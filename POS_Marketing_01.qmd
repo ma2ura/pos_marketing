@@ -1,0 +1,264 @@
+---
+title: |
+  <b>POSとマーケティングデータ分析</b> </br>
+  <span style="color: #282A36; ">第1回 売上をまとめた表</span>
+author: "Soichi Matsuura"
+format:
+  html:
+    toc: true
+    html-math-method: katex
+    css: mystyle.css
+execute:
+  echo: true
+  warning: false
+  highlight-style: github
+---
+
+# データを集計してみよう。
+
+## この章で使うファイルとパッケージ
+
+ファイル
+
+- `chp1.xlsx`
+
+パッケージ
+
+- `tidyverse` : データの読み込み，加工，可視化に使うパッケージ
+- `readxl` : Excelファイルを読み込むためのパッケージ
+
+```{r}
+pacman::p_load(tidyverse, readxl, tidyplots)
+```
+
+この章で使うファイルは作業ディレクトリの`data/`フォルダにいれておきましょう。
+
+
+## Rの準備
+
+- Rをインストールしておきましょう。
+- RStudioかVS Codeをインストールしておきましょう。
+- Rのパッケージ`tidyverse`をインストールしておきましょう。
+- 作業ディレクトリを設定しておきましょう。
+
+これらの内容が分からない場合は，R入門の資料や本を参照してください。
+
+## データの読み込み
+
+まずは`readxl`パッケージを使ってデータ`chp1.xlsx`を読み込んでみましょう。
+このExcelファイルのシートの一覧を表示してみます。
+
+```{r}
+readxl::excel_sheets("data/chp1.xlsx")
+```
+
+`excel_sheets()`関数はデフォルトで1番目のシートを読み込みます。
+「いつものPOSデータ」を読み込みたいので，特に指定せずに`read_excel()`関数を使って読み込みます。
+
+```{r}
+#| cache=TRUE
+df <- readxl::read_excel("data/chp1.xlsx")
+head(df) # 戦闘6行を表示
+```
+
+どんな変数があるのか確認するには`names()`関数を使います。
+
+```{r}
+names(df)
+```
+
+データの型や概要を確認するには`str()`関数を使います。
+
+```{r}
+str(df)
+```
+
+`dplyr::glimpse()`関数を使うと，データの概要をより見やすく表示できます。
+
+```{r}
+dplyr::glimpse(df)
+```
+
+この表から，変数が11個，観測値が374090個あることが分かります。
+
+## データの属性を確認する
+
+データの属性を確認するために，`summary()`関数を使ってみましょう。
+
+```{r}
+summary(df)
+```
+
+この表より，
+
+- レシート番号は文字列
+- 日付は2023年1月2日から2023年12月31日まで
+- 曜日は文字列
+- 時間は10:00から21:00まで
+- 性別は文字列
+- 年代も文字列
+- メーカーも文字列
+- 商品名も文字列
+- 単価は数値で，140〜170
+- 個数は数値で，1〜14
+- 金額は数値で，140〜2100
+
+となっています。
+このうち，曜日，性別，年代，メーカー，商品名はカテゴリカルデータであるため，因子型に変換しておきましょう。
+
+```{r}
+df <- df %>%
+  mutate(曜日 = factor(曜日, levels = c("月", "火", "水", "木", "金", "土", "日"), ordered = TRUE),
+         性別 = as.factor(性別),
+         年代 = as.factor(年代),
+         メーカー = as.factor(メーカー),
+         商品名 = as.factor(商品名))
+```
+
+もう一度，`summary()`関数を使ってデータの属性を確認してみましょう。
+
+```{r}
+summary(df)
+```
+
+すると，曜日，性別，年代，メーカー，商品名がカテゴリー変数として認識され，カテゴリーごとの個数が表示されています。
+たとえば，メーカー変数が`自社`の場合だけを抽出するには，`dplyr::filter()`関数を使います。
+
+```{r}
+df |>
+  dplyr::filter(メーカー == "自社") |>
+  head()
+```
+
+## 基礎集計でデータの傾向をチェック
+
+メーカーごとの売上金額合計を示す表を作成してみましょう。
+Excelでピボットテーブルを使う手続が教科書で解説されていますが，Rだと`dplyr`パッケージを使って簡単にできます。
+
+```{r}
+df_maker_sales <- df |>
+  dplyr::group_by(メーカー) |>
+  dplyr::summarise(売上金額合計 = sum(金額))
+df_maker_sales
+```
+
+これだけです。
+キレイな表にするなら，`knitr::kable()`関数と`kableExtra`パッケージを使うといいでしょう。
+
+```{r}
+df |>
+  dplyr::group_by(メーカー) |>
+  dplyr::summarise(売上金額合計 = sum(金額)) |>
+  dplyr::arrange(desc(売上金額合計)) |>
+  knitr::kable(
+    format = "html",
+    caption = "表1-2 メーカーごとの売上金額"
+  ) |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("striped")
+  )
+```
+
+次に，各メーカーのどの商品が，平均何円で売られているのか，を調べてみましょう。
+
+```{r}
+df |>
+  dplyr::group_by(メーカー, 商品名) |> # メーカーと商品名でグループ化
+  dplyr::summarise(平均単価 = mean(単価)) |> # 平均単価を計算
+  dplyr::arrange(メーカー, desc(平均単価)) |> # メーカーでソート
+  knitr::kable(
+    format = "html",
+    caption = "表1−3 商品ごとの単価"
+  ) |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("striped")
+  )
+```
+
+## 資料作成に必要なデータを取り出す
+
+データ全体における売上金額と売上個数を計算して，各月と各時間帯にの売上金額を計算してみる。
+
+
+```{r}
+# 全体の売上金額と売上個数
+df |>
+  summarise(
+    売上金額合計 = sum(金額),
+    売上個数合計 = sum(個数)
+    )
+```
+
+自社製品ごとの個数と金額を計算してみましょう。
+
+```{r}
+df |>
+  filter(メーカー == "自社") |>
+  group_by(商品名) |>
+  summarise(
+    売上金額合計 = sum(金額),
+    売上個数合計 = sum(個数)
+    ) |>
+  arrange(desc(売上金額合計))
+```
+
+
+各月ごとの売上金額を計算してみましょう。
+```{r}
+df |>
+  filter(メーカー == "自社") |>
+  mutate(月 = lubridate::month(日付, label = TRUE)) |>
+  group_by(月) |>
+  summarise(売上金額合計 = sum(金額)) |>
+  arrange(月) |>
+  knitr::kable(
+    format = "html",
+    caption = "表1−5 自社商品の月ごとの売上金額"
+  ) |>
+    kableExtra::kable_styling(
+    bootstrap_options = c("striped")
+  )
+```
+
+各時間帯ごとの売上金額を計算してみましょう。
+
+```{r}
+df |>
+  filter(メーカー == "自社") |>
+  group_by(時間) |>
+  summarise(売上金額合計 = sum(金額)) |>
+  arrange(時間) |>
+  knitr::kable(
+    format = "html",
+    caption = "表1−6 自社商品の時間帯ごとの売上金額"
+  ) |>
+    kableExtra::kable_styling(
+    bootstrap_options = c("striped")
+  )
+```
+
+## 集計結果をグラフで可視化
+
+可視化はRの得意分野です。
+最近話題の`tidyplots`パッケージを使って，いろんなグラフで表示してみましょう。
+
+
+メーカー別売上金額を棒グラフにします。
+
+```{r}
+df_maker_sales |>
+  tidyplot(x = メーカー, y = 売上金額合計, color = メーカー) |>
+  adjust_font(family = "HiraKakuProN-W3")
+```
+
+月別売上高を折れ線グラフにします。
+
+```{r}
+df |>
+  filter(メーカー == "自社") |>
+  mutate(月 = lubridate::month(日付, label = TRUE)) |>
+  group_by(月) |>
+  summarise(売上金額合計 = sum(金額)) |>
+  tidyplot(x = 月, y = 売上金額合計, color = 月) |>
+  adjust_font(family = "HiraKakuProN-W3")
+```
