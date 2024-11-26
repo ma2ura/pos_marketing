@@ -1,0 +1,11 @@
+*.ppt
+*.pptx
+*.js
+*.css
+*.png
+*.RData
+*.rdb
+*.rdx
+*.woff
+__packages
+/temp/
