@@ -1,10 +1,13 @@
 ---
 title: |
   <b>POSとマーケティングデータ分析</b> </br>
-  <span style="color: #282A36; ">第1回 売上をまとめた表</span>
+  <span style="color: #282A36; ">第1回 売上をまとめた表をつくる</span>
 author: "Soichi Matsuura"
 format:
   html:
+    theme:
+      light: cosmo
+      dark: darkly
     toc: true
     html-math-method: katex
     css: mystyle.css
@@ -79,7 +82,7 @@ str(df)
 dplyr::glimpse(df)
 ```
 
-この表から，変数が11個，観測値が374090個あることが分かります。
+この表の上部をみると、このデータには変数が11個，観測値が374090個あることが分かります。
 
 ## データの属性を確認する
 
@@ -91,20 +94,22 @@ summary(df)
 
 この表より，
 
-- レシート番号は文字列
+- レシート番号は文字列(charactor)
 - 日付は2023年1月2日から2023年12月31日まで
-- 曜日は文字列
+- 曜日は文字列(charactor)
 - 時間は10:00から21:00まで
-- 性別は文字列
-- 年代も文字列
-- メーカーも文字列
-- 商品名も文字列
+- 性別は文字列(charactor)
+- 年代も文字列(charactor)
+- メーカーも文字列(charactor)
+- 商品名も文字列(charactor)
 - 単価は数値で，140〜170
 - 個数は数値で，1〜14
 - 金額は数値で，140〜2100
 
-となっています。
-このうち，曜日，性別，年代，メーカー，商品名はカテゴリカルデータであるため，因子型に変換しておきましょう。
+となっていることがわかります。
+このうち，`曜日`，`性別`，`年代`，`メーカー`，`商品名`は**カテゴリカルデータ**であるため，**因子型**(factor)に変換しておきましょう。
+変数を因子型に変更するには，`facor()`関数や`as.factor()`関数を使います。
+ここでは，曜日に順番があるため，`levels`オプションと`ordered`オプションで曜日の種類と順番を指定しています。
 
 ```{r}
 df <- df %>%
@@ -115,14 +120,19 @@ df <- df %>%
          商品名 = as.factor(商品名))
 ```
 
-もう一度，`summary()`関数を使ってデータの属性を確認してみましょう。
+変数の型を変更したので，もう一度，`summary()`関数を使ってデータを確認してみましょう。
 
 ```{r}
 summary(df)
 ```
 
-すると，曜日，性別，年代，メーカー，商品名がカテゴリー変数として認識され，カテゴリーごとの個数が表示されています。
-たとえば，メーカー変数が`自社`の場合だけを抽出するには，`dplyr::filter()`関数を使います。
+すると，`曜日`，`性別`，`年代`，`メーカー`，`商品名`がカテゴリー変数として認識され，カテゴリーごとの個数が表示されています。
+
+## 条件によるデータの抽出
+
+`メーカー`変数が`自社`の場合だけを抽出するには，`dplyr::filter()`関数を使います。
+`filter()`関数は，引数に`メーカー == "自社`という条件を指定することで，条件に合致するデータだけを抽出します。
+
 
 ```{r}
 df |>
@@ -136,6 +146,7 @@ df |>
 Excelでピボットテーブルを使う手続が教科書で解説されていますが，Rだと`dplyr`パッケージを使って簡単にできます。
 
 ```{r}
+#| class-output: code-output
 df_maker_sales <- df |>
   dplyr::group_by(メーカー) |>
   dplyr::summarise(売上金額合計 = sum(金額))
@@ -146,10 +157,7 @@ df_maker_sales
 キレイな表にするなら，`knitr::kable()`関数と`kableExtra`パッケージを使うといいでしょう。
 
 ```{r}
-df |>
-  dplyr::group_by(メーカー) |>
-  dplyr::summarise(売上金額合計 = sum(金額)) |>
-  dplyr::arrange(desc(売上金額合計)) |>
+df_maker_sales |>
   knitr::kable(
     format = "html",
     caption = "表1-2 メーカーごとの売上金額"
@@ -160,12 +168,14 @@ df |>
 ```
 
 次に，各メーカーのどの商品が，平均何円で売られているのか，を調べてみましょう。
-
+`group_by()`関数の引数に，`メーカー`と`商品名`を指定して，`summarise()`関数でグループごとの平均単価を計算し，
+`arrange()`関数でメーカーと平均単価でソートします。`desc()`関数は降順にソートするための関数です。
 ```{r}
-df |>
-  dplyr::group_by(メーカー, 商品名) |> # メーカーと商品名でグループ化
-  dplyr::summarise(平均単価 = mean(単価)) |> # 平均単価を計算
-  dplyr::arrange(メーカー, desc(平均単価)) |> # メーカーでソート
+df_maker_item <- df |>
+  group_by(メーカー, 商品名) |> # メーカーと商品名でグループ化
+  summarise(平均単価 = mean(単価)) |> # 平均単価を計算
+  arrange(メーカー, desc(平均単価))# メーカーと平均単価でソート
+df_maker_item |>
   knitr::kable(
     format = "html",
     caption = "表1−3 商品ごとの単価"
@@ -181,6 +191,7 @@ df |>
 
 
 ```{r}
+#| class-output: code-output
 # 全体の売上金額と売上個数
 df |>
   summarise(
@@ -192,7 +203,8 @@ df |>
 自社製品ごとの個数と金額を計算してみましょう。
 
 ```{r}
-df |>
+#| class-output: code-output
+df_jisha_total <- df |>
   filter(メーカー == "自社") |> # 自社製品だけを抽出
   group_by(商品名) |>
   summarise(
@@ -200,13 +212,20 @@ df |>
     売上個数合計 = sum(個数)
     ) |>
   arrange(desc(売上金額合計))
+df_jisha_total
 ```
 
+これで自社の売上金額と売上個数の合計が計算されました。
+ここで注意しないといけないことは，`group_by()`関数と`summarise()`関数を使った場合，グループごとに1つの統計量を返すため，上のコードだと，
+自社の2商品ごとの売上金額と売上個数の合計が出力され，2行2列のデータフレームが返されていることが分かります。
 
-各月ごとの売上金額を計算してみましょう。
+
+
+次に，各月ごとの売上金額を計算してみましょう。
 `日付`変数の型を確認します。
 
 ```{r}
+#| class-output: code-output
 class(df$日付)
 ```
 
@@ -234,7 +253,7 @@ df_month_sales |>
   )
 ```
 
-各時間帯ごとの売上金額を計算してみましょう。
+同じように各時間帯ごとの売上金額を計算してみましょう。
 
 ```{r}
 df_time_sales <- df |>
@@ -277,9 +296,12 @@ df_month_sales |>
   theme_bw(base_family = "HiraKakuPro-W3")
 ```
 
+夏に売上高がピークを迎えていることが分かります。
+
 時間帯別売上高を棒グラフにします。
 
 ```{r}
+#| class-output: code-output
 df_time_sales |>
   ggplot() +
   aes(x = 時間, y = 売上金額合計, fill = factor(時間, levels = rev(unique(時間)))) + # 時間の順序を逆にする
@@ -287,3 +309,63 @@ df_time_sales |>
   guides(fill = guide_legend(title = "時間帯")) +
   scale_fill_viridis_d(direction = 1) # Viridis パレットを逆順に適用
 ```
+
+12時ころと17時ころに売上高が大きくなっているので，昼食・夕食の時間帯に売上が伸びていることが分かります。
+
+さらに，月ごと，時間ごとの棒グラフを重ねて表示してみましょう。
+
+```{r}
+df_month_time_sales <- df |>
+  filter(メーカー == "自社") |>
+  mutate(月 = lubridate::month(日付, label = TRUE),
+         時間 = as.factor(時間)) |>
+  group_by(月, 時間) |>
+  summarise(売上金額合計 = sum(金額)) |>
+  arrange(月, 時間)
+
+df_month_time_sales |>
+  ggplot() + aes(x = 月, y = 売上金額合計, fill = 時間) +
+  geom_col(position = "dodge") + theme_bw(base_family = "HiraKakuPro-W3") +
+  guides(fill = guide_legend(title = "時間帯")) +
+  scale_fill_viridis_d(direction = -1)
+```
+
+昼食時と夕食前に売上が伸びる傾向は1月から12月まで観察されていますが，その差は夏が非常に多く，冬には昼食時と夕食前とそれ以外の売上の差が小さくなっていることが分かります。
+
+これをアニメーションにしてみましょう。
+Rには`ggplot2`パッケージで作ったグラフをアニメーションにする`gganimate`パッケージがあります。
+ここでは，`transition_states()`関数と`enter_fade()`関数，`exit_fade()`関数を使って，時間帯ごとの売上高をアニメーションで表示してみます。
+
+- `transition_states()`: アニメーションの状態を指定します。
+- `enter_fade()`: アニメーションの開始時のエフェクトを指定します。
+- `exit_fade()`: アニメーションの終了時のエフェクトを指定します。
+
+```{r}
+#| cache: true
+pacman::p_load(gganimate)
+
+df_month_time_sales |>
+  ggplot() +
+  aes(x = 月, y = 売上金額合計, fill = 時間) +
+  geom_col(position = "dodge") +
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  guides(fill = guide_legend(title = "時間帯")) +
+  scale_fill_viridis_d(direction = -1) +
+  transition_states(時間, transition_length = 2, state_length = 1) +
+  labs(
+    title = "月ごとの時間帯別売上高: 時間帯 {closest_state} 時",
+    x = "月",
+    y = "売上金額合計"
+  ) +
+  enter_fade() +
+  exit_fade()
+```
+
+
+テキストの気温と販売個数の散布図は，気温データがないため作れません。
+
+## 提出用の資料を作成する。
+
+テキストではMS Excelで作成した表を、MS Powerpointに貼り付けてスライド資料を作成するようになっていますが、
+RとQuartoを使えば、データ分析と資料作成を同じ場所で行うことができます。
+
