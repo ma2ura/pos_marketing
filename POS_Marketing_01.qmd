@@ -1,20 +1,4 @@
----
-title: |
-  <b>POSとマーケティングデータ分析</b> </br>
-  <span style="color: #282A36; ">第1回 売上をまとめた表</span>
-author: "Soichi Matsuura"
-format:
-  html:
-    toc: true
-    html-math-method: katex
-    css: mystyle.css
-execute:
-  echo: true
-  warning: false
-  highlight-style: github
----
-
-# データを集計してみよう。
+# 第1回 売上をまとめた表
 
 ## この章で使うファイルとパッケージ
 

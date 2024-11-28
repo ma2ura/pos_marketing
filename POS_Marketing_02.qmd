@@ -1,0 +1,257 @@
+
+# 第2回 顧客層別の売上
+
+## この章で使うファイルとパッケージ
+
+ファイル
+
+- `chp2.xlsx`
+
+パッケージ
+
+- `tidyverse` : データの読み込み，加工，可視化に使うパッケージ
+- `readxl` : Excelファイルを読み込むためのパッケージ
+
+```{r}
+pacman::p_load(tidyverse, readxl, tidyplots, ggthemes, kableExtra)
+```
+
+`readxl`パッケージを使ってデータ`chp2.xlsx`を読み込んでみましょう。
+前章と同様にこのExcelファイルのシートの一覧を表示してみます。
+
+```{r}
+readxl::excel_sheets("data/chp2.xlsx")
+```
+
+第1章のデータと同じでした。
+「いつものPOSデータ」を読み込みたいので，特に指定せずに`read_excel()`関数を使って読み込みます。
+ついでに文字列をカテゴリー変数として因子型に変換しておきます。
+```{r}
+#| cache=TRUE
+df <- readxl::read_excel("data/chp2.xlsx")
+df <- df %>%
+  mutate(曜日 = factor(曜日, levels = c("月", "火", "水", "木", "金", "土", "日"), ordered = TRUE),
+         性別 = as.factor(性別),
+         年代 = as.factor(年代),
+         メーカー = as.factor(メーカー),
+         商品名 = as.factor(商品名))
+head(df) # 戦闘6行を表示
+```
+
+
+## 自社商品における購入者の属性を調べる
+
+### セグメンテーション
+
+顧客を属性で分類することを**セグメンテーション**といいます。
+セグメントごとの顧客の特徴を調べてみます。
+
+まずは自社商品におおける年代別と性別ごとの販売個数を計算してみましょう。
+
+```{r}
+df_jisha_age_sex_num <- df |>
+  filter(メーカー == "自社") |>
+  group_by(年代, 性別) |>
+  summarise(販売個数合計 = sum(個数)) |>
+  ungroup()
+df_jisha_age_sex_num
+```
+
+表が出力されましたが，いわゆる「ロング型」となっているため，教科書のようなワイド型に変換してみましょう。
+ついでに教科書のように，年代別合計を列に，性別ごとの合計を行に追加します。これが以外に面倒です。
+
+```{r}
+total_sex <- df_jisha_age_sex_num |>
+  group_by(性別) |> # 性別ごとに
+  summarise(合計 = sum(販売個数合計)) |> # 個数を合計
+  pivot_wider(names_from = 性別, values_from = 合計) |> # ワイドに
+  mutate(年代 = "合計") |> # 年代に"合計"を追加
+  ungroup() # グループ化解除
+df_jisha_age_sex_num |> # ワイドに
+  pivot_wider(names_from = 性別, values_from = 販売個数合計) |>
+  rbind(total_sex) |> # 合計の行を追加
+  mutate( # 合計の列を追加
+    合計 = 女性 + 男性
+  ) |>
+  knitr::kable(
+    format = "html",
+    caption = "表2-1 性別・年代ごとの購入回数をまとめてクロス集計表"
+  )
+```
+
+年代と性別の多重クロス表が完成しました。
+販売個数ではなく，売上金額の表にしたい場合は，`summarise(売上合計 = sum(金額))`とすればよいです。
+
+```{r}
+df_jisha_sale_age_sex <- df |>
+  filter(メーカー == "自社") |>
+  group_by(性別, 年代) |>
+  summarise(
+    売上合計 = sum(金額)
+  ) |>
+  ungroup()
+
+df_jisha_sale_age_sex |>
+  pivot_wider(names_from = 性別, values_from = 売上合計) |>
+  knitr::kable(
+    format = "html",
+    caption = "表2-2 性別・年代ごとの自社商品の売上金額"
+  )
+```
+
+### 棒グラフによる可視化
+
+可視化するため，棒グラフにしてみる。
+`geom_col()`関数で棒グラフを描画し，`position = "dodge"`で性別ごとに横並びの棒グラフにします。
+
+```{r}
+df_jisha_sale_age_sex |>
+  ggplot() + aes(x = 年代, y = 売上合計, fill = 性別) +
+  geom_col(position = "dodge") +
+  labs(title = "図2-2 性別・年代ごとの自社商品の売上金額",
+       x = "年代",
+       y = "売上金額") +
+  theme_bw(base_family = "HiraKakuPro-W3")
+```
+
+積み上げ棒グラフにするなら，`position = "stack"`を指定します。
+
+
+```{r}
+df_jisha_sale_age_sex |>
+  ggplot() + aes(x = 年代, y = 売上合計, fill = 性別) +
+  geom_col(position = "stack") +
+  labs(title = "図2-2 自社商品の年代別・性別別売上金額",
+       x = "年代",
+       y = "売上金額") +
+  theme_bw(base_family = "HiraKakuPro-W3")
+```
+
+
+合計を1とした割合を示す積み上げ棒グラフにするなら，`position = "fill"`を指定します。
+
+```{r}
+df_jisha_sale_age_sex |>
+  ggplot() + aes(x = 年代, y = 売上合計, fill = 性別) +
+  geom_col(position = "fill") +
+  labs(title = "図2-2 自社商品の年代別・性別別売上金額",
+       x = "年代",
+       y = "売上金額") +
+  theme_bw(base_family = "HiraKakuPro-W3")
+```
+
+売上個数のグラフも作成してみます。
+
+```{r}
+df |>
+  filter(メーカー == "自社") |>
+  group_by(年代, 性別) |>
+  summarise(販売個数 = sum(個数)) |>
+  ggplot() + aes(x = 年代, y = 販売個数, fill = 性別) +
+  geom_col(position = "dodge") +
+  labs(title = "図2-4 性別・年代ごとの自社商品の売上個数",
+       x = "年代",
+       y = "販売個数") +
+  theme_bw(base_family = "HiraKakuPro-W3")
+```
+
+
+### 割合を見る
+
+表2-2の表を見ると，年代ごとの売上金額の合計が異なるため，単純に比較することができません。そこで売上高合計に占める割合を見てみます。
+
+```{r}
+df_jisha_sale_age_sex |>
+  mutate( # 割合を計算し，小数点以下2桁で丸める
+    割合 = round(売上合計 / sum(売上合計) * 100, 2)
+  ) |>
+  select(年代, 性別, 割合) |> # 必要な列だけ抽出
+  pivot_wider(names_from = 性別, values_from = 割合) |>
+  mutate( # 性別ごとの合計を追加
+    合計 = 女性 + 男性
+  ) |>
+  knitr::kable(
+    format = "html",
+    caption = "表2-4 自社商品の売上金額における性別・年代の比率(%)"
+  )
+```
+
+次に売上全体に対する割合ではなく，性別ごとの合計に対する割合を示す表を作成してみます。
+
+```{r}
+df_row_ratio <- df_jisha_sale_age_sex |>
+  pivot_wider(names_from = 性別, values_from = 売上合計) |>
+  mutate(
+    女性 = round(女性 / sum(女性) * 100, 2),
+    男性 = round(男性 / sum(男性) * 100, 2)
+  ) |>
+  select(年代, 女性, 男性)
+df_row_ratio |>
+  knitr::kable(
+    format = "html",
+    caption = "表2-5 各性別を100%とした場合の性別に対する年代の比率 (%)"
+  )
+```
+
+性別ごとの年代の比率から棒グラフを作成します。
+
+```{r}
+df_row_ratio |>
+  pivot_longer(cols = c(女性, 男性), names_to = "性別", values_to = "割合") |>
+  ggplot() + aes(x = 年代, y = 割合, fill = 性別) +
+  geom_col(position = "fill") +
+  labs(title = "図2-9 帯グラフの作成",
+       x = "年代",
+       y = "割合") +
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  # グラフを横向き
+  coord_flip()
+```
+
+次に，性別ごとの年代別の割合を見てみます。
+
+```{r}
+df_row_ratio |>
+  pivot_longer(cols = c(女性, 男性), names_to = "性別", values_to = "割合") |>
+  ggplot() + aes(x = 性別, y = 割合, fill = 年代) +
+  geom_col(position = "fill") +
+  labs(title = "図2-10 帯グラフの作成",
+       x = "性別",
+       y = "割合") +
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  #カラーパレットを変更
+  scale_fill_tableau(name = "Tableau 20") +
+  coord_flip()
+```
+
+### 年代別・性別ごとの購入者の属性を調べる
+
+```{r}
+df_sales_total <- df |>
+  dplyr::filter(メーカー == "自社") |>
+  group_by(年代, 性別) |>
+  summarise(
+    売上合計 = sum(金額),
+    .groups = "drop"
+  ) |>
+  pivot_wider(names_from = 性別, values_from = c(売上合計))
+df_sales_total |>
+  rowwise() |>  # 行ごとに処理
+  mutate(
+    # 年代以外の列で，行を合計で割る
+    across(-年代, ~ . / sum(c_across(-年代), na.rm = TRUE))
+    ) |>
+  ungroup() |>
+  knitr::kable(
+    format = "html",
+    caption = "表2-3 自社商品の年代別・性別別売上金額"
+  )
+```
+
+
+
+## 独立性の検定
+
+年代と性別との間に売上金額に差があるかどうかを検定します。
+上で作成したクロス表から，$\chi^2$検定を行うことで，年代と性別が独立であるかどうかを検定します。
+
