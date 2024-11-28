@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.36">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>2&nbsp; 第1回 売上をまとめた表 – POSとマーケティングデータ分析</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./POS_Marketing_02.html" rel="next">
+<link href="./index.html" rel="prev">
+<link href="./img/favicon.ico" rel="icon">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-01c78b5cd655e4cd89133cf59d535862.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c3c62341195aaca57c6426706fd8d4e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "一致なし",
+    "search-matching-documents-text": "一致した文書",
+    "search-copy-link-title": "検索へのリンクをコピー",
+    "search-hide-matches-text": "追加の検索結果を非表示",
+    "search-more-match-text": "追加の検索結果",
+    "search-more-matches-text": "追加の検索結果",
+    "search-clear-button-title": "消去",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "検索",
+    "search-label": "サーチ"
+  }
+}</script><script src="site_libs/kePrint-0.0.1/kePrint.js"></script><link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<meta name="twitter:title" content="2&nbsp; 第1回 売上をまとめた表 – POSとマーケティングデータ分析">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://so-ichi.com/POS_Marketing_01_files/figure-html/unnamed-chunk-19-1.png">
+<meta name="twitter:image-height" content="960">
+<meta name="twitter:image-width" content="1344">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./POS_Marketing_01.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">第1回 売上をまとめた表</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="サーチ" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">POSとマーケティングデータ分析</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="サーチ"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">POSデータで学ぶはじめてのマーケティングデータ分析</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_01.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">第1回 売上をまとめた表</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title"><b>POSとマーケティングデータ分析</b> 
+<span style="color: #282A36; ">第2回 顧客層別の売上</span></span></span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">目次</h2>
+   
+  <ul>
+<li><a href="#%E3%81%93%E3%81%AE%E7%AB%A0%E3%81%A7%E4%BD%BF%E3%81%86%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%A8%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8" id="toc-この章で使うファイルとパッケージ" class="nav-link active" data-scroll-target="#%E3%81%93%E3%81%AE%E7%AB%A0%E3%81%A7%E4%BD%BF%E3%81%86%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%A8%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8"><span class="header-section-number">2.1</span> この章で使うファイルとパッケージ</a></li>
+  <li><a href="#r%E3%81%AE%E6%BA%96%E5%82%99" id="toc-rの準備" class="nav-link" data-scroll-target="#r%E3%81%AE%E6%BA%96%E5%82%99"><span class="header-section-number">2.2</span> Rの準備</a></li>
+  <li><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF" id="toc-データの読み込み" class="nav-link" data-scroll-target="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF"><span class="header-section-number">2.3</span> データの読み込み</a></li>
+  <li><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%B1%9E%E6%80%A7%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B" id="toc-データの属性を確認する" class="nav-link" data-scroll-target="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%B1%9E%E6%80%A7%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B"><span class="header-section-number">2.4</span> データの属性を確認する</a></li>
+  <li><a href="#%E5%9F%BA%E7%A4%8E%E9%9B%86%E8%A8%88%E3%81%A7%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%82%BE%E5%90%91%E3%82%92%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF" id="toc-基礎集計でデータの傾向をチェック" class="nav-link" data-scroll-target="#%E5%9F%BA%E7%A4%8E%E9%9B%86%E8%A8%88%E3%81%A7%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%82%BE%E5%90%91%E3%82%92%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF"><span class="header-section-number">2.5</span> 基礎集計でデータの傾向をチェック</a></li>
+  <li><a href="#%E8%B3%87%E6%96%99%E4%BD%9C%E6%88%90%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E5%8F%96%E3%82%8A%E5%87%BA%E3%81%99" id="toc-資料作成に必要なデータを取り出す" class="nav-link" data-scroll-target="#%E8%B3%87%E6%96%99%E4%BD%9C%E6%88%90%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E5%8F%96%E3%82%8A%E5%87%BA%E3%81%99"><span class="header-section-number">2.6</span> 資料作成に必要なデータを取り出す</a></li>
+  <li><a href="#%E9%9B%86%E8%A8%88%E7%B5%90%E6%9E%9C%E3%82%92%E3%82%B0%E3%83%A9%E3%83%95%E3%81%A7%E5%8F%AF%E8%A6%96%E5%8C%96" id="toc-集計結果をグラフで可視化" class="nav-link" data-scroll-target="#%E9%9B%86%E8%A8%88%E7%B5%90%E6%9E%9C%E3%82%92%E3%82%B0%E3%83%A9%E3%83%95%E3%81%A7%E5%8F%AF%E8%A6%96%E5%8C%96"><span class="header-section-number">2.7</span> 集計結果をグラフで可視化</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">2</span>&nbsp; <span class="chapter-title">第1回 売上をまとめた表</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="この章で使うファイルとパッケージ" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="この章で使うファイルとパッケージ">
+<span class="header-section-number">2.1</span> この章で使うファイルとパッケージ</h2>
+<p>ファイル</p>
+<ul>
+<li><code>chp1.xlsx</code></li>
+</ul>
+<p>パッケージ</p>
+<ul>
+<li>
+<code>tidyverse</code> : データの読み込み，加工，可視化に使うパッケージ</li>
+<li>
+<code>readxl</code> : Excelファイルを読み込むためのパッケージ</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>, <span class="va">readxl</span>, <span class="va">tidyplots</span>, <span class="va">ggthemes</span>, <span class="va">kableExtra</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>この章で使うファイルは作業ディレクトリの<code>data/</code>フォルダにいれておきましょう。</p>
+</section><section id="rの準備" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="rの準備">
+<span class="header-section-number">2.2</span> Rの準備</h2>
+<ul>
+<li>Rをインストールしておきましょう。</li>
+<li>RStudioかVS Codeをインストールしておきましょう。</li>
+<li>Rのパッケージ<code>tidyverse</code>をインストールしておきましょう。</li>
+<li>作業ディレクトリを設定しておきましょう。</li>
+</ul>
+<p>これらの内容が分からない場合は，R入門の資料や本を参照してください。</p>
+</section><section id="データの読み込み" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="データの読み込み">
+<span class="header-section-number">2.3</span> データの読み込み</h2>
+<p>まずは<code>readxl</code>パッケージを使ってデータ<code>chp1.xlsx</code>を読み込んでみましょう。 このExcelファイルのシートの一覧を表示してみます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/excel_sheets.html">excel_sheets</a></span><span class="op">(</span><span class="st">"data/chp1.xlsx"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "いつものPOSデータ"     "ピボットテーブル"      "表1-2・図1-19"        
+[4] "表1-4・図1-28・図1-29" "表1-5・図1-32"         "表1-6"                
+[7] "図1-38"               </code></pre>
+</div>
+</div>
+<p><code>excel_sheets()</code>関数はデフォルトで1番目のシートを読み込みます。 「いつものPOSデータ」を読み込みたいので，特に指定せずに<code>read_excel()</code>関数を使って読み込みます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/chp1.xlsx"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="co"># 戦闘6行を表示</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 12%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 15%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">レシート番号</th>
+<th style="text-align: left;">日付</th>
+<th style="text-align: left;">曜日</th>
+<th style="text-align: right;">時間</th>
+<th style="text-align: left;">性別</th>
+<th style="text-align: left;">年代</th>
+<th style="text-align: left;">メーカー</th>
+<th style="text-align: left;">商品名</th>
+<th style="text-align: right;">単価</th>
+<th style="text-align: right;">個数</th>
+<th style="text-align: right;">金額</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">R000001</td>
+<td style="text-align: left;">2023-01-02</td>
+<td style="text-align: left;">月</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">女性</td>
+<td style="text-align: left;">30代</td>
+<td style="text-align: left;">競合A</td>
+<td style="text-align: left;">おいしい緑茶</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">320</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R000001</td>
+<td style="text-align: left;">2023-01-02</td>
+<td style="text-align: left;">月</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">女性</td>
+<td style="text-align: left;">30代</td>
+<td style="text-align: left;">競合B</td>
+<td style="text-align: left;">静岡の緑茶</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">340</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R000002</td>
+<td style="text-align: left;">2023-01-02</td>
+<td style="text-align: left;">月</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">男性</td>
+<td style="text-align: left;">60歳以上</td>
+<td style="text-align: left;">競合A</td>
+<td style="text-align: left;">おいしい濃茶</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">320</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R000002</td>
+<td style="text-align: left;">2023-01-02</td>
+<td style="text-align: left;">月</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">男性</td>
+<td style="text-align: left;">60歳以上</td>
+<td style="text-align: left;">競合B</td>
+<td style="text-align: left;">静岡の緑茶</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">680</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R000003</td>
+<td style="text-align: left;">2023-01-02</td>
+<td style="text-align: left;">月</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">男性</td>
+<td style="text-align: left;">50代</td>
+<td style="text-align: left;">競合C</td>
+<td style="text-align: left;">ほうじ茶</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">140</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R000004</td>
+<td style="text-align: left;">2023-01-02</td>
+<td style="text-align: left;">月</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">女性</td>
+<td style="text-align: left;">50代</td>
+<td style="text-align: left;">競合D</td>
+<td style="text-align: left;">ウーロン茶</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">420</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>どんな変数があるのか確認するには<code><a href="https://rdrr.io/r/base/names.html">names()</a></code>関数を使います。</p>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "レシート番号" "日付"         "曜日"         "時間"         "性別"        
+ [6] "年代"         "メーカー"     "商品名"       "単価"         "個数"        
+[11] "金額"        </code></pre>
+</div>
+</div>
+<p>データの型や概要を確認するには<code><a href="https://rdrr.io/r/utils/str.html">str()</a></code>関数を使います。</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [374,090 × 11] (S3: tbl_df/tbl/data.frame)
+ $ レシート番号: chr [1:374090] "R000001" "R000001" "R000002" "R000002" ...
+ $ 日付        : POSIXct[1:374090], format: "2023-01-02" "2023-01-02" ...
+ $ 曜日        : chr [1:374090] "月" "月" "月" "月" ...
+ $ 時間        : num [1:374090] 10 10 10 10 10 10 10 10 10 10 ...
+ $ 性別        : chr [1:374090] "女性" "女性" "男性" "男性" ...
+ $ 年代        : chr [1:374090] "30代" "30代" "60歳以上" "60歳以上" ...
+ $ メーカー    : chr [1:374090] "競合A" "競合B" "競合A" "競合B" ...
+ $ 商品名      : chr [1:374090] "おいしい緑茶" "静岡の緑茶" "おいしい濃茶" "静岡の緑茶" ...
+ $ 単価        : num [1:374090] 160 170 160 170 140 140 160 150 150 160 ...
+ $ 個数        : num [1:374090] 2 2 2 4 1 3 1 2 3 4 ...
+ $ 金額        : num [1:374090] 320 340 320 680 140 420 160 300 450 640 ...</code></pre>
+</div>
+</div>
+<p><code><a href="https://pillar.r-lib.org/reference/glimpse.html">dplyr::glimpse()</a></code>関数を使うと，データの概要をより見やすく表示できます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 374,090
+Columns: 11
+$ レシート番号 &lt;chr&gt; "R000001", "R000001", "R000002", "R000002", "R000003", "R…
+$ 日付         &lt;dttm&gt; 2023-01-02, 2023-01-02, 2023-01-02, 2023-01-02, 2023-01-…
+$ 曜日         &lt;chr&gt; "月", "月", "月", "月", "月", "月", "月", "月", "月", "月…
+$ 時間         &lt;dbl&gt; 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 1…
+$ 性別         &lt;chr&gt; "女性", "女性", "男性", "男性", "男性", "女性", "女性", "…
+$ 年代         &lt;chr&gt; "30代", "30代", "60歳以上", "60歳以上", "50代", "50代", "…
+$ メーカー     &lt;chr&gt; "競合A", "競合B", "競合A", "競合B", "競合C", "競合D", "競…
+$ 商品名       &lt;chr&gt; "おいしい緑茶", "静岡の緑茶", "おいしい濃茶", "静岡の緑茶…
+$ 単価         &lt;dbl&gt; 160, 170, 160, 170, 140, 140, 160, 150, 150, 160, 160, 17…
+$ 個数         &lt;dbl&gt; 2, 2, 2, 4, 1, 3, 1, 2, 3, 4, 1, 2, 2, 1, 1, 2, 1, 2, 3, …
+$ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 160, 34…</code></pre>
+</div>
+</div>
+<p>この表から，変数が11個，観測値が374090個あることが分かります。</p>
+</section><section id="データの属性を確認する" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="データの属性を確認する">
+<span class="header-section-number">2.4</span> データの属性を確認する</h2>
+<p>データの属性を確認するために，<code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>関数を使ってみましょう。</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> レシート番号            日付                            曜日          
+ Length:374090      Min.   :2023-01-02 00:00:00.00   Length:374090     
+ Class :character   1st Qu.:2023-05-09 00:00:00.00   Class :character  
+ Mode  :character   Median :2023-07-28 00:00:00.00   Mode  :character  
+                    Mean   :2023-07-16 10:09:45.75                     
+                    3rd Qu.:2023-09-23 00:00:00.00                     
+                    Max.   :2023-12-31 00:00:00.00                     
+      時間           性別               年代             メーカー        
+ Min.   :10.00   Length:374090      Length:374090      Length:374090     
+ 1st Qu.:13.00   Class :character   Class :character   Class :character  
+ Median :16.00   Mode  :character   Mode  :character   Mode  :character  
+ Mean   :15.57                                                           
+ 3rd Qu.:18.00                                                           
+ Max.   :21.00                                                           
+    商品名               単価            個数             金額       
+ Length:374090      Min.   :140.0   Min.   : 1.000   Min.   : 140.0  
+ Class :character   1st Qu.:150.0   1st Qu.: 1.000   1st Qu.: 160.0  
+ Mode  :character   Median :160.0   Median : 2.000   Median : 280.0  
+                    Mean   :154.5   Mean   : 1.783   Mean   : 275.7  
+                    3rd Qu.:160.0   3rd Qu.: 2.000   3rd Qu.: 320.0  
+                    Max.   :170.0   Max.   :14.000   Max.   :2100.0  </code></pre>
+</div>
+</div>
+<p>この表より，</p>
+<ul>
+<li>レシート番号は文字列</li>
+<li>日付は2023年1月2日から2023年12月31日まで</li>
+<li>曜日は文字列</li>
+<li>時間は10:00から21:00まで</li>
+<li>性別は文字列</li>
+<li>年代も文字列</li>
+<li>メーカーも文字列</li>
+<li>商品名も文字列</li>
+<li>単価は数値で，140〜170</li>
+<li>個数は数値で，1〜14</li>
+<li>金額は数値で，140〜2100</li>
+</ul>
+<p>となっています。 このうち，曜日，性別，年代，メーカー，商品名はカテゴリカルデータであるため，因子型に変換しておきましょう。</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>曜日 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">曜日</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"月"</span>, <span class="st">"火"</span>, <span class="st">"水"</span>, <span class="st">"木"</span>, <span class="st">"金"</span>, <span class="st">"土"</span>, <span class="st">"日"</span><span class="op">)</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>         性別 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">性別</span><span class="op">)</span>,</span>
+<span>         年代 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">年代</span><span class="op">)</span>,</span>
+<span>         メーカー <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">メーカー</span><span class="op">)</span>,</span>
+<span>         商品名 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">商品名</span><span class="op">)</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>もう一度，<code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>関数を使ってデータの属性を確認してみましょう。</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> レシート番号            日付                        曜日            時間      
+ Length:374090      Min.   :2023-01-02 00:00:00.00   月:36468   Min.   :10.00  
+ Class :character   1st Qu.:2023-05-09 00:00:00.00   火:44573   1st Qu.:13.00  
+ Mode  :character   Median :2023-07-28 00:00:00.00   水:52418   Median :16.00  
+                    Mean   :2023-07-16 10:09:45.75   木:37703   Mean   :15.57  
+                    3rd Qu.:2023-09-23 00:00:00.00   金:66894   3rd Qu.:18.00  
+                    Max.   :2023-12-31 00:00:00.00   土:74754   Max.   :21.00  
+                                                     日:61280                  
+   性別              年代        メーカー               商品名     
+ 女性:274659   20歳未満:19102   競合A:144742   ウーロン茶  :31905  
+ 男性: 99431   20代    :49716   競合B: 46516   おいしい濃茶:59910  
+               30代    :81065   競合C: 39190   おいしい緑茶:84832  
+               40代    :74773   競合D: 31905   ほうじ茶    :39190  
+               50代    :93194   自社 :111737   静岡の緑茶  :46516  
+               60歳以上:56240                  濃い茶      :45982  
+                                               緑茶        :65755  
+      単価            個数             金額       
+ Min.   :140.0   Min.   : 1.000   Min.   : 140.0  
+ 1st Qu.:150.0   1st Qu.: 1.000   1st Qu.: 160.0  
+ Median :160.0   Median : 2.000   Median : 280.0  
+ Mean   :154.5   Mean   : 1.783   Mean   : 275.7  
+ 3rd Qu.:160.0   3rd Qu.: 2.000   3rd Qu.: 320.0  
+ Max.   :170.0   Max.   :14.000   Max.   :2100.0  
+                                                  </code></pre>
+</div>
+</div>
+<p>すると，曜日，性別，年代，メーカー，商品名がカテゴリー変数として認識され，カテゴリーごとの個数が表示されています。 たとえば，メーカー変数が<code>自社</code>の場合だけを抽出するには，<code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code>関数を使います。</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">メーカー</span> <span class="op">==</span> <span class="st">"自社"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 14%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 12%">
+<col style="width: 9%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">レシート番号</th>
+<th style="text-align: left;">日付</th>
+<th style="text-align: left;">曜日</th>
+<th style="text-align: right;">時間</th>
+<th style="text-align: left;">性別</th>
+<th style="text-align: left;">年代</th>
+<th style="text-align: left;">メーカー</th>
+<th style="text-align: left;">商品名</th>
+<th style="text-align: right;">単価</th>
+<th style="text-align: right;">個数</th>
+<th style="text-align: right;">金額</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">R000005</td>
+<td style="text-align: left;">2023-01-02</td>
+<td style="text-align: left;">月</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">女性</td>
+<td style="text-align: left;">50代</td>
+<td style="text-align: left;">自社</td>
+<td style="text-align: left;">濃い茶</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">300</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R000005</td>
+<td style="text-align: left;">2023-01-02</td>
+<td style="text-align: left;">月</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">女性</td>
+<td style="text-align: left;">50代</td>
+<td style="text-align: left;">自社</td>
+<td style="text-align: left;">緑茶</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">450</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R000010</td>
+<td style="text-align: left;">2023-01-02</td>
+<td style="text-align: left;">月</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">女性</td>
+<td style="text-align: left;">50代</td>
+<td style="text-align: left;">自社</td>
+<td style="text-align: left;">濃い茶</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">300</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R000010</td>
+<td style="text-align: left;">2023-01-02</td>
+<td style="text-align: left;">月</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">女性</td>
+<td style="text-align: left;">50代</td>
+<td style="text-align: left;">自社</td>
+<td style="text-align: left;">緑茶</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">150</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R000011</td>
+<td style="text-align: left;">2023-01-02</td>
+<td style="text-align: left;">月</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">男性</td>
+<td style="text-align: left;">20代</td>
+<td style="text-align: left;">自社</td>
+<td style="text-align: left;">緑茶</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">150</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R000012</td>
+<td style="text-align: left;">2023-01-02</td>
+<td style="text-align: left;">月</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">女性</td>
+<td style="text-align: left;">20代</td>
+<td style="text-align: left;">自社</td>
+<td style="text-align: left;">緑茶</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">150</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section><section id="基礎集計でデータの傾向をチェック" class="level2" data-number="2.5"><h2 data-number="2.5" class="anchored" data-anchor-id="基礎集計でデータの傾向をチェック">
+<span class="header-section-number">2.5</span> 基礎集計でデータの傾向をチェック</h2>
+<p>メーカーごとの売上金額合計を示す表を作成してみましょう。 Excelでピボットテーブルを使う手続が教科書で解説されていますが，Rだと<code>dplyr</code>パッケージを使って簡単にできます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_maker_sales</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">メーカー</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>売上金額合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">金額</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">df_maker_sales</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">メーカー</th>
+<th style="text-align: right;">売上金額合計</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">競合A</td>
+<td style="text-align: right;">42695520</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">競合B</td>
+<td style="text-align: right;">13537440</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">競合C</td>
+<td style="text-align: right;">9289700</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">競合D</td>
+<td style="text-align: right;">7486080</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">自社</td>
+<td style="text-align: right;">30126150</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>これだけです。 キレイな表にするなら，<code><a href="https://rdrr.io/pkg/knitr/man/kable.html">knitr::kable()</a></code>関数と<code>kableExtra</code>パッケージを使うといいでしょう。</p>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">メーカー</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>売上金額合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">金額</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">売上金額合計</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span></span>
+<span>    format <span class="op">=</span> <span class="st">"html"</span>,</span>
+<span>    caption <span class="op">=</span> <span class="st">"表1-2 メーカーごとの売上金額"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span></span>
+<span>    bootstrap_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"striped"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-striped caption-top table-sm small" data-quarto-postprocess="true">
+<caption>表1-2 メーカーごとの売上金額</caption>
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">メーカー</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">売上金額合計</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">競合A</td>
+<td style="text-align: right;">42695520</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">自社</td>
+<td style="text-align: right;">30126150</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">競合B</td>
+<td style="text-align: right;">13537440</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">競合C</td>
+<td style="text-align: right;">9289700</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">競合D</td>
+<td style="text-align: right;">7486080</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>次に，各メーカーのどの商品が，平均何円で売られているのか，を調べてみましょう。</p>
+<div class="cell">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">メーカー</span>, <span class="va">商品名</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># メーカーと商品名でグループ化</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>平均単価 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">単価</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 平均単価を計算</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">メーカー</span>, <span class="fu">desc</span><span class="op">(</span><span class="va">平均単価</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># メーカーでソート</span></span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span></span>
+<span>    format <span class="op">=</span> <span class="st">"html"</span>,</span>
+<span>    caption <span class="op">=</span> <span class="st">"表1−3 商品ごとの単価"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span></span>
+<span>    bootstrap_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"striped"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'メーカー'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output-display">
+<table class="table table-striped caption-top table-sm small" data-quarto-postprocess="true">
+<caption>表1−3 商品ごとの単価</caption>
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">メーカー</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">商品名</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">平均単価</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">競合A</td>
+<td style="text-align: left;">おいしい濃茶</td>
+<td style="text-align: right;">160</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">競合A</td>
+<td style="text-align: left;">おいしい緑茶</td>
+<td style="text-align: right;">160</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">競合B</td>
+<td style="text-align: left;">静岡の緑茶</td>
+<td style="text-align: right;">170</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">競合C</td>
+<td style="text-align: left;">ほうじ茶</td>
+<td style="text-align: right;">140</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">競合D</td>
+<td style="text-align: left;">ウーロン茶</td>
+<td style="text-align: right;">140</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">自社</td>
+<td style="text-align: left;">濃い茶</td>
+<td style="text-align: right;">150</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">自社</td>
+<td style="text-align: left;">緑茶</td>
+<td style="text-align: right;">150</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section><section id="資料作成に必要なデータを取り出す" class="level2" data-number="2.6"><h2 data-number="2.6" class="anchored" data-anchor-id="資料作成に必要なデータを取り出す">
+<span class="header-section-number">2.6</span> 資料作成に必要なデータを取り出す</h2>
+<p>データ全体における売上金額と売上個数を計算して，各月と各時間帯にの売上金額を計算してみる。</p>
+<div class="cell">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># 全体の売上金額と売上個数</span></span>
+<span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">summarise</span><span class="op">(</span></span>
+<span>    売上金額合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">金額</span><span class="op">)</span>,</span>
+<span>    売上個数合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">個数</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: right;">売上金額合計</th>
+<th style="text-align: right;">売上個数合計</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td style="text-align: right;">103134890</td>
+<td style="text-align: right;">667147</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+</div>
+<p>自社製品ごとの個数と金額を計算してみましょう。</p>
+<div class="cell">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">メーカー</span> <span class="op">==</span> <span class="st">"自社"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 自社製品だけを抽出</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">商品名</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">summarise</span><span class="op">(</span></span>
+<span>    売上金額合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">金額</span><span class="op">)</span>,</span>
+<span>    売上個数合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">個数</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">売上金額合計</span><span class="op">)</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">商品名</th>
+<th style="text-align: right;">売上金額合計</th>
+<th style="text-align: right;">売上個数合計</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">緑茶</td>
+<td style="text-align: right;">18057150</td>
+<td style="text-align: right;">120381</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">濃い茶</td>
+<td style="text-align: right;">12069000</td>
+<td style="text-align: right;">80460</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>各月ごとの売上金額を計算してみましょう。 <code>日付</code>変数の型を確認します。</p>
+<div class="cell">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">日付</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "POSIXct" "POSIXt" </code></pre>
+</div>
+</div>
+<p><code>POSIXct</code> <code>POSIXt</code> という日付型のデータです。 この変数<code>日付</code>から月を取り出すには，<code>lubridate</code>パッケージを使います。 日付データは<code>2023-05-14 UTC</code>といった形式で格納されているため，<code><a href="https://lubridate.tidyverse.org/reference/month.html">lubridate::month()</a></code>関数を使って月を取り出します。</p>
+<div class="cell">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_month_sales</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">メーカー</span> <span class="op">==</span> <span class="st">"自社"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>月 <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">日付</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">月</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 月ごとにグループ化</span></span>
+<span>  <span class="fu">summarise</span><span class="op">(</span>売上金額合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">金額</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">月</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df_month_sales</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span></span>
+<span>    format <span class="op">=</span> <span class="st">"html"</span>,</span>
+<span>    caption <span class="op">=</span> <span class="st">"表1−5 自社商品の月ごとの売上金額"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span></span>
+<span>    bootstrap_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"striped"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-striped caption-top table-sm small" data-quarto-postprocess="true">
+<caption>表1−5 自社商品の月ごとの売上金額</caption>
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">月</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">売上金額合計</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">1577250</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">1317900</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">1809300</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: right;">2238750</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: right;">2506050</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6</td>
+<td style="text-align: right;">2288550</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">7</td>
+<td style="text-align: right;">3844350</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8</td>
+<td style="text-align: right;">4231950</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">9</td>
+<td style="text-align: right;">3599550</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">10</td>
+<td style="text-align: right;">2888250</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">11</td>
+<td style="text-align: right;">2140800</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">12</td>
+<td style="text-align: right;">1683450</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>各時間帯ごとの売上金額を計算してみましょう。</p>
+<div class="cell">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_time_sales</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">メーカー</span> <span class="op">==</span> <span class="st">"自社"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">時間</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">summarise</span><span class="op">(</span>売上金額合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">金額</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">時間</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df_time_sales</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span></span>
+<span>    format <span class="op">=</span> <span class="st">"html"</span>,</span>
+<span>    caption <span class="op">=</span> <span class="st">"表1−6 自社商品の時間帯ごとの売上金額"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span></span>
+<span>    bootstrap_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"striped"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-striped caption-top table-sm small" data-quarto-postprocess="true">
+<caption>表1−6 自社商品の時間帯ごとの売上金額</caption>
+<thead><tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">時間</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">売上金額合計</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1506600</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">2070750</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">2942400</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">2729550</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">2108700</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">2740050</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">3033150</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">3617700</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">3038550</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2710950</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">2124900</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">1502850</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section><section id="集計結果をグラフで可視化" class="level2" data-number="2.7"><h2 data-number="2.7" class="anchored" data-anchor-id="集計結果をグラフで可視化">
+<span class="header-section-number">2.7</span> 集計結果をグラフで可視化</h2>
+<p>可視化はRの得意分野です。 <code>ggplot2</code>パッケージを使って，いろんなグラフで表示してみましょう。</p>
+<p>メーカー別売上金額を棒グラフにします。</p>
+<div class="cell">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_maker_sales</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">メーカー</span>, y <span class="op">=</span> <span class="va">売上金額合計</span>, fill <span class="op">=</span> <span class="va">メーカー</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_col</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>月別売上高を折れ線グラフにします。</p>
+<div class="cell">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_month_sales</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月</span>, y <span class="op">=</span> <span class="va">売上金額合計</span>, group <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>時間帯別売上高を棒グラフにします。</p>
+<div class="cell">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_time_sales</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">時間</span>, y <span class="op">=</span> <span class="va">売上金額合計</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">時間</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">時間</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># 時間の順序を逆にする</span></span>
+<span>  <span class="fu">geom_col</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># テーマとフォント</span></span>
+<span>  <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"時間帯"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_fill_viridis_d</span><span class="op">(</span>direction <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="co"># Viridis パレットを逆順に適用</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "コピーしました");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "コピーしました");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/so-ichi\.com");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="POSデータで学ぶはじめてのマーケティングデータ分析">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">POSデータで学ぶはじめてのマーケティングデータ分析</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./POS_Marketing_02.html" class="pagination-link" aria-label="<b>POSとマーケティングデータ分析</b> </br>
+<span style=&quot;color: #282A36; &quot;>第2回 顧客層別の売上</span>">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title"><b>POSとマーケティングデータ分析</b>  <span style="color: #282A36; ">第2回 顧客層別の売上</span></span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Soichi Matsuura</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ma2ura">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/matsuura_rits">
+      <i class="bi bi-twitter" role="img" aria-label="Twitter">
+</i> 
+    </a>
+  </li>  
+</ul>
+</div>
+  </div>
+</footer>
+
+
+</body></html>

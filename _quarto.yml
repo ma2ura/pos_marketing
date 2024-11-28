@@ -1,0 +1,43 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "POSとマーケティングデータ分析"
+  author: "Soichi Matsuura"
+  date: "11/28/2024"
+  favicon: img/favicon.ico
+  twitter-card: true
+  site-url: https://so-ichi.com
+  chapters:
+    - index.qmd
+    - POS_Marketing_01.qmd
+    - POS_Marketing_02.qmd
+  page-navigation: true
+  back-to-top-navigation: true
+  page-footer:
+      border: true
+      # background: "#a10000"
+      left: "Copyright 2024, Soichi Matsuura"
+      right:
+        - icon: github
+          href: https://github.com/ma2ura
+        - icon: twitter
+          href: https://twitter.com/matsuura_rits
+          aria-label: Twitter
+
+format:
+  html:
+    theme: cerulean
+    toc: true
+    html-math-method: katex
+    code-copy: true
+    code-overflow: wrap
+    code-link: true
+    link-external-icon: true
+    df-print: kable
+    grid:
+      sidebar-width: 200px
+      body-width: 1200px
+lang: "ja"
+dev: "ragg_png"
