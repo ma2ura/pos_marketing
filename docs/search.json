@@ -1,0 +1,182 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "POSとマーケティングデータ分析",
+    "section": "",
+    "text": "POSデータで学ぶはじめてのマーケティングデータ分析",
+    "crumbs": [
+      "POSデータで学ぶはじめてのマーケティングデータ分析"
+    ]
+  },
+  {
+    "objectID": "index.html#資料の紹介",
+    "href": "index.html#資料の紹介",
+    "title": "POSとマーケティングデータ分析",
+    "section": "資料の紹介",
+    "text": "資料の紹介\nこの資料は，横山・花井著 (2024) 「POSデータで学ぶはじめてのマーケティングデータ分析」の内容をRで再現したものです。 書籍の内容にはほとんど触れず，書籍内の分析や作表・作図をRで再現することに焦点を当てています。",
+    "crumbs": [
+      "POSデータで学ぶはじめてのマーケティングデータ分析"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_01.html",
+    "href": "POS_Marketing_01.html",
+    "title": "\n2  第1回 売上をまとめた表\n",
+    "section": "",
+    "text": "2.1 この章で使うファイルとパッケージ\nファイル\nパッケージ\npacman::p_load(tidyverse, readxl, tidyplots, ggthemes, kableExtra)\nこの章で使うファイルは作業ディレクトリのdata/フォルダにいれておきましょう。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>第1回 売上をまとめた表</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_01.html#この章で使うファイルとパッケージ",
+    "href": "POS_Marketing_01.html#この章で使うファイルとパッケージ",
+    "title": "\n2  第1回 売上をまとめた表\n",
+    "section": "",
+    "text": "chp1.xlsx\n\n\n\n\ntidyverse : データの読み込み，加工，可視化に使うパッケージ\n\nreadxl : Excelファイルを読み込むためのパッケージ",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>第1回 売上をまとめた表</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_01.html#rの準備",
+    "href": "POS_Marketing_01.html#rの準備",
+    "title": "\n2  第1回 売上をまとめた表\n",
+    "section": "\n2.2 Rの準備",
+    "text": "2.2 Rの準備\n\nRをインストールしておきましょう。\nRStudioかVS Codeをインストールしておきましょう。\nRのパッケージtidyverseをインストールしておきましょう。\n作業ディレクトリを設定しておきましょう。\n\nこれらの内容が分からない場合は，R入門の資料や本を参照してください。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>第1回 売上をまとめた表</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_01.html#データの読み込み",
+    "href": "POS_Marketing_01.html#データの読み込み",
+    "title": "\n2  第1回 売上をまとめた表\n",
+    "section": "\n2.3 データの読み込み",
+    "text": "2.3 データの読み込み\nまずはreadxlパッケージを使ってデータchp1.xlsxを読み込んでみましょう。 このExcelファイルのシートの一覧を表示してみます。\n\nreadxl::excel_sheets(\"data/chp1.xlsx\")\n\n[1] \"いつものPOSデータ\"     \"ピボットテーブル\"      \"表1-2・図1-19\"        \n[4] \"表1-4・図1-28・図1-29\" \"表1-5・図1-32\"         \"表1-6\"                \n[7] \"図1-38\"               \n\n\nexcel_sheets()関数はデフォルトで1番目のシートを読み込みます。 「いつものPOSデータ」を読み込みたいので，特に指定せずにread_excel()関数を使って読み込みます。\n\ndf &lt;- readxl::read_excel(\"data/chp1.xlsx\")\nhead(df) # 戦闘6行を表示\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nレシート番号\n日付\n曜日\n時間\n性別\n年代\nメーカー\n商品名\n単価\n個数\n金額\n\n\n\nR000001\n2023-01-02\n月\n10\n女性\n30代\n競合A\nおいしい緑茶\n160\n2\n320\n\n\nR000001\n2023-01-02\n月\n10\n女性\n30代\n競合B\n静岡の緑茶\n170\n2\n340\n\n\nR000002\n2023-01-02\n月\n10\n男性\n60歳以上\n競合A\nおいしい濃茶\n160\n2\n320\n\n\nR000002\n2023-01-02\n月\n10\n男性\n60歳以上\n競合B\n静岡の緑茶\n170\n4\n680\n\n\nR000003\n2023-01-02\n月\n10\n男性\n50代\n競合C\nほうじ茶\n140\n1\n140\n\n\nR000004\n2023-01-02\n月\n10\n女性\n50代\n競合D\nウーロン茶\n140\n3\n420\n\n\n\n\n\n\nどんな変数があるのか確認するにはnames()関数を使います。\n\nnames(df)\n\n [1] \"レシート番号\" \"日付\"         \"曜日\"         \"時間\"         \"性別\"        \n [6] \"年代\"         \"メーカー\"     \"商品名\"       \"単価\"         \"個数\"        \n[11] \"金額\"        \n\n\nデータの型や概要を確認するにはstr()関数を使います。\n\nstr(df)\n\ntibble [374,090 × 11] (S3: tbl_df/tbl/data.frame)\n $ レシート番号: chr [1:374090] \"R000001\" \"R000001\" \"R000002\" \"R000002\" ...\n $ 日付        : POSIXct[1:374090], format: \"2023-01-02\" \"2023-01-02\" ...\n $ 曜日        : chr [1:374090] \"月\" \"月\" \"月\" \"月\" ...\n $ 時間        : num [1:374090] 10 10 10 10 10 10 10 10 10 10 ...\n $ 性別        : chr [1:374090] \"女性\" \"女性\" \"男性\" \"男性\" ...\n $ 年代        : chr [1:374090] \"30代\" \"30代\" \"60歳以上\" \"60歳以上\" ...\n $ メーカー    : chr [1:374090] \"競合A\" \"競合B\" \"競合A\" \"競合B\" ...\n $ 商品名      : chr [1:374090] \"おいしい緑茶\" \"静岡の緑茶\" \"おいしい濃茶\" \"静岡の緑茶\" ...\n $ 単価        : num [1:374090] 160 170 160 170 140 140 160 150 150 160 ...\n $ 個数        : num [1:374090] 2 2 2 4 1 3 1 2 3 4 ...\n $ 金額        : num [1:374090] 320 340 320 680 140 420 160 300 450 640 ...\n\n\ndplyr::glimpse()関数を使うと，データの概要をより見やすく表示できます。\n\ndplyr::glimpse(df)\n\nRows: 374,090\nColumns: 11\n$ レシート番号 &lt;chr&gt; \"R000001\", \"R000001\", \"R000002\", \"R000002\", \"R000003\", \"R…\n$ 日付         &lt;dttm&gt; 2023-01-02, 2023-01-02, 2023-01-02, 2023-01-02, 2023-01-…\n$ 曜日         &lt;chr&gt; \"月\", \"月\", \"月\", \"月\", \"月\", \"月\", \"月\", \"月\", \"月\", \"月…\n$ 時間         &lt;dbl&gt; 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 1…\n$ 性別         &lt;chr&gt; \"女性\", \"女性\", \"男性\", \"男性\", \"男性\", \"女性\", \"女性\", \"…\n$ 年代         &lt;chr&gt; \"30代\", \"30代\", \"60歳以上\", \"60歳以上\", \"50代\", \"50代\", \"…\n$ メーカー     &lt;chr&gt; \"競合A\", \"競合B\", \"競合A\", \"競合B\", \"競合C\", \"競合D\", \"競…\n$ 商品名       &lt;chr&gt; \"おいしい緑茶\", \"静岡の緑茶\", \"おいしい濃茶\", \"静岡の緑茶…\n$ 単価         &lt;dbl&gt; 160, 170, 160, 170, 140, 140, 160, 150, 150, 160, 160, 17…\n$ 個数         &lt;dbl&gt; 2, 2, 2, 4, 1, 3, 1, 2, 3, 4, 1, 2, 2, 1, 1, 2, 1, 2, 3, …\n$ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 160, 34…\n\n\nこの表から，変数が11個，観測値が374090個あることが分かります。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>第1回 売上をまとめた表</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_01.html#データの属性を確認する",
+    "href": "POS_Marketing_01.html#データの属性を確認する",
+    "title": "\n2  第1回 売上をまとめた表\n",
+    "section": "\n2.4 データの属性を確認する",
+    "text": "2.4 データの属性を確認する\nデータの属性を確認するために，summary()関数を使ってみましょう。\n\nsummary(df)\n\n レシート番号            日付                            曜日          \n Length:374090      Min.   :2023-01-02 00:00:00.00   Length:374090     \n Class :character   1st Qu.:2023-05-09 00:00:00.00   Class :character  \n Mode  :character   Median :2023-07-28 00:00:00.00   Mode  :character  \n                    Mean   :2023-07-16 10:09:45.75                     \n                    3rd Qu.:2023-09-23 00:00:00.00                     \n                    Max.   :2023-12-31 00:00:00.00                     \n      時間           性別               年代             メーカー        \n Min.   :10.00   Length:374090      Length:374090      Length:374090     \n 1st Qu.:13.00   Class :character   Class :character   Class :character  \n Median :16.00   Mode  :character   Mode  :character   Mode  :character  \n Mean   :15.57                                                           \n 3rd Qu.:18.00                                                           \n Max.   :21.00                                                           \n    商品名               単価            個数             金額       \n Length:374090      Min.   :140.0   Min.   : 1.000   Min.   : 140.0  \n Class :character   1st Qu.:150.0   1st Qu.: 1.000   1st Qu.: 160.0  \n Mode  :character   Median :160.0   Median : 2.000   Median : 280.0  \n                    Mean   :154.5   Mean   : 1.783   Mean   : 275.7  \n                    3rd Qu.:160.0   3rd Qu.: 2.000   3rd Qu.: 320.0  \n                    Max.   :170.0   Max.   :14.000   Max.   :2100.0  \n\n\nこの表より，\n\nレシート番号は文字列\n日付は2023年1月2日から2023年12月31日まで\n曜日は文字列\n時間は10:00から21:00まで\n性別は文字列\n年代も文字列\nメーカーも文字列\n商品名も文字列\n単価は数値で，140〜170\n個数は数値で，1〜14\n金額は数値で，140〜2100\n\nとなっています。 このうち，曜日，性別，年代，メーカー，商品名はカテゴリカルデータであるため，因子型に変換しておきましょう。\n\ndf &lt;- df %&gt;%\n  mutate(曜日 = factor(曜日, levels = c(\"月\", \"火\", \"水\", \"木\", \"金\", \"土\", \"日\"), ordered = TRUE),\n         性別 = as.factor(性別),\n         年代 = as.factor(年代),\n         メーカー = as.factor(メーカー),\n         商品名 = as.factor(商品名))\n\nもう一度，summary()関数を使ってデータの属性を確認してみましょう。\n\nsummary(df)\n\n レシート番号            日付                        曜日            時間      \n Length:374090      Min.   :2023-01-02 00:00:00.00   月:36468   Min.   :10.00  \n Class :character   1st Qu.:2023-05-09 00:00:00.00   火:44573   1st Qu.:13.00  \n Mode  :character   Median :2023-07-28 00:00:00.00   水:52418   Median :16.00  \n                    Mean   :2023-07-16 10:09:45.75   木:37703   Mean   :15.57  \n                    3rd Qu.:2023-09-23 00:00:00.00   金:66894   3rd Qu.:18.00  \n                    Max.   :2023-12-31 00:00:00.00   土:74754   Max.   :21.00  \n                                                     日:61280                  \n   性別              年代        メーカー               商品名     \n 女性:274659   20歳未満:19102   競合A:144742   ウーロン茶  :31905  \n 男性: 99431   20代    :49716   競合B: 46516   おいしい濃茶:59910  \n               30代    :81065   競合C: 39190   おいしい緑茶:84832  \n               40代    :74773   競合D: 31905   ほうじ茶    :39190  \n               50代    :93194   自社 :111737   静岡の緑茶  :46516  \n               60歳以上:56240                  濃い茶      :45982  \n                                               緑茶        :65755  \n      単価            個数             金額       \n Min.   :140.0   Min.   : 1.000   Min.   : 140.0  \n 1st Qu.:150.0   1st Qu.: 1.000   1st Qu.: 160.0  \n Median :160.0   Median : 2.000   Median : 280.0  \n Mean   :154.5   Mean   : 1.783   Mean   : 275.7  \n 3rd Qu.:160.0   3rd Qu.: 2.000   3rd Qu.: 320.0  \n Max.   :170.0   Max.   :14.000   Max.   :2100.0  \n                                                  \n\n\nすると，曜日，性別，年代，メーカー，商品名がカテゴリー変数として認識され，カテゴリーごとの個数が表示されています。 たとえば，メーカー変数が自社の場合だけを抽出するには，dplyr::filter()関数を使います。\n\ndf |&gt;\n  dplyr::filter(メーカー == \"自社\") |&gt;\n  head()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nレシート番号\n日付\n曜日\n時間\n性別\n年代\nメーカー\n商品名\n単価\n個数\n金額\n\n\n\nR000005\n2023-01-02\n月\n10\n女性\n50代\n自社\n濃い茶\n150\n2\n300\n\n\nR000005\n2023-01-02\n月\n10\n女性\n50代\n自社\n緑茶\n150\n3\n450\n\n\nR000010\n2023-01-02\n月\n10\n女性\n50代\n自社\n濃い茶\n150\n2\n300\n\n\nR000010\n2023-01-02\n月\n10\n女性\n50代\n自社\n緑茶\n150\n1\n150\n\n\nR000011\n2023-01-02\n月\n10\n男性\n20代\n自社\n緑茶\n150\n1\n150\n\n\nR000012\n2023-01-02\n月\n10\n女性\n20代\n自社\n緑茶\n150\n1\n150",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>第1回 売上をまとめた表</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_01.html#基礎集計でデータの傾向をチェック",
+    "href": "POS_Marketing_01.html#基礎集計でデータの傾向をチェック",
+    "title": "\n2  第1回 売上をまとめた表\n",
+    "section": "\n2.5 基礎集計でデータの傾向をチェック",
+    "text": "2.5 基礎集計でデータの傾向をチェック\nメーカーごとの売上金額合計を示す表を作成してみましょう。 Excelでピボットテーブルを使う手続が教科書で解説されていますが，Rだとdplyrパッケージを使って簡単にできます。\n\ndf_maker_sales &lt;- df |&gt;\n  dplyr::group_by(メーカー) |&gt;\n  dplyr::summarise(売上金額合計 = sum(金額))\ndf_maker_sales\n\n\n\n\nメーカー\n売上金額合計\n\n\n\n競合A\n42695520\n\n\n競合B\n13537440\n\n\n競合C\n9289700\n\n\n競合D\n7486080\n\n\n自社\n30126150\n\n\n\n\n\n\nこれだけです。 キレイな表にするなら，knitr::kable()関数とkableExtraパッケージを使うといいでしょう。\n\ndf |&gt;\n  dplyr::group_by(メーカー) |&gt;\n  dplyr::summarise(売上金額合計 = sum(金額)) |&gt;\n  dplyr::arrange(desc(売上金額合計)) |&gt;\n  knitr::kable(\n    format = \"html\",\n    caption = \"表1-2 メーカーごとの売上金額\"\n  ) |&gt;\n  kableExtra::kable_styling(\n    bootstrap_options = c(\"striped\")\n  )\n\n\n表1-2 メーカーごとの売上金額\n\nメーカー\n売上金額合計\n\n\n\n競合A\n42695520\n\n\n自社\n30126150\n\n\n競合B\n13537440\n\n\n競合C\n9289700\n\n\n競合D\n7486080\n\n\n\n\n\n次に，各メーカーのどの商品が，平均何円で売られているのか，を調べてみましょう。\n\ndf |&gt;\n  dplyr::group_by(メーカー, 商品名) |&gt; # メーカーと商品名でグループ化\n  dplyr::summarise(平均単価 = mean(単価)) |&gt; # 平均単価を計算\n  dplyr::arrange(メーカー, desc(平均単価)) |&gt; # メーカーでソート\n  knitr::kable(\n    format = \"html\",\n    caption = \"表1−3 商品ごとの単価\"\n  ) |&gt;\n  kableExtra::kable_styling(\n    bootstrap_options = c(\"striped\")\n  )\n\n`summarise()` has grouped output by 'メーカー'. You can override using the\n`.groups` argument.\n\n\n\n表1−3 商品ごとの単価\n\nメーカー\n商品名\n平均単価\n\n\n\n競合A\nおいしい濃茶\n160\n\n\n競合A\nおいしい緑茶\n160\n\n\n競合B\n静岡の緑茶\n170\n\n\n競合C\nほうじ茶\n140\n\n\n競合D\nウーロン茶\n140\n\n\n自社\n濃い茶\n150\n\n\n自社\n緑茶\n150",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>第1回 売上をまとめた表</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_01.html#資料作成に必要なデータを取り出す",
+    "href": "POS_Marketing_01.html#資料作成に必要なデータを取り出す",
+    "title": "\n2  第1回 売上をまとめた表\n",
+    "section": "\n2.6 資料作成に必要なデータを取り出す",
+    "text": "2.6 資料作成に必要なデータを取り出す\nデータ全体における売上金額と売上個数を計算して，各月と各時間帯にの売上金額を計算してみる。\n\n# 全体の売上金額と売上個数\ndf |&gt;\n  summarise(\n    売上金額合計 = sum(金額),\n    売上個数合計 = sum(個数)\n    )\n\n\n\n\n売上金額合計\n売上個数合計\n\n\n103134890\n667147\n\n\n\n\n\n自社製品ごとの個数と金額を計算してみましょう。\n\ndf |&gt;\n  filter(メーカー == \"自社\") |&gt; # 自社製品だけを抽出\n  group_by(商品名) |&gt;\n  summarise(\n    売上金額合計 = sum(金額),\n    売上個数合計 = sum(個数)\n    ) |&gt;\n  arrange(desc(売上金額合計))\n\n\n\n\n商品名\n売上金額合計\n売上個数合計\n\n\n\n緑茶\n18057150\n120381\n\n\n濃い茶\n12069000\n80460\n\n\n\n\n\n\n各月ごとの売上金額を計算してみましょう。 日付変数の型を確認します。\n\nclass(df$日付)\n\n[1] \"POSIXct\" \"POSIXt\" \n\n\nPOSIXct POSIXt という日付型のデータです。 この変数日付から月を取り出すには，lubridateパッケージを使います。 日付データは2023-05-14 UTCといった形式で格納されているため，lubridate::month()関数を使って月を取り出します。\n\ndf_month_sales &lt;- df |&gt;\n  filter(メーカー == \"自社\") |&gt;\n  mutate(月 = lubridate::month(日付, label = TRUE)) |&gt;\n  group_by(月) |&gt; # 月ごとにグループ化\n  summarise(売上金額合計 = sum(金額)) |&gt;\n  arrange(月)\n\ndf_month_sales |&gt;\n  knitr::kable(\n    format = \"html\",\n    caption = \"表1−5 自社商品の月ごとの売上金額\"\n  ) |&gt;\n    kableExtra::kable_styling(\n    bootstrap_options = c(\"striped\")\n  )\n\n\n表1−5 自社商品の月ごとの売上金額\n\n月\n売上金額合計\n\n\n\n1\n1577250\n\n\n2\n1317900\n\n\n3\n1809300\n\n\n4\n2238750\n\n\n5\n2506050\n\n\n6\n2288550\n\n\n7\n3844350\n\n\n8\n4231950\n\n\n9\n3599550\n\n\n10\n2888250\n\n\n11\n2140800\n\n\n12\n1683450\n\n\n\n\n\n各時間帯ごとの売上金額を計算してみましょう。\n\ndf_time_sales &lt;- df |&gt;\n  filter(メーカー == \"自社\") |&gt;\n  group_by(時間) |&gt;\n  summarise(売上金額合計 = sum(金額)) |&gt;\n  arrange(時間)\n\ndf_time_sales |&gt;\n  knitr::kable(\n    format = \"html\",\n    caption = \"表1−6 自社商品の時間帯ごとの売上金額\"\n  ) |&gt;\n    kableExtra::kable_styling(\n    bootstrap_options = c(\"striped\")\n  )\n\n\n表1−6 自社商品の時間帯ごとの売上金額\n\n時間\n売上金額合計\n\n\n\n10\n1506600\n\n\n11\n2070750\n\n\n12\n2942400\n\n\n13\n2729550\n\n\n14\n2108700\n\n\n15\n2740050\n\n\n16\n3033150\n\n\n17\n3617700\n\n\n18\n3038550\n\n\n19\n2710950\n\n\n20\n2124900\n\n\n21\n1502850",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>第1回 売上をまとめた表</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_01.html#集計結果をグラフで可視化",
+    "href": "POS_Marketing_01.html#集計結果をグラフで可視化",
+    "title": "\n2  第1回 売上をまとめた表\n",
+    "section": "\n2.7 集計結果をグラフで可視化",
+    "text": "2.7 集計結果をグラフで可視化\n可視化はRの得意分野です。 ggplot2パッケージを使って，いろんなグラフで表示してみましょう。\nメーカー別売上金額を棒グラフにします。\n\ndf_maker_sales |&gt;\n  ggplot() + aes(x = メーカー, y = 売上金額合計, fill = メーカー) +\n  geom_col() + theme_bw(base_family = \"HiraKakuPro-W3\")\n\n\n\n\n\n\n\n月別売上高を折れ線グラフにします。\n\ndf_month_sales |&gt;\n  ggplot() + aes(x = 月, y = 売上金額合計, group = 1) +\n  geom_line() + geom_point() +\n  theme_bw(base_family = \"HiraKakuPro-W3\")\n\n\n\n\n\n\n\n時間帯別売上高を棒グラフにします。\n\ndf_time_sales |&gt;\n  ggplot() +\n  aes(x = 時間, y = 売上金額合計, fill = factor(時間, levels = rev(unique(時間)))) + # 時間の順序を逆にする\n  geom_col() + theme_bw(base_family = \"HiraKakuPro-W3\") + # テーマとフォント\n  guides(fill = guide_legend(title = \"時間帯\")) +\n  scale_fill_viridis_d(direction = 1) # Viridis パレットを逆順に適用",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>第1回 売上をまとめた表</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_02.html",
+    "href": "POS_Marketing_02.html",
+    "title": "\n2  第2回 顧客層別の売上\n",
+    "section": "",
+    "text": "2.1 この章で使うファイルとパッケージ\nファイル\nパッケージ\npacman::p_load(tidyverse, readxl, tidyplots, ggthemes, kableExtra)\nreadxlパッケージを使ってデータchp2.xlsxを読み込んでみましょう。 前章と同様にこのExcelファイルのシートの一覧を表示してみます。\nreadxl::excel_sheets(\"data/chp2.xlsx\")\n\n[1] \"いつものPOSデータ\"    \"ピボットテーブル\"     \"表2-2・図2-2\"        \n[4] \"表2-3・図2-4\"         \"表2-4・表2-5・図2-12\" \"表2-6・図2-13\"       \n[7] \"表2-7・図2-14\"        \"表2-8・表2-10・検定\"  \"表2-11・表2-12・検定\"\n第1章のデータと同じでした。 「いつものPOSデータ」を読み込みたいので，特に指定せずにread_excel()関数を使って読み込みます。 ついでに文字列をカテゴリー変数として因子型に変換しておきます。\ndf &lt;- readxl::read_excel(\"data/chp2.xlsx\")\ndf &lt;- df %&gt;%\n  mutate(曜日 = factor(曜日, levels = c(\"月\", \"火\", \"水\", \"木\", \"金\", \"土\", \"日\"), ordered = TRUE),\n         性別 = as.factor(性別),\n         年代 = as.factor(年代),\n         メーカー = as.factor(メーカー),\n         商品名 = as.factor(商品名))\nhead(df) # 戦闘6行を表示\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nレシート番号\n日付\n曜日\n時間\n性別\n年代\nメーカー\n商品名\n単価\n個数\n金額\n\n\n\nR000001\n2023-01-02\n月\n10\n女性\n30代\n競合A\nおいしい緑茶\n160\n2\n320\n\n\nR000001\n2023-01-02\n月\n10\n女性\n30代\n競合B\n静岡の緑茶\n170\n2\n340\n\n\nR000002\n2023-01-02\n月\n10\n男性\n60歳以上\n競合B\n静岡の緑茶\n170\n4\n680\n\n\nR000002\n2023-01-02\n月\n10\n男性\n60歳以上\n競合A\nおいしい濃茶\n160\n2\n320\n\n\nR000003\n2023-01-02\n月\n10\n男性\n50代\n競合C\nほうじ茶\n140\n1\n140\n\n\nR000004\n2023-01-02\n月\n10\n女性\n50代\n競合D\nウーロン茶\n140\n2\n280",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>第2回 顧客層別の売上</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_02.html#この章で使うファイルとパッケージ",
+    "href": "POS_Marketing_02.html#この章で使うファイルとパッケージ",
+    "title": "\n2  第2回 顧客層別の売上\n",
+    "section": "",
+    "text": "chp2.xlsx\n\n\n\n\ntidyverse : データの読み込み，加工，可視化に使うパッケージ\n\nreadxl : Excelファイルを読み込むためのパッケージ",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>第2回 顧客層別の売上</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_02.html#セグメンテーション",
+    "href": "POS_Marketing_02.html#セグメンテーション",
+    "title": "\n3  第2回 顧客層別の売上\n",
+    "section": "\n4.1 セグメンテーション",
+    "text": "4.1 セグメンテーション\n顧客を属性で分類することをセグメンテーションといいます。 セグメントごとの顧客の特徴を調べてみます。\nまずは自社商品におおける年代別と性別ごとの販売個数を計算してみましょう。\n\ndf_jisha_age_sex_num &lt;- df |&gt;\n  filter(メーカー == \"自社\") |&gt;\n  group_by(年代, 性別) |&gt;\n  summarise(販売個数合計 = sum(個数)) |&gt;\n  ungroup()\n\n`summarise()` has grouped output by '年代'. You can override using the\n`.groups` argument.\n\ndf_jisha_age_sex_num\n\n\n\n\n年代\n性別\n販売個数合計\n\n\n\n20歳未満\n女性\n7838\n\n\n20歳未満\n男性\n2540\n\n\n20代\n女性\n24164\n\n\n20代\n男性\n6979\n\n\n30代\n女性\n40730\n\n\n30代\n男性\n12075\n\n\n40代\n女性\n30477\n\n\n40代\n男性\n9826\n\n\n50代\n女性\n31457\n\n\n50代\n男性\n11000\n\n\n60歳以上\n女性\n17291\n\n\n60歳以上\n男性\n6464\n\n\n\n\n\n\n表が出力されましたが，いわゆる「ロング型」となっているため，教科書のようなワイド型に変換してみましょう。 ついでに教科書のように，年代別合計を列に，性別ごとの合計を行に追加します。これが以外に面倒です。\n\ntotal_sex &lt;- df_jisha_age_sex_num |&gt;\n  group_by(性別) |&gt; # 性別ごとに\n  summarise(合計 = sum(販売個数合計)) |&gt; # 個数を合計\n  pivot_wider(names_from = 性別, values_from = 合計) |&gt; # ワイドに\n  mutate(年代 = \"合計\") |&gt; # 年代に\"合計\"を追加\n  ungroup() # グループ化解除\ndf_jisha_age_sex_num |&gt; # ワイドに\n  pivot_wider(names_from = 性別, values_from = 販売個数合計) |&gt;\n  rbind(total_sex) |&gt; # 合計の行を追加\n  mutate( # 合計の列を追加\n    合計 = 女性 + 男性\n  ) |&gt;\n  knitr::kable(\n    format = \"html\",\n    caption = \"表2-1 性別・年代ごとの購入回数をまとめてクロス集計表\"\n  )\n\n\n表2-1 性別・年代ごとの購入回数をまとめてクロス集計表\n\n年代\n女性\n男性\n合計\n\n\n\n20歳未満\n7838\n2540\n10378\n\n\n20代\n24164\n6979\n31143\n\n\n30代\n40730\n12075\n52805\n\n\n40代\n30477\n9826\n40303\n\n\n50代\n31457\n11000\n42457\n\n\n60歳以上\n17291\n6464\n23755\n\n\n合計\n151957\n48884\n200841\n\n\n\n\n\n年代と性別の多重クロス表が完成しました。 販売個数ではなく，売上金額の表にしたい場合は，summarise(売上合計 = sum(金額))とすればよいです。\n\ndf_jisha_sale_age_sex &lt;- df |&gt;\n  filter(メーカー == \"自社\") |&gt;\n  group_by(性別, 年代) |&gt;\n  summarise(\n    売上合計 = sum(金額)\n  ) |&gt;\n  ungroup()\n\n`summarise()` has grouped output by '性別'. You can override using the\n`.groups` argument.\n\ndf_jisha_sale_age_sex |&gt;\n  pivot_wider(names_from = 性別, values_from = 売上合計) |&gt;\n  knitr::kable(\n    format = \"html\",\n    caption = \"表2-2 性別・年代ごとの自社商品の売上金額\"\n  )\n\n\n表2-2 性別・年代ごとの自社商品の売上金額\n\n年代\n女性\n男性\n\n\n\n20歳未満\n1175700\n381000\n\n\n20代\n3624600\n1046850\n\n\n30代\n6109500\n1811250\n\n\n40代\n4571550\n1473900\n\n\n50代\n4718550\n1650000\n\n\n60歳以上\n2593650\n969600",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>第2回 顧客層別の売上</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_02.html#棒グラフによる可視化",
+    "href": "POS_Marketing_02.html#棒グラフによる可視化",
+    "title": "\n3  第2回 顧客層別の売上\n",
+    "section": "\n4.2 棒グラフによる可視化",
+    "text": "4.2 棒グラフによる可視化\n可視化するため，棒グラフにしてみる。 geom_col()関数で棒グラフを描画し，position = \"dodge\"で性別ごとに横並びの棒グラフにします。\n\ndf_jisha_sale_age_sex |&gt;\n  ggplot() + aes(x = 年代, y = 売上合計, fill = 性別) +\n  geom_col(position = \"dodge\") +\n  labs(title = \"図2-2 性別・年代ごとの自社商品の売上金額\",\n       x = \"年代\",\n       y = \"売上金額\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\")\n\n\n\n\n\n\n\n積み上げ棒グラフにするなら，position = \"stack\"を指定します。\n\ndf_jisha_sale_age_sex |&gt;\n  ggplot() + aes(x = 年代, y = 売上合計, fill = 性別) +\n  geom_col(position = \"stack\") +\n  labs(title = \"図2-2 自社商品の年代別・性別別売上金額\",\n       x = \"年代\",\n       y = \"売上金額\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\")\n\n\n\n\n\n\n\n合計を1とした割合を示す積み上げ棒グラフにするなら，position = \"fill\"を指定します。\n\ndf_jisha_sale_age_sex |&gt;\n  ggplot() + aes(x = 年代, y = 売上合計, fill = 性別) +\n  geom_col(position = \"fill\") +\n  labs(title = \"図2-2 自社商品の年代別・性別別売上金額\",\n       x = \"年代\",\n       y = \"売上金額\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\")\n\n\n\n\n\n\n\n売上個数のグラフも作成してみます。\n\ndf |&gt;\n  filter(メーカー == \"自社\") |&gt;\n  group_by(年代, 性別) |&gt;\n  summarise(販売個数 = sum(個数)) |&gt;\n  ggplot() + aes(x = 年代, y = 販売個数, fill = 性別) +\n  geom_col(position = \"dodge\") +\n  labs(title = \"図2-4 性別・年代ごとの自社商品の売上個数\",\n       x = \"年代\",\n       y = \"販売個数\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\")\n\n`summarise()` has grouped output by '年代'. You can override using the\n`.groups` argument.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>第2回 顧客層別の売上</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_02.html#割合を見る",
+    "href": "POS_Marketing_02.html#割合を見る",
+    "title": "\n3  第2回 顧客層別の売上\n",
+    "section": "\n4.3 割合を見る",
+    "text": "4.3 割合を見る\n表2-2の表を見ると，年代ごとの売上金額の合計が異なるため，単純に比較することができません。そこで売上高合計に占める割合を見てみます。\n\ndf_jisha_sale_age_sex |&gt;\n  mutate( # 割合を計算し，小数点以下2桁で丸める\n    割合 = round(売上合計 / sum(売上合計) * 100, 2)\n  ) |&gt;\n  select(年代, 性別, 割合) |&gt; # 必要な列だけ抽出\n  pivot_wider(names_from = 性別, values_from = 割合) |&gt;\n  mutate( # 性別ごとの合計を追加\n    合計 = 女性 + 男性\n  ) |&gt;\n  knitr::kable(\n    format = \"html\",\n    caption = \"表2-4 自社商品の売上金額における性別・年代の比率(%)\"\n  )\n\n\n表2-4 自社商品の売上金額における性別・年代の比率(%)\n\n年代\n女性\n男性\n合計\n\n\n\n20歳未満\n3.90\n1.26\n5.16\n\n\n20代\n12.03\n3.47\n15.50\n\n\n30代\n20.28\n6.01\n26.29\n\n\n40代\n15.17\n4.89\n20.06\n\n\n50代\n15.66\n5.48\n21.14\n\n\n60歳以上\n8.61\n3.22\n11.83\n\n\n\n\n\n次に売上全体に対する割合ではなく，性別ごとの合計に対する割合を示す表を作成してみます。\n\ndf_row_ratio &lt;- df_jisha_sale_age_sex |&gt;\n  pivot_wider(names_from = 性別, values_from = 売上合計) |&gt;\n  mutate(\n    女性 = round(女性 / sum(女性) * 100, 2),\n    男性 = round(男性 / sum(男性) * 100, 2)\n  ) |&gt;\n  select(年代, 女性, 男性)\ndf_row_ratio |&gt;\n  knitr::kable(\n    format = \"html\",\n    caption = \"表2-5 各性別を100%とした場合の性別に対する年代の比率 (%)\"\n  )\n\n\n表2-5 各性別を100%とした場合の性別に対する年代の比率 (%)\n\n年代\n女性\n男性\n\n\n\n20歳未満\n5.16\n5.20\n\n\n20代\n15.90\n14.28\n\n\n30代\n26.80\n24.70\n\n\n40代\n20.06\n20.10\n\n\n50代\n20.70\n22.50\n\n\n60歳以上\n11.38\n13.22\n\n\n\n\n\n性別ごとの年代の比率から棒グラフを作成します。\n\ndf_row_ratio |&gt;\n  pivot_longer(cols = c(女性, 男性), names_to = \"性別\", values_to = \"割合\") |&gt;\n  ggplot() + aes(x = 年代, y = 割合, fill = 性別) +\n  geom_col(position = \"fill\") +\n  labs(title = \"図2-9 帯グラフの作成\",\n       x = \"年代\",\n       y = \"割合\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  # グラフを横向き\n  coord_flip()\n\n\n\n\n\n\n\n次に，性別ごとの年代別の割合を見てみます。\n\ndf_row_ratio |&gt;\n  pivot_longer(cols = c(女性, 男性), names_to = \"性別\", values_to = \"割合\") |&gt;\n  ggplot() + aes(x = 性別, y = 割合, fill = 年代) +\n  geom_col(position = \"fill\") +\n  labs(title = \"図2-10 帯グラフの作成\",\n       x = \"性別\",\n       y = \"割合\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  #カラーパレットを変更\n  scale_fill_tableau(name = \"Tableau 20\") +\n  coord_flip()",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>第2回 顧客層別の売上</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_02.html#年代別性別ごとの購入者の属性を調べる",
+    "href": "POS_Marketing_02.html#年代別性別ごとの購入者の属性を調べる",
+    "title": "\n3  第2回 顧客層別の売上\n",
+    "section": "\n4.4 年代別・性別ごとの購入者の属性を調べる",
+    "text": "4.4 年代別・性別ごとの購入者の属性を調べる\n\ndf_sales_total &lt;- df |&gt;\n  dplyr::filter(メーカー == \"自社\") |&gt;\n  group_by(年代, 性別) |&gt;\n  summarise(\n    売上合計 = sum(金額),\n    .groups = \"drop\"\n  ) |&gt;\n  pivot_wider(names_from = 性別, values_from = c(売上合計))\ndf_sales_total |&gt;\n  rowwise() |&gt;  # 行ごとに処理\n  mutate(\n    # 年代以外の列で，行を合計で割る\n    across(-年代, ~ . / sum(c_across(-年代), na.rm = TRUE))\n    ) |&gt;\n  ungroup() |&gt;\n  knitr::kable(\n    format = \"html\",\n    caption = \"表2-3 自社商品の年代別・性別別売上金額\"\n  )\n\n\n表2-3 自社商品の年代別・性別別売上金額\n\n年代\n女性\n男性\n\n\n\n20歳未満\n0.7552515\n0.2447485\n\n\n20代\n0.7759047\n0.2240953\n\n\n30代\n0.7713285\n0.2286715\n\n\n40代\n0.7561968\n0.2438032\n\n\n50代\n0.7409143\n0.2590857\n\n\n60歳以上\n0.7278889\n0.2721111",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>第2回 顧客層別の売上</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_02.html#独立性の検定",
+    "href": "POS_Marketing_02.html#独立性の検定",
+    "title": "\n2  第2回 顧客層別の売上\n",
+    "section": "\n2.3 独立性の検定",
+    "text": "2.3 独立性の検定\n年代と性別との間に売上金額に差があるかどうかを検定します。 上で作成したクロス表から，\\chi^2検定を行うことで，年代と性別が独立であるかどうかを検定します。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>第2回 顧客層別の売上</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_02.html#自社商品における購入者の属性を調べる",
+    "href": "POS_Marketing_02.html#自社商品における購入者の属性を調べる",
+    "title": "\n2  第2回 顧客層別の売上\n",
+    "section": "\n2.2 自社商品における購入者の属性を調べる",
+    "text": "2.2 自社商品における購入者の属性を調べる\n\n2.2.1 セグメンテーション\n顧客を属性で分類することをセグメンテーションといいます。 セグメントごとの顧客の特徴を調べてみます。\nまずは自社商品におおける年代別と性別ごとの販売個数を計算してみましょう。\n\ndf_jisha_age_sex_num &lt;- df |&gt;\n  filter(メーカー == \"自社\") |&gt;\n  group_by(年代, 性別) |&gt;\n  summarise(販売個数合計 = sum(個数)) |&gt;\n  ungroup()\n\n`summarise()` has grouped output by '年代'. You can override using the\n`.groups` argument.\n\ndf_jisha_age_sex_num\n\n\n\n\n年代\n性別\n販売個数合計\n\n\n\n20歳未満\n女性\n7838\n\n\n20歳未満\n男性\n2540\n\n\n20代\n女性\n24164\n\n\n20代\n男性\n6979\n\n\n30代\n女性\n40730\n\n\n30代\n男性\n12075\n\n\n40代\n女性\n30477\n\n\n40代\n男性\n9826\n\n\n50代\n女性\n31457\n\n\n50代\n男性\n11000\n\n\n60歳以上\n女性\n17291\n\n\n60歳以上\n男性\n6464\n\n\n\n\n\n\n表が出力されましたが，いわゆる「ロング型」となっているため，教科書のようなワイド型に変換してみましょう。 ついでに教科書のように，年代別合計を列に，性別ごとの合計を行に追加します。これが以外に面倒です。\n\ntotal_sex &lt;- df_jisha_age_sex_num |&gt;\n  group_by(性別) |&gt; # 性別ごとに\n  summarise(合計 = sum(販売個数合計)) |&gt; # 個数を合計\n  pivot_wider(names_from = 性別, values_from = 合計) |&gt; # ワイドに\n  mutate(年代 = \"合計\") |&gt; # 年代に\"合計\"を追加\n  ungroup() # グループ化解除\ndf_jisha_age_sex_num |&gt; # ワイドに\n  pivot_wider(names_from = 性別, values_from = 販売個数合計) |&gt;\n  rbind(total_sex) |&gt; # 合計の行を追加\n  mutate( # 合計の列を追加\n    合計 = 女性 + 男性\n  ) |&gt;\n  knitr::kable(\n    format = \"html\",\n    caption = \"表2-1 性別・年代ごとの購入回数をまとめてクロス集計表\"\n  )\n\n\n表2-1 性別・年代ごとの購入回数をまとめてクロス集計表\n\n年代\n女性\n男性\n合計\n\n\n\n20歳未満\n7838\n2540\n10378\n\n\n20代\n24164\n6979\n31143\n\n\n30代\n40730\n12075\n52805\n\n\n40代\n30477\n9826\n40303\n\n\n50代\n31457\n11000\n42457\n\n\n60歳以上\n17291\n6464\n23755\n\n\n合計\n151957\n48884\n200841\n\n\n\n\n\n年代と性別の多重クロス表が完成しました。 販売個数ではなく，売上金額の表にしたい場合は，summarise(売上合計 = sum(金額))とすればよいです。\n\ndf_jisha_sale_age_sex &lt;- df |&gt;\n  filter(メーカー == \"自社\") |&gt;\n  group_by(性別, 年代) |&gt;\n  summarise(\n    売上合計 = sum(金額)\n  ) |&gt;\n  ungroup()\n\n`summarise()` has grouped output by '性別'. You can override using the\n`.groups` argument.\n\ndf_jisha_sale_age_sex |&gt;\n  pivot_wider(names_from = 性別, values_from = 売上合計) |&gt;\n  knitr::kable(\n    format = \"html\",\n    caption = \"表2-2 性別・年代ごとの自社商品の売上金額\"\n  )\n\n\n表2-2 性別・年代ごとの自社商品の売上金額\n\n年代\n女性\n男性\n\n\n\n20歳未満\n1175700\n381000\n\n\n20代\n3624600\n1046850\n\n\n30代\n6109500\n1811250\n\n\n40代\n4571550\n1473900\n\n\n50代\n4718550\n1650000\n\n\n60歳以上\n2593650\n969600\n\n\n\n\n\n\n2.2.2 棒グラフによる可視化\n可視化するため，棒グラフにしてみる。 geom_col()関数で棒グラフを描画し，position = \"dodge\"で性別ごとに横並びの棒グラフにします。\n\ndf_jisha_sale_age_sex |&gt;\n  ggplot() + aes(x = 年代, y = 売上合計, fill = 性別) +\n  geom_col(position = \"dodge\") +\n  labs(title = \"図2-2 性別・年代ごとの自社商品の売上金額\",\n       x = \"年代\",\n       y = \"売上金額\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\")\n\n\n\n\n\n\n\n積み上げ棒グラフにするなら，position = \"stack\"を指定します。\n\ndf_jisha_sale_age_sex |&gt;\n  ggplot() + aes(x = 年代, y = 売上合計, fill = 性別) +\n  geom_col(position = \"stack\") +\n  labs(title = \"図2-2 自社商品の年代別・性別別売上金額\",\n       x = \"年代\",\n       y = \"売上金額\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\")\n\n\n\n\n\n\n\n合計を1とした割合を示す積み上げ棒グラフにするなら，position = \"fill\"を指定します。\n\ndf_jisha_sale_age_sex |&gt;\n  ggplot() + aes(x = 年代, y = 売上合計, fill = 性別) +\n  geom_col(position = \"fill\") +\n  labs(title = \"図2-2 自社商品の年代別・性別別売上金額\",\n       x = \"年代\",\n       y = \"売上金額\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\")\n\n\n\n\n\n\n\n売上個数のグラフも作成してみます。\n\ndf |&gt;\n  filter(メーカー == \"自社\") |&gt;\n  group_by(年代, 性別) |&gt;\n  summarise(販売個数 = sum(個数)) |&gt;\n  ggplot() + aes(x = 年代, y = 販売個数, fill = 性別) +\n  geom_col(position = \"dodge\") +\n  labs(title = \"図2-4 性別・年代ごとの自社商品の売上個数\",\n       x = \"年代\",\n       y = \"販売個数\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\")\n\n`summarise()` has grouped output by '年代'. You can override using the\n`.groups` argument.\n\n\n\n\n\n\n\n\n\n2.2.3 割合を見る\n表2-2の表を見ると，年代ごとの売上金額の合計が異なるため，単純に比較することができません。そこで売上高合計に占める割合を見てみます。\n\ndf_jisha_sale_age_sex |&gt;\n  mutate( # 割合を計算し，小数点以下2桁で丸める\n    割合 = round(売上合計 / sum(売上合計) * 100, 2)\n  ) |&gt;\n  select(年代, 性別, 割合) |&gt; # 必要な列だけ抽出\n  pivot_wider(names_from = 性別, values_from = 割合) |&gt;\n  mutate( # 性別ごとの合計を追加\n    合計 = 女性 + 男性\n  ) |&gt;\n  knitr::kable(\n    format = \"html\",\n    caption = \"表2-4 自社商品の売上金額における性別・年代の比率(%)\"\n  )\n\n\n表2-4 自社商品の売上金額における性別・年代の比率(%)\n\n年代\n女性\n男性\n合計\n\n\n\n20歳未満\n3.90\n1.26\n5.16\n\n\n20代\n12.03\n3.47\n15.50\n\n\n30代\n20.28\n6.01\n26.29\n\n\n40代\n15.17\n4.89\n20.06\n\n\n50代\n15.66\n5.48\n21.14\n\n\n60歳以上\n8.61\n3.22\n11.83\n\n\n\n\n\n次に売上全体に対する割合ではなく，性別ごとの合計に対する割合を示す表を作成してみます。\n\ndf_row_ratio &lt;- df_jisha_sale_age_sex |&gt;\n  pivot_wider(names_from = 性別, values_from = 売上合計) |&gt;\n  mutate(\n    女性 = round(女性 / sum(女性) * 100, 2),\n    男性 = round(男性 / sum(男性) * 100, 2)\n  ) |&gt;\n  select(年代, 女性, 男性)\ndf_row_ratio |&gt;\n  knitr::kable(\n    format = \"html\",\n    caption = \"表2-5 各性別を100%とした場合の性別に対する年代の比率 (%)\"\n  )\n\n\n表2-5 各性別を100%とした場合の性別に対する年代の比率 (%)\n\n年代\n女性\n男性\n\n\n\n20歳未満\n5.16\n5.20\n\n\n20代\n15.90\n14.28\n\n\n30代\n26.80\n24.70\n\n\n40代\n20.06\n20.10\n\n\n50代\n20.70\n22.50\n\n\n60歳以上\n11.38\n13.22\n\n\n\n\n\n性別ごとの年代の比率から棒グラフを作成します。\n\ndf_row_ratio |&gt;\n  pivot_longer(cols = c(女性, 男性), names_to = \"性別\", values_to = \"割合\") |&gt;\n  ggplot() + aes(x = 年代, y = 割合, fill = 性別) +\n  geom_col(position = \"fill\") +\n  labs(title = \"図2-9 帯グラフの作成\",\n       x = \"年代\",\n       y = \"割合\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  # グラフを横向き\n  coord_flip()\n\n\n\n\n\n\n\n次に，性別ごとの年代別の割合を見てみます。\n\ndf_row_ratio |&gt;\n  pivot_longer(cols = c(女性, 男性), names_to = \"性別\", values_to = \"割合\") |&gt;\n  ggplot() + aes(x = 性別, y = 割合, fill = 年代) +\n  geom_col(position = \"fill\") +\n  labs(title = \"図2-10 帯グラフの作成\",\n       x = \"性別\",\n       y = \"割合\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  #カラーパレットを変更\n  scale_fill_tableau(name = \"Tableau 20\") +\n  coord_flip()\n\n\n\n\n\n\n\n\n2.2.4 年代別・性別ごとの購入者の属性を調べる\n\ndf_sales_total &lt;- df |&gt;\n  dplyr::filter(メーカー == \"自社\") |&gt;\n  group_by(年代, 性別) |&gt;\n  summarise(\n    売上合計 = sum(金額),\n    .groups = \"drop\"\n  ) |&gt;\n  pivot_wider(names_from = 性別, values_from = c(売上合計))\ndf_sales_total |&gt;\n  rowwise() |&gt;  # 行ごとに処理\n  mutate(\n    # 年代以外の列で，行を合計で割る\n    across(-年代, ~ . / sum(c_across(-年代), na.rm = TRUE))\n    ) |&gt;\n  ungroup() |&gt;\n  knitr::kable(\n    format = \"html\",\n    caption = \"表2-3 自社商品の年代別・性別別売上金額\"\n  )\n\n\n表2-3 自社商品の年代別・性別別売上金額\n\n年代\n女性\n男性\n\n\n\n20歳未満\n0.7552515\n0.2447485\n\n\n20代\n0.7759047\n0.2240953\n\n\n30代\n0.7713285\n0.2286715\n\n\n40代\n0.7561968\n0.2438032\n\n\n50代\n0.7409143\n0.2590857\n\n\n60歳以上\n0.7278889\n0.2721111",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>第2回 顧客層別の売上</span>"
+    ]
+  }
+]

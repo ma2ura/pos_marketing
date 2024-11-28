@@ -1,21 +1,3 @@
----
-title: |
-  <b>POSとマーケティングデータ分析</b> </br>
-  <span style="color: #282A36; ">第2回 顧客層別の売上</span>
-author: "Soichi Matsuura"
-format:
-  html:
-    theme:
-      light: cosmo
-      dark: darkly
-    toc: true
-    html-math-method: katex
-    css: mystyle.css
-execute:
-  echo: true
-  warning: false
-  highlight-style: github
----
 
 # 第2回 顧客層別の売上
 
@@ -108,6 +90,7 @@ df_jisha_sale_age_sex <- df |>
     売上合計 = sum(金額)
   ) |>
   ungroup()
+
 df_jisha_sale_age_sex |>
   pivot_wider(names_from = 性別, values_from = 売上合計) |>
   knitr::kable(
@@ -116,7 +99,7 @@ df_jisha_sale_age_sex |>
   )
 ```
 
-## 棒グラフによる可視化
+### 棒グラフによる可視化
 
 可視化するため，棒グラフにしてみる。
 `geom_col()`関数で棒グラフを描画し，`position = "dodge"`で性別ごとに横並びの棒グラフにします。
@@ -173,7 +156,7 @@ df |>
 ```
 
 
-## 割合を見る
+### 割合を見る
 
 表2-2の表を見ると，年代ごとの売上金額の合計が異なるため，単純に比較することができません。そこで売上高合計に占める割合を見てみます。
 
@@ -196,13 +179,14 @@ df_jisha_sale_age_sex |>
 次に売上全体に対する割合ではなく，性別ごとの合計に対する割合を示す表を作成してみます。
 
 ```{r}
-df_jisha_sale_age_sex |>
+df_row_ratio <- df_jisha_sale_age_sex |>
   pivot_wider(names_from = 性別, values_from = 売上合計) |>
   mutate(
-    女性割合 = 女性 / sum(女性, 男性) * 100,
-    男性割合 = 男性 / sum(女性, 男性) * 100
+    女性 = round(女性 / sum(女性) * 100, 2),
+    男性 = round(男性 / sum(男性) * 100, 2)
   ) |>
-  select(年代, 女性割合, 男性割合) |>
+  select(年代, 女性, 男性)
+df_row_ratio |>
   knitr::kable(
     format = "html",
     caption = "表2-5 各性別を100%とした場合の性別に対する年代の比率 (%)"
@@ -212,16 +196,35 @@ df_jisha_sale_age_sex |>
 性別ごとの年代の比率から棒グラフを作成します。
 
 ```{r}
-df_jisha_sale_age_sex |>
-  ggplot() + aes(x = 年代, y = 売上合計, fill = 性別) +
+df_row_ratio |>
+  pivot_longer(cols = c(女性, 男性), names_to = "性別", values_to = "割合") |>
+  ggplot() + aes(x = 年代, y = 割合, fill = 性別) +
   geom_col(position = "fill") +
   labs(title = "図2-9 帯グラフの作成",
        x = "年代",
-       y = "売上金額") +
-  theme_bw(base_family = "HiraKakuPro-W3")
+       y = "割合") +
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  # グラフを横向き
+  coord_flip()
 ```
 
-## 年代別・性別ごとの購入者の属性を調べる
+次に，性別ごとの年代別の割合を見てみます。
+
+```{r}
+df_row_ratio |>
+  pivot_longer(cols = c(女性, 男性), names_to = "性別", values_to = "割合") |>
+  ggplot() + aes(x = 性別, y = 割合, fill = 年代) +
+  geom_col(position = "fill") +
+  labs(title = "図2-10 帯グラフの作成",
+       x = "性別",
+       y = "割合") +
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  #カラーパレットを変更
+  scale_fill_tableau(name = "Tableau 20") +
+  coord_flip()
+```
+
+### 年代別・性別ごとの購入者の属性を調べる
 
 ```{r}
 df_sales_total <- df |>
@@ -245,18 +248,6 @@ df_sales_total |>
   )
 ```
 
-
-
-
-```{r}
-df_row_ratio |>
-  pivot_longer(-年代, names_to = "性別", values_to = "割合") |>
-  ggplot() + aes(x = 年代, y = 割合, fill = 性別) + geom_col(position = "fill") +
-  labs(title = "図2-3 自社商品の年代別・性別別売上金額 (性別合計に対する割合)",
-       x = "年代",
-       y = "割合") +
-  theme_bw(base_family = "HiraKakuPro-W3")
-```
 
 
 ## 独立性の検定
