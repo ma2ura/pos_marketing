@@ -17,7 +17,6 @@ book:
   back-to-top-navigation: true
   page-footer:
       border: true
-      # background: "#a10000"
       left: "Copyright 2024, Soichi Matsuura"
       right:
         - icon: github
@@ -40,4 +39,3 @@ format:
       sidebar-width: 200px
       body-width: 1200px
 lang: "ja"
-dev: "ragg_png"
