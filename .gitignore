@@ -9,3 +9,5 @@
 *.woff
 __packages
 /temp/
+
+/.quarto/
