@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.36">
+<meta name="generator" content="quarto-1.6.32">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>1&nbsp; 第1回 売上をまとめた表 – POSとマーケティングデータ分析</title>
+<title>1&nbsp; 第1回 売上をまとめた表をつくる – POSとマーケティングデータ分析</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -68,10 +68,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-01c78b5cd655e4cd89133cf59d535862.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c3c62341195aaca57c6426706fd8d4e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-8473de6a1e397ed40005cc7c12b288ed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -98,21 +98,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "サーチ"
   }
 }</script><script src="site_libs/kePrint-0.0.1/kePrint.js"></script><link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<meta name="twitter:title" content="1&nbsp; 第1回 売上をまとめた表 – POSとマーケティングデータ分析">
+<meta name="twitter:title" content="1&nbsp; 第1回 売上をまとめた表をつくる – POSとマーケティングデータ分析">
 <meta name="twitter:description" content="">
-<meta name="twitter:image" content="https://so-ichi.com/POS_Marketing_01_files/figure-html/unnamed-chunk-19-1.png">
-<meta name="twitter:image-height" content="960">
-<meta name="twitter:image-width" content="1344">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 </head>
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./POS_Marketing_01.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">第1回 売上をまとめた表</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./POS_Marketing_01.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">第1回 売上をまとめた表をつくる</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="サーチ" onclick="window.quartoOpenSearch();">
@@ -142,7 +139,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./POS_Marketing_01.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">第1回 売上をまとめた表</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">第1回 売上をまとめた表をつくる</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -162,16 +159,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><a href="#%E3%81%93%E3%81%AE%E7%AB%A0%E3%81%A7%E4%BD%BF%E3%81%86%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%A8%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8" id="toc-この章で使うファイルとパッケージ" class="nav-link active" data-scroll-target="#%E3%81%93%E3%81%AE%E7%AB%A0%E3%81%A7%E4%BD%BF%E3%81%86%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%A8%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8"><span class="header-section-number">1.1</span> この章で使うファイルとパッケージ</a></li>
   <li><a href="#r%E3%81%AE%E6%BA%96%E5%82%99" id="toc-rの準備" class="nav-link" data-scroll-target="#r%E3%81%AE%E6%BA%96%E5%82%99"><span class="header-section-number">1.2</span> Rの準備</a></li>
   <li><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF" id="toc-データの読み込み" class="nav-link" data-scroll-target="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF"><span class="header-section-number">1.3</span> データの読み込み</a></li>
-  <li><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%B1%9E%E6%80%A7%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B" id="toc-データの属性を確認する" class="nav-link" data-scroll-target="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%B1%9E%E6%80%A7%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B"><span class="header-section-number">1.4</span> データの属性を確認する</a></li>
-  <li><a href="#%E5%9F%BA%E7%A4%8E%E9%9B%86%E8%A8%88%E3%81%A7%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%82%BE%E5%90%91%E3%82%92%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF" id="toc-基礎集計でデータの傾向をチェック" class="nav-link" data-scroll-target="#%E5%9F%BA%E7%A4%8E%E9%9B%86%E8%A8%88%E3%81%A7%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%82%BE%E5%90%91%E3%82%92%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF"><span class="header-section-number">1.5</span> 基礎集計でデータの傾向をチェック</a></li>
-  <li><a href="#%E8%B3%87%E6%96%99%E4%BD%9C%E6%88%90%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E5%8F%96%E3%82%8A%E5%87%BA%E3%81%99" id="toc-資料作成に必要なデータを取り出す" class="nav-link" data-scroll-target="#%E8%B3%87%E6%96%99%E4%BD%9C%E6%88%90%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E5%8F%96%E3%82%8A%E5%87%BA%E3%81%99"><span class="header-section-number">1.6</span> 資料作成に必要なデータを取り出す</a></li>
-  <li><a href="#%E9%9B%86%E8%A8%88%E7%B5%90%E6%9E%9C%E3%82%92%E3%82%B0%E3%83%A9%E3%83%95%E3%81%A7%E5%8F%AF%E8%A6%96%E5%8C%96" id="toc-集計結果をグラフで可視化" class="nav-link" data-scroll-target="#%E9%9B%86%E8%A8%88%E7%B5%90%E6%9E%9C%E3%82%92%E3%82%B0%E3%83%A9%E3%83%95%E3%81%A7%E5%8F%AF%E8%A6%96%E5%8C%96"><span class="header-section-number">1.7</span> 集計結果をグラフで可視化</a></li>
+  <li><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%B1%9E%E6%80%A7%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B" id="toc-データの属性を確認する" class="nav-link" data-scroll-target="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%B1%9E%E6%80%A7%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B"><span class="header-section-number">1.4</span> データの属性を確認する。</a></li>
+  <li><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E6%A6%82%E8%A6%81%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B" id="toc-データの概要を確認する" class="nav-link" data-scroll-target="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E6%A6%82%E8%A6%81%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B"><span class="header-section-number">1.5</span> データの概要を確認する</a></li>
+  <li><a href="#%E5%9B%A0%E5%AD%90%E5%9E%8B" id="toc-因子型" class="nav-link" data-scroll-target="#%E5%9B%A0%E5%AD%90%E5%9E%8B"><span class="header-section-number">1.6</span> 因子型</a></li>
+  <li><a href="#%E6%9D%A1%E4%BB%B6%E3%81%AB%E3%82%88%E3%82%8B%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E6%8A%BD%E5%87%BA" id="toc-条件によるデータの抽出" class="nav-link" data-scroll-target="#%E6%9D%A1%E4%BB%B6%E3%81%AB%E3%82%88%E3%82%8B%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E6%8A%BD%E5%87%BA"><span class="header-section-number">1.7</span> 条件によるデータの抽出</a></li>
+  <li><a href="#%E5%9F%BA%E7%A4%8E%E9%9B%86%E8%A8%88%E3%81%A7%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%82%BE%E5%90%91%E3%82%92%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF" id="toc-基礎集計でデータの傾向をチェック" class="nav-link" data-scroll-target="#%E5%9F%BA%E7%A4%8E%E9%9B%86%E8%A8%88%E3%81%A7%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%82%BE%E5%90%91%E3%82%92%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF"><span class="header-section-number">1.8</span> 基礎集計でデータの傾向をチェック</a></li>
+  <li><a href="#%E8%B3%87%E6%96%99%E4%BD%9C%E6%88%90%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E5%8F%96%E3%82%8A%E5%87%BA%E3%81%99" id="toc-資料作成に必要なデータを取り出す" class="nav-link" data-scroll-target="#%E8%B3%87%E6%96%99%E4%BD%9C%E6%88%90%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E5%8F%96%E3%82%8A%E5%87%BA%E3%81%99"><span class="header-section-number">1.9</span> 資料作成に必要なデータを取り出す</a></li>
+  <li><a href="#%E9%9B%86%E8%A8%88%E7%B5%90%E6%9E%9C%E3%82%92%E3%82%B0%E3%83%A9%E3%83%95%E3%81%A7%E5%8F%AF%E8%A6%96%E5%8C%96" id="toc-集計結果をグラフで可視化" class="nav-link" data-scroll-target="#%E9%9B%86%E8%A8%88%E7%B5%90%E6%9E%9C%E3%82%92%E3%82%B0%E3%83%A9%E3%83%95%E3%81%A7%E5%8F%AF%E8%A6%96%E5%8C%96"><span class="header-section-number">1.10</span> 集計結果をグラフで可視化</a></li>
+  <li><a href="#%E6%8F%90%E5%87%BA%E7%94%A8%E3%81%AE%E8%B3%87%E6%96%99%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B" id="toc-提出用の資料を作成する" class="nav-link" data-scroll-target="#%E6%8F%90%E5%87%BA%E7%94%A8%E3%81%AE%E8%B3%87%E6%96%99%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B"><span class="header-section-number">1.11</span> 提出用の資料を作成する。</a></li>
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">
-<span class="chapter-number">1</span>&nbsp; <span class="chapter-title">第1回 売上をまとめた表</span>
+<span class="chapter-number">1</span>&nbsp; <span class="chapter-title">第1回 売上をまとめた表をつくる</span>
 </h1>
 </div>
 
@@ -186,7 +187,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header><section id="この章で使うファイルとパッケージ" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="この章で使うファイルとパッケージ">
+</header><section id="この章で使うファイルとパッケージ" class="level2 page-columns page-full" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="この章で使うファイルとパッケージ">
 <span class="header-section-number">1.1</span> この章で使うファイルとパッケージ</h2>
 <p>ファイル</p>
 <ul>
@@ -202,8 +203,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>, <span class="va">readxl</span>, <span class="va">tidyplots</span>, <span class="va">ggthemes</span>, <span class="va">kableExtra</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>この章で使うファイルは作業ディレクトリの<code>data/</code>フォルダにいれておきましょう。</p>
-</section><section id="rの準備" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="rの準備">
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p><code>pacman</code>パッケージは，複数のパッケージを一括で読み込むためのパッケージです。 インストールされていないパッケージを指定したときは，自動でインストールされる便利なパッケージです。</p>
+</div></div><p>この章で使うファイルは作業ディレクトリの<code>data</code>フォルダにいれておきましょう。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>Rは作業ディレクトリとなっているフォルダを軸にしてファイルを読み込むため，ファイルの場所に注意してください。 作業ディレクトリの中に<code>data</code>フォルダを作り，そこに<code>chp1.xlsx</code>を保存してあるとき，<code>data/chp1.xlsx</code>と指定することでファイルにアクセスできます。</p>
+</div></div></section><section id="rの準備" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="rの準備">
 <span class="header-section-number">1.2</span> Rの準備</h2>
 <ul>
 <li>Rをインストールしておきましょう。</li>
@@ -349,7 +356,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 [11] "金額"        </code></pre>
 </div>
 </div>
-<p>データの型や概要を確認するには<code><a href="https://rdrr.io/r/utils/str.html">str()</a></code>関数を使います。</p>
+</section><section id="データの属性を確認する" class="level2 page-columns page-full" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="データの属性を確認する">
+<span class="header-section-number">1.4</span> データの属性を確認する。</h2>
+<p>データの属性や型を確認するには<code><a href="https://rdrr.io/r/utils/str.html">str()</a></code>関数を使います。</p>
 <div class="cell">
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -386,10 +395,22 @@ $ 個数         &lt;dbl&gt; 2, 2, 2, 4, 1, 3, 1, 2, 3, 4, 1, 2, 2, 1, 1, 2, 1, 
 $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 160, 34…</code></pre>
 </div>
 </div>
-<p>この表から，変数が11個，観測値が374090個あることが分かります。</p>
-</section><section id="データの属性を確認する" class="level2" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="データの属性を確認する">
-<span class="header-section-number">1.4</span> データの属性を確認する</h2>
-<p>データの属性を確認するために，<code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>関数を使ってみましょう。</p>
+<p>この表の上部をみると、このデータには変数が11個，観測値が374090個あることが分かります。 また，変数名の横に<code>&lt;chr&gt;</code>や<code>&lt;dbl&gt;</code>といった文字が表示されていますが，これは変数の型を示しています。 <code>&lt;chr&gt;</code>は文字列型，<code>&lt;dbl&gt;</code>は数値型，<code>&lt;dttm&gt;</code>は日付型を示しています。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>文字型，数値型，日付型以外にも，</p>
+<ul>
+<li>
+<code>&lt;fct&gt;</code>: 因子型</li>
+<li>
+<code>&lt;int&gt;</code>: 整数型</li>
+<li>
+<code>&lt;lgl&gt;</code>: 論理型</li>
+</ul>
+<p>などがあります。</p>
+</div></div></section><section id="データの概要を確認する" class="level2" data-number="1.5"><h2 data-number="1.5" class="anchored" data-anchor-id="データの概要を確認する">
+<span class="header-section-number">1.5</span> データの概要を確認する</h2>
+<p>データの属性を確認するために，<code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>関数を使ってみましょう。 基本関数<code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>は，データの記述統計量などを返してくれる関数です。</p>
 <div class="cell">
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -418,30 +439,48 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 </div>
 <p>この表より，</p>
 <ul>
-<li>レシート番号は文字列</li>
 <li>日付は2023年1月2日から2023年12月31日まで</li>
-<li>曜日は文字列</li>
 <li>時間は10:00から21:00まで</li>
-<li>性別は文字列</li>
-<li>年代も文字列</li>
-<li>メーカーも文字列</li>
-<li>商品名も文字列</li>
 <li>単価は数値で，140〜170</li>
 <li>個数は数値で，1〜14</li>
 <li>金額は数値で，140〜2100</li>
 </ul>
-<p>となっています。 このうち，曜日，性別，年代，メーカー，商品名はカテゴリカルデータであるため，因子型に変換しておきましょう。</p>
+<p>となっていることがわかります。 また文字型となっている<code>曜日</code>，<code>性別</code>，<code>年代</code>，<code>メーカー</code>，<code>商品名</code>はデータの個数として<code>Length:</code>が出力されていることがわかります。 文字列の<code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>を出力しても意味がないので，文字型の変数を除外して，数値型の変数だけを表示するには，<code>select()</code>関数と<code>where()</code>関数を使い， <code>is.double</code>関数を使って数値型の変数だけを選択します。</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span></span>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.double</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      日付                             時間            単価      
+ Min.   :2023-01-02 00:00:00.00   Min.   :10.00   Min.   :140.0  
+ 1st Qu.:2023-05-09 00:00:00.00   1st Qu.:13.00   1st Qu.:150.0  
+ Median :2023-07-28 00:00:00.00   Median :16.00   Median :160.0  
+ Mean   :2023-07-16 10:09:45.75   Mean   :15.57   Mean   :154.5  
+ 3rd Qu.:2023-09-23 00:00:00.00   3rd Qu.:18.00   3rd Qu.:160.0  
+ Max.   :2023-12-31 00:00:00.00   Max.   :21.00   Max.   :170.0  
+      個数             金額       
+ Min.   : 1.000   Min.   : 140.0  
+ 1st Qu.: 1.000   1st Qu.: 160.0  
+ Median : 2.000   Median : 280.0  
+ Mean   : 1.783   Mean   : 275.7  
+ 3rd Qu.: 2.000   3rd Qu.: 320.0  
+ Max.   :14.000   Max.   :2100.0  </code></pre>
+</div>
+</div>
+</section><section id="因子型" class="level2" data-number="1.6"><h2 data-number="1.6" class="anchored" data-anchor-id="因子型">
+<span class="header-section-number">1.6</span> 因子型</h2>
+<p>これらの文字型変数<code>曜日</code>，<code>性別</code>，<code>年代</code>，<code>メーカー</code>，<code>商品名</code>は，どのカテゴリーに属しているかを表している<strong>カテゴリカルデータ</strong>であるため， 文字型から<strong>因子型</strong>(factor)に変換しておきましょう。 変数を因子型に変更するには，<code>facor()</code>関数や<code><a href="https://rdrr.io/r/base/factor.html">as.factor()</a></code>関数を使います。 ここでは，曜日に順番があるため，<code>levels</code>オプションと<code>ordered</code>オプションで曜日の種類と順番を指定しています。</p>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>曜日 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">曜日</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"月"</span>, <span class="st">"火"</span>, <span class="st">"水"</span>, <span class="st">"木"</span>, <span class="st">"金"</span>, <span class="st">"土"</span>, <span class="st">"日"</span><span class="op">)</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>         性別 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">性別</span><span class="op">)</span>,</span>
 <span>         年代 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">年代</span><span class="op">)</span>,</span>
 <span>         メーカー <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">メーカー</span><span class="op">)</span>,</span>
 <span>         商品名 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">商品名</span><span class="op">)</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>もう一度，<code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>関数を使ってデータの属性を確認してみましょう。</p>
+<p>変数の型を変更したので，もう一度，<code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>関数を使ってデータを確認してみましょう。</p>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> レシート番号            日付                        曜日            時間      
  Length:374090      Min.   :2023-01-02 00:00:00.00   月:36468   Min.   :10.00  
@@ -469,9 +508,12 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
                                                   </code></pre>
 </div>
 </div>
-<p>すると，曜日，性別，年代，メーカー，商品名がカテゴリー変数として認識され，カテゴリーごとの個数が表示されています。 たとえば，メーカー変数が<code>自社</code>の場合だけを抽出するには，<code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code>関数を使います。</p>
+<p>すると，<code>曜日</code>，<code>性別</code>，<code>年代</code>，<code>メーカー</code>，<code>商品名</code>がカテゴリー変数として認識され，カテゴリーごとの個数が表示されています。</p>
+</section><section id="条件によるデータの抽出" class="level2" data-number="1.7"><h2 data-number="1.7" class="anchored" data-anchor-id="条件によるデータの抽出">
+<span class="header-section-number">1.7</span> 条件によるデータの抽出</h2>
+<p><code>メーカー</code>変数が<code>自社</code>の場合だけを抽出するには，<code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code>関数を使います。 <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code>関数は，引数に<code>メーカー == "自社</code>という条件を指定することで，条件に合致するデータだけを抽出します。</p>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">メーカー</span> <span class="op">==</span> <span class="st">"自社"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -587,11 +629,11 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 </div>
 </div>
 </div>
-</section><section id="基礎集計でデータの傾向をチェック" class="level2" data-number="1.5"><h2 data-number="1.5" class="anchored" data-anchor-id="基礎集計でデータの傾向をチェック">
-<span class="header-section-number">1.5</span> 基礎集計でデータの傾向をチェック</h2>
+</section><section id="基礎集計でデータの傾向をチェック" class="level2" data-number="1.8"><h2 data-number="1.8" class="anchored" data-anchor-id="基礎集計でデータの傾向をチェック">
+<span class="header-section-number">1.8</span> 基礎集計でデータの傾向をチェック</h2>
 <p>メーカーごとの売上金額合計を示す表を作成してみましょう。 Excelでピボットテーブルを使う手続が教科書で解説されていますが，Rだと<code>dplyr</code>パッケージを使って簡単にできます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_maker_sales</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_maker_sales</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">メーカー</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>売上金額合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">金額</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">df_maker_sales</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -630,10 +672,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 </div>
 <p>これだけです。 キレイな表にするなら，<code><a href="https://rdrr.io/pkg/knitr/man/kable.html">knitr::kable()</a></code>関数と<code>kableExtra</code>パッケージを使うといいでしょう。</p>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">メーカー</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>売上金額合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">金額</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">売上金額合計</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_maker_sales</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span></span>
 <span>    format <span class="op">=</span> <span class="st">"html"</span>,</span>
 <span>    caption <span class="op">=</span> <span class="st">"表1-2 メーカーごとの売上金額"</span></span>
@@ -654,31 +693,36 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 <td style="text-align: right;">42695520</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">自社</td>
-<td style="text-align: right;">30126150</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">競合B</td>
 <td style="text-align: right;">13537440</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">競合C</td>
 <td style="text-align: right;">9289700</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">競合D</td>
 <td style="text-align: right;">7486080</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">自社</td>
+<td style="text-align: right;">30126150</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<p>次に，各メーカーのどの商品が，平均何円で売られているのか，を調べてみましょう。</p>
+<p>次に，各メーカーのどの商品が，平均何円で売られているのか，を調べてみましょう。 <code>group_by()</code>関数の引数に，<code>メーカー</code>と<code>商品名</code>を指定して，<code>summarise()</code>関数でグループごとの平均単価を計算し， <code>arrange()</code>関数でメーカーと平均単価でソートします。<code>desc()</code>関数は降順にソートするための関数です。</p>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">メーカー</span>, <span class="va">商品名</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># メーカーと商品名でグループ化</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>平均単価 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">単価</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 平均単価を計算</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">メーカー</span>, <span class="fu">desc</span><span class="op">(</span><span class="va">平均単価</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># メーカーでソート</span></span>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_maker_item</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">メーカー</span>, <span class="va">商品名</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># メーカーと商品名でグループ化</span></span>
+<span>  <span class="fu">summarise</span><span class="op">(</span>平均単価 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">単価</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 平均単価を計算</span></span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">メーカー</span>, <span class="fu">desc</span><span class="op">(</span><span class="va">平均単価</span><span class="op">)</span><span class="op">)</span><span class="co"># メーカーと平均単価でソート</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'メーカー'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_maker_item</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span></span>
 <span>    format <span class="op">=</span> <span class="st">"html"</span>,</span>
 <span>    caption <span class="op">=</span> <span class="st">"表1−3 商品ごとの単価"</span></span>
@@ -686,10 +730,6 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 <span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span></span>
 <span>    bootstrap_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"striped"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'メーカー'. You can override using the
-`.groups` argument.</code></pre>
-</div>
 <div class="cell-output-display">
 <table class="table table-striped caption-top table-sm small" data-quarto-postprocess="true">
 <caption>表1−3 商品ごとの単価</caption>
@@ -738,11 +778,11 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 </table>
 </div>
 </div>
-</section><section id="資料作成に必要なデータを取り出す" class="level2" data-number="1.6"><h2 data-number="1.6" class="anchored" data-anchor-id="資料作成に必要なデータを取り出す">
-<span class="header-section-number">1.6</span> 資料作成に必要なデータを取り出す</h2>
+</section><section id="資料作成に必要なデータを取り出す" class="level2" data-number="1.9"><h2 data-number="1.9" class="anchored" data-anchor-id="資料作成に必要なデータを取り出す">
+<span class="header-section-number">1.9</span> 資料作成に必要なデータを取り出す</h2>
 <p>データ全体における売上金額と売上個数を計算して，各月と各時間帯にの売上金額を計算してみる。</p>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># 全体の売上金額と売上個数</span></span>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># 全体の売上金額と売上個数</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">summarise</span><span class="op">(</span></span>
 <span>    売上金額合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">金額</span><span class="op">)</span>,</span>
@@ -765,14 +805,15 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 </div>
 <p>自社製品ごとの個数と金額を計算してみましょう。</p>
 <div class="cell">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_jisha_total</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">メーカー</span> <span class="op">==</span> <span class="st">"自社"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 自社製品だけを抽出</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">商品名</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">summarise</span><span class="op">(</span></span>
 <span>    売上金額合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">金額</span><span class="op">)</span>,</span>
 <span>    売上個数合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">個数</span><span class="op">)</span></span>
 <span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">売上金額合計</span><span class="op">)</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">売上金額合計</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">df_jisha_total</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="kable-table">
 <table class="caption-top table table-sm table-striped small">
@@ -797,16 +838,17 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 </div>
 </div>
 </div>
-<p>各月ごとの売上金額を計算してみましょう。 <code>日付</code>変数の型を確認します。</p>
+<p>これで自社の売上金額と売上個数の合計が計算されました。 ここで注意しないといけないことは，<code>group_by()</code>関数と<code>summarise()</code>関数を使った場合，グループごとに1つの統計量を返すため，上のコードだと， 自社の2商品ごとの売上金額と売上個数の合計が出力され，2行2列のデータフレームが返されていることが分かります。</p>
+<p>次に，各月ごとの売上金額を計算してみましょう。 <code>日付</code>変数の型を確認します。</p>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">日付</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">日付</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "POSIXct" "POSIXt" </code></pre>
+<pre class="code-output"><code>[1] "POSIXct" "POSIXt" </code></pre>
 </div>
 </div>
 <p><code>POSIXct</code> <code>POSIXt</code> という日付型のデータです。 この変数<code>日付</code>から月を取り出すには，<code>lubridate</code>パッケージを使います。 日付データは<code>2023-05-14 UTC</code>といった形式で格納されているため，<code><a href="https://lubridate.tidyverse.org/reference/month.html">lubridate::month()</a></code>関数を使って月を取り出します。</p>
 <div class="cell">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_month_sales</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_month_sales</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">メーカー</span> <span class="op">==</span> <span class="st">"自社"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>月 <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">日付</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">月</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 月ごとにグループ化</span></span>
@@ -881,9 +923,9 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 </table>
 </div>
 </div>
-<p>各時間帯ごとの売上金額を計算してみましょう。</p>
+<p>同じように各時間帯ごとの売上金額を計算してみましょう。</p>
 <div class="cell">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_time_sales</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_time_sales</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">メーカー</span> <span class="op">==</span> <span class="st">"自社"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">時間</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">summarise</span><span class="op">(</span>売上金額合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">金額</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -957,27 +999,14 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 </table>
 </div>
 </div>
-</section><section id="集計結果をグラフで可視化" class="level2" data-number="1.7"><h2 data-number="1.7" class="anchored" data-anchor-id="集計結果をグラフで可視化">
-<span class="header-section-number">1.7</span> 集計結果をグラフで可視化</h2>
+</section><section id="集計結果をグラフで可視化" class="level2" data-number="1.10"><h2 data-number="1.10" class="anchored" data-anchor-id="集計結果をグラフで可視化">
+<span class="header-section-number">1.10</span> 集計結果をグラフで可視化</h2>
 <p>可視化はRの得意分野です。 <code>ggplot2</code>パッケージを使って，いろんなグラフで表示してみましょう。</p>
 <p>メーカー別売上金額を棒グラフにします。</p>
 <div class="cell">
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_maker_sales</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_maker_sales</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">メーカー</span>, y <span class="op">=</span> <span class="va">売上金額合計</span>, fill <span class="op">=</span> <span class="va">メーカー</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_col</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>月別売上高を折れ線グラフにします。</p>
-<div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_month_sales</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月</span>, y <span class="op">=</span> <span class="va">売上金額合計</span>, group <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
@@ -985,14 +1014,12 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 </div>
 </div>
 </div>
-<p>時間帯別売上高を棒グラフにします。</p>
+<p>月別売上高を折れ線グラフにします。</p>
 <div class="cell">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_time_sales</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">時間</span>, y <span class="op">=</span> <span class="va">売上金額合計</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">時間</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">時間</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># 時間の順序を逆にする</span></span>
-<span>  <span class="fu">geom_col</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># テーマとフォント</span></span>
-<span>  <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"時間帯"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">scale_fill_viridis_d</span><span class="op">(</span>direction <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="co"># Viridis パレットを逆順に適用</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_month_sales</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月</span>, y <span class="op">=</span> <span class="va">売上金額合計</span>, group <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
@@ -1000,6 +1027,112 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 </div>
 </div>
 </div>
+<p>夏に売上高がピークを迎えていることが分かります。</p>
+<p>時間帯別売上高を棒グラフにします。</p>
+<div class="cell">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_time_sales</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">時間</span>, y <span class="op">=</span> <span class="va">売上金額合計</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">時間</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">時間</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># 時間の順序を逆にする</span></span>
+<span>  <span class="fu">geom_col</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># テーマとフォント</span></span>
+<span>  <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"時間帯"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_fill_viridis_d</span><span class="op">(</span>direction <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="co"># Viridis パレットを逆順に適用</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>12時ころと17時ころに売上高が大きくなっているので，昼食・夕食の時間帯に売上が伸びていることが分かります。</p>
+<p>さらに，月ごと，時間ごとの棒グラフを重ねて表示してみましょう。</p>
+<div class="cell">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_month_time_sales</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">メーカー</span> <span class="op">==</span> <span class="st">"自社"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>月 <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">日付</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>         時間 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">時間</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">月</span>, <span class="va">時間</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">summarise</span><span class="op">(</span>売上金額合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">金額</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">月</span>, <span class="va">時間</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by '月'. You can override using the `.groups`
+argument.</code></pre>
+</div>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_month_time_sales</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月</span>, y <span class="op">=</span> <span class="va">売上金額合計</span>, fill <span class="op">=</span> <span class="va">時間</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_col</span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"時間帯"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_fill_viridis_d</span><span class="op">(</span>direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>昼食時と夕食前に売上が伸びる傾向は1月から12月まで観察されていますが，その差は夏が非常に多く，冬には昼食時と夕食前とそれ以外の売上の差が小さくなっていることが分かります。</p>
+<p>これをアニメーションにしてみましょう。 Rには<code>ggplot2</code>パッケージで作ったグラフをアニメーションにする<code>gganimate</code>パッケージがあります。 ここでは，<code>transition_states()</code>関数と<code>enter_fade()</code>関数，<code>exit_fade()</code>関数を使って，時間帯ごとの売上高をアニメーションで表示してみます。</p>
+<ul>
+<li>
+<code>transition_states()</code>: アニメーションの状態を指定します。</li>
+<li>
+<code>enter_fade()</code>: アニメーションの開始時のエフェクトを指定します。</li>
+<li>
+<code>exit_fade()</code>: アニメーションの終了時のエフェクトを指定します。</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">gganimate</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_month_time_sales</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月</span>, y <span class="op">=</span> <span class="va">売上金額合計</span>, fill <span class="op">=</span> <span class="va">時間</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_col</span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"時間帯"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_fill_viridis_d</span><span class="op">(</span>direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">transition_states</span><span class="op">(</span><span class="va">時間</span>, transition_length <span class="op">=</span> <span class="fl">2</span>, state_length <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"月ごとの時間帯別売上高: 時間帯 {closest_state} 時"</span>,</span>
+<span>    x <span class="op">=</span> <span class="st">"月"</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"売上金額合計"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">enter_fade</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">exit_fade</span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-25-1.gif" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>同じように，月と時間を入れ替えてみましょう。</p>
+<div class="cell">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_month_time_sales</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">時間</span>, y <span class="op">=</span> <span class="va">売上金額合計</span>, fill <span class="op">=</span> <span class="va">月</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_col</span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"月"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_fill_viridis_d</span><span class="op">(</span>direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">transition_states</span><span class="op">(</span><span class="va">月</span>, transition_length <span class="op">=</span> <span class="fl">2</span>, state_length <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"時間ごとの月別売上高:  {closest_state} 月"</span>,</span>
+<span>    x <span class="op">=</span> <span class="st">"時間"</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"売上金額合計"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">enter_fade</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">exit_fade</span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-26-1.gif" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>テキストの気温と販売個数の散布図は，気温データがないため作れません。</p>
+</section><section id="提出用の資料を作成する" class="level2" data-number="1.11"><h2 data-number="1.11" class="anchored" data-anchor-id="提出用の資料を作成する">
+<span class="header-section-number">1.11</span> 提出用の資料を作成する。</h2>
+<p>テキストではMS Excelで作成した表を、MS Powerpointに貼り付けてスライド資料を作成するようになっていますが、 RとQuartoを使えば、データ分析と資料作成を同じ場所で行うことができます。</p>
 
 
 </section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
@@ -1084,6 +1217,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1196,6 +1331,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
