@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.6.36">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>2&nbsp; 第1回 売上をまとめた表 – POSとマーケティングデータ分析</title>
+<title>1&nbsp; 第1回 売上をまとめた表 – POSとマーケティングデータ分析</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -98,7 +98,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "サーチ"
   }
 }</script><script src="site_libs/kePrint-0.0.1/kePrint.js"></script><link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<meta name="twitter:title" content="2&nbsp; 第1回 売上をまとめた表 – POSとマーケティングデータ分析">
+<meta name="twitter:title" content="1&nbsp; 第1回 売上をまとめた表 – POSとマーケティングデータ分析">
 <meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://so-ichi.com/POS_Marketing_01_files/figure-html/unnamed-chunk-19-1.png">
 <meta name="twitter:image-height" content="960">
@@ -112,7 +112,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./POS_Marketing_01.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">第1回 売上をまとめた表</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./POS_Marketing_01.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">第1回 売上をまとめた表</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="サーチ" onclick="window.quartoOpenSearch();">
@@ -136,20 +136,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">POSデータで学ぶはじめてのマーケティングデータ分析</span></span></a>
+ <span class="menu-text">POSデータで学ぶはじめてのマーケティングデータ分析</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./POS_Marketing_01.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">第1回 売上をまとめた表</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">第1回 売上をまとめた表</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./POS_Marketing_02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title"><b>POSとマーケティングデータ分析</b> 
-<span style="color: #282A36; ">第2回 顧客層別の売上</span></span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">第2回 顧客層別の売上</span></span></a>
   </div>
 </li>
     </ul>
@@ -160,19 +159,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">目次</h2>
    
   <ul>
-<li><a href="#%E3%81%93%E3%81%AE%E7%AB%A0%E3%81%A7%E4%BD%BF%E3%81%86%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%A8%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8" id="toc-この章で使うファイルとパッケージ" class="nav-link active" data-scroll-target="#%E3%81%93%E3%81%AE%E7%AB%A0%E3%81%A7%E4%BD%BF%E3%81%86%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%A8%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8"><span class="header-section-number">2.1</span> この章で使うファイルとパッケージ</a></li>
-  <li><a href="#r%E3%81%AE%E6%BA%96%E5%82%99" id="toc-rの準備" class="nav-link" data-scroll-target="#r%E3%81%AE%E6%BA%96%E5%82%99"><span class="header-section-number">2.2</span> Rの準備</a></li>
-  <li><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF" id="toc-データの読み込み" class="nav-link" data-scroll-target="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF"><span class="header-section-number">2.3</span> データの読み込み</a></li>
-  <li><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%B1%9E%E6%80%A7%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B" id="toc-データの属性を確認する" class="nav-link" data-scroll-target="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%B1%9E%E6%80%A7%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B"><span class="header-section-number">2.4</span> データの属性を確認する</a></li>
-  <li><a href="#%E5%9F%BA%E7%A4%8E%E9%9B%86%E8%A8%88%E3%81%A7%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%82%BE%E5%90%91%E3%82%92%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF" id="toc-基礎集計でデータの傾向をチェック" class="nav-link" data-scroll-target="#%E5%9F%BA%E7%A4%8E%E9%9B%86%E8%A8%88%E3%81%A7%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%82%BE%E5%90%91%E3%82%92%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF"><span class="header-section-number">2.5</span> 基礎集計でデータの傾向をチェック</a></li>
-  <li><a href="#%E8%B3%87%E6%96%99%E4%BD%9C%E6%88%90%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E5%8F%96%E3%82%8A%E5%87%BA%E3%81%99" id="toc-資料作成に必要なデータを取り出す" class="nav-link" data-scroll-target="#%E8%B3%87%E6%96%99%E4%BD%9C%E6%88%90%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E5%8F%96%E3%82%8A%E5%87%BA%E3%81%99"><span class="header-section-number">2.6</span> 資料作成に必要なデータを取り出す</a></li>
-  <li><a href="#%E9%9B%86%E8%A8%88%E7%B5%90%E6%9E%9C%E3%82%92%E3%82%B0%E3%83%A9%E3%83%95%E3%81%A7%E5%8F%AF%E8%A6%96%E5%8C%96" id="toc-集計結果をグラフで可視化" class="nav-link" data-scroll-target="#%E9%9B%86%E8%A8%88%E7%B5%90%E6%9E%9C%E3%82%92%E3%82%B0%E3%83%A9%E3%83%95%E3%81%A7%E5%8F%AF%E8%A6%96%E5%8C%96"><span class="header-section-number">2.7</span> 集計結果をグラフで可視化</a></li>
+<li><a href="#%E3%81%93%E3%81%AE%E7%AB%A0%E3%81%A7%E4%BD%BF%E3%81%86%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%A8%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8" id="toc-この章で使うファイルとパッケージ" class="nav-link active" data-scroll-target="#%E3%81%93%E3%81%AE%E7%AB%A0%E3%81%A7%E4%BD%BF%E3%81%86%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%A8%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8"><span class="header-section-number">1.1</span> この章で使うファイルとパッケージ</a></li>
+  <li><a href="#r%E3%81%AE%E6%BA%96%E5%82%99" id="toc-rの準備" class="nav-link" data-scroll-target="#r%E3%81%AE%E6%BA%96%E5%82%99"><span class="header-section-number">1.2</span> Rの準備</a></li>
+  <li><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF" id="toc-データの読み込み" class="nav-link" data-scroll-target="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF"><span class="header-section-number">1.3</span> データの読み込み</a></li>
+  <li><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%B1%9E%E6%80%A7%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B" id="toc-データの属性を確認する" class="nav-link" data-scroll-target="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%B1%9E%E6%80%A7%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B"><span class="header-section-number">1.4</span> データの属性を確認する</a></li>
+  <li><a href="#%E5%9F%BA%E7%A4%8E%E9%9B%86%E8%A8%88%E3%81%A7%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%82%BE%E5%90%91%E3%82%92%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF" id="toc-基礎集計でデータの傾向をチェック" class="nav-link" data-scroll-target="#%E5%9F%BA%E7%A4%8E%E9%9B%86%E8%A8%88%E3%81%A7%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%82%BE%E5%90%91%E3%82%92%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF"><span class="header-section-number">1.5</span> 基礎集計でデータの傾向をチェック</a></li>
+  <li><a href="#%E8%B3%87%E6%96%99%E4%BD%9C%E6%88%90%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E5%8F%96%E3%82%8A%E5%87%BA%E3%81%99" id="toc-資料作成に必要なデータを取り出す" class="nav-link" data-scroll-target="#%E8%B3%87%E6%96%99%E4%BD%9C%E6%88%90%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E5%8F%96%E3%82%8A%E5%87%BA%E3%81%99"><span class="header-section-number">1.6</span> 資料作成に必要なデータを取り出す</a></li>
+  <li><a href="#%E9%9B%86%E8%A8%88%E7%B5%90%E6%9E%9C%E3%82%92%E3%82%B0%E3%83%A9%E3%83%95%E3%81%A7%E5%8F%AF%E8%A6%96%E5%8C%96" id="toc-集計結果をグラフで可視化" class="nav-link" data-scroll-target="#%E9%9B%86%E8%A8%88%E7%B5%90%E6%9E%9C%E3%82%92%E3%82%B0%E3%83%A9%E3%83%95%E3%81%A7%E5%8F%AF%E8%A6%96%E5%8C%96"><span class="header-section-number">1.7</span> 集計結果をグラフで可視化</a></li>
   </ul></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">
-<span class="chapter-number">2</span>&nbsp; <span class="chapter-title">第1回 売上をまとめた表</span>
+<span class="chapter-number">1</span>&nbsp; <span class="chapter-title">第1回 売上をまとめた表</span>
 </h1>
 </div>
 
@@ -187,8 +186,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header><section id="この章で使うファイルとパッケージ" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="この章で使うファイルとパッケージ">
-<span class="header-section-number">2.1</span> この章で使うファイルとパッケージ</h2>
+</header><section id="この章で使うファイルとパッケージ" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="この章で使うファイルとパッケージ">
+<span class="header-section-number">1.1</span> この章で使うファイルとパッケージ</h2>
 <p>ファイル</p>
 <ul>
 <li><code>chp1.xlsx</code></li>
@@ -204,8 +203,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>, <span class="va">readxl</span>, <span class="va">tidyplots</span>, <span class="va">ggthemes</span>, <span class="va">kableExtra</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>この章で使うファイルは作業ディレクトリの<code>data/</code>フォルダにいれておきましょう。</p>
-</section><section id="rの準備" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="rの準備">
-<span class="header-section-number">2.2</span> Rの準備</h2>
+</section><section id="rの準備" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="rの準備">
+<span class="header-section-number">1.2</span> Rの準備</h2>
 <ul>
 <li>Rをインストールしておきましょう。</li>
 <li>RStudioかVS Codeをインストールしておきましょう。</li>
@@ -213,8 +212,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>作業ディレクトリを設定しておきましょう。</li>
 </ul>
 <p>これらの内容が分からない場合は，R入門の資料や本を参照してください。</p>
-</section><section id="データの読み込み" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="データの読み込み">
-<span class="header-section-number">2.3</span> データの読み込み</h2>
+</section><section id="データの読み込み" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="データの読み込み">
+<span class="header-section-number">1.3</span> データの読み込み</h2>
 <p>まずは<code>readxl</code>パッケージを使ってデータ<code>chp1.xlsx</code>を読み込んでみましょう。 このExcelファイルのシートの一覧を表示してみます。</p>
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/excel_sheets.html">excel_sheets</a></span><span class="op">(</span><span class="st">"data/chp1.xlsx"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -388,8 +387,8 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 </div>
 </div>
 <p>この表から，変数が11個，観測値が374090個あることが分かります。</p>
-</section><section id="データの属性を確認する" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="データの属性を確認する">
-<span class="header-section-number">2.4</span> データの属性を確認する</h2>
+</section><section id="データの属性を確認する" class="level2" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="データの属性を確認する">
+<span class="header-section-number">1.4</span> データの属性を確認する</h2>
 <p>データの属性を確認するために，<code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>関数を使ってみましょう。</p>
 <div class="cell">
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -588,8 +587,8 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 </div>
 </div>
 </div>
-</section><section id="基礎集計でデータの傾向をチェック" class="level2" data-number="2.5"><h2 data-number="2.5" class="anchored" data-anchor-id="基礎集計でデータの傾向をチェック">
-<span class="header-section-number">2.5</span> 基礎集計でデータの傾向をチェック</h2>
+</section><section id="基礎集計でデータの傾向をチェック" class="level2" data-number="1.5"><h2 data-number="1.5" class="anchored" data-anchor-id="基礎集計でデータの傾向をチェック">
+<span class="header-section-number">1.5</span> 基礎集計でデータの傾向をチェック</h2>
 <p>メーカーごとの売上金額合計を示す表を作成してみましょう。 Excelでピボットテーブルを使う手続が教科書で解説されていますが，Rだと<code>dplyr</code>パッケージを使って簡単にできます。</p>
 <div class="cell">
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_maker_sales</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
@@ -739,8 +738,8 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 </table>
 </div>
 </div>
-</section><section id="資料作成に必要なデータを取り出す" class="level2" data-number="2.6"><h2 data-number="2.6" class="anchored" data-anchor-id="資料作成に必要なデータを取り出す">
-<span class="header-section-number">2.6</span> 資料作成に必要なデータを取り出す</h2>
+</section><section id="資料作成に必要なデータを取り出す" class="level2" data-number="1.6"><h2 data-number="1.6" class="anchored" data-anchor-id="資料作成に必要なデータを取り出す">
+<span class="header-section-number">1.6</span> 資料作成に必要なデータを取り出す</h2>
 <p>データ全体における売上金額と売上個数を計算して，各月と各時間帯にの売上金額を計算してみる。</p>
 <div class="cell">
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># 全体の売上金額と売上個数</span></span>
@@ -958,8 +957,8 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 </table>
 </div>
 </div>
-</section><section id="集計結果をグラフで可視化" class="level2" data-number="2.7"><h2 data-number="2.7" class="anchored" data-anchor-id="集計結果をグラフで可視化">
-<span class="header-section-number">2.7</span> 集計結果をグラフで可視化</h2>
+</section><section id="集計結果をグラフで可視化" class="level2" data-number="1.7"><h2 data-number="1.7" class="anchored" data-anchor-id="集計結果をグラフで可視化">
+<span class="header-section-number">1.7</span> 集計結果をグラフで可視化</h2>
 <p>可視化はRの得意分野です。 <code>ggplot2</code>パッケージを使って，いろんなグラフで表示してみましょう。</p>
 <p>メーカー別売上金額を棒グラフにします。</p>
 <div class="cell">
@@ -1423,13 +1422,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./index.html" class="pagination-link" aria-label="POSデータで学ぶはじめてのマーケティングデータ分析">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">POSデータで学ぶはじめてのマーケティングデータ分析</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">POSデータで学ぶはじめてのマーケティングデータ分析</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./POS_Marketing_02.html" class="pagination-link" aria-label="<b>POSとマーケティングデータ分析</b> </br>
-<span style=&quot;color: #282A36; &quot;>第2回 顧客層別の売上</span>">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title"><b>POSとマーケティングデータ分析</b>  <span style="color: #282A36; ">第2回 顧客層別の売上</span></span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./POS_Marketing_02.html" class="pagination-link" aria-label="第2回 顧客層別の売上">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">第2回 顧客層別の売上</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

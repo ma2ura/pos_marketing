@@ -23,7 +23,4 @@
 
 LICENSE
 __packages
-/data/
-/Lecturenote/
-
-/.quarto/
+/temp/
