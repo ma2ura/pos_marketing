@@ -13,7 +13,7 @@
 - `readxl` : Excelファイルを読み込むためのパッケージ
 
 ```{r}
-pacman::p_load(tidyverse, readxl, tidyplots, ggthemes, kableExtra)
+pacman::p_load(tidyverse, readxl, tidyplots, ggthemes, kableExtra, gt, gtExtras)
 ```
 
 `readxl`パッケージを使ってデータ`chp2.xlsx`を読み込んでみましょう。
@@ -31,8 +31,8 @@ readxl::excel_sheets("data/chp2.xlsx")
 df <- readxl::read_excel("data/chp2.xlsx")
 df <- df %>%
   mutate(曜日 = factor(曜日, levels = c("月", "火", "水", "木", "金", "土", "日"), ordered = TRUE),
-         性別 = as.factor(性別),
-         年代 = as.factor(年代),
+         性別 = factor(性別, levels = c("男性", "女性"), ordered = TRUE),
+         年代 = factor(年代, levels = c("20歳未満", "20代", "30代", "40代", "50代", "60歳以上"), ordered = TRUE),
          メーカー = as.factor(メーカー),
          商品名 = as.factor(商品名))
 head(df) # 戦闘6行を表示
@@ -73,10 +73,9 @@ df_jisha_age_sex_num |> # ワイドに
   mutate( # 合計の列を追加
     合計 = 女性 + 男性
   ) |>
-  knitr::kable(
-    format = "html",
-    caption = "表2-1 性別・年代ごとの購入回数をまとめてクロス集計表"
-  )
+  gt() |>
+  fmt_number(columns = 2:4, decimals = 0) |>
+  tab_header(title = "表2-1 性別・年代ごとの購入回数をまとめてクロス集計表")
 ```
 
 年代と性別の多重クロス表が完成しました。
@@ -93,10 +92,9 @@ df_jisha_sale_age_sex <- df |>
 
 df_jisha_sale_age_sex |>
   pivot_wider(names_from = 性別, values_from = 売上合計) |>
-  knitr::kable(
-    format = "html",
-    caption = "表2-2 性別・年代ごとの自社商品の売上金額"
-  )
+  gt() |>
+  fmt_number(columns = 2:3, decimals = 0) |>
+  tab_header(title = "表2-2 性別・年代ごとの自社商品の売上金額")
 ```
 
 ### 棒グラフによる可視化
@@ -111,7 +109,8 @@ df_jisha_sale_age_sex |>
   labs(title = "図2-2 性別・年代ごとの自社商品の売上金額",
        x = "年代",
        y = "売上金額") +
-  theme_bw(base_family = "HiraKakuPro-W3")
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  scale_fill_tableau(name = "Tableau 20")
 ```
 
 積み上げ棒グラフにするなら，`position = "stack"`を指定します。
@@ -124,7 +123,8 @@ df_jisha_sale_age_sex |>
   labs(title = "図2-2 自社商品の年代別・性別別売上金額",
        x = "年代",
        y = "売上金額") +
-  theme_bw(base_family = "HiraKakuPro-W3")
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  scale_fill_tableau(name = "Tableau 20")
 ```
 
 
@@ -137,7 +137,8 @@ df_jisha_sale_age_sex |>
   labs(title = "図2-2 自社商品の年代別・性別別売上金額",
        x = "年代",
        y = "売上金額") +
-  theme_bw(base_family = "HiraKakuPro-W3")
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  scale_fill_tableau(name = "Tableau 20")
 ```
 
 売上個数のグラフも作成してみます。
@@ -152,7 +153,8 @@ df |>
   labs(title = "図2-4 性別・年代ごとの自社商品の売上個数",
        x = "年代",
        y = "販売個数") +
-  theme_bw(base_family = "HiraKakuPro-W3")
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  scale_fill_tableau(name = "Tableau 20")
 ```
 
 
@@ -163,17 +165,16 @@ df |>
 ```{r}
 df_jisha_sale_age_sex |>
   mutate( # 割合を計算し，小数点以下2桁で丸める
-    割合 = round(売上合計 / sum(売上合計) * 100, 2)
+    割合 = 売上合計 / sum(売上合計) * 100
   ) |>
   select(年代, 性別, 割合) |> # 必要な列だけ抽出
   pivot_wider(names_from = 性別, values_from = 割合) |>
   mutate( # 性別ごとの合計を追加
     合計 = 女性 + 男性
   ) |>
-  knitr::kable(
-    format = "html",
-    caption = "表2-4 自社商品の売上金額における性別・年代の比率(%)"
-  )
+  gt() |>
+  fmt_number(columns = 2:4, decimals = 2) |>
+  tab_header(title = "表2-4 自社商品の売上金額における性別・年代の比率(%)")
 ```
 
 次に売上全体に対する割合ではなく，性別ごとの合計に対する割合を示す表を作成してみます。
@@ -182,15 +183,14 @@ df_jisha_sale_age_sex |>
 df_row_ratio <- df_jisha_sale_age_sex |>
   pivot_wider(names_from = 性別, values_from = 売上合計) |>
   mutate(
-    女性 = round(女性 / sum(女性) * 100, 2),
-    男性 = round(男性 / sum(男性) * 100, 2)
+    女性 = 女性 / sum(女性) * 100,
+    男性 = 男性 / sum(男性) * 100
   ) |>
   select(年代, 女性, 男性)
 df_row_ratio |>
-  knitr::kable(
-    format = "html",
-    caption = "表2-5 各性別を100%とした場合の性別に対する年代の比率 (%)"
-  )
+  gt() |>
+  fmt_number(columns = 2:3, decimals = 2) |>
+  tab_header(title = "表2-5 各性別を100%とした場合の性別に対する年代の比率 (%)")
 ```
 
 性別ごとの年代の比率から棒グラフを作成します。
@@ -242,16 +242,108 @@ df_sales_total |>
     across(-年代, ~ . / sum(c_across(-年代), na.rm = TRUE))
     ) |>
   ungroup() |>
-  knitr::kable(
-    format = "html",
-    caption = "表2-3 自社商品の年代別・性別別売上金額"
-  )
+  gt() |>
+  fmt_number(columns = 2:3, decimals = 2) |>
+  tab_header(title = "表2-3 自社商品の年代別・性別別売上金額")
+```
+
+## 2-2 競合商品との属性の違い
+
+競合する商品の売り上げ個数を，性別・年代ごとに集計してみる。
+
+```{r}
+df_maker_age_sex <- df |>
+  group_by(メーカー, 年代, 性別) |>
+  summarise(販売個数 = sum(個数), .groups = "drop") |>
+  ungroup()
+```
+
+競合A社の性別・年代ごとの売上個数を見てみる。
+
+```{r}
+df_maker_age_sex |>
+  filter(メーカー == "競合A")|>
+  pivot_wider(names_from = 性別, values_from = 販売個数) |>
+  select(-メーカー) |>
+  mutate(
+    合計 = 男性 + 女性
+  ) |>
+  gt() |>
+  fmt_number(columns = 2:4, decimals = 0) |>
+  tab_header(title = "表2-6 年代・性別ごとの競合A社の売上個数")
+```
+
+棒グラフにしてみる。
+
+```{r}
+df_maker_age_sex |>
+    filter(メーカー == "競合A")|>
+    ggplot() + aes(x = 年代, y = 販売個数, fill = 性別) +
+    geom_col(position = "dodge") +
+    labs(title = "図2-13 競合A社の年代別・性別別売上個数",
+         x = "年代",
+         y = "販売個数") +
+    theme_bw(base_family = "HiraKakuPro-W3") +
+    scale_fill_tableau(name = "Tableau 20")
+```
+
+自社と競合A社を比較してみます。
+
+```{r}
+# 自社とA社の比較
+df_ji_A_item <- df_maker_age_sex |>
+  filter(メーカー %in% c("自社", "競合A")) |> # 自社と競合A社のみ抽出
+  pivot_wider(names_from = メーカー, values_from = 販売個数) |> # ワイド
+  select(年代, 性別, 自社, 競合A) # 必要な変数のみ選択
+
+# 全体売上個数を計算する
+df_total_item <- df |>
+  group_by(年代, 性別) |> # 年代と性別ごとに
+  summarise(合計 = sum(個数), .groups = "drop") # 売上個数を合計
+
+# 自社とA社のデータフレームと全体のデータフレームを結合
+df_ji_A_item <- df_ji_A_item |>
+  left_join(df_total_item, by = c("年代", "性別"))
+# 作表
+df_ji_A_item |>
+  arrange(性別) |>
+  group_by(性別) |>
+  gt() |>
+  fmt_number(columns = 3:5, decimals = 0) |>
+  tab_header(title = "表2-7 自社と競合A社の年代・性別別売上個数")
+
+```
+
+割合棒グラフにしてみます。
+
+```{r}
+df_ji_A_item |>
+  pivot_longer(cols = -c(年代, 性別), names_to = "メーカー", values_to = "販売個数") |>
+  mutate(
+    年代性別 = paste0(年代, 性別),
+    年代性別 = factor(年代性別, levels = rev(unique(年代性別))),
+    メーカー = factor(メーカー, levels = c("自社", "競合A", "合計"))
+    ) |>
+  select(年代性別, メーカー, 販売個数) |>
+  ggplot() + aes(x = メーカー, y = 販売個数, fill = 年代性別) + geom_col(position = "fill") +
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  #カラーパレットを変更
+  scale_fill_brewer(palette = "Paired") +
+  coord_flip()
 ```
 
 
+## 2-3 購入者の属性の違いを検証する
 
-## 独立性の検定
+関心のある調査対象全体を**母集団**(population)といいます。
+通常，母集団は非常に大きいデータであるため，全てのデータを調査することは非常に困難です。
+この母集団の平均や分散といった統計量を**母数**(parameter)といいます。母数は観察不可能な値と考えます。
 
-年代と性別との間に売上金額に差があるかどうかを検定します。
-上で作成したクロス表から，$\chi^2$検定を行うことで，年代と性別が独立であるかどうかを検定します。
+そこで，母集団から一部を抽出して調査することにします。
+この母集団から抽出された，母集団より数ケタ小さな一式のデータを**標本**(sample)といいます。
+この標本の平均や分散といった統計量を**統計量**(statistic)といい，標本平均や標本分散は計算可能な値です。
+
+この1つの標本から得られた統計量を使って，母集団の母数を推定することを**推定**(estimation)といいます。
+1斤300gと表記された食パンを購入し，家に帰ったから重さを量ったら294gであったとして，そこからパン屋さんが食パンの重さをごまかして表記より小さいパンを売っている，と主張することは可能でしょうか？
+当然ですが，標本平均が母平均と一致しているわけではないため，推定値である標本平均には誤差が含まれます。
 

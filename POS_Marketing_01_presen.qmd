@@ -1,0 +1,122 @@
+---
+title: |
+  <b>2023年1月〜12月</b> </br>
+  <span style="color: #282A36; "> 自社商品(茶系飲料)の </br> 売上の報告 </span>
+author: "松浦総一"
+date: "20 Nov. 2024"
+format:
+  revealjs:
+    theme: ["default", "dracula.scss"]
+    transition: slide
+    slide-number: true
+    code-line-numbers: false
+    html-math-method: katex
+    chalkboard: true
+    touch: true
+    controls: true
+    width: 1300
+    height: 900
+execute:
+  echo: true
+  warning: false
+  highlight-style: github
+css: mystyle.css
+---
+
+
+## 自社商品を含む茶系飲料の1年間の売上金額
+
+```{r}
+#| echo: false
+pacman::p_load(tidyverse, ggthemes, kableExtra, patchwork)
+```
+
+```{r}
+#| echo: false
+#| cache: true
+df <- readxl::read_excel("data/chp1.xlsx")
+```
+
+```{r}
+#| code-fold: true
+df <- df |>
+  mutate(
+    メーカー = factor(メーカー, levels = c("自社", "競合A", "競合B", "競合C", "競合D"), ordered = TRUE)
+  )
+df |>
+  group_by(メーカー) |>
+  summarise(売上合計 = sum(金額)) |>
+  ggplot() + aes(x = メーカー, y = 売上合計, fill = メーカー) + geom_col() + 
+  # 数値を指数表記ではなく通常の表記にする
+  scale_y_continuous(labels = scales::label_number()) +
+  theme_bw(base_family = "HiraKakuProN-W3")
+```
+
+- 自社商品の総売上高は約3,000万円
+- トップは競合A社の約4,270万円(自社の約`r round(4270/3000, 2)`倍)
+- 自社と競合A社は2商品、その他は1商品であることに注意
+
+## 自社製品の年間の販売個数と売上金額
+
+::::{.columns}
+
+:::{.column width=50%}
+
+```{r}
+#| fig-height: 10
+#| code-fold: true
+df_item <- df |>
+  filter(メーカー == "自社") |>
+  group_by(商品名) |>
+  summarise(
+    販売合計 = sum(個数), 
+    売上合計 = sum(金額)
+  )
+g1 <- ggplot(df_item) + aes(x = 商品名, y = 販売合計, fill = 商品名) + geom_col() +
+  geom_text(aes(x = 商品名, y=販売合計, label = sprintf("%2.0f", 販売合計)), vjust=-0.5)
+g2 <- ggplot(df_item) + aes(x = 商品名, y = 売上合計, fill = 商品名) + geom_col() +
+  geom_text(aes(x = 商品名, y=売上合計, label = sprintf("%2.0f", 売上合計)), vjust=-0.5) +
+  scale_y_continuous(labels = scales::label_comma())
+(g1/g2) * theme_bw(base_family = "HiraKakuProN-W3") * theme(text = element_text(size = 24))
+```
+
+:::
+:::{.column width=50%}
+
+- 自社商品は「緑茶」と「濃茶」の2種類
+  - 価格はどちらも150円
+- 「緑茶」
+  - 約12万個、約1,800万円
+- 「濃茶」
+  - 約98万個、約1,200万円
+- 「緑茶」の売上金額は「濃茶」の約`r round(1800/1200, 2)`倍
+:::
+::::
+
+
+## 自社商品の月ごとの売上金額
+
+```{r}
+#| code-fold: true
+df_month_sales <- df |>
+  filter(メーカー == "自社") |>
+  mutate(月 = lubridate::month(日付, label = TRUE)) |>
+  group_by(月) |> # 月ごとにグループ化
+  summarise(売上金額合計 = sum(金額)) |>
+  arrange(月)
+
+label_points <- df_month_sales |>
+  filter(売上金額合計 == min(売上金額合計) | 売上金額合計 == max(売上金額合計))
+
+df_month_sales |>
+  ggplot() + aes(x = 月, y = 売上金額合計, group = 1) + geom_line() +
+  geom_point() + 
+  scale_y_continuous(labels = scales::label_comma(), limits=c(0,5*10^6)) + 
+  theme_bw(base_family = "HiraKakuProN-W3") + 
+  geom_text(
+    data = label_points, 
+    aes(label = 売上金額合計),
+    vjust = -1,
+    size = 5
+  )
+```
