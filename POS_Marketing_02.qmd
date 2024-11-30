@@ -617,10 +617,63 @@ df_chi2 <- df |>
   pivot_wider(names_from = 性別, values_from = 販売個数)
 ```
 
+このクロス表から期待度数を計算してみます。
+期待度数は，男女別合計と年代別合計を乗して，全体の合計で割ることで求められます。
+
+```{r}
+df_chi2 <- df_chi2 |>
+  mutate(合計 = 男性 + 女性) |>
+  mutate(男性期待 = 合計 * sum(男性) / sum(合計),
+         女性期待 = 合計 * sum(女性) / sum(合計)
+         ) |>
+  rename(
+    女性観察 = 女性,
+    男性観察 = 男性
+  ) |>
+  select(年代, 女性観察, 男性観察, 女性期待, 男性期待)
+df_chi2
+```
+
+期待度数を計算したデータフレーム`df_chi_kitai`を作れたので，
+観察された度数`df_chi2`と期待度数`df_chi_kitai`から$\chi^2$統計量を計算します。
+
+```{r}
+df_chi_test  <- df_chi2 |>
+    pivot_longer(
+    cols = -年代, # 年代以外の列を長い形式に変換
+    names_to = c("性別", "種別"), # 新しい列の名前を指定
+    names_pattern = "(女性|男性)(観察|期待)", # 列名を分割するパターン
+    values_to = "値" # 値を格納する列の名前
+  )
+df_chi_test
+```
+
+```{r}
+df_a <- df_chi2 |>
+  pivot_longer(cols = -年代, names_to = "性別", values_to = "販売個数")
+df_b <- df_chi_kitai |>
+  pivot_longer(cols = -年代, names_to = "性別", values_to = "期待個数") |>
+  mutate(性別 = substr(性別,1,2))
+df_chi_test <- df_a |>
+  left_join(df_b, by = c("年代", "性別"))
+df_chi_test
+```
+
+```{r}
+chi <-  ((O[1,1] - E[1,1])^2 / E[1,1]) + #男眼鏡
+        ((O[1,2] - E[1,2])^2 / E[1,2]) + #男眼鏡無
+        ((O[2,1] - E[2,1])^2 / E[2,1]) + #女眼鏡
+        ((O[2,2] - E[2,2])^2 / E[2,2])   #女眼鏡無
+print(chi)
+```
+
 このクロス集計表`df_chi2`は`data.frame`型ですが、`chisq.test()`関数は`matrix`型を引数として受け取るため、`as.matrix()`関数を使って`matrix`型に変換します。
 年代を行、性別を列とする`matrix`型のクロス集計表を作成し、`chisq.test()`関数に渡します。
+
 ```{r}
 O <- as.matrix(df_chi2[,2:3])
+rownames(O) <- df_chi2$年代
+E <- as.matrix(df_chi_kitai[,2:3])
 rownames(O) <- df_chi2$年代
 chisq.test(O, correct = FALSE)
 ```
