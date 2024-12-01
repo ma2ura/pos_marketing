@@ -1,31 +1,54 @@
 # 第1回 売上をまとめた表をつくる
 
+## はじめに
+
+第1回の内容は，POSデータを集約して，売上金額や売上個数の合計を計算し，販売状況の特徴を把握しやすい図や表を作成することです。
+
 ## この章で使うファイルとパッケージ
 
-ファイル
+ここで用いるファイルは，MS Excelのファイルです。
+MS Excelで作成されたフィアルは拡張子に`.xlsx`がついています。
+
+:::{.aside}
+**拡張子**(extension)は，ファイル名の最後についている`.xlsx`や`.csv`などの文字列のことで，ファイルの種類を示しています。Windowsではデフォルトで拡張子が表示されない設定になっているかもしれないので，必ず拡張子を表示させる設定にしておいてください。`.exe`ファイルを知らずに実行すると，ウイルスに感染する可能性があるので，拡張子を表示させることはセキュリティ上も重要です。
+:::
 
 - `chp1.xlsx`
 
-パッケージ
+Rの機能を拡張するために，ここでは以下のパッケージを用います。
 
 - `tidyverse` : データの読み込み，加工，可視化に使うパッケージ
 - `readxl` : Excelファイルを読み込むためのパッケージ
 
+通常，Rでは`install.packages()`関数を使ってパッケージをインストールし，`library()`で読み出しますが，ここでは`pacman`パッケージを使って一括でインストール・読み込みを行います。
+
+`pacman`パッケージを使うために，以下のコードを実行してください。
+
 ```{r}
-pacman::p_load(tidyverse, readxl, tidyplots, ggthemes, kableExtra)
+#| eval: false
+install.packages("pacman") # 最初の1回だけ実行
 ```
 
+`pacman`パッケージには便利な関数がいろいろありますが，ここでは`p_load()`関数を使って複数のパッケージを一括で読み込みます。まだインストールされていないパッケージがあれば，自動でインストールされます。
+便利なパッケージをいろいろ読み込んでおきましょう。
+
+```{r}
+pacman::p_load(tidyverse, readxl, ggthemes, gt, gtExtras)
+```
+
+- `ggtheme` : グラフのテーマを変更するためのパッケージ
+- `gt` : 表を作成するためのパッケージ
+- `gtExtras` : `gt`パッケージの拡張機能を提供するパッケージ
+
+
 :::{.aside}
-`pacman`パッケージは，複数のパッケージを一括で読み込むためのパッケージです。
-インストールされていないパッケージを指定したときは，自動でインストールされる便利なパッケージです。
+`pacman::p_load()`のように，「パッケージ名`::`関数名」という書き方で，パッケージ名を指定して関数を使うと，`p_load()`関数が`pacman`パッケージの関数であることが分かりやすいので，似たような名前の関数があるときは，パッケージ名をつけて使うといいでしょう。
+たとえば，`dplyr::select()`関数や`readxl::read_excel()`関数です。
 :::
 
 この章で使うファイルは作業ディレクトリの`data`フォルダにいれておきましょう。
-
-:::{.aside}
-Rは作業ディレクトリとなっているフォルダを軸にしてファイルを読み込むため，ファイルの場所に注意してください。
-作業ディレクトリの中に`data`フォルダを作り，そこに`chp1.xlsx`を保存してあるとき，`data/chp1.xlsx`と指定することでファイルにアクセスできます。
-:::
+<span class="rmarker-s">Rは作業ディレクトリとなっているフォルダを軸にしてファイルを読み込む</span>ため，ファイルの場所に注意してください。
+ここでは作業ディレクトリの中に`data`フォルダを作り，そこに`chp1.xlsx`を保存してあるので，`data/chp1.xlsx`と指定することでファイルにアクセスしています。
 
 
 ## Rの準備
@@ -46,7 +69,7 @@ Rは作業ディレクトリとなっているフォルダを軸にしてファ�
 readxl::excel_sheets("data/chp1.xlsx")
 ```
 
-`excel_sheets()`関数はデフォルトで1番目のシートを読み込みます。
+<span class="rmarker-s">`excel_sheets()`関数はデフォルトで1番目のシートを読み込みます</span>。
 「いつものPOSデータ」を読み込みたいので，特に指定せずに`read_excel()`関数を使って読み込みます。
 
 ```{r}
@@ -117,6 +140,11 @@ df |>
   summary()
 ```
 
+:::{.aside}
+`is.double()`関数は，引数の型が数値型かどうかを判定する関数で，数値型の場合は`TRUE`を返し，そうでない場合は`FALSE`を返します。このように，`is.型名()`関数は，型を判定する関数として使われます。
+条件を満たす変数だけを選択する`dplyr::select()`関数と，`dplyr::where()`関数を使うことで変数の型を指定して変数を抽出できます。
+:::
+
 ## 因子型
 
 これらの文字型変数`曜日`，`性別`，`年代`，`メーカー`，`商品名`は，どのカテゴリーに属しているかを表している**カテゴリカルデータ**であるため，
@@ -167,17 +195,15 @@ df_maker_sales
 ```
 
 これだけです。
-キレイな表にするなら，`knitr::kable()`関数と`kableExtra`パッケージを使うといいでしょう。
+キレイな表にするなら，`gt()`関数と`gtExtra`パッケージを使うといいでしょう。
 
 ```{r}
 df_maker_sales |>
-  knitr::kable(
-    format = "html",
-    caption = "表1-2 メーカーごとの売上金額"
-  ) |>
-  kableExtra::kable_styling(
-    bootstrap_options = c("striped")
-  )
+  gt() |>
+  fmt_number(columns = 2:2, decimals = 0) |>
+  tab_header(title = "表1-2 メーカーごとの売上金額") |>
+  gt_theme_pff() |> # テーマを適用
+  as_raw_html()
 ```
 
 次に，各メーカーのどの商品が，平均何円で売られているのか，を調べてみましょう。
@@ -187,15 +213,14 @@ df_maker_sales |>
 df_maker_item <- df |>
   group_by(メーカー, 商品名) |> # メーカーと商品名でグループ化
   summarise(平均単価 = mean(単価)) |> # 平均単価を計算
-  arrange(メーカー, desc(平均単価))# メーカーと平均単価でソート
+  arrange(メーカー, desc(平均単価)) |># メーカーと平均単価でソート
+  ungroup()
 df_maker_item |>
-  knitr::kable(
-    format = "html",
-    caption = "表1−3 商品ごとの単価"
-  ) |>
-  kableExtra::kable_styling(
-    bootstrap_options = c("striped")
-  )
+  gt() |>
+  fmt_number(columns = 3:3, decimals = 0) |>
+  tab_header(title = "表1−3 商品ごとの単価") |>
+  gt_theme_pff() |> # テーマを適用
+  as_raw_html()
 ```
 
 ## 資料作成に必要なデータを取り出す
@@ -228,10 +253,9 @@ df_jisha_total <- df |>
 df_jisha_total
 ```
 
-これで自社の売上金額と売上個数の合計が計算されました。
+これで自社の製品ごとの売上金額と売上個数の合計が計算されました。
 ここで注意しないといけないことは，`group_by()`関数と`summarise()`関数を使った場合，グループごとに1つの統計量を返すため，上のコードだと，
 自社の2商品ごとの売上金額と売上個数の合計が出力され，2行2列のデータフレームが返されていることが分かります。
-
 
 
 次に，各月ごとの売上金額を計算してみましょう。
@@ -254,16 +278,19 @@ df_month_sales <- df |>
   mutate(月 = lubridate::month(日付, label = TRUE)) |>
   group_by(月) |> # 月ごとにグループ化
   summarise(売上金額合計 = sum(金額)) |>
-  arrange(月)
+  arrange(月) |>
+  ungroup()
 
 df_month_sales |>
-  knitr::kable(
-    format = "html",
-    caption = "表1−5 自社商品の月ごとの売上金額"
-  ) |>
-    kableExtra::kable_styling(
-    bootstrap_options = c("striped")
-  )
+  gt() |>
+  fmt_number(columns = 2:2, decimals = 0) |>
+  tab_header(title = "表1−5 自社商品の月ごとの売上金額") |>
+  gt_theme_pff() |> # テーマを適用
+  tab_options(
+    heading.title.font.size = "small",
+    table.font.size = "large",
+    table.width = pct(60)
+    )
 ```
 
 同じように各時間帯ごとの売上金額を計算してみましょう。
@@ -273,16 +300,19 @@ df_time_sales <- df |>
   filter(メーカー == "自社") |>
   group_by(時間) |>
   summarise(売上金額合計 = sum(金額)) |>
-  arrange(時間)
+  arrange(時間) |>
+  ungroup()
 
 df_time_sales |>
-  knitr::kable(
-    format = "html",
-    caption = "表1−6 自社商品の時間帯ごとの売上金額"
-  ) |>
-    kableExtra::kable_styling(
-    bootstrap_options = c("striped")
-  )
+  gt() |>
+  fmt_number(columns = 2:2, decimals = 0) |>
+  gt_theme_pff() |> # テーマを適用
+  tab_header(title = "表1−6 自社商品の時間帯別売上高") |>
+  tab_options(
+        heading.title.font.size = "small",
+        table.font.size = "large",
+        table.width = pct(60)
+        )
 ```
 
 ## 集計結果をグラフで可視化
@@ -290,14 +320,21 @@ df_time_sales |>
 可視化はRの得意分野です。
 `ggplot2`パッケージを使って，いろんなグラフで表示してみましょう。
 
+:::{.aside}
+`ggplot2`パッケージで日本語を表示させるためには，一手間必要になります。
+しかもMacOSとWindowsでやり方が異なるので，注意してください。
+松浦の環境はMacOSであるため，ヒラギノフォントを指定してます。
+ついでに，カラーパレットもユニバーサルデザインに配慮した`scale_fill_tableau(name = "Tableau 20")`を指定してます。
+:::
 
-メーカー別売上金額を棒グラフにします。
+
+メーカー別の売上合計金額を棒グラフにします。
 
 ```{r}
 df_maker_sales |>
   ggplot() + aes(x = メーカー, y = 売上金額合計, fill = メーカー) +
-  geom_col() + theme_bw(base_family = "HiraKakuPro-W3")
-
+  geom_col() + theme_bw(base_family = "HiraKakuProN-W6") +
+  scale_fill_tableau(name = "Tableau 20") # Tableau 20 パレットを適用
 ```
 
 月別売上高を折れ線グラフにします。
@@ -379,6 +416,7 @@ df_month_time_sales |>
 同じように，月と時間を入れ替えてみましょう。
 
 ```{r}
+#| cache: true
 df_month_time_sales |>
   ggplot() +
   aes(x = 時間, y = 売上金額合計, fill = 月) +
