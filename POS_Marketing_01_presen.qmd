@@ -1,9 +1,9 @@
 ---
 title: |
-  <b>2023年1月〜12月</b> </br>
-  <span style="color: #282A36; "> 自社商品(茶系飲料)の </br> 売上の報告 </span>
+  <b> POSデータを使った</b> </br>
+  <span style="color: #282A36; ">マーケティングデータ分析 </span>
 author: "松浦総一"
-date: "20 Nov. 2024"
+date: "1 Dec. 2024"
 format:
   revealjs:
     theme: ["default", "dracula.scss"]
@@ -14,7 +14,7 @@ format:
     chalkboard: true
     touch: true
     controls: true
-    width: 1300
+    width: 1400
     height: 900
 execute:
   echo: true
@@ -23,30 +23,304 @@ execute:
 css: mystyle.css
 ---
 
+# 売上をまとめた表を作る
 
-## 自社商品を含む茶系飲料の1年間の売上金額
+## 準備
+
+以下のパッケージを使います。
 
 ```{r}
-#| echo: false
-pacman::p_load(tidyverse, ggthemes, kableExtra, patchwork)
+pacman::p_load(tidyverse, readxl, ggthemes, patchwork, gt, gtExtras)
 ```
 
+- `readxl` : Excelファイルを読み込むためのパッケージ
+- `ggthemes` : グラフのテーマを変更するためのパッケージ
+- `patchwork` : グラフを組み合わせるためのパッケージ
+- `gt` : 表を作成するためのパッケージ
+- `gtExtras` : `gt`パッケージの拡張機能を提供するパッケージ
+
+## データの読み込みと確認
+
+データは`chp1.xlsx`です。
+
 ```{r}
-#| echo: false
-#| cache: true
 df <- readxl::read_excel("data/chp1.xlsx")
+glimpse(df)
 ```
+
+
+## データの概要を確認する
+
+データの属性を確認するために，`summary()`関数を使います。
+
+```{r}
+summary(df)
+```
+
+## データの概要を確認する2
+
+この表より，
+
+- 日付は2023年1月2日から2023年12月31日まで
+- 時間は10:00から21:00まで
+- 単価は数値で，140〜170
+- 個数は数値で，1〜14
+- 金額は数値で，140〜2100
+
+## カテゴリー変数の処理
+
+文字列のカテゴリー変数を因子型に変更
+
+```{r}
+df <- df %>%
+  mutate(曜日 = factor(曜日, levels = c("月", "火", "水", "木", "金", "土", "日"), ordered = TRUE),
+         性別 = factor(性別, levels = c("男性", "女性"), ordered = TRUE),
+         年代 = factor(年代, levels = c("20歳未満", "20代", "30代", "40代", "50代", "60歳以上"), ordered = TRUE),
+         メーカー = as.factor(メーカー),
+         商品名 = as.factor(商品名))
+head(df) # 6行を表示
+```
+
+
+## データを再度確認
+
+```{r}
+summary(df)
+```
+
+# 自社商品の購入者属性
+
+## セグメンテーション
+
+顧客を属性で分類することを**セグメンテーション**といいます。
+ここでは，`自社`の商品を購入した顧客の属性を分析します。
+`メーカー`変数が`自社`の場合だけを抽出するには，`dplyr::filter()`関数を使います。
+`filter()`関数は，引数に`メーカー == "自社`という条件を指定することで，条件に合致するデータだけを抽出します。
+
+
+```{r}
+df_jisha <- df |>
+  dplyr::filter(メーカー == "自社")
+df_jisha |> head()
+```
+
+## 基礎集計で傾向をチェック
+
+メーカーごとの売上金額を集計してみましょう。
+
+```{r}
+df |>
+  dplyr::group_by(メーカー) |> # メーカーごとに
+  dplyr::summarise( # 売上金額を合計
+    売上合計 = sum(金額)
+  )
+```
+
+## `gt`パッケージを使って表を作成
+
+キレイな表にするなら，`gt()`関数と`gtExtra`パッケージを使うといいでしょう。
 
 ```{r}
 #| code-fold: true
-df <- df |>
+df |>
+  dplyr::group_by(メーカー) |> # メーカーごとに
+  dplyr::summarise( # 売上金額を合計
+    売上合計 = sum(金額)
+  ) |>
+  gt() |>
+  fmt_number(columns = 2:2, decimals = 0) |>
+  tab_header(title = "表1-2 メーカーごとの売上金額") |>
+  gt_theme_pff()
+```
+
+## 日付データの処理
+
+`df`データフレームの`日付`変数は日付型`POSIXct`になっています。
+
+```{r}
+class(df$日付)
+```
+
+日付データに対して`tidyverse`の`lubridate`パッケージを使うと，日付データを扱いやすくなります。
+
+```{r}
+df <- df %>%
   mutate(
-    メーカー = factor(メーカー, levels = c("自社", "競合A", "競合B", "競合C", "競合D"), ordered = TRUE)
-  )
+    月 = lubridate::month(日付, label = TRUE) |> as.factor(),
+    )
+table(df$月)
+```
+
+## 自社の月別売上高
+
+```{r}
+df |>
+  filter(メーカー == "自社") |> # 自社商品のみ抽出
+  group_by(月) |> # 月ごとに
+  summarise(
+    月別売上合計 = sum(金額)
+    ) # 売上金額を合計
+```
+
+
+## 自社の時間帯別売上高
+
+```{r}
+df |>
+  filter(メーカー == "自社") |> # 自社商品のみ抽出
+  group_by(時間) |> # 時間帯ごとに
+  summarise(
+    時間帯別売上合計 = sum(金額)
+    ) # 売上金額を合計
+```
+
+## 時間帯別売上高の折れ線グラフ
+
+```{r}
+#| code-fold: true
+df |>
+  filter(メーカー == "自社") |> # 自社商品のみ抽出
+  group_by(時間) |> # 時間帯ごとに
+  summarise( # 売上金額を合計
+    時間帯別売上合計 = sum(金額)
+    ) |>
+  ggplot() + aes(x = 時間, y = 時間帯別売上合計) + geom_line() +
+  labs(title = "図1-2 自社商品の時間帯別売上金額",
+       x = "時間帯", y = "売上金額") +
+  theme_bw(base_family = "HiraKakuPro-W3")
+```
+
+
+## 月別売上高の折れ線グラフ
+
+```{r}
+#| code-fold: true
+df |>
+  filter(メーカー == "自社") |> # 自社商品のみ抽出
+  group_by(月) |> # 時間帯ごとに
+  summarise( # 売上金額を合計
+    月別売上合計 = sum(金額)
+    ) |>
+    ggplot() + aes(x = 月, y = 月別売上合計, group = 1) + geom_line() +
+  labs(title = "図1-2 自社商品の月別売上金額",
+       x = "時間帯", y = "売上金額") +
+  theme_bw(base_family = "HiraKakuPro-W3")
+```
+
+
+## アニメーション
+
+
+```{r}
+#| code-fold: true
+#| cache: true
+pacman::p_load(gganimate)
+df |>
+  filter(メーカー == "自社") |> # 自社商品のみ抽出
+  group_by(月, 時間) |> # 月と時間ごとに
+  summarise(売上金額合計 = sum(金額)) |> # 売上金額を合計
+  arrange(月, 時間) |> # 月と時間で並び替え
+  ggplot() +
+  aes(x = 時間, y = 売上金額合計, fill = 月) +
+  geom_col(position = "dodge") +
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  guides(fill = guide_legend(title = "月")) +
+  scale_fill_viridis_d(direction = -1) +
+  transition_states(月, transition_length = 2, state_length = 1) +
+  labs(
+    title = "時間ごとの月別売上高:  {closest_state} 月",
+    x = "時間",
+    y = "売上金額合計"
+  ) +
+  enter_fade() +
+  exit_fade()
+```
+
+
+## 年代別と性別ごとの販売個数
+
+<span class="rmarker-s">自社商品におおける年代別と性別ごとの販売個数</span>を計算してみましょう。
+
+```{r}
+df_jisha_age_gender <- df_jisha  |>
+  group_by(年代, 性別) |> # 年代と性別ごとに
+  summarise(販売個数合計 = sum(個数)) |> # 個数を合計
+  ungroup() # グループ化解除
+df_jisha_age_gender |> head(3)
+```
+
+## 販売個数の表を作成
+
+ロング型をワイド型に変換し，表にする。
+
+```{r}
+# 男女の合計
+tbl_gender_total <- df_jisha_age_gender |>
+  group_by(性別) |> # 性別ごとに
+  summarise(合計 = sum(販売個数合計)) |> # 個数を合計
+  pivot_wider(names_from = 性別, values_from = 合計) |> # ワイドに
+  mutate(年代 = "合計") |> # 年代に"合計"を追加
+  ungroup() # グループ化解除
+df_jisha_age_gender |> # ワイドに
+  pivot_wider(names_from = 性別, values_from = 販売個数合計) |>
+  rbind(tbl_gender_total) |> # 合計の行を追加
+  mutate( # 合計の列を追加
+    合計 = 女性 + 男性
+  ) |>
+  gt() |>
+  fmt_number(columns = 2:4, decimals = 0) |>
+  gt_highlight_rows(rows = 7, fill = "lightpink") |>
+  gt_color_rows(4) |>
+  tab_header(title = "表2-1 性別・年代ごとの購入回数をまとめてクロス集計表")
+```
+
+## 売上金額
+
+
+```{r}
+#| code-fold: true
+df_jisha_sale_age_gender <- df |>
+  filter(メーカー == "自社") |> # 自社商品のみ抽出
+  group_by(性別, 年代) |> # 年代と性別ごとに
+  summarise( # 売上金額を合計
+    売上合計 = sum(金額)
+  ) |>
+  ungroup()
+# 表を作成
+df_jisha_sale_age_gender |>
+  pivot_wider(names_from = 性別, values_from = 売上合計) |>
+  gt() |>
+  fmt_number(columns = 2:3, decimals = 0) |>
+  tab_header(title = "表2-2 性別・年代ごとの自社商品の売上金額")
+```
+
+## 棒グラフにしてみる。
+
+```{r}
+#| code-fold: true
+df_jisha_sale_age_gender |>
+  ggplot() + aes(x = 年代, y = 売上合計, fill = 性別) +
+  geom_col(position = "dodge") +
+  labs(title = "図2-2 性別・年代ごとの自社商品の売上金額",
+       x = "年代",
+       y = "売上金額") +
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  scale_fill_tableau(name = "Tableau 20")
+```
+
+
+
+# 自社商品を含む茶系飲料の1年間の売上金額
+
+##
+
+```{r}
+#| code-fold: true
+
 df |>
   group_by(メーカー) |>
   summarise(売上合計 = sum(金額)) |>
-  ggplot() + aes(x = メーカー, y = 売上合計, fill = メーカー) + geom_col() + 
+  ggplot() + aes(x = メーカー, y = 売上合計, fill = メーカー) + geom_col() +
   # 数値を指数表記ではなく通常の表記にする
   scale_y_continuous(labels = scales::label_number()) +
   theme_bw(base_family = "HiraKakuProN-W3")
@@ -69,7 +343,7 @@ df_item <- df |>
   filter(メーカー == "自社") |>
   group_by(商品名) |>
   summarise(
-    販売合計 = sum(個数), 
+    販売合計 = sum(個数),
     売上合計 = sum(金額)
   )
 g1 <- ggplot(df_item) + aes(x = 商品名, y = 販売合計, fill = 商品名) + geom_col() +
@@ -110,11 +384,11 @@ label_points <- df_month_sales |>
 
 df_month_sales |>
   ggplot() + aes(x = 月, y = 売上金額合計, group = 1) + geom_line() +
-  geom_point() + 
-  scale_y_continuous(labels = scales::label_comma(), limits=c(0,5*10^6)) + 
-  theme_bw(base_family = "HiraKakuProN-W3") + 
+  geom_point() +
+  scale_y_continuous(labels = scales::label_comma(), limits=c(0,5*10^6)) +
+  theme_bw(base_family = "HiraKakuProN-W3") +
   geom_text(
-    data = label_points, 
+    data = label_points,
     aes(label = 売上金額合計),
     vjust = -1,
     size = 5

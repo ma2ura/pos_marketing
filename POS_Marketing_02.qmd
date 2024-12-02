@@ -1,19 +1,21 @@
 
 # 第2回 顧客層別の売上
 
+## はじめに
+
+年代ごとの客層に違いがあるのかや、自社と他社の顧客層に違いがあるのかを調べる方法を学ぶ。
+クロス表の作成方法やカイ二乗検定の方法を学びます。
+
 ## この章で使うファイルとパッケージ
 
-ファイル
+第2回ファイルで使うデータは`chp2.xlsx`です。
 
 - `chp2.xlsx`
 
-パッケージ
-
-- `tidyverse` : データの読み込み，加工，可視化に使うパッケージ
-- `readxl` : Excelファイルを読み込むためのパッケージ
+パッケージを読み込みます。
 
 ```{r}
-pacman::p_load(tidyverse, readxl, tidyplots, ggthemes, kableExtra, gt, gtExtras)
+pacman::p_load(tidyverse, readxl, ggthemes, gt, gtExtras)
 ```
 
 `readxl`パッケージを使ってデータ`chp2.xlsx`を読み込んでみましょう。
@@ -38,26 +40,25 @@ df <- df %>%
 head(df) # 戦闘6行を表示
 ```
 
-
 ## 自社商品における購入者の属性を調べる
 
 ### セグメンテーション
 
 顧客を属性で分類することを**セグメンテーション**といいます。
-セグメントごとの顧客の特徴を調べてみます。
+年代や性別といったセグメントごとの顧客の特徴を調べてみます。
 
-まずは自社商品におおける年代別と性別ごとの販売個数を計算してみましょう。
+まずは<span class="rmarker-s">自社商品におおける年代別と性別ごとの販売個数</span>を計算してみましょう。
 
 ```{r}
 df_jisha_age_sex_num <- df |>
-  filter(メーカー == "自社") |>
-  group_by(年代, 性別) |>
-  summarise(販売個数合計 = sum(個数)) |>
-  ungroup()
+  filter(メーカー == "自社") |> # 自社商品のみ抽出
+  group_by(年代, 性別) |> # 年代と性別ごとに
+  summarise(販売個数合計 = sum(個数)) |> # 個数を合計
+  ungroup() # グループ化解除
 df_jisha_age_sex_num
 ```
 
-表が出力されましたが，いわゆる「ロング型」となっているため，教科書のようなワイド型に変換してみましょう。
+表が出力されましたが，いわゆる「ロング型」となっているため，表示に適した教科書のようなワイド型に変換してみましょう。
 ついでに教科書のように，年代別合計を列に，性別ごとの合計を行に追加します。これが以外に面倒です。
 
 ```{r}
@@ -646,34 +647,4 @@ df_chi_test  <- df_chi2 |>
     values_to = "値" # 値を格納する列の名前
   )
 df_chi_test
-```
-
-```{r}
-df_a <- df_chi2 |>
-  pivot_longer(cols = -年代, names_to = "性別", values_to = "販売個数")
-df_b <- df_chi_kitai |>
-  pivot_longer(cols = -年代, names_to = "性別", values_to = "期待個数") |>
-  mutate(性別 = substr(性別,1,2))
-df_chi_test <- df_a |>
-  left_join(df_b, by = c("年代", "性別"))
-df_chi_test
-```
-
-```{r}
-chi <-  ((O[1,1] - E[1,1])^2 / E[1,1]) + #男眼鏡
-        ((O[1,2] - E[1,2])^2 / E[1,2]) + #男眼鏡無
-        ((O[2,1] - E[2,1])^2 / E[2,1]) + #女眼鏡
-        ((O[2,2] - E[2,2])^2 / E[2,2])   #女眼鏡無
-print(chi)
-```
-
-このクロス集計表`df_chi2`は`data.frame`型ですが、`chisq.test()`関数は`matrix`型を引数として受け取るため、`as.matrix()`関数を使って`matrix`型に変換します。
-年代を行、性別を列とする`matrix`型のクロス集計表を作成し、`chisq.test()`関数に渡します。
-
-```{r}
-O <- as.matrix(df_chi2[,2:3])
-rownames(O) <- df_chi2$年代
-E <- as.matrix(df_chi_kitai[,2:3])
-rownames(O) <- df_chi2$年代
-chisq.test(O, correct = FALSE)
 ```
