@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.32">
+<meta name="generator" content="quarto-1.6.36">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>2&nbsp; 第2回 顧客層別の売上 – POSとマーケティングデータ分析</title>
 <style>
@@ -60,6 +60,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./POS_Marketing_01_presen.html" rel="next">
 <link href="./POS_Marketing_01.html" rel="prev">
 <link href="./img/favicon.ico" rel="icon">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -67,10 +68,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-01c78b5cd655e4cd89133cf59d535862.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8473de6a1e397ed40005cc7c12b288ed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-c3c62341195aaca57c6426706fd8d4e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -138,7 +139,10 @@ window.Quarto = {
 </script><link rel="stylesheet" href="mystyle.css">
 <meta name="twitter:title" content="2&nbsp; 第2回 顧客層別の売上 – POSとマーケティングデータ分析">
 <meta name="twitter:description" content="">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://so-ichi.com/POS_Marketing_02_files/figure-html/unnamed-chunk-7-1.png">
+<meta name="twitter:image-height" content="960">
+<meta name="twitter:image-width" content="1344">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="nav-sidebar floating">
 
@@ -186,6 +190,13 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">第2回 顧客層別の売上</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_01_presen.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title"><b> POSデータを使った</b> 
+<span style="color: #282A36; ">マーケティングデータ分析 </span></span></span></a>
+  </div>
+</li>
     </ul>
 </div>
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
@@ -194,24 +205,25 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">目次</h2>
    
   <ul>
-<li><a href="#%E3%81%93%E3%81%AE%E7%AB%A0%E3%81%A7%E4%BD%BF%E3%81%86%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%A8%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8" id="toc-この章で使うファイルとパッケージ" class="nav-link active" data-scroll-target="#%E3%81%93%E3%81%AE%E7%AB%A0%E3%81%A7%E4%BD%BF%E3%81%86%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%A8%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8"><span class="header-section-number">2.1</span> この章で使うファイルとパッケージ</a></li>
+<li><a href="#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB" id="toc-はじめに" class="nav-link active" data-scroll-target="#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB"><span class="header-section-number">2.1</span> はじめに</a></li>
+  <li><a href="#%E3%81%93%E3%81%AE%E7%AB%A0%E3%81%A7%E4%BD%BF%E3%81%86%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%A8%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8" id="toc-この章で使うファイルとパッケージ" class="nav-link" data-scroll-target="#%E3%81%93%E3%81%AE%E7%AB%A0%E3%81%A7%E4%BD%BF%E3%81%86%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%A8%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8"><span class="header-section-number">2.2</span> この章で使うファイルとパッケージ</a></li>
   <li>
-<a href="#%E8%87%AA%E7%A4%BE%E5%95%86%E5%93%81%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E8%B3%BC%E5%85%A5%E8%80%85%E3%81%AE%E5%B1%9E%E6%80%A7%E3%82%92%E8%AA%BF%E3%81%B9%E3%82%8B" id="toc-自社商品における購入者の属性を調べる" class="nav-link" data-scroll-target="#%E8%87%AA%E7%A4%BE%E5%95%86%E5%93%81%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E8%B3%BC%E5%85%A5%E8%80%85%E3%81%AE%E5%B1%9E%E6%80%A7%E3%82%92%E8%AA%BF%E3%81%B9%E3%82%8B"><span class="header-section-number">2.2</span> 自社商品における購入者の属性を調べる</a>
+<a href="#%E8%87%AA%E7%A4%BE%E5%95%86%E5%93%81%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E8%B3%BC%E5%85%A5%E8%80%85%E3%81%AE%E5%B1%9E%E6%80%A7%E3%82%92%E8%AA%BF%E3%81%B9%E3%82%8B" id="toc-自社商品における購入者の属性を調べる" class="nav-link" data-scroll-target="#%E8%87%AA%E7%A4%BE%E5%95%86%E5%93%81%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E8%B3%BC%E5%85%A5%E8%80%85%E3%81%AE%E5%B1%9E%E6%80%A7%E3%82%92%E8%AA%BF%E3%81%B9%E3%82%8B"><span class="header-section-number">2.3</span> 自社商品における購入者の属性を調べる</a>
   <ul class="collapse">
-<li><a href="#%E3%82%BB%E3%82%B0%E3%83%A1%E3%83%B3%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3" id="toc-セグメンテーション" class="nav-link" data-scroll-target="#%E3%82%BB%E3%82%B0%E3%83%A1%E3%83%B3%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3"><span class="header-section-number">2.2.1</span> セグメンテーション</a></li>
-  <li><a href="#%E6%A3%92%E3%82%B0%E3%83%A9%E3%83%95%E3%81%AB%E3%82%88%E3%82%8B%E5%8F%AF%E8%A6%96%E5%8C%96" id="toc-棒グラフによる可視化" class="nav-link" data-scroll-target="#%E6%A3%92%E3%82%B0%E3%83%A9%E3%83%95%E3%81%AB%E3%82%88%E3%82%8B%E5%8F%AF%E8%A6%96%E5%8C%96"><span class="header-section-number">2.2.2</span> 棒グラフによる可視化</a></li>
-  <li><a href="#%E5%89%B2%E5%90%88%E3%82%92%E8%A6%8B%E3%82%8B" id="toc-割合を見る" class="nav-link" data-scroll-target="#%E5%89%B2%E5%90%88%E3%82%92%E8%A6%8B%E3%82%8B"><span class="header-section-number">2.2.3</span> 割合を見る</a></li>
-  <li><a href="#%E5%B9%B4%E4%BB%A3%E5%88%A5%E6%80%A7%E5%88%A5%E3%81%94%E3%81%A8%E3%81%AE%E8%B3%BC%E5%85%A5%E8%80%85%E3%81%AE%E5%B1%9E%E6%80%A7%E3%82%92%E8%AA%BF%E3%81%B9%E3%82%8B" id="toc-年代別性別ごとの購入者の属性を調べる" class="nav-link" data-scroll-target="#%E5%B9%B4%E4%BB%A3%E5%88%A5%E6%80%A7%E5%88%A5%E3%81%94%E3%81%A8%E3%81%AE%E8%B3%BC%E5%85%A5%E8%80%85%E3%81%AE%E5%B1%9E%E6%80%A7%E3%82%92%E8%AA%BF%E3%81%B9%E3%82%8B"><span class="header-section-number">2.2.4</span> 年代別・性別ごとの購入者の属性を調べる</a></li>
+<li><a href="#%E3%82%BB%E3%82%B0%E3%83%A1%E3%83%B3%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3" id="toc-セグメンテーション" class="nav-link" data-scroll-target="#%E3%82%BB%E3%82%B0%E3%83%A1%E3%83%B3%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3"><span class="header-section-number">2.3.1</span> セグメンテーション</a></li>
+  <li><a href="#%E6%A3%92%E3%82%B0%E3%83%A9%E3%83%95%E3%81%AB%E3%82%88%E3%82%8B%E5%8F%AF%E8%A6%96%E5%8C%96" id="toc-棒グラフによる可視化" class="nav-link" data-scroll-target="#%E6%A3%92%E3%82%B0%E3%83%A9%E3%83%95%E3%81%AB%E3%82%88%E3%82%8B%E5%8F%AF%E8%A6%96%E5%8C%96"><span class="header-section-number">2.3.2</span> 棒グラフによる可視化</a></li>
+  <li><a href="#%E5%89%B2%E5%90%88%E3%82%92%E8%A6%8B%E3%82%8B" id="toc-割合を見る" class="nav-link" data-scroll-target="#%E5%89%B2%E5%90%88%E3%82%92%E8%A6%8B%E3%82%8B"><span class="header-section-number">2.3.3</span> 割合を見る</a></li>
+  <li><a href="#%E5%B9%B4%E4%BB%A3%E5%88%A5%E6%80%A7%E5%88%A5%E3%81%94%E3%81%A8%E3%81%AE%E8%B3%BC%E5%85%A5%E8%80%85%E3%81%AE%E5%B1%9E%E6%80%A7%E3%82%92%E8%AA%BF%E3%81%B9%E3%82%8B" id="toc-年代別性別ごとの購入者の属性を調べる" class="nav-link" data-scroll-target="#%E5%B9%B4%E4%BB%A3%E5%88%A5%E6%80%A7%E5%88%A5%E3%81%94%E3%81%A8%E3%81%AE%E8%B3%BC%E5%85%A5%E8%80%85%E3%81%AE%E5%B1%9E%E6%80%A7%E3%82%92%E8%AA%BF%E3%81%B9%E3%82%8B"><span class="header-section-number">2.3.4</span> 年代別・性別ごとの購入者の属性を調べる</a></li>
   </ul>
 </li>
-  <li><a href="#%E7%AB%B6%E5%90%88%E5%95%86%E5%93%81%E3%81%A8%E3%81%AE%E5%B1%9E%E6%80%A7%E3%81%AE%E9%81%95%E3%81%84" id="toc-競合商品との属性の違い" class="nav-link" data-scroll-target="#%E7%AB%B6%E5%90%88%E5%95%86%E5%93%81%E3%81%A8%E3%81%AE%E5%B1%9E%E6%80%A7%E3%81%AE%E9%81%95%E3%81%84"><span class="header-section-number">2.3</span> 2-2 競合商品との属性の違い</a></li>
-  <li><a href="#%E7%B5%B1%E8%A8%88%E7%9A%84%E6%8E%A8%E5%AE%9A" id="toc-統計的推定" class="nav-link" data-scroll-target="#%E7%B5%B1%E8%A8%88%E7%9A%84%E6%8E%A8%E5%AE%9A"><span class="header-section-number">2.4</span> 統計的推定</a></li>
+  <li><a href="#%E7%AB%B6%E5%90%88%E5%95%86%E5%93%81%E3%81%A8%E3%81%AE%E5%B1%9E%E6%80%A7%E3%81%AE%E9%81%95%E3%81%84" id="toc-競合商品との属性の違い" class="nav-link" data-scroll-target="#%E7%AB%B6%E5%90%88%E5%95%86%E5%93%81%E3%81%A8%E3%81%AE%E5%B1%9E%E6%80%A7%E3%81%AE%E9%81%95%E3%81%84"><span class="header-section-number">2.4</span> 2-2 競合商品との属性の違い</a></li>
+  <li><a href="#%E7%B5%B1%E8%A8%88%E7%9A%84%E6%8E%A8%E5%AE%9A" id="toc-統計的推定" class="nav-link" data-scroll-target="#%E7%B5%B1%E8%A8%88%E7%9A%84%E6%8E%A8%E5%AE%9A"><span class="header-section-number">2.5</span> 統計的推定</a></li>
   <li>
-<a href="#%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%83%BC%E5%A4%89%E6%95%B0%E9%96%93%E3%81%AE%E9%96%A2%E9%80%A3%E6%80%A7%E3%81%AE%E6%A4%9C%E5%AE%9A" id="toc-カテゴリー変数間の関連性の検定" class="nav-link" data-scroll-target="#%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%83%BC%E5%A4%89%E6%95%B0%E9%96%93%E3%81%AE%E9%96%A2%E9%80%A3%E6%80%A7%E3%81%AE%E6%A4%9C%E5%AE%9A"><span class="header-section-number">2.5</span> カテゴリー変数間の関連性の検定</a>
+<a href="#%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%83%BC%E5%A4%89%E6%95%B0%E9%96%93%E3%81%AE%E9%96%A2%E9%80%A3%E6%80%A7%E3%81%AE%E6%A4%9C%E5%AE%9A" id="toc-カテゴリー変数間の関連性の検定" class="nav-link" data-scroll-target="#%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%83%BC%E5%A4%89%E6%95%B0%E9%96%93%E3%81%AE%E9%96%A2%E9%80%A3%E6%80%A7%E3%81%AE%E6%A4%9C%E5%AE%9A"><span class="header-section-number">2.6</span> カテゴリー変数間の関連性の検定</a>
   <ul class="collapse">
-<li><a href="#%E3%82%AB%E3%82%A4%E4%BA%8C%E4%B9%97%E6%A4%9C%E5%AE%9A" id="toc-カイ二乗検定" class="nav-link" data-scroll-target="#%E3%82%AB%E3%82%A4%E4%BA%8C%E4%B9%97%E6%A4%9C%E5%AE%9A"><span class="header-section-number">2.5.1</span> カイ二乗検定</a></li>
-  <li><a href="#r%E3%81%A7%CF%872%E6%A4%9C%E5%AE%9A" id="toc-rでχ2検定" class="nav-link" data-scroll-target="#r%E3%81%A7%CF%872%E6%A4%9C%E5%AE%9A"><span class="header-section-number">2.5.2</span> Rでχ2検定</a></li>
-  <li><a href="#%E8%87%AA%E7%A4%BE%E5%95%86%E5%93%81%E3%81%AE%E5%A3%B2%E4%B8%8A%E5%80%8B%E6%95%B0%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E6%80%A7%E5%88%A5%E3%81%A8%E5%B9%B4%E4%BB%A3%E3%81%AE%E5%B7%AE" id="toc-自社商品の売上個数における性別と年代の差" class="nav-link" data-scroll-target="#%E8%87%AA%E7%A4%BE%E5%95%86%E5%93%81%E3%81%AE%E5%A3%B2%E4%B8%8A%E5%80%8B%E6%95%B0%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E6%80%A7%E5%88%A5%E3%81%A8%E5%B9%B4%E4%BB%A3%E3%81%AE%E5%B7%AE"><span class="header-section-number">2.5.3</span> 自社商品の売上個数における性別と年代の差</a></li>
+<li><a href="#%E3%82%AB%E3%82%A4%E4%BA%8C%E4%B9%97%E6%A4%9C%E5%AE%9A" id="toc-カイ二乗検定" class="nav-link" data-scroll-target="#%E3%82%AB%E3%82%A4%E4%BA%8C%E4%B9%97%E6%A4%9C%E5%AE%9A"><span class="header-section-number">2.6.1</span> カイ二乗検定</a></li>
+  <li><a href="#r%E3%81%A7%CF%872%E6%A4%9C%E5%AE%9A" id="toc-rでχ2検定" class="nav-link" data-scroll-target="#r%E3%81%A7%CF%872%E6%A4%9C%E5%AE%9A"><span class="header-section-number">2.6.2</span> Rでχ2検定</a></li>
+  <li><a href="#%E8%87%AA%E7%A4%BE%E5%95%86%E5%93%81%E3%81%AE%E5%A3%B2%E4%B8%8A%E5%80%8B%E6%95%B0%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E6%80%A7%E5%88%A5%E3%81%A8%E5%B9%B4%E4%BB%A3%E3%81%AE%E5%B7%AE" id="toc-自社商品の売上個数における性別と年代の差" class="nav-link" data-scroll-target="#%E8%87%AA%E7%A4%BE%E5%95%86%E5%93%81%E3%81%AE%E5%A3%B2%E4%B8%8A%E5%80%8B%E6%95%B0%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E6%80%A7%E5%88%A5%E3%81%A8%E5%B9%B4%E4%BB%A3%E3%81%AE%E5%B7%AE"><span class="header-section-number">2.6.3</span> 自社商品の売上個数における性別と年代の差</a></li>
   </ul>
 </li>
   </ul></nav>
@@ -234,21 +246,18 @@ window.Quarto = {
   
 
 
-</header><section id="この章で使うファイルとパッケージ" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="この章で使うファイルとパッケージ">
-<span class="header-section-number">2.1</span> この章で使うファイルとパッケージ</h2>
-<p>ファイル</p>
+</header><section id="はじめに" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="はじめに">
+<span class="header-section-number">2.1</span> はじめに</h2>
+<p>年代ごとの客層に違いがあるのかや、自社と他社の顧客層に違いがあるのかを調べる方法を学ぶ。 クロス表の作成方法やカイ二乗検定の方法を学びます。</p>
+</section><section id="この章で使うファイルとパッケージ" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="この章で使うファイルとパッケージ">
+<span class="header-section-number">2.2</span> この章で使うファイルとパッケージ</h2>
+<p>第2回ファイルで使うデータは<code>chp2.xlsx</code>です。</p>
 <ul>
 <li><code>chp2.xlsx</code></li>
 </ul>
-<p>パッケージ</p>
-<ul>
-<li>
-<code>tidyverse</code> : データの読み込み，加工，可視化に使うパッケージ</li>
-<li>
-<code>readxl</code> : Excelファイルを読み込むためのパッケージ</li>
-</ul>
+<p>パッケージを読み込みます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>, <span class="va">readxl</span>, <span class="va">tidyplots</span>, <span class="va">ggthemes</span>, <span class="va">kableExtra</span>, <span class="va">gt</span>, <span class="va">gtExtras</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>, <span class="va">readxl</span>, <span class="va">ggthemes</span>, <span class="va">gt</span>, <span class="va">gtExtras</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>readxl</code>パッケージを使ってデータ<code>chp2.xlsx</code>を読み込んでみましょう。 前章と同様にこのExcelファイルのシートの一覧を表示してみます。</p>
 <div class="cell">
@@ -382,18 +391,18 @@ window.Quarto = {
 </div>
 </div>
 </div>
-</section><section id="自社商品における購入者の属性を調べる" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="自社商品における購入者の属性を調べる">
-<span class="header-section-number">2.2</span> 自社商品における購入者の属性を調べる</h2>
-<section id="セグメンテーション" class="level3" data-number="2.2.1"><h3 data-number="2.2.1" class="anchored" data-anchor-id="セグメンテーション">
-<span class="header-section-number">2.2.1</span> セグメンテーション</h3>
-<p>顧客を属性で分類することを<strong>セグメンテーション</strong>といいます。 セグメントごとの顧客の特徴を調べてみます。</p>
-<p>まずは自社商品におおける年代別と性別ごとの販売個数を計算してみましょう。</p>
+</section><section id="自社商品における購入者の属性を調べる" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="自社商品における購入者の属性を調べる">
+<span class="header-section-number">2.3</span> 自社商品における購入者の属性を調べる</h2>
+<section id="セグメンテーション" class="level3" data-number="2.3.1"><h3 data-number="2.3.1" class="anchored" data-anchor-id="セグメンテーション">
+<span class="header-section-number">2.3.1</span> セグメンテーション</h3>
+<p>顧客を属性で分類することを<strong>セグメンテーション</strong>といいます。 年代や性別といったセグメントごとの顧客の特徴を調べてみます。</p>
+<p>まずは<span class="rmarker-s">自社商品におおける年代別と性別ごとの販売個数</span>を計算してみましょう。</p>
 <div class="cell">
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_jisha_age_sex_num</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">メーカー</span> <span class="op">==</span> <span class="st">"自社"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">年代</span>, <span class="va">性別</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">summarise</span><span class="op">(</span>販売個数合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">個数</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">メーカー</span> <span class="op">==</span> <span class="st">"自社"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 自社商品のみ抽出</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">年代</span>, <span class="va">性別</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 年代と性別ごとに</span></span>
+<span>  <span class="fu">summarise</span><span class="op">(</span>販売個数合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">個数</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 個数を合計</span></span>
+<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="co"># グループ化解除</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by '年代'. You can override using the
 `.groups` argument.</code></pre>
@@ -473,7 +482,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>表が出力されましたが，いわゆる「ロング型」となっているため，教科書のようなワイド型に変換してみましょう。 ついでに教科書のように，年代別合計を列に，性別ごとの合計を行に追加します。これが以外に面倒です。</p>
+<p>表が出力されましたが，いわゆる「ロング型」となっているため，表示に適した教科書のようなワイド型に変換してみましょう。 ついでに教科書のように，年代別合計を列に，性別ごとの合計を行に追加します。これが以外に面倒です。</p>
 <div class="cell">
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">total_sex</span> <span class="op">&lt;-</span> <span class="va">df_jisha_age_sex_num</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">性別</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 性別ごとに</span></span>
@@ -491,23 +500,23 @@ window.Quarto = {
 <span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, decimals <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"表2-1 性別・年代ごとの購入回数をまとめてクロス集計表"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="zlhgukgxbg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zlhgukgxbg table {
+<div id="ffaixjtsum" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ffaixjtsum table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#zlhgukgxbg thead, #zlhgukgxbg tbody, #zlhgukgxbg tfoot, #zlhgukgxbg tr, #zlhgukgxbg td, #zlhgukgxbg th {
+#ffaixjtsum thead, #ffaixjtsum tbody, #ffaixjtsum tfoot, #ffaixjtsum tr, #ffaixjtsum td, #ffaixjtsum th {
   border-style: none;
 }
 
-#zlhgukgxbg p {
+#ffaixjtsum p {
   margin: 0;
   padding: 0;
 }
 
-#zlhgukgxbg .gt_table {
+#ffaixjtsum .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -533,12 +542,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#zlhgukgxbg .gt_caption {
+#ffaixjtsum .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#zlhgukgxbg .gt_title {
+#ffaixjtsum .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -550,7 +559,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#zlhgukgxbg .gt_subtitle {
+#ffaixjtsum .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -562,7 +571,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#zlhgukgxbg .gt_heading {
+#ffaixjtsum .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -574,13 +583,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#zlhgukgxbg .gt_bottom_border {
+#ffaixjtsum .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zlhgukgxbg .gt_col_headings {
+#ffaixjtsum .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -595,7 +604,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#zlhgukgxbg .gt_col_heading {
+#ffaixjtsum .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -615,7 +624,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#zlhgukgxbg .gt_column_spanner_outer {
+#ffaixjtsum .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -627,15 +636,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#zlhgukgxbg .gt_column_spanner_outer:first-child {
+#ffaixjtsum .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zlhgukgxbg .gt_column_spanner_outer:last-child {
+#ffaixjtsum .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zlhgukgxbg .gt_column_spanner {
+#ffaixjtsum .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -647,11 +656,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#zlhgukgxbg .gt_spanner_row {
+#ffaixjtsum .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#zlhgukgxbg .gt_group_heading {
+#ffaixjtsum .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -677,7 +686,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#zlhgukgxbg .gt_empty_group_heading {
+#ffaixjtsum .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -692,15 +701,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#zlhgukgxbg .gt_from_md > :first-child {
+#ffaixjtsum .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zlhgukgxbg .gt_from_md > :last-child {
+#ffaixjtsum .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zlhgukgxbg .gt_row {
+#ffaixjtsum .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -719,7 +728,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#zlhgukgxbg .gt_stub {
+#ffaixjtsum .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -732,7 +741,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#zlhgukgxbg .gt_stub_row_group {
+#ffaixjtsum .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -746,15 +755,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#zlhgukgxbg .gt_row_group_first td {
+#ffaixjtsum .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#zlhgukgxbg .gt_row_group_first th {
+#ffaixjtsum .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#zlhgukgxbg .gt_summary_row {
+#ffaixjtsum .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -764,16 +773,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#zlhgukgxbg .gt_first_summary_row {
+#ffaixjtsum .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#zlhgukgxbg .gt_first_summary_row.thick {
+#ffaixjtsum .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#zlhgukgxbg .gt_last_summary_row {
+#ffaixjtsum .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -783,7 +792,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#zlhgukgxbg .gt_grand_summary_row {
+#ffaixjtsum .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -793,7 +802,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#zlhgukgxbg .gt_first_grand_summary_row {
+#ffaixjtsum .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -803,7 +812,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#zlhgukgxbg .gt_last_grand_summary_row_top {
+#ffaixjtsum .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -813,11 +822,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#zlhgukgxbg .gt_striped {
+#ffaixjtsum .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#zlhgukgxbg .gt_table_body {
+#ffaixjtsum .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -826,7 +835,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#zlhgukgxbg .gt_footnotes {
+#ffaixjtsum .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -840,7 +849,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#zlhgukgxbg .gt_footnote {
+#ffaixjtsum .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -849,7 +858,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#zlhgukgxbg .gt_sourcenotes {
+#ffaixjtsum .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -863,7 +872,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#zlhgukgxbg .gt_sourcenote {
+#ffaixjtsum .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -871,72 +880,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#zlhgukgxbg .gt_left {
+#ffaixjtsum .gt_left {
   text-align: left;
 }
 
-#zlhgukgxbg .gt_center {
+#ffaixjtsum .gt_center {
   text-align: center;
 }
 
-#zlhgukgxbg .gt_right {
+#ffaixjtsum .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zlhgukgxbg .gt_font_normal {
+#ffaixjtsum .gt_font_normal {
   font-weight: normal;
 }
 
-#zlhgukgxbg .gt_font_bold {
+#ffaixjtsum .gt_font_bold {
   font-weight: bold;
 }
 
-#zlhgukgxbg .gt_font_italic {
+#ffaixjtsum .gt_font_italic {
   font-style: italic;
 }
 
-#zlhgukgxbg .gt_super {
+#ffaixjtsum .gt_super {
   font-size: 65%;
 }
 
-#zlhgukgxbg .gt_footnote_marks {
+#ffaixjtsum .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#zlhgukgxbg .gt_asterisk {
+#ffaixjtsum .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#zlhgukgxbg .gt_indent_1 {
+#ffaixjtsum .gt_indent_1 {
   text-indent: 5px;
 }
 
-#zlhgukgxbg .gt_indent_2 {
+#ffaixjtsum .gt_indent_2 {
   text-indent: 10px;
 }
 
-#zlhgukgxbg .gt_indent_3 {
+#ffaixjtsum .gt_indent_3 {
   text-indent: 15px;
 }
 
-#zlhgukgxbg .gt_indent_4 {
+#ffaixjtsum .gt_indent_4 {
   text-indent: 20px;
 }
 
-#zlhgukgxbg .gt_indent_5 {
+#ffaixjtsum .gt_indent_5 {
   text-indent: 25px;
 }
 
-#zlhgukgxbg .katex-display {
+#ffaixjtsum .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#zlhgukgxbg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ffaixjtsum div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1019,23 +1028,23 @@ window.Quarto = {
 <span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">3</span>, decimals <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"表2-2 性別・年代ごとの自社商品の売上金額"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fwnvuhrfic" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#fwnvuhrfic table {
+<div id="wtieyxdgsv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#wtieyxdgsv table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#fwnvuhrfic thead, #fwnvuhrfic tbody, #fwnvuhrfic tfoot, #fwnvuhrfic tr, #fwnvuhrfic td, #fwnvuhrfic th {
+#wtieyxdgsv thead, #wtieyxdgsv tbody, #wtieyxdgsv tfoot, #wtieyxdgsv tr, #wtieyxdgsv td, #wtieyxdgsv th {
   border-style: none;
 }
 
-#fwnvuhrfic p {
+#wtieyxdgsv p {
   margin: 0;
   padding: 0;
 }
 
-#fwnvuhrfic .gt_table {
+#wtieyxdgsv .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1061,12 +1070,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#fwnvuhrfic .gt_caption {
+#wtieyxdgsv .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#fwnvuhrfic .gt_title {
+#wtieyxdgsv .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1078,7 +1087,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#fwnvuhrfic .gt_subtitle {
+#wtieyxdgsv .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1090,7 +1099,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#fwnvuhrfic .gt_heading {
+#wtieyxdgsv .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1102,13 +1111,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#fwnvuhrfic .gt_bottom_border {
+#wtieyxdgsv .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fwnvuhrfic .gt_col_headings {
+#wtieyxdgsv .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1123,7 +1132,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#fwnvuhrfic .gt_col_heading {
+#wtieyxdgsv .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1143,7 +1152,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#fwnvuhrfic .gt_column_spanner_outer {
+#wtieyxdgsv .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1155,15 +1164,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#fwnvuhrfic .gt_column_spanner_outer:first-child {
+#wtieyxdgsv .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fwnvuhrfic .gt_column_spanner_outer:last-child {
+#wtieyxdgsv .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fwnvuhrfic .gt_column_spanner {
+#wtieyxdgsv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1175,11 +1184,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#fwnvuhrfic .gt_spanner_row {
+#wtieyxdgsv .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#fwnvuhrfic .gt_group_heading {
+#wtieyxdgsv .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1205,7 +1214,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#fwnvuhrfic .gt_empty_group_heading {
+#wtieyxdgsv .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1220,15 +1229,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#fwnvuhrfic .gt_from_md > :first-child {
+#wtieyxdgsv .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fwnvuhrfic .gt_from_md > :last-child {
+#wtieyxdgsv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fwnvuhrfic .gt_row {
+#wtieyxdgsv .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1247,7 +1256,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#fwnvuhrfic .gt_stub {
+#wtieyxdgsv .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1260,7 +1269,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#fwnvuhrfic .gt_stub_row_group {
+#wtieyxdgsv .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1274,15 +1283,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#fwnvuhrfic .gt_row_group_first td {
+#wtieyxdgsv .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#fwnvuhrfic .gt_row_group_first th {
+#wtieyxdgsv .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#fwnvuhrfic .gt_summary_row {
+#wtieyxdgsv .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1292,16 +1301,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#fwnvuhrfic .gt_first_summary_row {
+#wtieyxdgsv .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#fwnvuhrfic .gt_first_summary_row.thick {
+#wtieyxdgsv .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#fwnvuhrfic .gt_last_summary_row {
+#wtieyxdgsv .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1311,7 +1320,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#fwnvuhrfic .gt_grand_summary_row {
+#wtieyxdgsv .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1321,7 +1330,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#fwnvuhrfic .gt_first_grand_summary_row {
+#wtieyxdgsv .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1331,7 +1340,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#fwnvuhrfic .gt_last_grand_summary_row_top {
+#wtieyxdgsv .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1341,11 +1350,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#fwnvuhrfic .gt_striped {
+#wtieyxdgsv .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fwnvuhrfic .gt_table_body {
+#wtieyxdgsv .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1354,7 +1363,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#fwnvuhrfic .gt_footnotes {
+#wtieyxdgsv .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1368,7 +1377,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#fwnvuhrfic .gt_footnote {
+#wtieyxdgsv .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1377,7 +1386,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#fwnvuhrfic .gt_sourcenotes {
+#wtieyxdgsv .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1391,7 +1400,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#fwnvuhrfic .gt_sourcenote {
+#wtieyxdgsv .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1399,72 +1408,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#fwnvuhrfic .gt_left {
+#wtieyxdgsv .gt_left {
   text-align: left;
 }
 
-#fwnvuhrfic .gt_center {
+#wtieyxdgsv .gt_center {
   text-align: center;
 }
 
-#fwnvuhrfic .gt_right {
+#wtieyxdgsv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fwnvuhrfic .gt_font_normal {
+#wtieyxdgsv .gt_font_normal {
   font-weight: normal;
 }
 
-#fwnvuhrfic .gt_font_bold {
+#wtieyxdgsv .gt_font_bold {
   font-weight: bold;
 }
 
-#fwnvuhrfic .gt_font_italic {
+#wtieyxdgsv .gt_font_italic {
   font-style: italic;
 }
 
-#fwnvuhrfic .gt_super {
+#wtieyxdgsv .gt_super {
   font-size: 65%;
 }
 
-#fwnvuhrfic .gt_footnote_marks {
+#wtieyxdgsv .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#fwnvuhrfic .gt_asterisk {
+#wtieyxdgsv .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#fwnvuhrfic .gt_indent_1 {
+#wtieyxdgsv .gt_indent_1 {
   text-indent: 5px;
 }
 
-#fwnvuhrfic .gt_indent_2 {
+#wtieyxdgsv .gt_indent_2 {
   text-indent: 10px;
 }
 
-#fwnvuhrfic .gt_indent_3 {
+#wtieyxdgsv .gt_indent_3 {
   text-indent: 15px;
 }
 
-#fwnvuhrfic .gt_indent_4 {
+#wtieyxdgsv .gt_indent_4 {
   text-indent: 20px;
 }
 
-#fwnvuhrfic .gt_indent_5 {
+#wtieyxdgsv .gt_indent_5 {
   text-indent: 25px;
 }
 
-#fwnvuhrfic .katex-display {
+#wtieyxdgsv .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#fwnvuhrfic div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#wtieyxdgsv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1515,8 +1524,8 @@ window.Quarto = {
 </div>
 </div>
 </div>
-</section><section id="棒グラフによる可視化" class="level3" data-number="2.2.2"><h3 data-number="2.2.2" class="anchored" data-anchor-id="棒グラフによる可視化">
-<span class="header-section-number">2.2.2</span> 棒グラフによる可視化</h3>
+</section><section id="棒グラフによる可視化" class="level3" data-number="2.3.2"><h3 data-number="2.3.2" class="anchored" data-anchor-id="棒グラフによる可視化">
+<span class="header-section-number">2.3.2</span> 棒グラフによる可視化</h3>
 <p>可視化するため，棒グラフにしてみる。 <code>geom_col()</code>関数で棒グラフを描画し，<code>position = "dodge"</code>で性別ごとに横並びの棒グラフにします。</p>
 <div class="cell">
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_jisha_sale_age_sex</span> <span class="op">|&gt;</span></span>
@@ -1592,8 +1601,8 @@ window.Quarto = {
 </div>
 </div>
 </div>
-</section><section id="割合を見る" class="level3" data-number="2.2.3"><h3 data-number="2.2.3" class="anchored" data-anchor-id="割合を見る">
-<span class="header-section-number">2.2.3</span> 割合を見る</h3>
+</section><section id="割合を見る" class="level3" data-number="2.3.3"><h3 data-number="2.3.3" class="anchored" data-anchor-id="割合を見る">
+<span class="header-section-number">2.3.3</span> 割合を見る</h3>
 <p>表2-2の表を見ると，年代ごとの売上金額の合計が異なるため，単純に比較することができません。そこで売上高合計に占める割合を見てみます。</p>
 <div class="cell">
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_jisha_sale_age_sex</span> <span class="op">|&gt;</span></span>
@@ -1609,23 +1618,23 @@ window.Quarto = {
 <span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, decimals <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"表2-4 自社商品の売上金額における性別・年代の比率(%)"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="jsnobxkynv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#jsnobxkynv table {
+<div id="mkexkoiwoq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mkexkoiwoq table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#jsnobxkynv thead, #jsnobxkynv tbody, #jsnobxkynv tfoot, #jsnobxkynv tr, #jsnobxkynv td, #jsnobxkynv th {
+#mkexkoiwoq thead, #mkexkoiwoq tbody, #mkexkoiwoq tfoot, #mkexkoiwoq tr, #mkexkoiwoq td, #mkexkoiwoq th {
   border-style: none;
 }
 
-#jsnobxkynv p {
+#mkexkoiwoq p {
   margin: 0;
   padding: 0;
 }
 
-#jsnobxkynv .gt_table {
+#mkexkoiwoq .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1651,12 +1660,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#jsnobxkynv .gt_caption {
+#mkexkoiwoq .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#jsnobxkynv .gt_title {
+#mkexkoiwoq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1668,7 +1677,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#jsnobxkynv .gt_subtitle {
+#mkexkoiwoq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1680,7 +1689,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#jsnobxkynv .gt_heading {
+#mkexkoiwoq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1692,13 +1701,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#jsnobxkynv .gt_bottom_border {
+#mkexkoiwoq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jsnobxkynv .gt_col_headings {
+#mkexkoiwoq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1713,7 +1722,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#jsnobxkynv .gt_col_heading {
+#mkexkoiwoq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1733,7 +1742,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#jsnobxkynv .gt_column_spanner_outer {
+#mkexkoiwoq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1745,15 +1754,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#jsnobxkynv .gt_column_spanner_outer:first-child {
+#mkexkoiwoq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jsnobxkynv .gt_column_spanner_outer:last-child {
+#mkexkoiwoq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jsnobxkynv .gt_column_spanner {
+#mkexkoiwoq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1765,11 +1774,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#jsnobxkynv .gt_spanner_row {
+#mkexkoiwoq .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#jsnobxkynv .gt_group_heading {
+#mkexkoiwoq .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1795,7 +1804,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#jsnobxkynv .gt_empty_group_heading {
+#mkexkoiwoq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1810,15 +1819,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#jsnobxkynv .gt_from_md > :first-child {
+#mkexkoiwoq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jsnobxkynv .gt_from_md > :last-child {
+#mkexkoiwoq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jsnobxkynv .gt_row {
+#mkexkoiwoq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1837,7 +1846,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#jsnobxkynv .gt_stub {
+#mkexkoiwoq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1850,7 +1859,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#jsnobxkynv .gt_stub_row_group {
+#mkexkoiwoq .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1864,15 +1873,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#jsnobxkynv .gt_row_group_first td {
+#mkexkoiwoq .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#jsnobxkynv .gt_row_group_first th {
+#mkexkoiwoq .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#jsnobxkynv .gt_summary_row {
+#mkexkoiwoq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1882,16 +1891,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#jsnobxkynv .gt_first_summary_row {
+#mkexkoiwoq .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#jsnobxkynv .gt_first_summary_row.thick {
+#mkexkoiwoq .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#jsnobxkynv .gt_last_summary_row {
+#mkexkoiwoq .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1901,7 +1910,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#jsnobxkynv .gt_grand_summary_row {
+#mkexkoiwoq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1911,7 +1920,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#jsnobxkynv .gt_first_grand_summary_row {
+#mkexkoiwoq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1921,7 +1930,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#jsnobxkynv .gt_last_grand_summary_row_top {
+#mkexkoiwoq .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1931,11 +1940,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#jsnobxkynv .gt_striped {
+#mkexkoiwoq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jsnobxkynv .gt_table_body {
+#mkexkoiwoq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1944,7 +1953,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#jsnobxkynv .gt_footnotes {
+#mkexkoiwoq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1958,7 +1967,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#jsnobxkynv .gt_footnote {
+#mkexkoiwoq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1967,7 +1976,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#jsnobxkynv .gt_sourcenotes {
+#mkexkoiwoq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1981,7 +1990,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#jsnobxkynv .gt_sourcenote {
+#mkexkoiwoq .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1989,72 +1998,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#jsnobxkynv .gt_left {
+#mkexkoiwoq .gt_left {
   text-align: left;
 }
 
-#jsnobxkynv .gt_center {
+#mkexkoiwoq .gt_center {
   text-align: center;
 }
 
-#jsnobxkynv .gt_right {
+#mkexkoiwoq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jsnobxkynv .gt_font_normal {
+#mkexkoiwoq .gt_font_normal {
   font-weight: normal;
 }
 
-#jsnobxkynv .gt_font_bold {
+#mkexkoiwoq .gt_font_bold {
   font-weight: bold;
 }
 
-#jsnobxkynv .gt_font_italic {
+#mkexkoiwoq .gt_font_italic {
   font-style: italic;
 }
 
-#jsnobxkynv .gt_super {
+#mkexkoiwoq .gt_super {
   font-size: 65%;
 }
 
-#jsnobxkynv .gt_footnote_marks {
+#mkexkoiwoq .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#jsnobxkynv .gt_asterisk {
+#mkexkoiwoq .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#jsnobxkynv .gt_indent_1 {
+#mkexkoiwoq .gt_indent_1 {
   text-indent: 5px;
 }
 
-#jsnobxkynv .gt_indent_2 {
+#mkexkoiwoq .gt_indent_2 {
   text-indent: 10px;
 }
 
-#jsnobxkynv .gt_indent_3 {
+#mkexkoiwoq .gt_indent_3 {
   text-indent: 15px;
 }
 
-#jsnobxkynv .gt_indent_4 {
+#mkexkoiwoq .gt_indent_4 {
   text-indent: 20px;
 }
 
-#jsnobxkynv .gt_indent_5 {
+#mkexkoiwoq .gt_indent_5 {
   text-indent: 25px;
 }
 
-#jsnobxkynv .katex-display {
+#mkexkoiwoq .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#jsnobxkynv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#mkexkoiwoq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2126,23 +2135,23 @@ window.Quarto = {
 <span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">3</span>, decimals <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"表2-5 各性別を100%とした場合の性別に対する年代の比率 (%)"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="ofxvaulchy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ofxvaulchy table {
+<div id="nhtuxgpdyp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nhtuxgpdyp table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ofxvaulchy thead, #ofxvaulchy tbody, #ofxvaulchy tfoot, #ofxvaulchy tr, #ofxvaulchy td, #ofxvaulchy th {
+#nhtuxgpdyp thead, #nhtuxgpdyp tbody, #nhtuxgpdyp tfoot, #nhtuxgpdyp tr, #nhtuxgpdyp td, #nhtuxgpdyp th {
   border-style: none;
 }
 
-#ofxvaulchy p {
+#nhtuxgpdyp p {
   margin: 0;
   padding: 0;
 }
 
-#ofxvaulchy .gt_table {
+#nhtuxgpdyp .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2168,12 +2177,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#ofxvaulchy .gt_caption {
+#nhtuxgpdyp .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ofxvaulchy .gt_title {
+#nhtuxgpdyp .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2185,7 +2194,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#ofxvaulchy .gt_subtitle {
+#nhtuxgpdyp .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2197,7 +2206,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#ofxvaulchy .gt_heading {
+#nhtuxgpdyp .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2209,13 +2218,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#ofxvaulchy .gt_bottom_border {
+#nhtuxgpdyp .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ofxvaulchy .gt_col_headings {
+#nhtuxgpdyp .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2230,7 +2239,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#ofxvaulchy .gt_col_heading {
+#nhtuxgpdyp .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2250,7 +2259,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#ofxvaulchy .gt_column_spanner_outer {
+#nhtuxgpdyp .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2262,15 +2271,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#ofxvaulchy .gt_column_spanner_outer:first-child {
+#nhtuxgpdyp .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ofxvaulchy .gt_column_spanner_outer:last-child {
+#nhtuxgpdyp .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ofxvaulchy .gt_column_spanner {
+#nhtuxgpdyp .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2282,11 +2291,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#ofxvaulchy .gt_spanner_row {
+#nhtuxgpdyp .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ofxvaulchy .gt_group_heading {
+#nhtuxgpdyp .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2312,7 +2321,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#ofxvaulchy .gt_empty_group_heading {
+#nhtuxgpdyp .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2327,15 +2336,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#ofxvaulchy .gt_from_md > :first-child {
+#nhtuxgpdyp .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ofxvaulchy .gt_from_md > :last-child {
+#nhtuxgpdyp .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ofxvaulchy .gt_row {
+#nhtuxgpdyp .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2354,7 +2363,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#ofxvaulchy .gt_stub {
+#nhtuxgpdyp .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2367,7 +2376,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#ofxvaulchy .gt_stub_row_group {
+#nhtuxgpdyp .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2381,15 +2390,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#ofxvaulchy .gt_row_group_first td {
+#nhtuxgpdyp .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ofxvaulchy .gt_row_group_first th {
+#nhtuxgpdyp .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ofxvaulchy .gt_summary_row {
+#nhtuxgpdyp .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2399,16 +2408,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#ofxvaulchy .gt_first_summary_row {
+#nhtuxgpdyp .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ofxvaulchy .gt_first_summary_row.thick {
+#nhtuxgpdyp .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ofxvaulchy .gt_last_summary_row {
+#nhtuxgpdyp .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2418,7 +2427,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#ofxvaulchy .gt_grand_summary_row {
+#nhtuxgpdyp .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2428,7 +2437,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#ofxvaulchy .gt_first_grand_summary_row {
+#nhtuxgpdyp .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2438,7 +2447,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#ofxvaulchy .gt_last_grand_summary_row_top {
+#nhtuxgpdyp .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2448,11 +2457,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#ofxvaulchy .gt_striped {
+#nhtuxgpdyp .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ofxvaulchy .gt_table_body {
+#nhtuxgpdyp .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2461,7 +2470,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#ofxvaulchy .gt_footnotes {
+#nhtuxgpdyp .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2475,7 +2484,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#ofxvaulchy .gt_footnote {
+#nhtuxgpdyp .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2484,7 +2493,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#ofxvaulchy .gt_sourcenotes {
+#nhtuxgpdyp .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2498,7 +2507,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#ofxvaulchy .gt_sourcenote {
+#nhtuxgpdyp .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2506,72 +2515,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#ofxvaulchy .gt_left {
+#nhtuxgpdyp .gt_left {
   text-align: left;
 }
 
-#ofxvaulchy .gt_center {
+#nhtuxgpdyp .gt_center {
   text-align: center;
 }
 
-#ofxvaulchy .gt_right {
+#nhtuxgpdyp .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ofxvaulchy .gt_font_normal {
+#nhtuxgpdyp .gt_font_normal {
   font-weight: normal;
 }
 
-#ofxvaulchy .gt_font_bold {
+#nhtuxgpdyp .gt_font_bold {
   font-weight: bold;
 }
 
-#ofxvaulchy .gt_font_italic {
+#nhtuxgpdyp .gt_font_italic {
   font-style: italic;
 }
 
-#ofxvaulchy .gt_super {
+#nhtuxgpdyp .gt_super {
   font-size: 65%;
 }
 
-#ofxvaulchy .gt_footnote_marks {
+#nhtuxgpdyp .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ofxvaulchy .gt_asterisk {
+#nhtuxgpdyp .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ofxvaulchy .gt_indent_1 {
+#nhtuxgpdyp .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ofxvaulchy .gt_indent_2 {
+#nhtuxgpdyp .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ofxvaulchy .gt_indent_3 {
+#nhtuxgpdyp .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ofxvaulchy .gt_indent_4 {
+#nhtuxgpdyp .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ofxvaulchy .gt_indent_5 {
+#nhtuxgpdyp .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ofxvaulchy .katex-display {
+#nhtuxgpdyp .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ofxvaulchy div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#nhtuxgpdyp div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2662,8 +2671,8 @@ window.Quarto = {
 </div>
 </div>
 </div>
-</section><section id="年代別性別ごとの購入者の属性を調べる" class="level3" data-number="2.2.4"><h3 data-number="2.2.4" class="anchored" data-anchor-id="年代別性別ごとの購入者の属性を調べる">
-<span class="header-section-number">2.2.4</span> 年代別・性別ごとの購入者の属性を調べる</h3>
+</section><section id="年代別性別ごとの購入者の属性を調べる" class="level3" data-number="2.3.4"><h3 data-number="2.3.4" class="anchored" data-anchor-id="年代別性別ごとの購入者の属性を調べる">
+<span class="header-section-number">2.3.4</span> 年代別・性別ごとの購入者の属性を調べる</h3>
 <div class="cell">
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_sales_total</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">メーカー</span> <span class="op">==</span> <span class="st">"自社"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -2684,23 +2693,23 @@ window.Quarto = {
 <span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">3</span>, decimals <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"表2-3 自社商品の年代別・性別別売上金額"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="tweqyifplf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#tweqyifplf table {
+<div id="obllnybdgd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#obllnybdgd table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#tweqyifplf thead, #tweqyifplf tbody, #tweqyifplf tfoot, #tweqyifplf tr, #tweqyifplf td, #tweqyifplf th {
+#obllnybdgd thead, #obllnybdgd tbody, #obllnybdgd tfoot, #obllnybdgd tr, #obllnybdgd td, #obllnybdgd th {
   border-style: none;
 }
 
-#tweqyifplf p {
+#obllnybdgd p {
   margin: 0;
   padding: 0;
 }
 
-#tweqyifplf .gt_table {
+#obllnybdgd .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2726,12 +2735,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#tweqyifplf .gt_caption {
+#obllnybdgd .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#tweqyifplf .gt_title {
+#obllnybdgd .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2743,7 +2752,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#tweqyifplf .gt_subtitle {
+#obllnybdgd .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2755,7 +2764,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#tweqyifplf .gt_heading {
+#obllnybdgd .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2767,13 +2776,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#tweqyifplf .gt_bottom_border {
+#obllnybdgd .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#tweqyifplf .gt_col_headings {
+#obllnybdgd .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2788,7 +2797,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#tweqyifplf .gt_col_heading {
+#obllnybdgd .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2808,7 +2817,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#tweqyifplf .gt_column_spanner_outer {
+#obllnybdgd .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2820,15 +2829,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#tweqyifplf .gt_column_spanner_outer:first-child {
+#obllnybdgd .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#tweqyifplf .gt_column_spanner_outer:last-child {
+#obllnybdgd .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#tweqyifplf .gt_column_spanner {
+#obllnybdgd .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2840,11 +2849,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#tweqyifplf .gt_spanner_row {
+#obllnybdgd .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#tweqyifplf .gt_group_heading {
+#obllnybdgd .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2870,7 +2879,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#tweqyifplf .gt_empty_group_heading {
+#obllnybdgd .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2885,15 +2894,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#tweqyifplf .gt_from_md > :first-child {
+#obllnybdgd .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#tweqyifplf .gt_from_md > :last-child {
+#obllnybdgd .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#tweqyifplf .gt_row {
+#obllnybdgd .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2912,7 +2921,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#tweqyifplf .gt_stub {
+#obllnybdgd .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2925,7 +2934,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#tweqyifplf .gt_stub_row_group {
+#obllnybdgd .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2939,15 +2948,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#tweqyifplf .gt_row_group_first td {
+#obllnybdgd .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#tweqyifplf .gt_row_group_first th {
+#obllnybdgd .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#tweqyifplf .gt_summary_row {
+#obllnybdgd .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2957,16 +2966,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#tweqyifplf .gt_first_summary_row {
+#obllnybdgd .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#tweqyifplf .gt_first_summary_row.thick {
+#obllnybdgd .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#tweqyifplf .gt_last_summary_row {
+#obllnybdgd .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2976,7 +2985,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#tweqyifplf .gt_grand_summary_row {
+#obllnybdgd .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2986,7 +2995,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#tweqyifplf .gt_first_grand_summary_row {
+#obllnybdgd .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2996,7 +3005,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#tweqyifplf .gt_last_grand_summary_row_top {
+#obllnybdgd .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3006,11 +3015,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#tweqyifplf .gt_striped {
+#obllnybdgd .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#tweqyifplf .gt_table_body {
+#obllnybdgd .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3019,7 +3028,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#tweqyifplf .gt_footnotes {
+#obllnybdgd .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3033,7 +3042,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#tweqyifplf .gt_footnote {
+#obllnybdgd .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3042,7 +3051,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#tweqyifplf .gt_sourcenotes {
+#obllnybdgd .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3056,7 +3065,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#tweqyifplf .gt_sourcenote {
+#obllnybdgd .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3064,72 +3073,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#tweqyifplf .gt_left {
+#obllnybdgd .gt_left {
   text-align: left;
 }
 
-#tweqyifplf .gt_center {
+#obllnybdgd .gt_center {
   text-align: center;
 }
 
-#tweqyifplf .gt_right {
+#obllnybdgd .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#tweqyifplf .gt_font_normal {
+#obllnybdgd .gt_font_normal {
   font-weight: normal;
 }
 
-#tweqyifplf .gt_font_bold {
+#obllnybdgd .gt_font_bold {
   font-weight: bold;
 }
 
-#tweqyifplf .gt_font_italic {
+#obllnybdgd .gt_font_italic {
   font-style: italic;
 }
 
-#tweqyifplf .gt_super {
+#obllnybdgd .gt_super {
   font-size: 65%;
 }
 
-#tweqyifplf .gt_footnote_marks {
+#obllnybdgd .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#tweqyifplf .gt_asterisk {
+#obllnybdgd .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#tweqyifplf .gt_indent_1 {
+#obllnybdgd .gt_indent_1 {
   text-indent: 5px;
 }
 
-#tweqyifplf .gt_indent_2 {
+#obllnybdgd .gt_indent_2 {
   text-indent: 10px;
 }
 
-#tweqyifplf .gt_indent_3 {
+#obllnybdgd .gt_indent_3 {
   text-indent: 15px;
 }
 
-#tweqyifplf .gt_indent_4 {
+#obllnybdgd .gt_indent_4 {
   text-indent: 20px;
 }
 
-#tweqyifplf .gt_indent_5 {
+#obllnybdgd .gt_indent_5 {
   text-indent: 25px;
 }
 
-#tweqyifplf .katex-display {
+#obllnybdgd .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#tweqyifplf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#obllnybdgd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3180,8 +3189,8 @@ window.Quarto = {
 </div>
 </div>
 </div>
-</section></section><section id="競合商品との属性の違い" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="競合商品との属性の違い">
-<span class="header-section-number">2.3</span> 2-2 競合商品との属性の違い</h2>
+</section></section><section id="競合商品との属性の違い" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="競合商品との属性の違い">
+<span class="header-section-number">2.4</span> 2-2 競合商品との属性の違い</h2>
 <p>競合する商品の売り上げ個数を，性別・年代ごとに集計してみる。</p>
 <div class="cell">
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_maker_age_sex</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
@@ -3202,23 +3211,23 @@ window.Quarto = {
 <span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, decimals <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"表2-6 年代・性別ごとの競合A社の売上個数"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="lfvqolbvew" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#lfvqolbvew table {
+<div id="xpikeyohxi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xpikeyohxi table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#lfvqolbvew thead, #lfvqolbvew tbody, #lfvqolbvew tfoot, #lfvqolbvew tr, #lfvqolbvew td, #lfvqolbvew th {
+#xpikeyohxi thead, #xpikeyohxi tbody, #xpikeyohxi tfoot, #xpikeyohxi tr, #xpikeyohxi td, #xpikeyohxi th {
   border-style: none;
 }
 
-#lfvqolbvew p {
+#xpikeyohxi p {
   margin: 0;
   padding: 0;
 }
 
-#lfvqolbvew .gt_table {
+#xpikeyohxi .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3244,12 +3253,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#lfvqolbvew .gt_caption {
+#xpikeyohxi .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#lfvqolbvew .gt_title {
+#xpikeyohxi .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3261,7 +3270,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#lfvqolbvew .gt_subtitle {
+#xpikeyohxi .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3273,7 +3282,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#lfvqolbvew .gt_heading {
+#xpikeyohxi .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3285,13 +3294,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#lfvqolbvew .gt_bottom_border {
+#xpikeyohxi .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#lfvqolbvew .gt_col_headings {
+#xpikeyohxi .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3306,7 +3315,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#lfvqolbvew .gt_col_heading {
+#xpikeyohxi .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3326,7 +3335,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#lfvqolbvew .gt_column_spanner_outer {
+#xpikeyohxi .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3338,15 +3347,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#lfvqolbvew .gt_column_spanner_outer:first-child {
+#xpikeyohxi .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#lfvqolbvew .gt_column_spanner_outer:last-child {
+#xpikeyohxi .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#lfvqolbvew .gt_column_spanner {
+#xpikeyohxi .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3358,11 +3367,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#lfvqolbvew .gt_spanner_row {
+#xpikeyohxi .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#lfvqolbvew .gt_group_heading {
+#xpikeyohxi .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3388,7 +3397,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#lfvqolbvew .gt_empty_group_heading {
+#xpikeyohxi .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3403,15 +3412,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#lfvqolbvew .gt_from_md > :first-child {
+#xpikeyohxi .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#lfvqolbvew .gt_from_md > :last-child {
+#xpikeyohxi .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#lfvqolbvew .gt_row {
+#xpikeyohxi .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3430,7 +3439,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#lfvqolbvew .gt_stub {
+#xpikeyohxi .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3443,7 +3452,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#lfvqolbvew .gt_stub_row_group {
+#xpikeyohxi .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3457,15 +3466,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#lfvqolbvew .gt_row_group_first td {
+#xpikeyohxi .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#lfvqolbvew .gt_row_group_first th {
+#xpikeyohxi .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#lfvqolbvew .gt_summary_row {
+#xpikeyohxi .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3475,16 +3484,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#lfvqolbvew .gt_first_summary_row {
+#xpikeyohxi .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#lfvqolbvew .gt_first_summary_row.thick {
+#xpikeyohxi .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#lfvqolbvew .gt_last_summary_row {
+#xpikeyohxi .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3494,7 +3503,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#lfvqolbvew .gt_grand_summary_row {
+#xpikeyohxi .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3504,7 +3513,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#lfvqolbvew .gt_first_grand_summary_row {
+#xpikeyohxi .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3514,7 +3523,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#lfvqolbvew .gt_last_grand_summary_row_top {
+#xpikeyohxi .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3524,11 +3533,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#lfvqolbvew .gt_striped {
+#xpikeyohxi .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#lfvqolbvew .gt_table_body {
+#xpikeyohxi .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3537,7 +3546,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#lfvqolbvew .gt_footnotes {
+#xpikeyohxi .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3551,7 +3560,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#lfvqolbvew .gt_footnote {
+#xpikeyohxi .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3560,7 +3569,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#lfvqolbvew .gt_sourcenotes {
+#xpikeyohxi .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3574,7 +3583,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#lfvqolbvew .gt_sourcenote {
+#xpikeyohxi .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3582,72 +3591,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#lfvqolbvew .gt_left {
+#xpikeyohxi .gt_left {
   text-align: left;
 }
 
-#lfvqolbvew .gt_center {
+#xpikeyohxi .gt_center {
   text-align: center;
 }
 
-#lfvqolbvew .gt_right {
+#xpikeyohxi .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#lfvqolbvew .gt_font_normal {
+#xpikeyohxi .gt_font_normal {
   font-weight: normal;
 }
 
-#lfvqolbvew .gt_font_bold {
+#xpikeyohxi .gt_font_bold {
   font-weight: bold;
 }
 
-#lfvqolbvew .gt_font_italic {
+#xpikeyohxi .gt_font_italic {
   font-style: italic;
 }
 
-#lfvqolbvew .gt_super {
+#xpikeyohxi .gt_super {
   font-size: 65%;
 }
 
-#lfvqolbvew .gt_footnote_marks {
+#xpikeyohxi .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#lfvqolbvew .gt_asterisk {
+#xpikeyohxi .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#lfvqolbvew .gt_indent_1 {
+#xpikeyohxi .gt_indent_1 {
   text-indent: 5px;
 }
 
-#lfvqolbvew .gt_indent_2 {
+#xpikeyohxi .gt_indent_2 {
   text-indent: 10px;
 }
 
-#lfvqolbvew .gt_indent_3 {
+#xpikeyohxi .gt_indent_3 {
   text-indent: 15px;
 }
 
-#lfvqolbvew .gt_indent_4 {
+#xpikeyohxi .gt_indent_4 {
   text-indent: 20px;
 }
 
-#lfvqolbvew .gt_indent_5 {
+#xpikeyohxi .gt_indent_5 {
   text-indent: 25px;
 }
 
-#lfvqolbvew .katex-display {
+#xpikeyohxi .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#lfvqolbvew div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#xpikeyohxi div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3747,23 +3756,23 @@ window.Quarto = {
 <span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">5</span>, decimals <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"表2-7 自社と競合A社の年代・性別別売上個数"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="jbwmtdffjt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#jbwmtdffjt table {
+<div id="fbkbhugbpa" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fbkbhugbpa table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#jbwmtdffjt thead, #jbwmtdffjt tbody, #jbwmtdffjt tfoot, #jbwmtdffjt tr, #jbwmtdffjt td, #jbwmtdffjt th {
+#fbkbhugbpa thead, #fbkbhugbpa tbody, #fbkbhugbpa tfoot, #fbkbhugbpa tr, #fbkbhugbpa td, #fbkbhugbpa th {
   border-style: none;
 }
 
-#jbwmtdffjt p {
+#fbkbhugbpa p {
   margin: 0;
   padding: 0;
 }
 
-#jbwmtdffjt .gt_table {
+#fbkbhugbpa .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3789,12 +3798,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#jbwmtdffjt .gt_caption {
+#fbkbhugbpa .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#jbwmtdffjt .gt_title {
+#fbkbhugbpa .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3806,7 +3815,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#jbwmtdffjt .gt_subtitle {
+#fbkbhugbpa .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3818,7 +3827,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#jbwmtdffjt .gt_heading {
+#fbkbhugbpa .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3830,13 +3839,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#jbwmtdffjt .gt_bottom_border {
+#fbkbhugbpa .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jbwmtdffjt .gt_col_headings {
+#fbkbhugbpa .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3851,7 +3860,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#jbwmtdffjt .gt_col_heading {
+#fbkbhugbpa .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3871,7 +3880,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#jbwmtdffjt .gt_column_spanner_outer {
+#fbkbhugbpa .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3883,15 +3892,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#jbwmtdffjt .gt_column_spanner_outer:first-child {
+#fbkbhugbpa .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jbwmtdffjt .gt_column_spanner_outer:last-child {
+#fbkbhugbpa .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jbwmtdffjt .gt_column_spanner {
+#fbkbhugbpa .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3903,11 +3912,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#jbwmtdffjt .gt_spanner_row {
+#fbkbhugbpa .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#jbwmtdffjt .gt_group_heading {
+#fbkbhugbpa .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3933,7 +3942,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#jbwmtdffjt .gt_empty_group_heading {
+#fbkbhugbpa .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3948,15 +3957,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#jbwmtdffjt .gt_from_md > :first-child {
+#fbkbhugbpa .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jbwmtdffjt .gt_from_md > :last-child {
+#fbkbhugbpa .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jbwmtdffjt .gt_row {
+#fbkbhugbpa .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3975,7 +3984,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#jbwmtdffjt .gt_stub {
+#fbkbhugbpa .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3988,7 +3997,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#jbwmtdffjt .gt_stub_row_group {
+#fbkbhugbpa .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4002,15 +4011,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#jbwmtdffjt .gt_row_group_first td {
+#fbkbhugbpa .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#jbwmtdffjt .gt_row_group_first th {
+#fbkbhugbpa .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#jbwmtdffjt .gt_summary_row {
+#fbkbhugbpa .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4020,16 +4029,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#jbwmtdffjt .gt_first_summary_row {
+#fbkbhugbpa .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#jbwmtdffjt .gt_first_summary_row.thick {
+#fbkbhugbpa .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#jbwmtdffjt .gt_last_summary_row {
+#fbkbhugbpa .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4039,7 +4048,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#jbwmtdffjt .gt_grand_summary_row {
+#fbkbhugbpa .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4049,7 +4058,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#jbwmtdffjt .gt_first_grand_summary_row {
+#fbkbhugbpa .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4059,7 +4068,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#jbwmtdffjt .gt_last_grand_summary_row_top {
+#fbkbhugbpa .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4069,11 +4078,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#jbwmtdffjt .gt_striped {
+#fbkbhugbpa .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jbwmtdffjt .gt_table_body {
+#fbkbhugbpa .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4082,7 +4091,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#jbwmtdffjt .gt_footnotes {
+#fbkbhugbpa .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4096,7 +4105,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#jbwmtdffjt .gt_footnote {
+#fbkbhugbpa .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -4105,7 +4114,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#jbwmtdffjt .gt_sourcenotes {
+#fbkbhugbpa .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4119,7 +4128,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#jbwmtdffjt .gt_sourcenote {
+#fbkbhugbpa .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -4127,72 +4136,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#jbwmtdffjt .gt_left {
+#fbkbhugbpa .gt_left {
   text-align: left;
 }
 
-#jbwmtdffjt .gt_center {
+#fbkbhugbpa .gt_center {
   text-align: center;
 }
 
-#jbwmtdffjt .gt_right {
+#fbkbhugbpa .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jbwmtdffjt .gt_font_normal {
+#fbkbhugbpa .gt_font_normal {
   font-weight: normal;
 }
 
-#jbwmtdffjt .gt_font_bold {
+#fbkbhugbpa .gt_font_bold {
   font-weight: bold;
 }
 
-#jbwmtdffjt .gt_font_italic {
+#fbkbhugbpa .gt_font_italic {
   font-style: italic;
 }
 
-#jbwmtdffjt .gt_super {
+#fbkbhugbpa .gt_super {
   font-size: 65%;
 }
 
-#jbwmtdffjt .gt_footnote_marks {
+#fbkbhugbpa .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#jbwmtdffjt .gt_asterisk {
+#fbkbhugbpa .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#jbwmtdffjt .gt_indent_1 {
+#fbkbhugbpa .gt_indent_1 {
   text-indent: 5px;
 }
 
-#jbwmtdffjt .gt_indent_2 {
+#fbkbhugbpa .gt_indent_2 {
   text-indent: 10px;
 }
 
-#jbwmtdffjt .gt_indent_3 {
+#fbkbhugbpa .gt_indent_3 {
   text-indent: 15px;
 }
 
-#jbwmtdffjt .gt_indent_4 {
+#fbkbhugbpa .gt_indent_4 {
   text-indent: 20px;
 }
 
-#jbwmtdffjt .gt_indent_5 {
+#fbkbhugbpa .gt_indent_5 {
   text-indent: 25px;
 }
 
-#jbwmtdffjt .katex-display {
+#fbkbhugbpa .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#jbwmtdffjt div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#fbkbhugbpa div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -4314,15 +4323,15 @@ window.Quarto = {
 </div>
 </div>
 </div>
-</section><section id="統計的推定" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="統計的推定">
-<span class="header-section-number">2.4</span> 統計的推定</h2>
+</section><section id="統計的推定" class="level2" data-number="2.5"><h2 data-number="2.5" class="anchored" data-anchor-id="統計的推定">
+<span class="header-section-number">2.5</span> 統計的推定</h2>
 <p>統計学において，関心のある調査対象全体を<strong>母集団</strong>(population)といいます。 通常，母集団は非常に大きいデータであるため，全てのデータを調査することはコストや手間の面で非常に困難です。 母集団の平均や分散といった統計量を<strong>母数</strong>(parameter)といい，通常母数は観察不可能な値と考えます。</p>
 <p>そこで，母集団から一部を抽出して調査することにします。 この母集団から抽出された，母集団より数ケタ小さな一式のデータを<strong>標本</strong>(sample)といいます。 この標本の平均や分散といった集約した値を<strong>統計量</strong>(statistic)といい，標本平均や標本分散は計算可能な値です。 統計学では，全体を見ることなく，その一部である標本を見ることで，母集団の特性を推定することを目的としています。</p>
 <!-- この1つの標本から得られた統計量を使って，母集団の母数を推定することを**推定**(estimation)といいます。 -->
 <!-- 1斤300gと表記された食パンを購入し，家に帰ったから重さを量ったら294gであったとして，そこからパン屋さんが食パンの重さをごまかして表記より小さいパンを売っている，と主張することは可能でしょうか？ -->
 <!-- 当然ですが，標本平均が母平均と一致しているわけではないため，推定値である標本平均には誤差が含まれます。 -->
-</section><section id="カテゴリー変数間の関連性の検定" class="level2" data-number="2.5"><h2 data-number="2.5" class="anchored" data-anchor-id="カテゴリー変数間の関連性の検定">
-<span class="header-section-number">2.5</span> カテゴリー変数間の関連性の検定</h2>
+</section><section id="カテゴリー変数間の関連性の検定" class="level2" data-number="2.6"><h2 data-number="2.6" class="anchored" data-anchor-id="カテゴリー変数間の関連性の検定">
+<span class="header-section-number">2.6</span> カテゴリー変数間の関連性の検定</h2>
 <p>次に，ある特性をもつ2つの集団(カテゴリー)が関連しているかどうかを検定する方法を学びます。 カテゴリーに属するかということを表す変数を<strong>カテゴリー変数</strong>といいます。 たとえば，男なら1，女なら0といった性別カテゴリーの変数や，20代や50代といった年代に属するかどうかを表すカテゴリー変数があります。 このような2つのカテゴリー変数の関連性を調べるためにはクロス集計表を作ることが有益です。</p>
 <p>例えば、1学年400名の生徒うち、男が245名、女が155名いるとしましょう。 その学年の中で、メガネをかけている男が41名、メガネを掛けている女が81名いました。 このクロス集計表は次のようなものになります。</p>
 <table class="caption-top table">
@@ -4354,8 +4363,8 @@ window.Quarto = {
 </tbody>
 </table>
 <p>この表から、メガネをかけている人の割合は、男性の中で <span class="math inline">41\div 245 =</span> 0.1673469、女性の中で <span class="math inline">81 \div 155 =</span> 0.52であることから、女子学生の方がメガネをかけている割合が高いことが分かりました。</p>
-<section id="カイ二乗検定" class="level3" data-number="2.5.1"><h3 data-number="2.5.1" class="anchored" data-anchor-id="カイ二乗検定">
-<span class="header-section-number">2.5.1</span> カイ二乗検定</h3>
+<section id="カイ二乗検定" class="level3" data-number="2.6.1"><h3 data-number="2.6.1" class="anchored" data-anchor-id="カイ二乗検定">
+<span class="header-section-number">2.6.1</span> カイ二乗検定</h3>
 <p>このクロス集計表から読み取れる関係が、統計的に意味があるのかどうかを調べるためには、<span class="math inline">\chi ^2</span>(カイ二乗)検定を行います。 <span class="math inline">\chi^2</span>検定は次のステップで実行します。</p>
 <ol type="1">
 <li>
@@ -4556,8 +4565,8 @@ E_{女, メガネ無} &amp;= \frac{155 \times 278}{400} = 107.725
 </div>
 </div>
 <p>となり、非常に小さな値であることが分かりました。 つまり、2つのカテゴリー変数の間に関係がない、という帰無仮説の下で、観測された度数が発生することはほぼありえない、ということが言えるので、帰無仮説は棄却され、2つのカテゴリー変数には関係があると結論付けられます。</p>
-</section><section id="rでχ2検定" class="level3" data-number="2.5.2"><h3 data-number="2.5.2" class="anchored" data-anchor-id="rでχ2検定">
-<span class="header-section-number">2.5.2</span> Rでχ2検定</h3>
+</section><section id="rでχ2検定" class="level3" data-number="2.6.2"><h3 data-number="2.6.2" class="anchored" data-anchor-id="rでχ2検定">
+<span class="header-section-number">2.6.2</span> Rでχ2検定</h3>
 <p>Rでは<code><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test()</a></code>関数を使ってχ2検定を行うことができます。 引数は、<code>x</code>に度数表、<code>correct</code>に補正を行うかどうか、<code>p</code>に期待度数を指定します。</p>
 <p>先ほどの男女とメガネの例をここでも使ってみます。 まず<code><a href="https://rdrr.io/r/base/matrix.html">matrix()</a></code>関数を使ってクロス集計表を行列として作成します。</p>
 <div class="cell">
@@ -4634,8 +4643,8 @@ odds ratio
  0.1845096 </code></pre>
 </div>
 </div>
-</section><section id="自社商品の売上個数における性別と年代の差" class="level3" data-number="2.5.3"><h3 data-number="2.5.3" class="anchored" data-anchor-id="自社商品の売上個数における性別と年代の差">
-<span class="header-section-number">2.5.3</span> 自社商品の売上個数における性別と年代の差</h3>
+</section><section id="自社商品の売上個数における性別と年代の差" class="level3" data-number="2.6.3"><h3 data-number="2.6.3" class="anchored" data-anchor-id="自社商品の売上個数における性別と年代の差">
+<span class="header-section-number">2.6.3</span> 自社商品の売上個数における性別と年代の差</h3>
 <p>表2−3のクロス集計表を標本とみなして、この標本から母集団の性別・年代ごとに売上個数の差があるのかどうかを検証します。 ここでは、</p>
 <ul>
 <li>
@@ -4975,8 +4984,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -5089,7 +5096,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -5320,6 +5326,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./POS_Marketing_01_presen.html" class="pagination-link" aria-label="<b> POSデータを使った</b> </br>
+<span style=&quot;color: #282A36; &quot;>マーケティングデータ分析 </span>">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title"><b> POSデータを使った</b>  <span style="color: #282A36; ">マーケティングデータ分析 </span></span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
