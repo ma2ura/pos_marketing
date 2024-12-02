@@ -1,0 +1,186 @@
+
+# 第3回 売上の時系列データ分析
+
+## はじめに
+
+パッケージとデータを準備する。
+
+第3回ファイルで使うデータは`chp3.xlsx`です。
+
+- `chp3.xlsx`
+
+パッケージを読み込みます。
+
+```{r}
+pacman::p_load(tidyverse, readxl, ggthemes, gt, gtExtras)
+```
+
+「いつものPOSデータ」を読み込みます。
+ついでに文字列をカテゴリー変数として因子型に変換しておきます。
+
+```{r}
+#| cache=TRUE
+df <- readxl::read_excel("data/chp3.xlsx")
+df <- df %>%
+  mutate(曜日 = factor(曜日, levels = c("月", "火", "水", "木", "金", "土", "日"), ordered = TRUE),
+         性別 = factor(性別, levels = c("男性", "女性"), ordered = TRUE),
+         年代 = factor(年代, levels = c("20歳未満", "20代", "30代", "40代", "50代", "60歳以上"), ordered = TRUE),
+         メーカー = as.factor(メーカー),
+         商品名 = as.factor(商品名))
+head(df) # 戦闘6行を表示
+```
+
+## 商品と月ごとの売上個数
+
+
+```{r}
+df <- df |>
+    mutate(
+        分類 = paste0(メーカー, 商品名),
+        月 = lubridate::month(日付),
+        月 = factor(月, levels = unique(月)),
+        月日 = paste0(month(日付), "月", day(日付), "日"),
+    )
+
+df_month_item <- df |>
+    group_by(分類, 月) |>
+    summarise(売上個数 = sum(個数))
+df_month_item |>
+    pivot_wider(names_from = 分類, values_from = 売上個数) |>
+    gt()|>
+    fmt_number(columns = 2:8, decimals = 0)
+```
+
+
+```{r}
+df_month_item |>
+    ggplot(aes(x = 月, y = 売上個数, group = 分類, color = 分類)) +
+    geom_line() +
+    geom_point() +
+    theme(legend.position = "top") +
+    labs(title = "商品と月ごとの売上個数",
+         x = "月", y = "売上個数") +
+    theme_bw(base_family = "HiraKakuPro-W3") +
+    scale_fill_tableau(name = "Tableau 20")
+```
+
+
+個人的に気に入っているグラフの描き方です。
+
+
+```{r}
+#| fig-width: 12
+df_name <- df_month_item |> filter(月 == 12) # 12月のデータを抽出
+g <- df_month_item |>
+    ggplot(aes(x = 月, y = 売上個数, group = 分類, color = 分類)) +
+    geom_line() + geom_point() + # 線と点を描く
+    labs(title = "商品と月ごとの売上個数", x = "月", y = "売上個数") +
+    theme_bw(base_family = "HiraKakuPro-W3") +
+    scale_fill_tableau(name = "Tableau 20") +
+    scale_x_discrete(breaks = 1:12, expand = expansion(mult = c(0, .20))) # x軸の範囲を拡大
+g <- g + geom_text(data = df_name, aes(x = 月, y = 売上個数, label = 分類), adj = 0, size = 4, nudge_x = 0.2,family = "HiraKakuProN-W3")
+g
+```
+
+## 日別の売上個数
+
+
+```{r}
+df_md_item <- df |>
+    group_by(分類, 月日) |>
+    summarise(売上個数 = sum(個数)) |>
+    ungroup()
+df_md_item |>
+    pivot_wider(names_from = 分類, values_from = 売上個数) |>
+    head(10) |>
+    gt()|>
+    fmt_number(columns = 2:8, decimals = 0)
+```
+
+
+```{r}
+#| fig-width: 12
+df_md_item |>
+    ggplot(aes(x = 月日, y = 売上個数, group = 分類, color = 分類)) +
+    geom_line(linewidth = 0.5) +
+    geom_point(size = .5) +
+    labs(title = "商品と日別の売上個数",
+         x = "日", y = "売上個数") +
+    # ラベルを縦にする。
+    theme_bw(base_family = "HiraKakuPro-W3") +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    scale_fill_tableau(name = "Tableau 20")
+```
+
+
+
+```{r}
+df |>
+    filter(月 == 1) |>
+    filter(分類 %in% c("競合Aおいしい濃茶", "競合Aおいしい緑茶", "自社濃い茶", "自社緑茶")) |>
+    group_by(分類, 月日) |>
+    summarise(売上個数 = sum(個数)) |>
+    ggplot(aes(x = 月日, y = 売上個数, group = 分類, color = 分類)) +
+    geom_line(linewidth = 0.5) +
+    geom_point(size = .5) +
+    labs(title = "商品と日別の売上個数",
+         x = "日", y = "売上個数") +
+    # ラベルを縦にする。
+    theme_bw(base_family = "HiraKakuPro-W3") +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    scale_fill_tableau(name = "Tableau 20")
+```
+
+
+```{r}
+df |> 
+    filter(分類 %in% c("競合Aおいしい濃茶", "競合Aおいしい緑茶", "自社濃い茶", "自社緑茶")) |>
+    group_by(分類, 曜日) |>
+    summarise(売上個数 = sum(個数)) |>
+    ggplot(aes(x = 曜日, y = 売上個数, group = 分類, color = 分類)) +
+    geom_line(linewidth = 0.5) +
+    geom_point(size = .5) +
+    labs(title = "商品と曜日の売上個数",
+         x = "曜日", y = "売上個数") +
+    # ラベルを縦にする。
+    theme_bw(base_family = "HiraKakuPro-W3") +
+    scale_fill_tableau(name = "Tableau 20")
+```
+
+
+## 移動平均
+
+<!-- 
+日々の変動を平滑化するために、移動平均を使います。
+移動平均とは、基準時点を中心として前後のデータを含めた平均を取る手法です。
+たとえば、時系列データ$X_t$に対して、$t$時点を中心として前後$n$個のデータを含めた移動平均は次のように定義されます。 
+
+$$
+\text{移動平均} = \frac{1}{2n+1} \sum_{i=-n}^{n} X_{t+i}
+$$
+-->
+
+
+移動平均を計算するためには、`zoo`パッケージを使います。
+
+```{r}
+#| fig-width: 12
+#| warning: false
+pacman::p_load(zoo)
+df_mv_item <- df_md_item |>
+    filter(分類 %in% c("競合Aおいしい濃茶", "競合Aおいしい緑茶", "自社濃い茶", "自社緑茶")) |>
+    group_by(分類) |>
+    mutate(移動平均 = rollmean(売上個数, align = "right", k = 7, fill = NA)) |>
+    ungroup()
+
+levels(df_mv_item$月日)
+
+df_mv_item |>
+    ggplot() + aes(x = 月日, y = 移動平均, group = 分類, color = 分類) +
+    geom_line(linewidth = 0.5) + geom_point(size = .5) +
+    labs(title = "の売上個数の7日移動平均",
+         x = "基準日", y = "売上個数") +
+    theme_bw(base_family = "HiraKakuPro-W3") +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 6)) +
+    scale_fill_tableau(name = "Tableau 20")
+```

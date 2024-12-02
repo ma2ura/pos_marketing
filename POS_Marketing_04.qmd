@@ -1,0 +1,88 @@
+
+# 第4回 売上に影響を与える要因
+
+## はじめに
+
+パッケージとデータを準備する。
+
+第3回ファイルで使うデータは`chp4.xlsx`です。
+
+- `chp4.xlsx`
+
+パッケージを読み込みます。
+
+```{r}
+pacman::p_load(tidyverse, readxl, ggthemes, gt, gtExtras)
+```
+
+
+## 天気データ
+
+気象庁のウェブサイトからテキストの通りにデータを取得し、`weather.csv`として`data`フォルダに保存してください。
+このファイルをMS Excelで開くと、次のようなデータが表示されます。
+
+![気象庁のデータ](img/weather_data.png)
+
+このデータをRで分析するための前処理を行います。
+
+1. 必要ない値が入っているので、1〜3行目を削除
+2. 必要な変数は`年月日`、`平均気温(℃)`、`最高気温(℃)`、`最低気温(℃)`、`天気概況(昼：06時～18時)`、`降水量の合計(mm)`、`1時間降水量の最大(mm)`なので、それ以外の列を削除
+3. 必要ない行を削除
+
+```{r}
+weather <- read_csv(
+  "data/weather.csv", 
+  locale = locale(encoding = "cp932"),
+  skip=3)
+weather <- weather |>
+  select(c(1,2,5,8,11,15,19)) |>
+  slice(3:n()) |>
+  mutate(
+    年月日 = as.Date(年月日, format = "%Y/%m/%d")
+  )
+weather <- weather |>
+  rename(
+    `平均気温` = "平均気温(℃)...2",             
+    `最高気温` = "最高気温(℃)...5",
+    `最低気温` = "最低気温(℃)...8",
+    `降水量の合計mm` = "降水量の合計(mm)...11",
+    `一時間降水量の最大mm` = "1時間降水量の最大(mm)...15",
+    `天気概況6-18h` = "天気概況(昼：06時〜18時)...19"
+  )
+```
+
+## 販売データ
+
+```{r}
+df <- readxl::read_excel("data/chp4.xlsx", sheet = 1)
+df <- df |>
+  rename(
+    年月日 = "...1"
+  ) |>
+  mutate(
+    ## 1月2日を2023/01/02に変換
+    年月日 = paste0("2023/", gsub("月|日", "/", 年月日)),
+    年月日 = as.Date(年月日, format = "%Y/%m/%d")
+  )
+df_pos_weather <- df |>
+  left_join(weather, by = "年月日")
+
+view(df_pos_weather)
+```
+このデータを販売データに結合します。
+日付で1対1対応しているので、`left_join`を使います。
+
+## 気温のグラフ
+
+
+```{r}
+#| fig-width: 12
+df_pos_weather |>
+  select(年月日, 最低気温, 平均気温, 最高気温) |>
+  pivot_longer(cols = c(最低気温, 平均気温, 最高気温), names_to = "気温", values_to = "温度") |>
+  ggplot(aes(x = 年月日, y = 温度, group = 気温, color = 気温)) +
+  geom_line() +
+  geom_point() +
+    theme_bw(base_family = "HiraKakuPro-W3") +
+    scale_fill_tableau(name = "Tableau 20")
+```
