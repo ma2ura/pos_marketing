@@ -488,5 +488,105 @@
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'><b> POSデータを使った</b> </br>\n<span style=\"color: #282A36; \">マーケティングデータ分析 </span></span>"
     ]
+  },
+  {
+    "objectID": "POS_Marketing_04.html",
+    "href": "POS_Marketing_04.html",
+    "title": "\n4  第4回 売上に影響を与える要因\n",
+    "section": "",
+    "text": "4.1 はじめに\nパッケージとデータを準備する。\n第3回ファイルで使うデータはchp4.xlsxです。\nパッケージを読み込みます。\npacman::p_load(tidyverse, readxl, ggthemes, gt, gtExtras)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>第4回 売上に影響を与える要因</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_04.html#はじめに",
+    "href": "POS_Marketing_04.html#はじめに",
+    "title": "\n4  第4回 売上に影響を与える要因\n",
+    "section": "",
+    "text": "chp4.xlsx",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>第4回 売上に影響を与える要因</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_04.html#天気データ",
+    "href": "POS_Marketing_04.html#天気データ",
+    "title": "\n4  第4回 売上に影響を与える要因\n",
+    "section": "\n4.2 天気データ",
+    "text": "4.2 天気データ\n気象庁のウェブサイトからテキストの通りにデータを取得し、weather.csvとしてdataフォルダに保存してください。 このファイルをMS Excelで開くと、次のようなデータが表示されます。\n\n\n気象庁のデータ\n\nこのデータをRで分析するための前処理を行います。\n\n必要ない値が入っているので、1〜3行目を削除\n必要な変数は年月日、平均気温(℃)、最高気温(℃)、最低気温(℃)、天気概況(昼：06時～18時)、降水量の合計(mm)、1時間降水量の最大(mm)なので、それ以外の列を削除\n必要ない行を削除\n\n\nweather &lt;- read_csv(\n  \"data/weather.csv\", \n  locale = locale(encoding = \"cp932\"),\n  skip=3)\n\nNew names:\nRows: 366 Columns: 21\n── Column specification\n────────────────────────────────────────────────────────\nDelimiter: \",\" chr (16): 年月日, 平均気温(℃)...3, 平均気温(℃)...4,\n最高気温(℃)...6, 最高気温(℃)...7, 最低気温(℃)..... dbl (5):\n平均気温(℃)...2, 最高気温(℃)...5, 最低気温(℃)...8, 降水量の合計(mm)...11,\n1時間降水量の最大(...\nℹ Use `spec()` to retrieve the full column specification for this data. ℹ\nSpecify the column types or set `show_col_types = FALSE` to quiet this message.\n• `平均気温(℃)` -&gt; `平均気温(℃)...2`\n• `平均気温(℃)` -&gt; `平均気温(℃)...3`\n• `平均気温(℃)` -&gt; `平均気温(℃)...4`\n• `最高気温(℃)` -&gt; `最高気温(℃)...5`\n• `最高気温(℃)` -&gt; `最高気温(℃)...6`\n• `最高気温(℃)` -&gt; `最高気温(℃)...7`\n• `最低気温(℃)` -&gt; `最低気温(℃)...8`\n• `最低気温(℃)` -&gt; `最低気温(℃)...9`\n• `最低気温(℃)` -&gt; `最低気温(℃)...10`\n• `降水量の合計(mm)` -&gt; `降水量の合計(mm)...11`\n• `降水量の合計(mm)` -&gt; `降水量の合計(mm)...12`\n• `降水量の合計(mm)` -&gt; `降水量の合計(mm)...13`\n• `降水量の合計(mm)` -&gt; `降水量の合計(mm)...14`\n• `1時間降水量の最大(mm)` -&gt; `1時間降水量の最大(mm)...15`\n• `1時間降水量の最大(mm)` -&gt; `1時間降水量の最大(mm)...16`\n• `1時間降水量の最大(mm)` -&gt; `1時間降水量の最大(mm)...17`\n• `1時間降水量の最大(mm)` -&gt; `1時間降水量の最大(mm)...18`\n• `天気概況(昼：06時〜18時)` -&gt; `天気概況(昼：06時〜18時)...19`\n• `天気概況(昼：06時〜18時)` -&gt; `天気概況(昼：06時〜18時)...20`\n• `天気概況(昼：06時〜18時)` -&gt; `天気概況(昼：06時〜18時)...21`\n\nweather &lt;- weather |&gt;\n  select(c(1,2,5,8,11,15,19)) |&gt;\n  slice(3:n()) |&gt;\n  mutate(\n    年月日 = as.Date(年月日, format = \"%Y/%m/%d\")\n  )\nweather &lt;- weather |&gt;\n  rename(\n    `平均気温` = \"平均気温(℃)...2\",             \n    `最高気温` = \"最高気温(℃)...5\",\n    `最低気温` = \"最低気温(℃)...8\",\n    `降水量の合計mm` = \"降水量の合計(mm)...11\",\n    `一時間降水量の最大mm` = \"1時間降水量の最大(mm)...15\",\n    `天気概況6-18h` = \"天気概況(昼：06時〜18時)...19\"\n  )",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>第4回 売上に影響を与える要因</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_04.html#販売データ",
+    "href": "POS_Marketing_04.html#販売データ",
+    "title": "\n4  第4回 売上に影響を与える要因\n",
+    "section": "\n4.3 販売データ",
+    "text": "4.3 販売データ\n\ndf &lt;- readxl::read_excel(\"data/chp4.xlsx\", sheet = 1)\n\nNew names:\n• `` -&gt; `...1`\n\ndf &lt;- df |&gt;\n  rename(\n    年月日 = \"...1\"\n  ) |&gt;\n  mutate(\n    ## 1月2日を2023/01/02に変換\n    年月日 = paste0(\"2023/\", gsub(\"月|日\", \"/\", 年月日)),\n    年月日 = as.Date(年月日, format = \"%Y/%m/%d\")\n  )\ndf_pos_weather &lt;- df |&gt;\n  left_join(weather, by = \"年月日\")\n\nview(df_pos_weather)\n\nこのデータを販売データに結合します。 日付で1対1対応しているので、left_joinを使います。",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>第4回 売上に影響を与える要因</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_04.html#気温のグラフ",
+    "href": "POS_Marketing_04.html#気温のグラフ",
+    "title": "\n4  第4回 売上に影響を与える要因\n",
+    "section": "\n4.4 気温のグラフ",
+    "text": "4.4 気温のグラフ\n\ndf_pos_weather |&gt;\n  select(年月日, 最低気温, 平均気温, 最高気温) |&gt;\n  pivot_longer(cols = c(最低気温, 平均気温, 最高気温), names_to = \"気温\", values_to = \"温度\") |&gt;\n  ggplot(aes(x = 年月日, y = 温度, group = 気温, color = 気温)) +\n  geom_line() +\n  geom_point() +\n    theme_bw(base_family = \"HiraKakuPro-W3\") +\n    scale_fill_tableau(name = \"Tableau 20\")",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>第4回 売上に影響を与える要因</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_03.html",
+    "href": "POS_Marketing_03.html",
+    "title": "\n3  第3回 売上の時系列データ分析\n",
+    "section": "",
+    "text": "3.1 はじめに\nパッケージとデータを準備する。\n第3回ファイルで使うデータはchp3.xlsxです。\nパッケージを読み込みます。\npacman::p_load(tidyverse, readxl, ggthemes, gt, gtExtras)\n「いつものPOSデータ」を読み込みます。 ついでに文字列をカテゴリー変数として因子型に変換しておきます。\ndf &lt;- readxl::read_excel(\"data/chp3.xlsx\")\ndf &lt;- df %&gt;%\n  mutate(曜日 = factor(曜日, levels = c(\"月\", \"火\", \"水\", \"木\", \"金\", \"土\", \"日\"), ordered = TRUE),\n         性別 = factor(性別, levels = c(\"男性\", \"女性\"), ordered = TRUE),\n         年代 = factor(年代, levels = c(\"20歳未満\", \"20代\", \"30代\", \"40代\", \"50代\", \"60歳以上\"), ordered = TRUE),\n         メーカー = as.factor(メーカー),\n         商品名 = as.factor(商品名))\nhead(df) # 戦闘6行を表示\n\n# A tibble: 6 × 11\n  レシート番号 日付                曜日   時間 性別  年代  メーカー 商品名  単価\n  &lt;chr&gt;        &lt;dttm&gt;              &lt;ord&gt; &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;fct&gt;    &lt;fct&gt;  &lt;dbl&gt;\n1 R000001      2023-01-02 00:00:00 月       10 女性  30代  競合A    おい…    160\n2 R000001      2023-01-02 00:00:00 月       10 女性  30代  競合B    静岡…    170\n3 R000002      2023-01-02 00:00:00 月       10 男性  60歳… 競合B    静岡…    170\n4 R000002      2023-01-02 00:00:00 月       10 男性  60歳… 競合A    おい…    160\n5 R000003      2023-01-02 00:00:00 月       10 男性  50代  競合C    ほう…    140\n6 R000004      2023-01-02 00:00:00 月       10 女性  50代  競合D    ウー…    140\n# ℹ 2 more variables: 個数 &lt;dbl&gt;, 金額 &lt;dbl&gt;",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>第3回 売上の時系列データ分析</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_03.html#はじめに",
+    "href": "POS_Marketing_03.html#はじめに",
+    "title": "\n3  第3回 売上の時系列データ分析\n",
+    "section": "",
+    "text": "chp3.xlsx",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>第3回 売上の時系列データ分析</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_03.html#商品と月ごとの売上個数",
+    "href": "POS_Marketing_03.html#商品と月ごとの売上個数",
+    "title": "\n3  第3回 売上の時系列データ分析\n",
+    "section": "\n3.2 商品と月ごとの売上個数",
+    "text": "3.2 商品と月ごとの売上個数\n\ndf &lt;- df |&gt;\n    mutate(\n        分類 = paste0(メーカー, 商品名),\n        月 = lubridate::month(日付),\n        月 = factor(月, levels = unique(月)),\n        月日 = paste0(month(日付), \"月\", day(日付), \"日\"),\n    )\n\ndf_month_item &lt;- df |&gt;\n    group_by(分類, 月) |&gt;\n    summarise(売上個数 = sum(個数))\n\n`summarise()` has grouped output by '分類'. You can override using the\n`.groups` argument.\n\ndf_month_item |&gt;\n    pivot_wider(names_from = 分類, values_from = 売上個数) |&gt;\n    gt()|&gt;\n    fmt_number(columns = 2:8, decimals = 0)\n\n\n\n\n\n月\n競合Aおいしい濃茶\n競合Aおいしい緑茶\n競合B静岡の緑茶\n競合Cほうじ茶\n競合Dウーロン茶\n自社濃い茶\n自社緑茶\n\n\n\n1\n5,569\n8,344\n4,264\n3,397\n2,740\n4,183\n6,332\n\n\n2\n4,881\n7,119\n3,528\n2,892\n2,409\n3,535\n5,251\n\n\n3\n6,447\n9,776\n4,928\n4,005\n3,264\n4,719\n7,343\n\n\n4\n7,753\n11,761\n5,854\n5,009\n3,849\n6,032\n8,893\n\n\n5\n8,987\n13,588\n6,428\n5,571\n4,526\n6,601\n10,106\n\n\n6\n8,158\n12,072\n6,319\n4,989\n4,086\n6,058\n9,199\n\n\n7\n13,690\n20,222\n10,119\n8,583\n6,890\n10,407\n15,222\n\n\n8\n14,509\n22,650\n11,207\n9,291\n7,315\n11,348\n16,865\n\n\n9\n12,366\n19,143\n9,663\n7,941\n6,310\n9,769\n14,228\n\n\n10\n10,353\n15,540\n7,273\n6,339\n5,083\n7,666\n11,589\n\n\n11\n7,754\n11,427\n5,514\n4,742\n3,985\n5,680\n8,592\n\n\n12\n6,063\n8,675\n4,535\n3,596\n3,015\n4,462\n6,761\n\n\n\n\n\n\n\ndf_month_item |&gt;\n    ggplot(aes(x = 月, y = 売上個数, group = 分類, color = 分類)) +\n    geom_line() +\n    geom_point() +\n    theme(legend.position = \"top\") +\n    labs(title = \"商品と月ごとの売上個数\",\n         x = \"月\", y = \"売上個数\") +\n    theme_bw(base_family = \"HiraKakuPro-W3\") +\n    scale_fill_tableau(name = \"Tableau 20\")\n\n\n\n\n\n\n\n個人的に気に入っているグラフの描き方です。\n\ndf_name &lt;- df_month_item |&gt; filter(月 == 12) # 12月のデータを抽出\ng &lt;- df_month_item |&gt;\n    ggplot(aes(x = 月, y = 売上個数, group = 分類, color = 分類)) +\n    geom_line() + geom_point() + # 線と点を描く\n    labs(title = \"商品と月ごとの売上個数\", x = \"月\", y = \"売上個数\") +\n    theme_bw(base_family = \"HiraKakuPro-W3\") +\n    scale_fill_tableau(name = \"Tableau 20\") +\n    scale_x_discrete(breaks = 1:12, expand = expansion(mult = c(0, .20))) # x軸の範囲を拡大\ng &lt;- g + geom_text(data = df_name, aes(x = 月, y = 売上個数, label = 分類), adj = 0, size = 4, nudge_x = 0.2,family = \"HiraKakuProN-W3\")\ng",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>第3回 売上の時系列データ分析</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_03.html#日別の売上個数",
+    "href": "POS_Marketing_03.html#日別の売上個数",
+    "title": "\n3  第3回 売上の時系列データ分析\n",
+    "section": "\n3.3 日別の売上個数",
+    "text": "3.3 日別の売上個数\n\ndf_md_item &lt;- df |&gt;\n    group_by(分類, 月日) |&gt;\n    summarise(売上個数 = sum(個数)) |&gt;\n    ungroup()\n\n`summarise()` has grouped output by '分類'. You can override using the\n`.groups` argument.\n\ndf_md_item |&gt;\n    pivot_wider(names_from = 分類, values_from = 売上個数) |&gt;\n    head(10) |&gt;\n    gt()|&gt;\n    fmt_number(columns = 2:8, decimals = 0)\n\n\n\n\n\n月日\n競合Aおいしい濃茶\n競合Aおいしい緑茶\n競合B静岡の緑茶\n競合Cほうじ茶\n競合Dウーロン茶\n自社濃い茶\n自社緑茶\n\n\n\n10月10日\n361\n475\n206\n191\n189\n205\n351\n\n\n10月11日\n374\n613\n295\n264\n194\n352\n449\n\n\n10月12日\n253\n348\n185\n168\n125\n168\n273\n\n\n10月13日\n462\n737\n312\n283\n239\n330\n532\n\n\n10月14日\n544\n804\n392\n326\n229\n399\n570\n\n\n10月15日\n395\n647\n274\n245\n213\n279\n434\n\n\n10月16日\n196\n327\n147\n130\n111\n170\n261\n\n\n10月17日\n238\n455\n160\n185\n126\n194\n295\n\n\n10月18日\n324\n449\n225\n178\n130\n217\n347\n\n\n10月19日\n210\n341\n163\n127\n125\n165\n225\n\n\n\n\n\n\n\ndf_md_item |&gt;\n    ggplot(aes(x = 月日, y = 売上個数, group = 分類, color = 分類)) +\n    geom_line(linewidth = 0.5) +\n    geom_point(size = .5) +\n    labs(title = \"商品と日別の売上個数\",\n         x = \"日\", y = \"売上個数\") +\n    # ラベルを縦にする。\n    theme_bw(base_family = \"HiraKakuPro-W3\") +\n    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +\n    scale_fill_tableau(name = \"Tableau 20\")\n\n\n\n\n\n\n\n\ndf |&gt;\n    filter(月 == 1) |&gt;\n    filter(分類 %in% c(\"競合Aおいしい濃茶\", \"競合Aおいしい緑茶\", \"自社濃い茶\", \"自社緑茶\")) |&gt;\n    group_by(分類, 月日) |&gt;\n    summarise(売上個数 = sum(個数)) |&gt;\n    ggplot(aes(x = 月日, y = 売上個数, group = 分類, color = 分類)) +\n    geom_line(linewidth = 0.5) +\n    geom_point(size = .5) +\n    labs(title = \"商品と日別の売上個数\",\n         x = \"日\", y = \"売上個数\") +\n    # ラベルを縦にする。\n    theme_bw(base_family = \"HiraKakuPro-W3\") +\n    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +\n    scale_fill_tableau(name = \"Tableau 20\")\n\n`summarise()` has grouped output by '分類'. You can override using the\n`.groups` argument.\n\n\n\n\n\n\n\n\n\ndf |&gt; \n    filter(分類 %in% c(\"競合Aおいしい濃茶\", \"競合Aおいしい緑茶\", \"自社濃い茶\", \"自社緑茶\")) |&gt;\n    group_by(分類, 曜日) |&gt;\n    summarise(売上個数 = sum(個数)) |&gt;\n    ggplot(aes(x = 曜日, y = 売上個数, group = 分類, color = 分類)) +\n    geom_line(linewidth = 0.5) +\n    geom_point(size = .5) +\n    labs(title = \"商品と曜日の売上個数\",\n         x = \"曜日\", y = \"売上個数\") +\n    # ラベルを縦にする。\n    theme_bw(base_family = \"HiraKakuPro-W3\") +\n    scale_fill_tableau(name = \"Tableau 20\")\n\n`summarise()` has grouped output by '分類'. You can override using the\n`.groups` argument.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>第3回 売上の時系列データ分析</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_03.html#移動平均",
+    "href": "POS_Marketing_03.html#移動平均",
+    "title": "\n3  第3回 売上の時系列データ分析\n",
+    "section": "\n3.4 移動平均",
+    "text": "3.4 移動平均\n\n移動平均を計算するためには、zooパッケージを使います。\n\npacman::p_load(zoo)\ndf_mv_item &lt;- df_md_item |&gt;\n    filter(分類 %in% c(\"競合Aおいしい濃茶\", \"競合Aおいしい緑茶\", \"自社濃い茶\", \"自社緑茶\")) |&gt;\n    group_by(分類) |&gt;\n    mutate(移動平均 = rollmean(売上個数, align = \"right\", k = 7, fill = NA)) |&gt;\n    ungroup()\n\nlevels(df_mv_item$月日)\n\nNULL\n\ndf_mv_item |&gt;\n    ggplot() + aes(x = 月日, y = 移動平均, group = 分類, color = 分類) +\n    geom_line(linewidth = 0.5) + geom_point(size = .5) +\n    labs(title = \"の売上個数の7日移動平均\",\n         x = \"基準日\", y = \"売上個数\") +\n    theme_bw(base_family = \"HiraKakuPro-W3\") +\n    theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 6)) +\n    scale_fill_tableau(name = \"Tableau 20\")",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>第3回 売上の時系列データ分析</span>"
+    ]
   }
 ]
