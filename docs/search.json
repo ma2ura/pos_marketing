@@ -514,7 +514,7 @@
     "href": "POS_Marketing_04.html#天気データ",
     "title": "\n4  第4回 売上に影響を与える要因\n",
     "section": "\n4.2 天気データ",
-    "text": "4.2 天気データ\n気象庁のウェブサイトからテキストの通りにデータを取得し、weather.csvとしてdataフォルダに保存してください。 このファイルをMS Excelで開くと、次のようなデータが表示されます。\n\n\n気象庁のデータ\n\nこのデータをRで分析するための前処理を行います。\n\n必要ない値が入っているので、1〜3行目を削除\n必要な変数は年月日、平均気温(℃)、最高気温(℃)、最低気温(℃)、天気概況(昼：06時～18時)、降水量の合計(mm)、1時間降水量の最大(mm)なので、それ以外の列を削除\n必要ない行を削除\n\n\nweather &lt;- read_csv(\n  \"data/weather.csv\", \n  locale = locale(encoding = \"cp932\"),\n  skip=3)\n\nNew names:\nRows: 366 Columns: 21\n── Column specification\n────────────────────────────────────────────────────────\nDelimiter: \",\" chr (16): 年月日, 平均気温(℃)...3, 平均気温(℃)...4,\n最高気温(℃)...6, 最高気温(℃)...7, 最低気温(℃)..... dbl (5):\n平均気温(℃)...2, 最高気温(℃)...5, 最低気温(℃)...8, 降水量の合計(mm)...11,\n1時間降水量の最大(...\nℹ Use `spec()` to retrieve the full column specification for this data. ℹ\nSpecify the column types or set `show_col_types = FALSE` to quiet this message.\n• `平均気温(℃)` -&gt; `平均気温(℃)...2`\n• `平均気温(℃)` -&gt; `平均気温(℃)...3`\n• `平均気温(℃)` -&gt; `平均気温(℃)...4`\n• `最高気温(℃)` -&gt; `最高気温(℃)...5`\n• `最高気温(℃)` -&gt; `最高気温(℃)...6`\n• `最高気温(℃)` -&gt; `最高気温(℃)...7`\n• `最低気温(℃)` -&gt; `最低気温(℃)...8`\n• `最低気温(℃)` -&gt; `最低気温(℃)...9`\n• `最低気温(℃)` -&gt; `最低気温(℃)...10`\n• `降水量の合計(mm)` -&gt; `降水量の合計(mm)...11`\n• `降水量の合計(mm)` -&gt; `降水量の合計(mm)...12`\n• `降水量の合計(mm)` -&gt; `降水量の合計(mm)...13`\n• `降水量の合計(mm)` -&gt; `降水量の合計(mm)...14`\n• `1時間降水量の最大(mm)` -&gt; `1時間降水量の最大(mm)...15`\n• `1時間降水量の最大(mm)` -&gt; `1時間降水量の最大(mm)...16`\n• `1時間降水量の最大(mm)` -&gt; `1時間降水量の最大(mm)...17`\n• `1時間降水量の最大(mm)` -&gt; `1時間降水量の最大(mm)...18`\n• `天気概況(昼：06時〜18時)` -&gt; `天気概況(昼：06時〜18時)...19`\n• `天気概況(昼：06時〜18時)` -&gt; `天気概況(昼：06時〜18時)...20`\n• `天気概況(昼：06時〜18時)` -&gt; `天気概況(昼：06時〜18時)...21`\n\nweather &lt;- weather |&gt;\n  select(c(1,2,5,8,11,15,19)) |&gt;\n  slice(3:n()) |&gt;\n  mutate(\n    年月日 = as.Date(年月日, format = \"%Y/%m/%d\")\n  )\nweather &lt;- weather |&gt;\n  rename(\n    `平均気温` = \"平均気温(℃)...2\",             \n    `最高気温` = \"最高気温(℃)...5\",\n    `最低気温` = \"最低気温(℃)...8\",\n    `降水量の合計mm` = \"降水量の合計(mm)...11\",\n    `一時間降水量の最大mm` = \"1時間降水量の最大(mm)...15\",\n    `天気概況6-18h` = \"天気概況(昼：06時〜18時)...19\"\n  )",
+    "text": "4.2 天気データ\n気象庁のウェブサイトからテキストの通りにデータを取得し、weather.csvとしてdataフォルダに保存してください。 このファイルをMS Excelで開くと、次のようなデータが表示されます。\n\n\n気象庁のデータ\n\nこのデータをRで分析するための前処理を行います。\n\n必要ない値が入っているので、1〜3行目を削除\n必要な変数は年月日、平均気温(℃)、最高気温(℃)、最低気温(℃)、天気概況(昼：06時～18時)、降水量の合計(mm)、1時間降水量の最大(mm)なので、それ以外の列を削除\n必要ない行を削除\n\n\nweather &lt;- read_csv(\n  \"data/weather.csv\", # データへのパス\n  locale = locale(encoding = \"cp932\"), # 文字コードの指定\n  skip = 3 # 3行目まで読み込まない\n  )\n\nNew names:\nRows: 366 Columns: 21\n── Column specification\n────────────────────────────────────────────────────────\nDelimiter: \",\" chr (16): 年月日, 平均気温(℃)...3, 平均気温(℃)...4,\n最高気温(℃)...6, 最高気温(℃)...7, 最低気温(℃)..... dbl (5):\n平均気温(℃)...2, 最高気温(℃)...5, 最低気温(℃)...8, 降水量の合計(mm)...11,\n1時間降水量の最大(...\nℹ Use `spec()` to retrieve the full column specification for this data. ℹ\nSpecify the column types or set `show_col_types = FALSE` to quiet this message.\n• `平均気温(℃)` -&gt; `平均気温(℃)...2`\n• `平均気温(℃)` -&gt; `平均気温(℃)...3`\n• `平均気温(℃)` -&gt; `平均気温(℃)...4`\n• `最高気温(℃)` -&gt; `最高気温(℃)...5`\n• `最高気温(℃)` -&gt; `最高気温(℃)...6`\n• `最高気温(℃)` -&gt; `最高気温(℃)...7`\n• `最低気温(℃)` -&gt; `最低気温(℃)...8`\n• `最低気温(℃)` -&gt; `最低気温(℃)...9`\n• `最低気温(℃)` -&gt; `最低気温(℃)...10`\n• `降水量の合計(mm)` -&gt; `降水量の合計(mm)...11`\n• `降水量の合計(mm)` -&gt; `降水量の合計(mm)...12`\n• `降水量の合計(mm)` -&gt; `降水量の合計(mm)...13`\n• `降水量の合計(mm)` -&gt; `降水量の合計(mm)...14`\n• `1時間降水量の最大(mm)` -&gt; `1時間降水量の最大(mm)...15`\n• `1時間降水量の最大(mm)` -&gt; `1時間降水量の最大(mm)...16`\n• `1時間降水量の最大(mm)` -&gt; `1時間降水量の最大(mm)...17`\n• `1時間降水量の最大(mm)` -&gt; `1時間降水量の最大(mm)...18`\n• `天気概況(昼：06時〜18時)` -&gt; `天気概況(昼：06時〜18時)...19`\n• `天気概況(昼：06時〜18時)` -&gt; `天気概況(昼：06時〜18時)...20`\n• `天気概況(昼：06時〜18時)` -&gt; `天気概況(昼：06時〜18時)...21`\n\nweather &lt;- weather |&gt;\n  select(c(1,2,5,8,11,15,19)) |&gt; # 必要な変数だけ抽出\n  slice(3:n())\n\nこれで必要な部分だけデータを取得できましたが，変数名が重複しているため，自動的に...2などの番号が付与されてしまっています。 これをrename()を使って変数名を修正します。\n\nweather &lt;- weather |&gt; # 3行目以降を抽出\n  mutate( # 日付の整形\n    年月日 = as.Date(年月日, format = \"%Y/%m/%d\")\n  ) |&gt;\n  rename( # 変数名を修正\n    `平均気温` = \"平均気温(℃)...2\",\n    `最高気温` = \"最高気温(℃)...5\",\n    `最低気温` = \"最低気温(℃)...8\",\n    `降水量の合計mm` = \"降水量の合計(mm)...11\",\n    `一時間降水量の最大mm` = \"1時間降水量の最大(mm)...15\",\n    `天気概況6-18h` = \"天気概況(昼：06時〜18時)...19\"\n  )",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>第4回 売上に影響を与える要因</span>"
     ]
@@ -524,7 +524,7 @@
     "href": "POS_Marketing_04.html#販売データ",
     "title": "\n4  第4回 売上に影響を与える要因\n",
     "section": "\n4.3 販売データ",
-    "text": "4.3 販売データ\n\ndf &lt;- readxl::read_excel(\"data/chp4.xlsx\", sheet = 1)\n\nNew names:\n• `` -&gt; `...1`\n\ndf &lt;- df |&gt;\n  rename(\n    年月日 = \"...1\"\n  ) |&gt;\n  mutate(\n    ## 1月2日を2023/01/02に変換\n    年月日 = paste0(\"2023/\", gsub(\"月|日\", \"/\", 年月日)),\n    年月日 = as.Date(年月日, format = \"%Y/%m/%d\")\n  )\ndf_pos_weather &lt;- df |&gt;\n  left_join(weather, by = \"年月日\")\n\nview(df_pos_weather)\n\nこのデータを販売データに結合します。 日付で1対1対応しているので、left_joinを使います。",
+    "text": "4.3 販売データ\nテキストのデータchp4.xlsxを読み込みます。 readxl::read_excel()にオプションとしてsheet = 1を指定することで、1番目のシートを読み込みます。\n\ndf &lt;- readxl::read_excel(\"data/chp4.xlsx\", sheet = 1)\n\nNew names:\n• `` -&gt; `...1`\n\ndf &lt;- df |&gt;\n  rename( # 変数名の修正\n    年月日 = \"...1\"\n  ) |&gt;\n  mutate(\n    ## 1月2日を2023/01/02に変換\n    年月日 = paste0(\"2023/\", gsub(\"月|日\", \"/\", 年月日)),\n    年月日 = as.Date(年月日, format = \"%Y/%m/%d\")\n  )",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>第4回 売上に影響を与える要因</span>"
     ]
@@ -533,8 +533,8 @@
     "objectID": "POS_Marketing_04.html#気温のグラフ",
     "href": "POS_Marketing_04.html#気温のグラフ",
     "title": "\n4  第4回 売上に影響を与える要因\n",
-    "section": "\n4.4 気温のグラフ",
-    "text": "4.4 気温のグラフ\n\ndf_pos_weather |&gt;\n  select(年月日, 最低気温, 平均気温, 最高気温) |&gt;\n  pivot_longer(cols = c(最低気温, 平均気温, 最高気温), names_to = \"気温\", values_to = \"温度\") |&gt;\n  ggplot(aes(x = 年月日, y = 温度, group = 気温, color = 気温)) +\n  geom_line() +\n  geom_point() +\n    theme_bw(base_family = \"HiraKakuPro-W3\") +\n    scale_fill_tableau(name = \"Tableau 20\")",
+    "section": "\n4.5 気温のグラフ",
+    "text": "4.5 気温のグラフ\n最高、最低、平均気温の折れ線グラフを描きます。\n\n\nselect()で年月日、最低気温、平均気温、最高気温の列を選択\n\npivot_longer()で最低気温、平均気温、最高気温を縦に並べたワイド型に変換\n\nggplot()でグラフを描画\n\nという処理を行います。\n\ndf_pos_weather |&gt;\n  select(年月日, 最低気温, 平均気温, 最高気温) |&gt;\n  pivot_longer(cols = c(最低気温, 平均気温, 最高気温), names_to = \"気温\", values_to = \"温度\") |&gt;\n  ggplot(aes(x = 年月日, y = 温度, group = 気温, color = 気温)) +\n  geom_line() +\n  geom_point() +\n    theme_bw(base_family = \"HiraKakuPro-W3\") +\n    scale_fill_tableau(name = \"Tableau 20\")",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>第4回 売上に影響を与える要因</span>"
     ]
@@ -587,6 +587,46 @@
     "text": "3.4 移動平均\n\n移動平均を計算するためには、zooパッケージを使います。\n\npacman::p_load(zoo)\ndf_mv_item &lt;- df_md_item |&gt;\n    filter(分類 %in% c(\"競合Aおいしい濃茶\", \"競合Aおいしい緑茶\", \"自社濃い茶\", \"自社緑茶\")) |&gt;\n    group_by(分類) |&gt;\n    mutate(移動平均 = rollmean(売上個数, align = \"right\", k = 7, fill = NA)) |&gt;\n    ungroup()\n\nlevels(df_mv_item$月日)\n\nNULL\n\ndf_mv_item |&gt;\n    ggplot() + aes(x = 月日, y = 移動平均, group = 分類, color = 分類) +\n    geom_line(linewidth = 0.5) + geom_point(size = .5) +\n    labs(title = \"の売上個数の7日移動平均\",\n         x = \"基準日\", y = \"売上個数\") +\n    theme_bw(base_family = \"HiraKakuPro-W3\") +\n    theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 6)) +\n    scale_fill_tableau(name = \"Tableau 20\")",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>第3回 売上の時系列データ分析</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_04.html#データの結合",
+    "href": "POS_Marketing_04.html#データの結合",
+    "title": "\n4  第4回 売上に影響を与える要因\n",
+    "section": "\n4.4 データの結合",
+    "text": "4.4 データの結合\n天気データと販売データを結合します。 年月日で1対1対応しているので、これをキーとして左結合するためにleft_joinを使います。\n\ndf_pos_weather &lt;- df |&gt;\n  left_join(weather, by = \"年月日\")\nglimpse(df_pos_weather)\n\nRows: 364\nColumns: 11\n$ 年月日                &lt;date&gt; 2023-01-02, 2023-01-03, 2023-01-04, 2023-01-05,…\n$ `緑茶（自社）`        &lt;dbl&gt; 109, 141, 180, 129, 245, 264, 207, 163, 269, 293…\n$ `濃い茶（自社）`      &lt;dbl&gt; 62, 86, 125, 95, 190, 154, 149, 100, 140, 197, 1…\n$ `おいしい緑茶（A社）` &lt;dbl&gt; 148, 234, 233, 162, 314, 309, 301, 186, 308, 375…\n$ `おいしい濃茶（A社）` &lt;dbl&gt; 89, 127, 152, 103, 227, 246, 219, 163, 226, 223,…\n$ 平均気温              &lt;dbl&gt; 6.2, 5.8, 5.6, 5.9, 5.3, 6.0, 7.0, 8.0, 6.3, 5.4…\n$ 最高気温              &lt;dbl&gt; 12.1, 11.0, 11.0, 10.6, 9.9, 10.4, 12.5, 13.9, 9…\n$ 最低気温              &lt;dbl&gt; 2.0, 0.5, 1.3, 2.6, 0.0, 3.0, 1.6, 2.4, 2.8, 1.5…\n$ 降水量の合計mm        &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0…\n$ 一時間降水量の最大mm  &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0…\n$ `天気概況6-18h`       &lt;chr&gt; \"晴\", \"快晴\", \"晴\", \"快晴\", \"薄曇時々晴\", \"晴\", …",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>第4回 売上に影響を与える要因</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_04.html#降水量のグラフ",
+    "href": "POS_Marketing_04.html#降水量のグラフ",
+    "title": "\n4  第4回 売上に影響を与える要因\n",
+    "section": "\n4.6 降水量のグラフ",
+    "text": "4.6 降水量のグラフ\n日ごとの降水量の棒グラフを作成してみます。\n\ndf_pos_weather |&gt;\n  ggplot(aes(x = 年月日, y = 降水量の合計mm)) +\n  geom_col() +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  labs(title = \"降水量の合計(mm)\", x = \"年月日\", y = \"降水量(mm)\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  scale_fill_tableau(name = \"Tableau 20\")\n\n\n\n\n\n\n\n微妙に分かりづらいので，月ごとに集計して棒グラフを描画します。\n\ndf_pos_weather |&gt;\n  mutate(月 = factor(month(年月日), unique(month(年月日)))) |&gt;\n  group_by(月) |&gt;\n  summarise(降水量の合計mm = sum(降水量の合計mm)) |&gt;\n  ggplot(aes(x = 月, y = 降水量の合計mm)) +  geom_col() +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  labs(title = \"月ごとの降水量の合計(mm)\", x = \"月\", y = \"降水量(mm)\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  scale_fill_tableau(name = \"Tableau 20\")\n\n\n\n\n\n\n\nやはり6月は降水量が多いようです。 降水量のヒストグラムを描いてみます。\n\ndf_pos_weather |&gt;\n  ggplot(aes(x = 降水量の合計mm)) +\n  geom_histogram(binwidth = 5) +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  labs(title = \"降水量の合計(mm)\", x = \"降水量(mm)\", y = \"頻度\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  scale_fill_tableau(name = \"Tableau 20\")\n\n\n\n\n\n\n\n降水量が非常に少ない日が圧倒的に多いこともわかります。",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>第4回 売上に影響を与える要因</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_04.html#散布図",
+    "href": "POS_Marketing_04.html#散布図",
+    "title": "\n4  第4回 売上に影響を与える要因\n",
+    "section": "\n4.7 散布図",
+    "text": "4.7 散布図\n最高気温と売上個数の散布図を描いてみます。\n\ndf_pos_weather |&gt;\n  select(年月日, \"緑茶（自社）\", \"濃い茶（自社）\", \"おいしい緑茶（A社）\",\"おいしい濃茶（A社）\",\"平均気温\", \"最高気温\") |&gt;\n  pivot_longer(cols = c(\"緑茶（自社）\", \"濃い茶（自社）\", \"おいしい緑茶（A社）\",\"おいしい濃茶（A社）\"), names_to = \"商品\", values_to = \"個数\") |&gt;\n  ggplot(aes(x = 平均気温, y = 個数)) +\n  geom_point() +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  labs(title = \"最高気温と売上個数の散布図\", x = \"平均気温\", y = \"売上個数\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  scale_fill_tableau(name = \"Tableau 20\")\n\n\n\n\n\n\n\n平均気温が上がると，売上個数も大きくなる傾向が見られます。 次に横軸に降水量をとってみます。\n\ndf_pos_weather |&gt;\n  select(年月日, \"緑茶（自社）\", \"濃い茶（自社）\", \"おいしい緑茶（A社）\",\"おいしい濃茶（A社）\",\"平均気温\", \"降水量の合計mm\") |&gt;\n  pivot_longer(cols = c(\"緑茶（自社）\", \"濃い茶（自社）\", \"おいしい緑茶（A社）\",\"おいしい濃茶（A社）\"), names_to = \"商品\", values_to = \"個数\") |&gt;\n  ggplot(aes(x = 降水量の合計mm, y = 個数)) +\n  geom_point() +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  labs(title = \"降水量と売上個数の散布図\", x = \"降水量\", y = \"売上個数\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  scale_fill_tableau(name = \"Tableau 20\")\n\n\n\n\n\n\n\n降水量がゼロとなっている日が多いため，散布図が左に張り付いています。",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>第4回 売上に影響を与える要因</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_04.html#変数間の関係をみる",
+    "href": "POS_Marketing_04.html#変数間の関係をみる",
+    "title": "\n4  第4回 売上に影響を与える要因\n",
+    "section": "\n4.7 2変数間の関係をみる",
+    "text": "4.7 2変数間の関係をみる\n売上個数に影響を与える要因を探るために，気温や降水量との関係を表す散布図(scatter diagram)を描いてみます。\nまずは最高気温と売上個数の散布図を描いてみます。\n\ndf_pos_weather |&gt;\n  select(年月日, \"緑茶（自社）\", \"濃い茶（自社）\", \"おいしい緑茶（A社）\",\"おいしい濃茶（A社）\",\"平均気温\", \"最高気温\") |&gt;\n  pivot_longer(cols = c(\"緑茶（自社）\", \"濃い茶（自社）\", \"おいしい緑茶（A社）\",\"おいしい濃茶（A社）\"), names_to = \"商品\", values_to = \"個数\") |&gt;\n  ggplot(aes(x = 平均気温, y = 個数)) +\n  geom_point() +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  labs(title = \"最高気温と売上個数の散布図\", x = \"平均気温\", y = \"売上個数\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  scale_fill_tableau(name = \"Tableau 20\")\n\n\n\n\n\n\n\n平均気温が上がると，売上個数も大きくなる傾向が見られます。 次に横軸に降水量をとってみます。\n\ndf_pos_weather |&gt;\n  select(年月日, \"緑茶（自社）\", \"濃い茶（自社）\", \"おいしい緑茶（A社）\",\"おいしい濃茶（A社）\",\"平均気温\", \"降水量の合計mm\") |&gt;\n  pivot_longer(cols = c(\"緑茶（自社）\", \"濃い茶（自社）\", \"おいしい緑茶（A社）\",\"おいしい濃茶（A社）\"), names_to = \"商品\", values_to = \"個数\") |&gt;\n  ggplot(aes(x = 降水量の合計mm, y = 個数)) +\n  geom_point() +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  labs(title = \"降水量と売上個数の散布図\", x = \"降水量\", y = \"売上個数\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  scale_fill_tableau(name = \"Tableau 20\")\n\n\n\n\n\n\n\n降水量がゼロとなっている日が多いため，散布図が左に張り付いていて，何かを読み取ることは難しいです。",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>第4回 売上に影響を与える要因</span>"
     ]
   }
 ]

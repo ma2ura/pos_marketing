@@ -1,0 +1,2026 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>3&nbsp; 第3回 売上の時系列データ分析 – POSとマーケティングデータ分析</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./POS_Marketing_04.html" rel="next">
+<link href="./POS_Marketing_02.html" rel="prev">
+<link href="./img/favicon.ico" rel="icon">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-8473de6a1e397ed40005cc7c12b288ed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "一致なし",
+    "search-matching-documents-text": "一致した文書",
+    "search-copy-link-title": "検索へのリンクをコピー",
+    "search-hide-matches-text": "追加の検索結果を非表示",
+    "search-more-match-text": "追加の検索結果",
+    "search-more-matches-text": "追加の検索結果",
+    "search-clear-button-title": "消去",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "検索",
+    "search-label": "サーチ"
+  }
+}</script><link rel="stylesheet" href="mystyle.css">
+<meta name="twitter:title" content="3&nbsp; 第3回 売上の時系列データ分析 – POSとマーケティングデータ分析">
+<meta name="twitter:description" content="">
+<meta name="twitter:card" content="summary">
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./POS_Marketing_03.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">第3回 売上の時系列データ分析</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="サーチ" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">POSとマーケティングデータ分析</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="サーチ"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">POSデータで学ぶはじめてのマーケティングデータ分析</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">第1回 売上をまとめた表をつくる</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">第2回 顧客層別の売上</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_03.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">第3回 売上の時系列データ分析</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">第4回 売上に影響を与える要因</span></span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">目次</h2>
+   
+  <ul>
+<li><a href="#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB" id="toc-はじめに" class="nav-link active" data-scroll-target="#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB"><span class="header-section-number">3.1</span> はじめに</a></li>
+  <li><a href="#%E5%95%86%E5%93%81%E3%81%A8%E6%9C%88%E3%81%94%E3%81%A8%E3%81%AE%E5%A3%B2%E4%B8%8A%E5%80%8B%E6%95%B0" id="toc-商品と月ごとの売上個数" class="nav-link" data-scroll-target="#%E5%95%86%E5%93%81%E3%81%A8%E6%9C%88%E3%81%94%E3%81%A8%E3%81%AE%E5%A3%B2%E4%B8%8A%E5%80%8B%E6%95%B0"><span class="header-section-number">3.2</span> 商品と月ごとの売上個数</a></li>
+  <li><a href="#%E6%97%A5%E5%88%A5%E3%81%AE%E5%A3%B2%E4%B8%8A%E5%80%8B%E6%95%B0" id="toc-日別の売上個数" class="nav-link" data-scroll-target="#%E6%97%A5%E5%88%A5%E3%81%AE%E5%A3%B2%E4%B8%8A%E5%80%8B%E6%95%B0"><span class="header-section-number">3.3</span> 日別の売上個数</a></li>
+  <li><a href="#%E7%A7%BB%E5%8B%95%E5%B9%B3%E5%9D%87" id="toc-移動平均" class="nav-link" data-scroll-target="#%E7%A7%BB%E5%8B%95%E5%B9%B3%E5%9D%87"><span class="header-section-number">3.4</span> 移動平均</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">3</span>&nbsp; <span class="chapter-title">第3回 売上の時系列データ分析</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="はじめに" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="はじめに">
+<span class="header-section-number">3.1</span> はじめに</h2>
+<p>パッケージとデータを準備する。</p>
+<p>第3回ファイルで使うデータは<code>chp3.xlsx</code>です。</p>
+<ul>
+<li><code>chp3.xlsx</code></li>
+</ul>
+<p>パッケージを読み込みます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>, <span class="va">readxl</span>, <span class="va">ggthemes</span>, <span class="va">gt</span>, <span class="va">gtExtras</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>「いつものPOSデータ」を読み込みます。 ついでに文字列をカテゴリー変数として因子型に変換しておきます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/chp3.xlsx"</span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>曜日 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">曜日</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"月"</span>, <span class="st">"火"</span>, <span class="st">"水"</span>, <span class="st">"木"</span>, <span class="st">"金"</span>, <span class="st">"土"</span>, <span class="st">"日"</span><span class="op">)</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>         性別 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">性別</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"男性"</span>, <span class="st">"女性"</span><span class="op">)</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>         年代 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">年代</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"20歳未満"</span>, <span class="st">"20代"</span>, <span class="st">"30代"</span>, <span class="st">"40代"</span>, <span class="st">"50代"</span>, <span class="st">"60歳以上"</span><span class="op">)</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>         メーカー <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">メーカー</span><span class="op">)</span>,</span>
+<span>         商品名 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">商品名</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="co"># 戦闘6行を表示</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 11
+  レシート番号 日付                曜日   時間 性別  年代  メーカー 商品名  単価
+  &lt;chr&gt;        &lt;dttm&gt;              &lt;ord&gt; &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;fct&gt;    &lt;fct&gt;  &lt;dbl&gt;
+1 R000001      2023-01-02 00:00:00 月       10 女性  30代  競合A    おい…    160
+2 R000001      2023-01-02 00:00:00 月       10 女性  30代  競合B    静岡…    170
+3 R000002      2023-01-02 00:00:00 月       10 男性  60歳… 競合B    静岡…    170
+4 R000002      2023-01-02 00:00:00 月       10 男性  60歳… 競合A    おい…    160
+5 R000003      2023-01-02 00:00:00 月       10 男性  50代  競合C    ほう…    140
+6 R000004      2023-01-02 00:00:00 月       10 女性  50代  競合D    ウー…    140
+# ℹ 2 more variables: 個数 &lt;dbl&gt;, 金額 &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section><section id="商品と月ごとの売上個数" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="商品と月ごとの売上個数">
+<span class="header-section-number">3.2</span> 商品と月ごとの売上個数</h2>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">mutate</span><span class="op">(</span></span>
+<span>        分類 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">メーカー</span>, <span class="va">商品名</span><span class="op">)</span>,</span>
+<span>        月 <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">日付</span><span class="op">)</span>,</span>
+<span>        月 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">月</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">月</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>        月日 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu">month</span><span class="op">(</span><span class="va">日付</span><span class="op">)</span>, <span class="st">"月"</span>, <span class="fu">day</span><span class="op">(</span><span class="va">日付</span><span class="op">)</span>, <span class="st">"日"</span><span class="op">)</span>,</span>
+<span>    <span class="op">)</span></span>
+<span></span>
+<span><span class="va">df_month_item</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">分類</span>, <span class="va">月</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">summarise</span><span class="op">(</span>売上個数 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">個数</span><span class="op">)</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by '分類'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_month_item</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">分類</span>, values_from <span class="op">=</span> <span class="va">売上個数</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">gt</span><span class="op">(</span><span class="op">)</span><span class="op">|&gt;</span></span>
+<span>    <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">8</span>, decimals <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="erpakosgop" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#erpakosgop table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#erpakosgop thead, #erpakosgop tbody, #erpakosgop tfoot, #erpakosgop tr, #erpakosgop td, #erpakosgop th {
+  border-style: none;
+}
+
+#erpakosgop p {
+  margin: 0;
+  padding: 0;
+}
+
+#erpakosgop .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#erpakosgop .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#erpakosgop .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#erpakosgop .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#erpakosgop .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#erpakosgop .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#erpakosgop .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#erpakosgop .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#erpakosgop .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#erpakosgop .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#erpakosgop .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#erpakosgop .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#erpakosgop .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#erpakosgop .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#erpakosgop .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#erpakosgop .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#erpakosgop .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#erpakosgop .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#erpakosgop .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#erpakosgop .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#erpakosgop .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#erpakosgop .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#erpakosgop .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#erpakosgop .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#erpakosgop .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#erpakosgop .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#erpakosgop .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#erpakosgop .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#erpakosgop .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#erpakosgop .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#erpakosgop .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#erpakosgop .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#erpakosgop .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#erpakosgop .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#erpakosgop .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#erpakosgop .gt_left {
+  text-align: left;
+}
+
+#erpakosgop .gt_center {
+  text-align: center;
+}
+
+#erpakosgop .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#erpakosgop .gt_font_normal {
+  font-weight: normal;
+}
+
+#erpakosgop .gt_font_bold {
+  font-weight: bold;
+}
+
+#erpakosgop .gt_font_italic {
+  font-style: italic;
+}
+
+#erpakosgop .gt_super {
+  font-size: 65%;
+}
+
+#erpakosgop .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#erpakosgop .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#erpakosgop .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#erpakosgop .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#erpakosgop .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#erpakosgop .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#erpakosgop .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#erpakosgop .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#erpakosgop div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead><tr class="gt_col_headings header">
+<th id="月" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">月</th>
+<th id="競合Aおいしい濃茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">競合Aおいしい濃茶</th>
+<th id="競合Aおいしい緑茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">競合Aおいしい緑茶</th>
+<th id="競合B静岡の緑茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">競合B静岡の緑茶</th>
+<th id="競合Cほうじ茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">競合Cほうじ茶</th>
+<th id="競合Dウーロン茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">競合Dウーロン茶</th>
+<th id="自社濃い茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">自社濃い茶</th>
+<th id="自社緑茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">自社緑茶</th>
+</tr></thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_center" headers="月">1</td>
+<td class="gt_row gt_right" headers="競合Aおいしい濃茶">5,569</td>
+<td class="gt_row gt_right" headers="競合Aおいしい緑茶">8,344</td>
+<td class="gt_row gt_right" headers="競合B静岡の緑茶">4,264</td>
+<td class="gt_row gt_right" headers="競合Cほうじ茶">3,397</td>
+<td class="gt_row gt_right" headers="競合Dウーロン茶">2,740</td>
+<td class="gt_row gt_right" headers="自社濃い茶">4,183</td>
+<td class="gt_row gt_right" headers="自社緑茶">6,332</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center" headers="月">2</td>
+<td class="gt_row gt_right" headers="競合Aおいしい濃茶">4,881</td>
+<td class="gt_row gt_right" headers="競合Aおいしい緑茶">7,119</td>
+<td class="gt_row gt_right" headers="競合B静岡の緑茶">3,528</td>
+<td class="gt_row gt_right" headers="競合Cほうじ茶">2,892</td>
+<td class="gt_row gt_right" headers="競合Dウーロン茶">2,409</td>
+<td class="gt_row gt_right" headers="自社濃い茶">3,535</td>
+<td class="gt_row gt_right" headers="自社緑茶">5,251</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_center" headers="月">3</td>
+<td class="gt_row gt_right" headers="競合Aおいしい濃茶">6,447</td>
+<td class="gt_row gt_right" headers="競合Aおいしい緑茶">9,776</td>
+<td class="gt_row gt_right" headers="競合B静岡の緑茶">4,928</td>
+<td class="gt_row gt_right" headers="競合Cほうじ茶">4,005</td>
+<td class="gt_row gt_right" headers="競合Dウーロン茶">3,264</td>
+<td class="gt_row gt_right" headers="自社濃い茶">4,719</td>
+<td class="gt_row gt_right" headers="自社緑茶">7,343</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center" headers="月">4</td>
+<td class="gt_row gt_right" headers="競合Aおいしい濃茶">7,753</td>
+<td class="gt_row gt_right" headers="競合Aおいしい緑茶">11,761</td>
+<td class="gt_row gt_right" headers="競合B静岡の緑茶">5,854</td>
+<td class="gt_row gt_right" headers="競合Cほうじ茶">5,009</td>
+<td class="gt_row gt_right" headers="競合Dウーロン茶">3,849</td>
+<td class="gt_row gt_right" headers="自社濃い茶">6,032</td>
+<td class="gt_row gt_right" headers="自社緑茶">8,893</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_center" headers="月">5</td>
+<td class="gt_row gt_right" headers="競合Aおいしい濃茶">8,987</td>
+<td class="gt_row gt_right" headers="競合Aおいしい緑茶">13,588</td>
+<td class="gt_row gt_right" headers="競合B静岡の緑茶">6,428</td>
+<td class="gt_row gt_right" headers="競合Cほうじ茶">5,571</td>
+<td class="gt_row gt_right" headers="競合Dウーロン茶">4,526</td>
+<td class="gt_row gt_right" headers="自社濃い茶">6,601</td>
+<td class="gt_row gt_right" headers="自社緑茶">10,106</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center" headers="月">6</td>
+<td class="gt_row gt_right" headers="競合Aおいしい濃茶">8,158</td>
+<td class="gt_row gt_right" headers="競合Aおいしい緑茶">12,072</td>
+<td class="gt_row gt_right" headers="競合B静岡の緑茶">6,319</td>
+<td class="gt_row gt_right" headers="競合Cほうじ茶">4,989</td>
+<td class="gt_row gt_right" headers="競合Dウーロン茶">4,086</td>
+<td class="gt_row gt_right" headers="自社濃い茶">6,058</td>
+<td class="gt_row gt_right" headers="自社緑茶">9,199</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_center" headers="月">7</td>
+<td class="gt_row gt_right" headers="競合Aおいしい濃茶">13,690</td>
+<td class="gt_row gt_right" headers="競合Aおいしい緑茶">20,222</td>
+<td class="gt_row gt_right" headers="競合B静岡の緑茶">10,119</td>
+<td class="gt_row gt_right" headers="競合Cほうじ茶">8,583</td>
+<td class="gt_row gt_right" headers="競合Dウーロン茶">6,890</td>
+<td class="gt_row gt_right" headers="自社濃い茶">10,407</td>
+<td class="gt_row gt_right" headers="自社緑茶">15,222</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center" headers="月">8</td>
+<td class="gt_row gt_right" headers="競合Aおいしい濃茶">14,509</td>
+<td class="gt_row gt_right" headers="競合Aおいしい緑茶">22,650</td>
+<td class="gt_row gt_right" headers="競合B静岡の緑茶">11,207</td>
+<td class="gt_row gt_right" headers="競合Cほうじ茶">9,291</td>
+<td class="gt_row gt_right" headers="競合Dウーロン茶">7,315</td>
+<td class="gt_row gt_right" headers="自社濃い茶">11,348</td>
+<td class="gt_row gt_right" headers="自社緑茶">16,865</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_center" headers="月">9</td>
+<td class="gt_row gt_right" headers="競合Aおいしい濃茶">12,366</td>
+<td class="gt_row gt_right" headers="競合Aおいしい緑茶">19,143</td>
+<td class="gt_row gt_right" headers="競合B静岡の緑茶">9,663</td>
+<td class="gt_row gt_right" headers="競合Cほうじ茶">7,941</td>
+<td class="gt_row gt_right" headers="競合Dウーロン茶">6,310</td>
+<td class="gt_row gt_right" headers="自社濃い茶">9,769</td>
+<td class="gt_row gt_right" headers="自社緑茶">14,228</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center" headers="月">10</td>
+<td class="gt_row gt_right" headers="競合Aおいしい濃茶">10,353</td>
+<td class="gt_row gt_right" headers="競合Aおいしい緑茶">15,540</td>
+<td class="gt_row gt_right" headers="競合B静岡の緑茶">7,273</td>
+<td class="gt_row gt_right" headers="競合Cほうじ茶">6,339</td>
+<td class="gt_row gt_right" headers="競合Dウーロン茶">5,083</td>
+<td class="gt_row gt_right" headers="自社濃い茶">7,666</td>
+<td class="gt_row gt_right" headers="自社緑茶">11,589</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_center" headers="月">11</td>
+<td class="gt_row gt_right" headers="競合Aおいしい濃茶">7,754</td>
+<td class="gt_row gt_right" headers="競合Aおいしい緑茶">11,427</td>
+<td class="gt_row gt_right" headers="競合B静岡の緑茶">5,514</td>
+<td class="gt_row gt_right" headers="競合Cほうじ茶">4,742</td>
+<td class="gt_row gt_right" headers="競合Dウーロン茶">3,985</td>
+<td class="gt_row gt_right" headers="自社濃い茶">5,680</td>
+<td class="gt_row gt_right" headers="自社緑茶">8,592</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center" headers="月">12</td>
+<td class="gt_row gt_right" headers="競合Aおいしい濃茶">6,063</td>
+<td class="gt_row gt_right" headers="競合Aおいしい緑茶">8,675</td>
+<td class="gt_row gt_right" headers="競合B静岡の緑茶">4,535</td>
+<td class="gt_row gt_right" headers="競合Cほうじ茶">3,596</td>
+<td class="gt_row gt_right" headers="競合Dウーロン茶">3,015</td>
+<td class="gt_row gt_right" headers="自社濃い茶">4,462</td>
+<td class="gt_row gt_right" headers="自社緑茶">6,761</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_month_item</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月</span>, y <span class="op">=</span> <span class="va">売上個数</span>, group <span class="op">=</span> <span class="va">分類</span>, color <span class="op">=</span> <span class="va">分類</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"商品と月ごとの売上個数"</span>,</span>
+<span>         x <span class="op">=</span> <span class="st">"月"</span>, y <span class="op">=</span> <span class="st">"売上個数"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>個人的に気に入っているグラフの描き方です。</p>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_name</span> <span class="op">&lt;-</span> <span class="va">df_month_item</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">月</span> <span class="op">==</span> <span class="fl">12</span><span class="op">)</span> <span class="co"># 12月のデータを抽出</span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">df_month_item</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月</span>, y <span class="op">=</span> <span class="va">売上個数</span>, group <span class="op">=</span> <span class="va">分類</span>, color <span class="op">=</span> <span class="va">分類</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># 線と点を描く</span></span>
+<span>    <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"商品と月ごとの売上個数"</span>, x <span class="op">=</span> <span class="st">"月"</span>, y <span class="op">=</span> <span class="st">"売上個数"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">scale_x_discrete</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">12</span>, expand <span class="op">=</span> <span class="fu">expansion</span><span class="op">(</span>mult <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">.20</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co"># x軸の範囲を拡大</span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">+</span> <span class="fu">geom_text</span><span class="op">(</span>data <span class="op">=</span> <span class="va">df_name</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月</span>, y <span class="op">=</span> <span class="va">売上個数</span>, label <span class="op">=</span> <span class="va">分類</span><span class="op">)</span>, adj <span class="op">=</span> <span class="fl">0</span>, size <span class="op">=</span> <span class="fl">4</span>, nudge_x <span class="op">=</span> <span class="fl">0.2</span>,family <span class="op">=</span> <span class="st">"HiraKakuProN-W3"</span><span class="op">)</span></span>
+<span><span class="va">g</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="1152"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="日別の売上個数" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="日別の売上個数">
+<span class="header-section-number">3.3</span> 日別の売上個数</h2>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_md_item</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">分類</span>, <span class="va">月日</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">summarise</span><span class="op">(</span>売上個数 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">個数</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by '分類'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_md_item</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">分類</span>, values_from <span class="op">=</span> <span class="va">売上個数</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">gt</span><span class="op">(</span><span class="op">)</span><span class="op">|&gt;</span></span>
+<span>    <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">8</span>, decimals <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="koygjrrvgk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#koygjrrvgk table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#koygjrrvgk thead, #koygjrrvgk tbody, #koygjrrvgk tfoot, #koygjrrvgk tr, #koygjrrvgk td, #koygjrrvgk th {
+  border-style: none;
+}
+
+#koygjrrvgk p {
+  margin: 0;
+  padding: 0;
+}
+
+#koygjrrvgk .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#koygjrrvgk .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#koygjrrvgk .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#koygjrrvgk .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#koygjrrvgk .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#koygjrrvgk .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#koygjrrvgk .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#koygjrrvgk .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#koygjrrvgk .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#koygjrrvgk .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#koygjrrvgk .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#koygjrrvgk .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#koygjrrvgk .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#koygjrrvgk .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#koygjrrvgk .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#koygjrrvgk .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#koygjrrvgk .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#koygjrrvgk .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#koygjrrvgk .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#koygjrrvgk .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#koygjrrvgk .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#koygjrrvgk .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#koygjrrvgk .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#koygjrrvgk .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#koygjrrvgk .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#koygjrrvgk .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#koygjrrvgk .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#koygjrrvgk .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#koygjrrvgk .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#koygjrrvgk .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#koygjrrvgk .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#koygjrrvgk .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#koygjrrvgk .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#koygjrrvgk .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#koygjrrvgk .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#koygjrrvgk .gt_left {
+  text-align: left;
+}
+
+#koygjrrvgk .gt_center {
+  text-align: center;
+}
+
+#koygjrrvgk .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#koygjrrvgk .gt_font_normal {
+  font-weight: normal;
+}
+
+#koygjrrvgk .gt_font_bold {
+  font-weight: bold;
+}
+
+#koygjrrvgk .gt_font_italic {
+  font-style: italic;
+}
+
+#koygjrrvgk .gt_super {
+  font-size: 65%;
+}
+
+#koygjrrvgk .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#koygjrrvgk .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#koygjrrvgk .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#koygjrrvgk .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#koygjrrvgk .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#koygjrrvgk .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#koygjrrvgk .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#koygjrrvgk .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#koygjrrvgk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead><tr class="gt_col_headings header">
+<th id="月日" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">月日</th>
+<th id="競合Aおいしい濃茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">競合Aおいしい濃茶</th>
+<th id="競合Aおいしい緑茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">競合Aおいしい緑茶</th>
+<th id="競合B静岡の緑茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">競合B静岡の緑茶</th>
+<th id="競合Cほうじ茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">競合Cほうじ茶</th>
+<th id="競合Dウーロン茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">競合Dウーロン茶</th>
+<th id="自社濃い茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">自社濃い茶</th>
+<th id="自社緑茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">自社緑茶</th>
+</tr></thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="月日">10月10日</td>
+<td class="gt_row gt_right" headers="競合Aおいしい濃茶">361</td>
+<td class="gt_row gt_right" headers="競合Aおいしい緑茶">475</td>
+<td class="gt_row gt_right" headers="競合B静岡の緑茶">206</td>
+<td class="gt_row gt_right" headers="競合Cほうじ茶">191</td>
+<td class="gt_row gt_right" headers="競合Dウーロン茶">189</td>
+<td class="gt_row gt_right" headers="自社濃い茶">205</td>
+<td class="gt_row gt_right" headers="自社緑茶">351</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="月日">10月11日</td>
+<td class="gt_row gt_right" headers="競合Aおいしい濃茶">374</td>
+<td class="gt_row gt_right" headers="競合Aおいしい緑茶">613</td>
+<td class="gt_row gt_right" headers="競合B静岡の緑茶">295</td>
+<td class="gt_row gt_right" headers="競合Cほうじ茶">264</td>
+<td class="gt_row gt_right" headers="競合Dウーロン茶">194</td>
+<td class="gt_row gt_right" headers="自社濃い茶">352</td>
+<td class="gt_row gt_right" headers="自社緑茶">449</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="月日">10月12日</td>
+<td class="gt_row gt_right" headers="競合Aおいしい濃茶">253</td>
+<td class="gt_row gt_right" headers="競合Aおいしい緑茶">348</td>
+<td class="gt_row gt_right" headers="競合B静岡の緑茶">185</td>
+<td class="gt_row gt_right" headers="競合Cほうじ茶">168</td>
+<td class="gt_row gt_right" headers="競合Dウーロン茶">125</td>
+<td class="gt_row gt_right" headers="自社濃い茶">168</td>
+<td class="gt_row gt_right" headers="自社緑茶">273</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="月日">10月13日</td>
+<td class="gt_row gt_right" headers="競合Aおいしい濃茶">462</td>
+<td class="gt_row gt_right" headers="競合Aおいしい緑茶">737</td>
+<td class="gt_row gt_right" headers="競合B静岡の緑茶">312</td>
+<td class="gt_row gt_right" headers="競合Cほうじ茶">283</td>
+<td class="gt_row gt_right" headers="競合Dウーロン茶">239</td>
+<td class="gt_row gt_right" headers="自社濃い茶">330</td>
+<td class="gt_row gt_right" headers="自社緑茶">532</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="月日">10月14日</td>
+<td class="gt_row gt_right" headers="競合Aおいしい濃茶">544</td>
+<td class="gt_row gt_right" headers="競合Aおいしい緑茶">804</td>
+<td class="gt_row gt_right" headers="競合B静岡の緑茶">392</td>
+<td class="gt_row gt_right" headers="競合Cほうじ茶">326</td>
+<td class="gt_row gt_right" headers="競合Dウーロン茶">229</td>
+<td class="gt_row gt_right" headers="自社濃い茶">399</td>
+<td class="gt_row gt_right" headers="自社緑茶">570</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="月日">10月15日</td>
+<td class="gt_row gt_right" headers="競合Aおいしい濃茶">395</td>
+<td class="gt_row gt_right" headers="競合Aおいしい緑茶">647</td>
+<td class="gt_row gt_right" headers="競合B静岡の緑茶">274</td>
+<td class="gt_row gt_right" headers="競合Cほうじ茶">245</td>
+<td class="gt_row gt_right" headers="競合Dウーロン茶">213</td>
+<td class="gt_row gt_right" headers="自社濃い茶">279</td>
+<td class="gt_row gt_right" headers="自社緑茶">434</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="月日">10月16日</td>
+<td class="gt_row gt_right" headers="競合Aおいしい濃茶">196</td>
+<td class="gt_row gt_right" headers="競合Aおいしい緑茶">327</td>
+<td class="gt_row gt_right" headers="競合B静岡の緑茶">147</td>
+<td class="gt_row gt_right" headers="競合Cほうじ茶">130</td>
+<td class="gt_row gt_right" headers="競合Dウーロン茶">111</td>
+<td class="gt_row gt_right" headers="自社濃い茶">170</td>
+<td class="gt_row gt_right" headers="自社緑茶">261</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="月日">10月17日</td>
+<td class="gt_row gt_right" headers="競合Aおいしい濃茶">238</td>
+<td class="gt_row gt_right" headers="競合Aおいしい緑茶">455</td>
+<td class="gt_row gt_right" headers="競合B静岡の緑茶">160</td>
+<td class="gt_row gt_right" headers="競合Cほうじ茶">185</td>
+<td class="gt_row gt_right" headers="競合Dウーロン茶">126</td>
+<td class="gt_row gt_right" headers="自社濃い茶">194</td>
+<td class="gt_row gt_right" headers="自社緑茶">295</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="月日">10月18日</td>
+<td class="gt_row gt_right" headers="競合Aおいしい濃茶">324</td>
+<td class="gt_row gt_right" headers="競合Aおいしい緑茶">449</td>
+<td class="gt_row gt_right" headers="競合B静岡の緑茶">225</td>
+<td class="gt_row gt_right" headers="競合Cほうじ茶">178</td>
+<td class="gt_row gt_right" headers="競合Dウーロン茶">130</td>
+<td class="gt_row gt_right" headers="自社濃い茶">217</td>
+<td class="gt_row gt_right" headers="自社緑茶">347</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="月日">10月19日</td>
+<td class="gt_row gt_right" headers="競合Aおいしい濃茶">210</td>
+<td class="gt_row gt_right" headers="競合Aおいしい緑茶">341</td>
+<td class="gt_row gt_right" headers="競合B静岡の緑茶">163</td>
+<td class="gt_row gt_right" headers="競合Cほうじ茶">127</td>
+<td class="gt_row gt_right" headers="競合Dウーロン茶">125</td>
+<td class="gt_row gt_right" headers="自社濃い茶">165</td>
+<td class="gt_row gt_right" headers="自社緑茶">225</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_md_item</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月日</span>, y <span class="op">=</span> <span class="va">売上個数</span>, group <span class="op">=</span> <span class="va">分類</span>, color <span class="op">=</span> <span class="va">分類</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">geom_line</span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"商品と日別の売上個数"</span>,</span>
+<span>         x <span class="op">=</span> <span class="st">"日"</span>, y <span class="op">=</span> <span class="st">"売上個数"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="co"># ラベルを縦にする。</span></span>
+<span>    <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="1152"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">月</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">分類</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"競合Aおいしい濃茶"</span>, <span class="st">"競合Aおいしい緑茶"</span>, <span class="st">"自社濃い茶"</span>, <span class="st">"自社緑茶"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">分類</span>, <span class="va">月日</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">summarise</span><span class="op">(</span>売上個数 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">個数</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月日</span>, y <span class="op">=</span> <span class="va">売上個数</span>, group <span class="op">=</span> <span class="va">分類</span>, color <span class="op">=</span> <span class="va">分類</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">geom_line</span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"商品と日別の売上個数"</span>,</span>
+<span>         x <span class="op">=</span> <span class="st">"日"</span>, y <span class="op">=</span> <span class="st">"売上個数"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="co"># ラベルを縦にする。</span></span>
+<span>    <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by '分類'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">分類</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"競合Aおいしい濃茶"</span>, <span class="st">"競合Aおいしい緑茶"</span>, <span class="st">"自社濃い茶"</span>, <span class="st">"自社緑茶"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">分類</span>, <span class="va">曜日</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">summarise</span><span class="op">(</span>売上個数 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">個数</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">曜日</span>, y <span class="op">=</span> <span class="va">売上個数</span>, group <span class="op">=</span> <span class="va">分類</span>, color <span class="op">=</span> <span class="va">分類</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">geom_line</span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"商品と曜日の売上個数"</span>,</span>
+<span>         x <span class="op">=</span> <span class="st">"曜日"</span>, y <span class="op">=</span> <span class="st">"売上個数"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="co"># ラベルを縦にする。</span></span>
+<span>    <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by '分類'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="移動平均" class="level2" data-number="3.4"><h2 data-number="3.4" class="anchored" data-anchor-id="移動平均">
+<span class="header-section-number">3.4</span> 移動平均</h2>
+<!-- 
+日々の変動を平滑化するために、移動平均を使います。
+移動平均とは、基準時点を中心として前後のデータを含めた平均を取る手法です。
+たとえば、時系列データ$X_t$に対して、$t$時点を中心として前後$n$個のデータを含めた移動平均は次のように定義されます。 
+
+$$
+\text{移動平均} = \frac{1}{2n+1} \sum_{i=-n}^{n} X_{t+i}
+$$
+-->
+<p>移動平均を計算するためには、<code>zoo</code>パッケージを使います。</p>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">zoo</span><span class="op">)</span></span>
+<span><span class="va">df_mv_item</span> <span class="op">&lt;-</span> <span class="va">df_md_item</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">分類</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"競合Aおいしい濃茶"</span>, <span class="st">"競合Aおいしい緑茶"</span>, <span class="st">"自社濃い茶"</span>, <span class="st">"自社緑茶"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">分類</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">mutate</span><span class="op">(</span>移動平均 <span class="op">=</span> <span class="fu">rollmean</span><span class="op">(</span><span class="va">売上個数</span>, align <span class="op">=</span> <span class="st">"right"</span>, k <span class="op">=</span> <span class="fl">7</span>, fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">df_mv_item</span><span class="op">$</span><span class="va">月日</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_mv_item</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月日</span>, y <span class="op">=</span> <span class="va">移動平均</span>, group <span class="op">=</span> <span class="va">分類</span>, color <span class="op">=</span> <span class="va">分類</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">geom_line</span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"の売上個数の7日移動平均"</span>,</span>
+<span>         x <span class="op">=</span> <span class="st">"基準日"</span>, y <span class="op">=</span> <span class="st">"売上個数"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span>, hjust <span class="op">=</span> <span class="fl">1</span>, size <span class="op">=</span> <span class="fl">6</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="1152"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "コピーしました");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "コピーしました");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/so-ichi\.com");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./POS_Marketing_02.html" class="pagination-link" aria-label="第2回 顧客層別の売上">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">第2回 顧客層別の売上</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./POS_Marketing_04.html" class="pagination-link" aria-label="第4回 売上に影響を与える要因">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">第4回 売上に影響を与える要因</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Soichi Matsuura</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ma2ura">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/matsuura_rits">
+      <i class="bi bi-twitter" role="img" aria-label="Twitter">
+</i> 
+    </a>
+  </li>  
+</ul>
+</div>
+  </div>
+</footer>
+
+
+</body></html>
