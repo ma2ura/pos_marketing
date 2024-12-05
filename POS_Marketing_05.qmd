@@ -1,0 +1,216 @@
+
+# 第5回 併売の分析
+
+## はじめに
+
+パッケージとデータを準備する。
+
+第3回ファイルで使うデータは`chp5.xlsx`です。
+
+- `chp5.xlsx`
+
+パッケージを読み込みます。
+
+```{r packages}
+pacman::p_load(tidyverse, readxl, arules, ggthemes, gt, gtExtras, patchwork)
+```
+
+ここで用いる`chp5.xlsx`のシート名を確認します。
+
+```{r sheets}
+readxl::excel_sheets("data/chp5.xlsx")
+```
+
+## 併売の基礎集計
+
+最初の分析では、併売の基礎集計を行うために、1番目のシート「いつものPOSデータ」を読み込みます。
+
+```{r chp5-1}
+df <- readxl::read_excel("data/chp5.xlsx", sheet = 1)
+head(df)
+```
+
+各商品が別の商品と購入された回数を調べます。
+
+```{r pivot_wider}
+df_wide <- df |>
+  select(レシート番号, 商品名, 個数) |> # 必要な列だけ抽出
+  mutate(個数 = if_else(個数 > 0, 1, 0)) |> # 個数が1以上の場合は1、それ以外は0
+  pivot_wider(names_from = 商品名, values_from = 個数, values_fill = 0)
+head(df_wide)
+```
+
+これで、テキストの図5-1と同様に、レシート番号ごとに商品名が列になり、購入された場合に1、購入されなかった場合に0が入ったデータフレームができました。
+図5−2と同じになるように、自社商品、競合A社〜D社という製品の並びに変更します。
+
+```{r}
+df_wide <- df_wide |>
+  select(レシート番号, "緑茶", "濃い茶", "おいしい緑茶", "おいしい濃茶", "静岡の緑茶", "ほうじ茶", "ウーロン茶")
+df_wide |> tail(4)
+```
+
+ここから、各商品が別の各商品と一緒に購入された回数を集計します。
+まずは自社製品の緑茶だけを取り出して、図5-3を再現してみます。
+
+```{r}
+df_wide |>
+  filter(緑茶 == 1) |> # 緑茶が購入された場合
+  head()
+```
+
+変数ごとの合計を求めることで、この緑茶と一緒に購入された回数を商品別に集計します。
+
+```{r}
+df_wide |>
+  filter(緑茶 == 1) |> # 緑茶が購入された場合
+  select(-緑茶) |>
+  summarise(across(濃い茶:ウーロン茶, sum)) |> # 商品ごとに合計
+  gt() |> # 作表
+  fmt_number(columns = 1:6, decimals = 0) |>
+  tab_options(
+    table.font.size = "small"
+  ) |>
+  tab_header(title = "緑茶と一緒に購入された商品の個数") |>
+  gt_theme_pff()
+```
+
+これを関数にして、他の商品にも適用し、一緒に購入された回数を集計します。
+
+```{r}
+#| warning: false
+# 全商品名を取得
+product_names <- colnames(df_wide)[-1] # レシート番号以外の列
+# 各商品の販売回数合計を計算
+total_counts <- colSums(df_wide[product_names])
+# 各商品の購入頻度表を作成
+result <- product_names |>
+  map_dfr(~ { # purrr::map_dfr()を使ってデータフレームを結合
+    df_wide |>
+      filter(!!sym(.x) == 1) |> # !!sym()で変数名を展開
+      select(-レシート番号) |>
+      summarise(
+        across(everything(), sum)
+        ) |> # 商品ごとに合計
+      mutate(
+        across(everything(), ~ ifelse(cur_column() == .x, total_counts[.x], .)),
+             商品 = .x)
+  }) |>
+  select(商品, everything())
+# ここから下は表の設定なので、なくても動作します
+result |>
+  gt() |>
+  fmt_number(columns = 2:8, decimals = 0) |>
+  tab_options(table.font.size = "small") |>
+  gt_color_rows(2:8, palette = "ggsci::blue_material") |>
+  tab_header(title = "一緒に販売された商品の個数") |>
+  gt_theme_pff() |>
+  as_raw_html()
+```
+
+各項目の値を合計値で割ることで、商品ごとの購入率を求めます。
+
+```{r}
+result <- result |>
+  mutate(
+    緑茶 = 緑茶 / 緑茶[1],
+    濃い茶 = 濃い茶 / 濃い茶[2],
+    おいしい緑茶 = おいしい緑茶 / おいしい緑茶[3],
+    おいしい濃茶 = おいしい濃茶 / おいしい濃茶[4],
+    静岡の緑茶 = 静岡の緑茶 / 静岡の緑茶[5],
+    ほうじ茶 = ほうじ茶 / ほうじ茶[6],
+    ウーロン茶 = ウーロン茶 / ウーロン茶[7]
+  )
+  # ここから下は表の設定
+result |>
+  gt() |>
+  fmt_number(columns = 2:8, decimals = 3) |>
+  tab_options(table.font.size = "small") |>
+  gt_color_rows(2:8, palette = "ggsci::blue_material") |>
+  tab_header(title = "一緒に販売された商品の割合(個数/縦合計)") |>
+  tab_
+  gt_theme_pff() |>
+  as_raw_html()
+```
+
+
+```{r tab_items}
+df |>
+  select(レシート番号, 商品名, 個数) |> # 必要な列だけ抽出
+  mutate(個数 = if_else(個数 > 0, 1, 0)) |> # 個数が1以上の場合は1、それ以外は0
+  group_by(商品名) |> # 商品ごとにグループ化
+  summarise(購入回数 = sum(個数)) |> # 購入回数を合計
+  arrange(desc(購入回数)) |>  # 購入回数で降順ソート
+  gt() |> # 作表
+  fmt_number(columns = 2, decimals = 0) |>
+  tab_options(
+    table.font.size = "small"
+  )
+```
+
+次に、ある商品が購入された場合に、他の商品も購入されるかどうかを調べます。
+
+```{r oishi_green_tea}
+df_oishi_ryo <- df_wide |>
+  filter(おいしい緑茶 == 1)
+df_oishi_ryo
+```
+
+
+## アソシエーション分析
+
+
+アソシエーション分析のために用いるデータとして7番目のシート「併売データ」を読み込みたいので，`sheet = 7`を指定します。
+
+```{r readxl}
+df_7 <- readxl::read_excel("data/chp5.xlsx", sheet = 7)
+head(df_7)
+```
+
+行はレシート番号、列は商品名で、各セルには購入された場合に1、購入されなかった場合に0が入っています。
+
+
+
+アソシエーション分析とはマーケティングで用いられる分析手法の1つで、POSデータや購買データから、商品の関連性やパターンを見つける分析手法で、
+ある製品を買う人はこの製品も買う、という傾向を発見するために使われます。
+
+Rでアソシエーション分析を行うために，`arules`パッケージを使います。
+CRANのページにあるマニュアルにMining Association Rules and Frequent Itemsetsとあるように、関連ルールと頻出アイテムセットを見つけるためのパッケージです。
+
+:::{.aside}
+具体的な理論とアルゴリズムは，CRANの[Vignettes:introduction to arules](https://cran.r-project.org/web/packages/arules/vignettes/arules.pdf)を参照してください。
+:::
+
+
+ここで用いる`arules`パッケージの`apriori()`関数は、関連ルールに関する制限を識別し、Klemettinen (1994)のアプリオリアルゴリズムを実装しています。
+
+アソシエーション分析を行うために、まずはデータを`transactions`オブジェクトに変換します。
+`arules::as()`関数を使って変換します。この関数は引数として`list`や`matrix`を受け取り、`transactions`オブジェクトに変換します。
+
+```{r transaction}
+#| output: false
+#| message: false
+#| warning: false
+rownames(df_7) <- NULL # 行名をリセット
+df_tran <- as.matrix(df_7) |> as("transactions") # transactionsオブジェクトに変換
+df_ap <- arules::apriori(
+  df_tran,
+  parameter = list(support = 0.05, confidence = 0.4) # サポート0.05、信頼度0.4
+  )
+result <- df_ap |>
+  sort(by = "lift") |> # liftでソート
+  inspect()  # 結果を表示
+```
+
+```{r}
+result <- result |> as.data.frame()
+names(result)[2] <- "arrow"
+result |> gt() |>
+  fmt_number(columns = 4:7, decimals = 2) |>
+  tab_options(
+    table.font.size = "small"
+  )
+```
+
+`arules`パッケージで利用できるデータの型は`transactions`です。
+この型に変換するために，`arules::as()`関数を使います。
+

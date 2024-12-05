@@ -12,7 +12,7 @@
 パッケージを読み込みます。
 
 ```{r}
-pacman::p_load(tidyverse, readxl, ggthemes, gt, gtExtras)
+pacman::p_load(tidyverse, readxl, ggthemes, gt, gtExtras, patchwork)
 ```
 
 
@@ -31,18 +31,25 @@ pacman::p_load(tidyverse, readxl, ggthemes, gt, gtExtras)
 
 ```{r}
 weather <- read_csv(
-  "data/weather.csv", 
-  locale = locale(encoding = "cp932"),
-  skip=3)
-weather <- weather |>
-  select(c(1,2,5,8,11,15,19)) |>
-  slice(3:n()) |>
-  mutate(
-    年月日 = as.Date(年月日, format = "%Y/%m/%d")
+  "data/weather.csv", # データへのパス
+  locale = locale(encoding = "cp932"), # 文字コードの指定
+  skip = 3 # 3行目まで読み込まない
   )
 weather <- weather |>
-  rename(
-    `平均気温` = "平均気温(℃)...2",             
+  select(c(1,2,5,8,11,15,19)) |> # 必要な変数だけ抽出
+  slice(3:n())
+```
+
+これで必要な部分だけデータを取得できましたが，変数名が重複しているため，自動的に`...2`などの番号が付与されてしまっています。
+これを`rename()`を使って変数名を修正します。
+
+```{r}
+weather <- weather |> # 3行目以降を抽出
+  mutate( # 日付の整形
+    年月日 = as.Date(年月日, format = "%Y/%m/%d")
+  ) |>
+  rename( # 変数名を修正
+    `平均気温` = "平均気温(℃)...2",
     `最高気温` = "最高気温(℃)...5",
     `最低気温` = "最低気温(℃)...8",
     `降水量の合計mm` = "降水量の合計(mm)...11",
@@ -53,10 +60,13 @@ weather <- weather |>
 
 ## 販売データ
 
+テキストのデータ`chp4.xlsx`を読み込みます。
+`readxl::read_excel()`にオプションとして`sheet = 1`を指定することで、1番目のシートを読み込みます。
+
 ```{r}
 df <- readxl::read_excel("data/chp4.xlsx", sheet = 1)
 df <- df |>
-  rename(
+  rename( # 変数名の修正
     年月日 = "...1"
   ) |>
   mutate(
@@ -64,16 +74,29 @@ df <- df |>
     年月日 = paste0("2023/", gsub("月|日", "/", 年月日)),
     年月日 = as.Date(年月日, format = "%Y/%m/%d")
   )
+```
+
+## データの結合
+
+天気データと販売データを結合します。
+`年月日`で1対1対応しているので、これをキーとして左結合するために`left_join`を使います。
+
+```{r}
 df_pos_weather <- df |>
   left_join(weather, by = "年月日")
-
-view(df_pos_weather)
+glimpse(df_pos_weather)
 ```
-このデータを販売データに結合します。
-日付で1対1対応しているので、`left_join`を使います。
+
 
 ## 気温のグラフ
 
+最高、最低、平均気温の折れ線グラフを描きます。
+
+1. `select()`で`年月日`、`最低気温`、`平均気温`、`最高気温`の列を選択
+2. `pivot_longer()`で`最低気温`、`平均気温`、`最高気温`を縦に並べたワイド型に変換
+3. `ggplot()`でグラフを描画
+
+という処理を行います。
 
 ```{r}
 #| fig-width: 12
@@ -86,3 +109,189 @@ df_pos_weather |>
     theme_bw(base_family = "HiraKakuPro-W3") +
     scale_fill_tableau(name = "Tableau 20")
 ```
+
+
+気温のグラフに売上個数のグラフを追加して二軸の折れ線グラフを作成します。
+
+```{r}
+#| fig-width: 12
+#| warning: false
+
+# 売上データを例として利用
+df_pos_weather |>
+  select(年月日, 個数 = `緑茶（自社）`, 平均気温) |>
+  ggplot(aes(x = 年月日)) +
+  geom_line(aes(y = 個数, color = "売上個数"), linewidth = 0.5) +
+  geom_line(aes(y = 平均気温 * 1500/40, color = "平均気温")) +
+  scale_y_continuous(
+    name = "売上個数",
+    limits = c(0, 1500),  # 売上個数軸の範囲を設定
+    sec.axis = sec_axis(
+      trans = ~ . / (1500/40), # 気温軸を元のスケールに戻す変換
+      name = "平均気温 (℃)",
+      breaks = seq(-5, 35, 5)  # 気温軸の目盛りを設定
+    )
+  ) +
+  scale_color_manual(values = c("売上個数" = "blue", "平均気温" = "black")) +
+  labs(title = "売上個数と気温のグラフ", x = "年月日") +
+  theme_bw(base_family = "Hiragino Sans") +
+  theme(legend.title = element_blank())
+```
+
+## 降水量のグラフ
+
+日ごとの降水量の棒グラフを作成してみます。
+
+```{r}
+#| fig.width: 12
+df_pos_weather |>
+  ggplot(aes(x = 年月日, y = 降水量の合計mm)) +
+  geom_col() +
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  labs(title = "降水量の合計(mm)", x = "年月日", y = "降水量(mm)") +
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  scale_fill_tableau(name = "Tableau 20")
+```
+
+微妙に分かりづらいので，月ごとに集計して棒グラフを描画します。
+
+```{r}
+#| fig.width: 12
+df_pos_weather |>
+  mutate(月 = factor(month(年月日), unique(month(年月日)))) |>
+  group_by(月) |>
+  summarise(降水量の合計mm = sum(降水量の合計mm)) |>
+  ggplot(aes(x = 月, y = 降水量の合計mm)) +  geom_col() +
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  labs(title = "月ごとの降水量の合計(mm)", x = "月", y = "降水量(mm)") +
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  scale_fill_tableau(name = "Tableau 20")
+```
+
+やはり6月は降水量が多いようです。
+降水量のヒストグラムを描いてみます。
+
+```{r}
+#| fig.width: 12
+
+df_pos_weather |>
+  ggplot(aes(x = 降水量の合計mm)) +
+  geom_histogram(binwidth = 5) +
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  labs(title = "降水量の合計(mm)", x = "降水量(mm)", y = "頻度") +
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  scale_fill_tableau(name = "Tableau 20")
+```
+
+降水量が非常に少ない日が圧倒的に多いこともわかります。
+
+## 2変数間の関係をみる
+
+売上個数に影響を与える要因を探るために，気温や降水量との関係を表す**散布図**(scatter diagram)を描いてみます。
+
+まずは最高気温と売上個数の散布図を描いてみます。
+
+```{r}
+#| fig.width: 12
+#| fig.height: 12
+g_item_temp <- df_pos_weather |>
+  select(年月日, "緑茶（自社）", "濃い茶（自社）", "おいしい緑茶（A社）","おいしい濃茶（A社）","平均気温", "最高気温") |>
+  pivot_longer(cols = c("緑茶（自社）", "濃い茶（自社）", "おいしい緑茶（A社）","おいしい濃茶（A社）"), names_to = "商品", values_to = "個数") |>
+  ggplot(aes(x = 平均気温, y = 個数)) +
+  geom_point() +
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  labs(title = "最高気温と売上個数の散布図", x = "平均気温", y = "売上個数") +
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  scale_fill_tableau(name = "Tableau 20")
+g_item_temp
+```
+
+平均気温が上がると，売上個数も大きくなる傾向が見られます。
+次に横軸に降水量をとってみます。
+
+
+```{r}
+#| fig.width: 12
+#| fig.height: 12
+
+g_item_rain <- df_pos_weather |>
+  select(年月日, "緑茶（自社）", "濃い茶（自社）", "おいしい緑茶（A社）","おいしい濃茶（A社）","平均気温", "降水量の合計mm") |>
+  pivot_longer(cols = c("緑茶（自社）", "濃い茶（自社）", "おいしい緑茶（A社）","おいしい濃茶（A社）"), names_to = "商品", values_to = "個数") |>
+  ggplot(aes(x = 降水量の合計mm, y = 個数)) +
+  geom_point() +
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  labs(title = "降水量と売上個数の散布図", x = "降水量", y = "売上個数") +
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  scale_fill_tableau(name = "Tableau 20")
+g_item_rain
+```
+
+降水量がゼロとなっている日が多いため，散布図が左に張り付いていて，何かを読み取ることは難しいです。
+
+
+最高気温と緑茶の散布図を書いてみましょう。
+
+
+```{r}
+#| fig.width: 12
+#| fig.height: 12
+
+df_pos_weather |>
+  select(年月日, "緑茶（自社）", "最高気温") |>
+  ggplot() + aes(x = 最高気温, y = `緑茶（自社）`) +
+  geom_point() +
+  # 個数が最大の点を強調
+  geom_point(data = df_pos_weather |> filter(`緑茶（自社）` == max(`緑茶（自社）`)), color = "red", size = 3) +
+  labs(title = "最高気温と緑茶の散布図", x = "最高気温", y = "緑茶（自社）") +
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  scale_fill_tableau(name = "Tableau 20")
+```
+
+
+
+
+
+## 相関係数
+
+2変数の線形関係の強さを示す**相関係数**(correlation coefficient)を求めます。
+相関係数は-1から1の値を取り，1に近いほど正の相関が強く，-1に近いほど負の相関が強いことを表し，以下のように定義されます。
+
+最も良く使われる相関係数が**ピアソンの積率相関係数**です。
+
+$$
+r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i - \bar{x})^2}\sqrt{\sum_{i=1}^{n}(y_i - \bar{y})^2}} = \frac{\sigma_{xy}}{\sigma_x \sigma_y}
+$$
+
+分子が2変数の共分散で，分母がそれぞれの標準偏差となっています。
+
+気温と売上個数，降水量と売上個数の相関係数を求めてみます。
+
+```{r}
+df_pos_weather |>
+  select(年月日, "緑茶（自社）", "濃い茶（自社）", "おいしい緑茶（A社）","おいしい濃茶（A社）","平均気温", "降水量の合計mm") |>
+  pivot_longer(cols = c("緑茶（自社）", "濃い茶（自社）", "おいしい緑茶（A社）","おいしい濃茶（A社）"), names_to = "商品", values_to = "個数") |>
+  summarise(
+    気温と個数 = cor(平均気温, 個数, use = "complete.obs"),
+    雨と個数 = cor(降水量の合計mm, 個数, use = "complete.obs")
+  ) |>
+  gt() |>
+  fmt_number(columns = 1:2, decimals = 3) |>
+  tab_header(title = "相関係数") |>
+  tab_options(
+    heading.title.font.size = "normal",
+    table.font.size = "large",
+    table.width = pct(60)
+    )
+```
+
+気温と売上個数との間には$0.566$と強い正の相関がありますが，降水量と売上個数との間には$0.085$とほぼ無相関に近い値が得られました。
+これを図に書き込んだものが以下のようになります。
+
+
+```{r}
+#| fig.width: 12
+g1 <- g_item_temp + geom_smooth(method = "lm", se = FALSE)
+g2 <- g_item_rain + geom_smooth(method = "lm", se = FALSE)
+g1 + g2
+```
+

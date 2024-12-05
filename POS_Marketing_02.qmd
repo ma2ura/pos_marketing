@@ -313,7 +313,6 @@ df_ji_A_item |>
   gt() |>
   fmt_number(columns = 3:5, decimals = 0) |>
   tab_header(title = "表2-7 自社と競合A社の年代・性別別売上個数")
-
 ```
 
 割合棒グラフにしてみます。

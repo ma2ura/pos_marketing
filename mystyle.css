@@ -50,3 +50,32 @@
 .markb {
   background: linear-gradient(transparent 60%, #88E2EA 0%);
 }
+
+.bmarker-s{
+  font-weight: 700
+}
+.ymarker{
+  background: #fff9c4
+}
+.ymarker-s{
+  background: linear-gradient(transparent 70%,#fff9c4 0%)
+}
+.gmarker{
+  background:#eee
+}
+.gmarker-s{
+  background: linear-gradient(transparent 70%,#eee 0%)
+}
+.rmarker{
+  background:#ffcdd2
+}
+.rmarker-s{
+  background: linear-gradient(transparent 70%,#ffcdd2 0%)
+}
+.bmarker{
+  background:#e1f5fe
+}
+.bmarker-s{
+  background:linear-gradient(transparent 70%,#e1f5fe 0%)
+}
+
