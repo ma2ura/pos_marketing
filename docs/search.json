@@ -494,7 +494,7 @@
     "href": "POS_Marketing_04.html",
     "title": "\n4  第4回 売上に影響を与える要因\n",
     "section": "",
-    "text": "4.1 はじめに\nパッケージとデータを準備する。\n第3回ファイルで使うデータはchp4.xlsxです。\nパッケージを読み込みます。\npacman::p_load(tidyverse, readxl, ggthemes, gt, gtExtras)",
+    "text": "4.1 はじめに\nパッケージとデータを準備する。\n第3回ファイルで使うデータはchp4.xlsxです。\nパッケージを読み込みます。\npacman::p_load(tidyverse, readxl, ggthemes, gt, gtExtras, patchwork)",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>第4回 売上に影響を与える要因</span>"
     ]
@@ -534,7 +534,7 @@
     "href": "POS_Marketing_04.html#気温のグラフ",
     "title": "\n4  第4回 売上に影響を与える要因\n",
     "section": "\n4.5 気温のグラフ",
-    "text": "4.5 気温のグラフ\n最高、最低、平均気温の折れ線グラフを描きます。\n\n\nselect()で年月日、最低気温、平均気温、最高気温の列を選択\n\npivot_longer()で最低気温、平均気温、最高気温を縦に並べたワイド型に変換\n\nggplot()でグラフを描画\n\nという処理を行います。\n\ndf_pos_weather |&gt;\n  select(年月日, 最低気温, 平均気温, 最高気温) |&gt;\n  pivot_longer(cols = c(最低気温, 平均気温, 最高気温), names_to = \"気温\", values_to = \"温度\") |&gt;\n  ggplot(aes(x = 年月日, y = 温度, group = 気温, color = 気温)) +\n  geom_line() +\n  geom_point() +\n    theme_bw(base_family = \"HiraKakuPro-W3\") +\n    scale_fill_tableau(name = \"Tableau 20\")",
+    "text": "4.5 気温のグラフ\n最高、最低、平均気温の折れ線グラフを描きます。\n\n\nselect()で年月日、最低気温、平均気温、最高気温の列を選択\n\npivot_longer()で最低気温、平均気温、最高気温を縦に並べたワイド型に変換\n\nggplot()でグラフを描画\n\nという処理を行います。\n\ndf_pos_weather |&gt;\n  select(年月日, 最低気温, 平均気温, 最高気温) |&gt;\n  pivot_longer(cols = c(最低気温, 平均気温, 最高気温), names_to = \"気温\", values_to = \"温度\") |&gt;\n  ggplot(aes(x = 年月日, y = 温度, group = 気温, color = 気温)) +\n  geom_line() +\n  geom_point() +\n    theme_bw(base_family = \"HiraKakuPro-W3\") +\n    scale_fill_tableau(name = \"Tableau 20\")\n\n\n\n\n\n\n\n気温のグラフに売上個数のグラフを追加して二軸の折れ線グラフを作成します。\n\n# 売上データを例として利用\ndf_pos_weather |&gt;\n  select(年月日, 個数 = `緑茶（自社）`, 平均気温) |&gt;\n  ggplot(aes(x = 年月日)) +\n  geom_line(aes(y = 個数, color = \"売上個数\"), linewidth = 0.5) +\n  geom_line(aes(y = 平均気温 * 1500/40, color = \"平均気温\")) +\n  scale_y_continuous(\n    name = \"売上個数\",\n    limits = c(0, 1500),  # 売上個数軸の範囲を設定\n    sec.axis = sec_axis(\n      trans = ~ . / (1500/40), # 気温軸を元のスケールに戻す変換\n      name = \"平均気温 (℃)\",\n      breaks = seq(-5, 35, 5)  # 気温軸の目盛りを設定\n    )\n  ) +\n  scale_color_manual(values = c(\"売上個数\" = \"blue\", \"平均気温\" = \"black\")) +\n  labs(title = \"売上個数と気温のグラフ\", x = \"年月日\") +\n  theme_bw(base_family = \"Hiragino Sans\") +\n  theme(legend.title = element_blank())",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>第4回 売上に影響を与える要因</span>"
     ]
@@ -624,9 +624,59 @@
     "href": "POS_Marketing_04.html#変数間の関係をみる",
     "title": "\n4  第4回 売上に影響を与える要因\n",
     "section": "\n4.7 2変数間の関係をみる",
-    "text": "4.7 2変数間の関係をみる\n売上個数に影響を与える要因を探るために，気温や降水量との関係を表す散布図(scatter diagram)を描いてみます。\nまずは最高気温と売上個数の散布図を描いてみます。\n\ndf_pos_weather |&gt;\n  select(年月日, \"緑茶（自社）\", \"濃い茶（自社）\", \"おいしい緑茶（A社）\",\"おいしい濃茶（A社）\",\"平均気温\", \"最高気温\") |&gt;\n  pivot_longer(cols = c(\"緑茶（自社）\", \"濃い茶（自社）\", \"おいしい緑茶（A社）\",\"おいしい濃茶（A社）\"), names_to = \"商品\", values_to = \"個数\") |&gt;\n  ggplot(aes(x = 平均気温, y = 個数)) +\n  geom_point() +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  labs(title = \"最高気温と売上個数の散布図\", x = \"平均気温\", y = \"売上個数\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  scale_fill_tableau(name = \"Tableau 20\")\n\n\n\n\n\n\n\n平均気温が上がると，売上個数も大きくなる傾向が見られます。 次に横軸に降水量をとってみます。\n\ndf_pos_weather |&gt;\n  select(年月日, \"緑茶（自社）\", \"濃い茶（自社）\", \"おいしい緑茶（A社）\",\"おいしい濃茶（A社）\",\"平均気温\", \"降水量の合計mm\") |&gt;\n  pivot_longer(cols = c(\"緑茶（自社）\", \"濃い茶（自社）\", \"おいしい緑茶（A社）\",\"おいしい濃茶（A社）\"), names_to = \"商品\", values_to = \"個数\") |&gt;\n  ggplot(aes(x = 降水量の合計mm, y = 個数)) +\n  geom_point() +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  labs(title = \"降水量と売上個数の散布図\", x = \"降水量\", y = \"売上個数\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  scale_fill_tableau(name = \"Tableau 20\")\n\n\n\n\n\n\n\n降水量がゼロとなっている日が多いため，散布図が左に張り付いていて，何かを読み取ることは難しいです。",
+    "text": "4.7 2変数間の関係をみる\n売上個数に影響を与える要因を探るために，気温や降水量との関係を表す散布図(scatter diagram)を描いてみます。\nまずは最高気温と売上個数の散布図を描いてみます。\n\ng_item_temp &lt;- df_pos_weather |&gt;\n  select(年月日, \"緑茶（自社）\", \"濃い茶（自社）\", \"おいしい緑茶（A社）\",\"おいしい濃茶（A社）\",\"平均気温\", \"最高気温\") |&gt;\n  pivot_longer(cols = c(\"緑茶（自社）\", \"濃い茶（自社）\", \"おいしい緑茶（A社）\",\"おいしい濃茶（A社）\"), names_to = \"商品\", values_to = \"個数\") |&gt;\n  ggplot(aes(x = 平均気温, y = 個数)) +\n  geom_point() +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  labs(title = \"最高気温と売上個数の散布図\", x = \"平均気温\", y = \"売上個数\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  scale_fill_tableau(name = \"Tableau 20\")\ng_item_temp\n\n\n\n\n\n\n\n平均気温が上がると，売上個数も大きくなる傾向が見られます。 次に横軸に降水量をとってみます。\n\ng_item_rain &lt;- df_pos_weather |&gt;\n  select(年月日, \"緑茶（自社）\", \"濃い茶（自社）\", \"おいしい緑茶（A社）\",\"おいしい濃茶（A社）\",\"平均気温\", \"降水量の合計mm\") |&gt;\n  pivot_longer(cols = c(\"緑茶（自社）\", \"濃い茶（自社）\", \"おいしい緑茶（A社）\",\"おいしい濃茶（A社）\"), names_to = \"商品\", values_to = \"個数\") |&gt;\n  ggplot(aes(x = 降水量の合計mm, y = 個数)) +\n  geom_point() +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  labs(title = \"降水量と売上個数の散布図\", x = \"降水量\", y = \"売上個数\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  scale_fill_tableau(name = \"Tableau 20\")\ng_item_rain\n\n\n\n\n\n\n\n降水量がゼロとなっている日が多いため，散布図が左に張り付いていて，何かを読み取ることは難しいです。\n最高気温と緑茶の散布図を書いてみましょう。\n\ndf_pos_weather |&gt;\n  select(年月日, \"緑茶（自社）\", \"最高気温\") |&gt;\n  ggplot() + aes(x = 最高気温, y = `緑茶（自社）`) +\n  geom_point() +\n  # 個数が最大の点を強調\n  geom_point(data = df_pos_weather |&gt; filter(`緑茶（自社）` == max(`緑茶（自社）`)), color = \"red\", size = 3) +\n  labs(title = \"最高気温と緑茶の散布図\", x = \"最高気温\", y = \"緑茶（自社）\") +\n  theme_bw(base_family = \"HiraKakuPro-W3\") +\n  scale_fill_tableau(name = \"Tableau 20\")",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>第4回 売上に影響を与える要因</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_04.html#相関係数",
+    "href": "POS_Marketing_04.html#相関係数",
+    "title": "\n4  第4回 売上に影響を与える要因\n",
+    "section": "\n4.8 相関係数",
+    "text": "4.8 相関係数\n2変数の線形関係の強さを示す相関係数(correlation coefficient)を求めます。 相関係数は-1から1の値を取り，1に近いほど正の相関が強く，-1に近いほど負の相関が強いことを表し，以下のように定義されます。\n最も良く使われる相関係数がピアソンの積率相関係数です。\n\nr = \\frac{\\sum_{i=1}^{n}(x_i - \\bar{x})(y_i - \\bar{y})}{\\sqrt{\\sum_{i=1}^{n}(x_i - \\bar{x})^2}\\sqrt{\\sum_{i=1}^{n}(y_i - \\bar{y})^2}} = \\frac{\\sigma_{xy}}{\\sigma_x \\sigma_y}\n\n分子が2変数の共分散で，分母がそれぞれの標準偏差となっています。\n気温と売上個数，降水量と売上個数の相関係数を求めてみます。\n\ndf_pos_weather |&gt;\n  select(年月日, \"緑茶（自社）\", \"濃い茶（自社）\", \"おいしい緑茶（A社）\",\"おいしい濃茶（A社）\",\"平均気温\", \"降水量の合計mm\") |&gt;\n  pivot_longer(cols = c(\"緑茶（自社）\", \"濃い茶（自社）\", \"おいしい緑茶（A社）\",\"おいしい濃茶（A社）\"), names_to = \"商品\", values_to = \"個数\") |&gt;\n  summarise(\n    気温と個数 = cor(平均気温, 個数, use = \"complete.obs\"),\n    雨と個数 = cor(降水量の合計mm, 個数, use = \"complete.obs\")\n  ) |&gt;\n  gt() |&gt;\n  fmt_number(columns = 1:2, decimals = 3) |&gt;\n  tab_header(title = \"相関係数\") |&gt;\n  tab_options(\n    heading.title.font.size = \"normal\",\n    table.font.size = \"large\",\n    table.width = pct(60)\n    )\n\n\n\n\n\n\n相関係数\n\n\n気温と個数\n雨と個数\n\n\n\n0.566\n0.085\n\n\n\n\n\n気温と売上個数との間には0.566と強い正の相関がありますが，降水量と売上個数との間には0.085とほぼ無相関に近い値が得られました。 これを図に書き込んだものが以下のようになります。\n\ng1 &lt;- g_item_temp + geom_smooth(method = \"lm\", se = FALSE)\ng2 &lt;- g_item_rain + geom_smooth(method = \"lm\", se = FALSE)\ng1 + g2\n\n`geom_smooth()` using formula = 'y ~ x'\n`geom_smooth()` using formula = 'y ~ x'",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>第4回 売上に影響を与える要因</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_05.html",
+    "href": "POS_Marketing_05.html",
+    "title": "\n5  第5回 併売の分析\n",
+    "section": "",
+    "text": "5.1 はじめに\nパッケージとデータを準備する。\n第3回ファイルで使うデータはchp5.xlsxです。\nパッケージを読み込みます。\npacman::p_load(tidyverse, readxl, arules, ggthemes, gt, gtExtras, patchwork)\nここで用いるchp5.xlsxのシート名を確認します。\nreadxl::excel_sheets(\"data/chp5.xlsx\")\n\n[1] \"いつものPOSデータ\" \"ピボットテーブル\"  \"図5-2・表5-1\"     \n[4] \"図5-3\"             \"表5-2\"             \"表5-3・表5-4\"     \n[7] \"併売データ\"        \"表5-6・表5-7\"",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>第5回 併売の分析</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_05.html#はじめに",
+    "href": "POS_Marketing_05.html#はじめに",
+    "title": "\n5  第5回 併売の分析\n",
+    "section": "",
+    "text": "chp5.xlsx",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>第5回 併売の分析</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_05.html#アソシエーション分析",
+    "href": "POS_Marketing_05.html#アソシエーション分析",
+    "title": "\n5  第5回 併売の分析\n",
+    "section": "\n5.3 アソシエーション分析",
+    "text": "5.3 アソシエーション分析\nアソシエーション分析のために用いるデータとして7番目のシート「併売データ」を読み込みたいので，sheet = 7を指定します。\n\ndf &lt;- readxl::read_excel(\"data/chp5.xlsx\", sheet = 7)\nhead(df)\n\n\n\n\nお茶\n炭酸飲料\n弁当類\nパン類\nお菓子\nアイス\n\n\n\n1\n1\n0\n0\n0\n0\n\n\n1\n0\n0\n0\n1\n0\n\n\n0\n1\n0\n0\n0\n0\n\n\n1\n1\n0\n0\n0\n0\n\n\n0\n1\n0\n0\n1\n1\n\n\n0\n0\n0\n1\n0\n1\n\n\n\n\n\n\n行はレシート番号、列は商品名で、各セルには購入された場合に1、購入されなかった場合に0が入っています。\nアソシエーション分析とはマーケティングで用いられる分析手法の1つで、POSデータや購買データから、商品の関連性やパターンを見つける分析手法で、 ある製品を買う人はこの製品も買う、という傾向を発見するために使われます。\nRでアソシエーション分析を行うために，arulesパッケージを使います。 CRANのページにあるマニュアルにMining Association Rules and Frequent Itemsetsとあるように、関連ルールと頻出アイテムセットを見つけるためのパッケージです。 ここで用いるarulesパッケージのapriori()関数は、関連ルールに関する制限を識別し、Klemettinen (1994)のアプリオリアルゴリズムを実装しています。\nアソシエーション分析を行うために、まずはデータをtransactionsオブジェクトに変換します。 arules::as()関数を使って変換します。この関数は引数としてlistやmatrixを受け取り、transactionsオブジェクトに変換します。\n\nrownames(df) &lt;- NULL # 行名をリセット\ndf_tran &lt;- as.matrix(df) |&gt; as(\"transactions\") # transactionsオブジェクトに変換\ndf_ap &lt;- arules::apriori(\n  df_tran, \n  parameter = list(support = 0.05, confidence = 0.4) # サポート0.05、信頼度0.4\n  )\nresult &lt;- df_ap |&gt; \n  sort(by = \"lift\") |&gt; # liftでソート\n  inspect()  # 結果を表示\n\n\nresult &lt;- result |&gt; as.data.frame()\nnames(result)[2] &lt;- \"arrow\"\nresult |&gt; gt() |&gt; \n  fmt_number(columns = 4:7, decimals = 2) |&gt;\n  tab_options(\n    table.font.size = \"small\"\n  )\n\n\n\n\n\nlhs\narrow\nrhs\nsupport\nconfidence\ncoverage\nlift\ncount\n\n\n\n{炭酸飲料, 弁当類}\n=&gt;\n{お茶}\n0.14\n0.82\n0.17\n1.28\n138\n\n\n{炭酸飲料, アイス}\n=&gt;\n{お茶}\n0.06\n0.74\n0.08\n1.16\n58\n\n\n{お茶, アイス}\n=&gt;\n{炭酸飲料}\n0.06\n0.58\n0.10\n1.13\n58\n\n\n{お茶, お菓子}\n=&gt;\n{炭酸飲料}\n0.06\n0.58\n0.10\n1.12\n56\n\n\n{弁当類}\n=&gt;\n{お茶}\n0.28\n0.71\n0.40\n1.11\n283\n\n\n{お茶}\n=&gt;\n{弁当類}\n0.28\n0.44\n0.64\n1.11\n283\n\n\n{炭酸飲料}\n=&gt;\n{お茶}\n0.36\n0.70\n0.51\n1.09\n358\n\n\n{お茶}\n=&gt;\n{炭酸飲料}\n0.36\n0.56\n0.64\n1.09\n358\n\n\n{}\n=&gt;\n{炭酸飲料}\n0.51\n0.51\n1.00\n1.00\n514\n\n\n{}\n=&gt;\n{お茶}\n0.64\n0.64\n1.00\n1.00\n640\n\n\n{炭酸飲料, お菓子}\n=&gt;\n{お茶}\n0.06\n0.63\n0.09\n0.98\n56\n\n\n{お茶, 弁当類}\n=&gt;\n{炭酸飲料}\n0.14\n0.49\n0.28\n0.95\n138\n\n\n{お茶, パン類}\n=&gt;\n{炭酸飲料}\n0.05\n0.48\n0.11\n0.94\n52\n\n\n{炭酸飲料, パン類}\n=&gt;\n{お茶}\n0.05\n0.59\n0.09\n0.92\n52\n\n\n{お菓子}\n=&gt;\n{炭酸飲料}\n0.09\n0.47\n0.19\n0.92\n89\n\n\n{アイス}\n=&gt;\n{お茶}\n0.10\n0.58\n0.17\n0.91\n100\n\n\n{アイス}\n=&gt;\n{炭酸飲料}\n0.08\n0.45\n0.17\n0.88\n78\n\n\n{弁当類}\n=&gt;\n{炭酸飲料}\n0.17\n0.42\n0.40\n0.82\n168\n\n\n{お菓子}\n=&gt;\n{お茶}\n0.10\n0.51\n0.19\n0.80\n97\n\n\n{パン類}\n=&gt;\n{お茶}\n0.11\n0.49\n0.22\n0.76\n108\n\n\n\n\n\n\narulesパッケージで利用できるデータの型はtransactionsです。 この型に変換するために，arules::as()関数を使います。",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>第5回 併売の分析</span>"
+    ]
+  },
+  {
+    "objectID": "POS_Marketing_05.html#併売の基礎集計",
+    "href": "POS_Marketing_05.html#併売の基礎集計",
+    "title": "\n5  第5回 併売の分析\n",
+    "section": "\n5.2 併売の基礎集計",
+    "text": "5.2 併売の基礎集計\n最初の分析では、併売の基礎集計を行うために、1番目のシート「いつものPOSデータ」を読み込みます。\n\ndf &lt;- readxl::read_excel(\"data/chp5.xlsx\", sheet = 1)\nhead(df)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nレシート番号\n日付\n曜日\n時間\n性別\n年代\nメーカー\n商品名\n単価\n個数\n金額\n\n\n\nR000001\n2023-01-02\n月\n10\n女性\n30代\n競合A\nおいしい緑茶\n160\n2\n320\n\n\nR000001\n2023-01-02\n月\n10\n女性\n30代\n競合B\n静岡の緑茶\n170\n2\n340\n\n\nR000002\n2023-01-02\n月\n10\n男性\n60歳以上\n競合A\nおいしい濃茶\n160\n2\n320\n\n\nR000002\n2023-01-02\n月\n10\n男性\n60歳以上\n競合B\n静岡の緑茶\n170\n4\n680\n\n\nR000003\n2023-01-02\n月\n10\n男性\n50代\n競合C\nほうじ茶\n140\n1\n140\n\n\nR000004\n2023-01-02\n月\n10\n女性\n50代\n競合D\nウーロン茶\n140\n3\n420\n\n\n\n\n\n\n各商品が別の商品と購入された回数を調べます。\n\ndf_wide &lt;- df |&gt; \n  select(レシート番号, 商品名, 個数) |&gt; # 必要な列だけ抽出\n  mutate(個数 = if_else(個数 &gt; 0, 1, 0)) |&gt; # 個数が1以上の場合は1、それ以外は0\n  pivot_wider(names_from = 商品名, values_from = 個数, values_fill = 0)\nhead(df_wide)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nレシート番号\nおいしい緑茶\n静岡の緑茶\nおいしい濃茶\nほうじ茶\nウーロン茶\n濃い茶\n緑茶\n\n\n\nR000001\n1\n1\n0\n0\n0\n0\n0\n\n\nR000002\n0\n1\n1\n0\n0\n0\n0\n\n\nR000003\n0\n0\n0\n1\n0\n0\n0\n\n\nR000004\n0\n0\n0\n0\n1\n0\n0\n\n\nR000005\n1\n0\n0\n0\n0\n1\n1\n\n\nR000006\n0\n0\n1\n0\n0\n0\n0\n\n\n\n\n\n\nこれで、テキストの図5-1と同様に、レシート番号ごとに商品名が列になり、購入された場合に1、購入されなかった場合に0が入ったデータフレームができました。 ここから各商品の購入回数合計を求めます。\n\ndf |&gt;\n  select(レシート番号, 商品名, 個数) |&gt; # 必要な列だけ抽出\n  mutate(個数 = if_else(個数 &gt; 0, 1, 0)) |&gt; # 個数が1以上の場合は1、それ以外は0\n  group_by(商品名) |&gt; # 商品ごとにグループ化\n  summarise(購入回数 = sum(個数)) |&gt; # 購入回数を合計\n  arrange(desc(購入回数)) |&gt;  # 購入回数で降順ソート\n  gt() |&gt; # 作表\n  fmt_number(columns = 2, decimals = 0) |&gt;\n  tab_options(\n    table.font.size = \"small\"\n  )\n\n\n\n\n\n商品名\n購入回数\n\n\n\nおいしい緑茶\n84,832\n\n\n緑茶\n65,755\n\n\nおいしい濃茶\n59,910\n\n\n静岡の緑茶\n46,516\n\n\n濃い茶\n45,982\n\n\nほうじ茶\n39,190\n\n\nウーロン茶\n31,905",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>第5回 併売の分析</span>"
     ]
   }
 ]

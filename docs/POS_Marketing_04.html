@@ -96,7 +96,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "検索",
     "search-label": "サーチ"
   }
-}</script><link rel="stylesheet" href="mystyle.css">
+}</script><script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script><script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="mystyle.css">
 <meta name="twitter:title" content="4&nbsp; 第4回 売上に影響を与える要因 – POSとマーケティングデータ分析">
 <meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://so-ichi.com/img/weather_data.png">
@@ -177,6 +216,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#%E6%B0%97%E6%B8%A9%E3%81%AE%E3%82%B0%E3%83%A9%E3%83%95" id="toc-気温のグラフ" class="nav-link" data-scroll-target="#%E6%B0%97%E6%B8%A9%E3%81%AE%E3%82%B0%E3%83%A9%E3%83%95"><span class="header-section-number">4.5</span> 気温のグラフ</a></li>
   <li><a href="#%E9%99%8D%E6%B0%B4%E9%87%8F%E3%81%AE%E3%82%B0%E3%83%A9%E3%83%95" id="toc-降水量のグラフ" class="nav-link" data-scroll-target="#%E9%99%8D%E6%B0%B4%E9%87%8F%E3%81%AE%E3%82%B0%E3%83%A9%E3%83%95"><span class="header-section-number">4.6</span> 降水量のグラフ</a></li>
   <li><a href="#%E5%A4%89%E6%95%B0%E9%96%93%E3%81%AE%E9%96%A2%E4%BF%82%E3%82%92%E3%81%BF%E3%82%8B" id="toc-変数間の関係をみる" class="nav-link" data-scroll-target="#%E5%A4%89%E6%95%B0%E9%96%93%E3%81%AE%E9%96%A2%E4%BF%82%E3%82%92%E3%81%BF%E3%82%8B"><span class="header-section-number">4.7</span> 2変数間の関係をみる</a></li>
+  <li><a href="#%E7%9B%B8%E9%96%A2%E4%BF%82%E6%95%B0" id="toc-相関係数" class="nav-link" data-scroll-target="#%E7%9B%B8%E9%96%A2%E4%BF%82%E6%95%B0"><span class="header-section-number">4.8</span> 相関係数</a></li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -206,7 +246,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>パッケージを読み込みます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>, <span class="va">readxl</span>, <span class="va">ggthemes</span>, <span class="va">gt</span>, <span class="va">gtExtras</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>, <span class="va">readxl</span>, <span class="va">ggthemes</span>, <span class="va">gt</span>, <span class="va">gtExtras</span>, <span class="va">patchwork</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="天気データ" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="天気データ">
 <span class="header-section-number">4.2</span> 天気データ</h2>
@@ -280,9 +320,9 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 </div>
 </section><section id="販売データ" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="販売データ">
 <span class="header-section-number">4.3</span> 販売データ</h2>
-<p>テキストのデータ<code>chp4.xlsx</code>を読み込みます。 <code><a href="https://readxl.tidyverse.org/reference/read_excel.html">readxl::read_excel()</a></code>にオプションとして<code>sheet = 1</code>を指定することで、1番目のシートを読み込みます。</p>
+<p>テキストのデータ<code>chp4.xlsx</code>を読み込みます。 <code><a href="https://rdrr.io/pkg/readxl/man/read_excel.html">readxl::read_excel()</a></code>にオプションとして<code>sheet = 1</code>を指定することで、1番目のシートを読み込みます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/chp4.xlsx"</span>, sheet <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/readxl/man/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/chp4.xlsx"</span>, sheet <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>New names:
 • `` -&gt; `...1`</code></pre>
@@ -348,11 +388,39 @@ $ `天気概況6-18h`       &lt;chr&gt; "晴", "快晴", "晴", "快晴", "薄�
 </div>
 </div>
 </div>
+<p>気温のグラフに売上個数のグラフを追加して二軸の折れ線グラフを作成します。</p>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># 売上データを例として利用</span></span>
+<span><span class="va">df_pos_weather</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">年月日</span>, 個数 <span class="op">=</span> <span class="va">`緑茶（自社）`</span>, <span class="va">平均気温</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">年月日</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">個数</span>, color <span class="op">=</span> <span class="st">"売上個数"</span><span class="op">)</span>, linewidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">平均気温</span> <span class="op">*</span> <span class="fl">1500</span><span class="op">/</span><span class="fl">40</span>, color <span class="op">=</span> <span class="st">"平均気温"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_y_continuous</span><span class="op">(</span></span>
+<span>    name <span class="op">=</span> <span class="st">"売上個数"</span>,</span>
+<span>    limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1500</span><span class="op">)</span>,  <span class="co"># 売上個数軸の範囲を設定</span></span>
+<span>    sec.axis <span class="op">=</span> <span class="fu">sec_axis</span><span class="op">(</span></span>
+<span>      trans <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op">/</span> <span class="op">(</span><span class="fl">1500</span><span class="op">/</span><span class="fl">40</span><span class="op">)</span>, <span class="co"># 気温軸を元のスケールに戻す変換</span></span>
+<span>      name <span class="op">=</span> <span class="st">"平均気温 (℃)"</span>,</span>
+<span>      breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">35</span>, <span class="fl">5</span><span class="op">)</span>  <span class="co"># 気温軸の目盛りを設定</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_color_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"売上個数"</span> <span class="op">=</span> <span class="st">"blue"</span>, <span class="st">"平均気温"</span> <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"売上個数と気温のグラフ"</span>, x <span class="op">=</span> <span class="st">"年月日"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"Hiragino Sans"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_04_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="1152"></p>
+</figure>
+</div>
+</div>
+</div>
 </section><section id="降水量のグラフ" class="level2" data-number="4.6"><h2 data-number="4.6" class="anchored" data-anchor-id="降水量のグラフ">
 <span class="header-section-number">4.6</span> 降水量のグラフ</h2>
 <p>日ごとの降水量の棒グラフを作成してみます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_pos_weather</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_pos_weather</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">年月日</span>, y <span class="op">=</span> <span class="va">降水量の合計mm</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_col</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -361,14 +429,14 @@ $ `天気概況6-18h`       &lt;chr&gt; "晴", "快晴", "晴", "快晴", "薄�
 <span>  <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_04_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="1152"></p>
+<figure class="figure"><p><img src="POS_Marketing_04_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="1152"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>微妙に分かりづらいので，月ごとに集計して棒グラフを描画します。</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_pos_weather</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_pos_weather</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>月 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu">month</span><span class="op">(</span><span class="va">年月日</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu">month</span><span class="op">(</span><span class="va">年月日</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">月</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">summarise</span><span class="op">(</span>降水量の合計mm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">降水量の合計mm</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -379,14 +447,14 @@ $ `天気概況6-18h`       &lt;chr&gt; "晴", "快晴", "晴", "快晴", "薄�
 <span>  <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_04_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="1152"></p>
+<figure class="figure"><p><img src="POS_Marketing_04_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="1152"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>やはり6月は降水量が多いようです。 降水量のヒストグラムを描いてみます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_pos_weather</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_pos_weather</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">降水量の合計mm</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_histogram</span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -395,7 +463,7 @@ $ `天気概況6-18h`       &lt;chr&gt; "晴", "快晴", "晴", "快晴", "薄�
 <span>  <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_04_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="1152"></p>
+<figure class="figure"><p><img src="POS_Marketing_04_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="1152"></p>
 </figure>
 </div>
 </div>
@@ -406,7 +474,7 @@ $ `天気概況6-18h`       &lt;chr&gt; "晴", "快晴", "晴", "快晴", "薄�
 <p>売上個数に影響を与える要因を探るために，気温や降水量との関係を表す<strong>散布図</strong>(scatter diagram)を描いてみます。</p>
 <p>まずは最高気温と売上個数の散布図を描いてみます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_pos_weather</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g_item_temp</span> <span class="op">&lt;-</span> <span class="va">df_pos_weather</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">年月日</span>, <span class="st">"緑茶（自社）"</span>, <span class="st">"濃い茶（自社）"</span>, <span class="st">"おいしい緑茶（A社）"</span>,<span class="st">"おいしい濃茶（A社）"</span>,<span class="st">"平均気温"</span>, <span class="st">"最高気温"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">pivot_longer</span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"緑茶（自社）"</span>, <span class="st">"濃い茶（自社）"</span>, <span class="st">"おいしい緑茶（A社）"</span>,<span class="st">"おいしい濃茶（A社）"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"商品"</span>, values_to <span class="op">=</span> <span class="st">"個数"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">平均気温</span>, y <span class="op">=</span> <span class="va">個数</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -414,25 +482,8 @@ $ `天気概況6-18h`       &lt;chr&gt; "晴", "快晴", "晴", "快晴", "薄�
 <span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"最高気温と売上個数の散布図"</span>, x <span class="op">=</span> <span class="st">"平均気温"</span>, y <span class="op">=</span> <span class="st">"売上個数"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="POS_Marketing_04_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="1152"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>平均気温が上がると，売上個数も大きくなる傾向が見られます。 次に横軸に降水量をとってみます。</p>
-<div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_pos_weather</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">年月日</span>, <span class="st">"緑茶（自社）"</span>, <span class="st">"濃い茶（自社）"</span>, <span class="st">"おいしい緑茶（A社）"</span>,<span class="st">"おいしい濃茶（A社）"</span>,<span class="st">"平均気温"</span>, <span class="st">"降水量の合計mm"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">pivot_longer</span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"緑茶（自社）"</span>, <span class="st">"濃い茶（自社）"</span>, <span class="st">"おいしい緑茶（A社）"</span>,<span class="st">"おいしい濃茶（A社）"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"商品"</span>, values_to <span class="op">=</span> <span class="st">"個数"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">降水量の合計mm</span>, y <span class="op">=</span> <span class="va">個数</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"降水量と売上個数の散布図"</span>, x <span class="op">=</span> <span class="st">"降水量"</span>, y <span class="op">=</span> <span class="st">"売上個数"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span>
+<span><span class="va">g_item_temp</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="POS_Marketing_04_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="1152"></p>
@@ -440,7 +491,553 @@ $ `天気概況6-18h`       &lt;chr&gt; "晴", "快晴", "晴", "快晴", "薄�
 </div>
 </div>
 </div>
+<p>平均気温が上がると，売上個数も大きくなる傾向が見られます。 次に横軸に降水量をとってみます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g_item_rain</span> <span class="op">&lt;-</span> <span class="va">df_pos_weather</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">年月日</span>, <span class="st">"緑茶（自社）"</span>, <span class="st">"濃い茶（自社）"</span>, <span class="st">"おいしい緑茶（A社）"</span>,<span class="st">"おいしい濃茶（A社）"</span>,<span class="st">"平均気温"</span>, <span class="st">"降水量の合計mm"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">pivot_longer</span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"緑茶（自社）"</span>, <span class="st">"濃い茶（自社）"</span>, <span class="st">"おいしい緑茶（A社）"</span>,<span class="st">"おいしい濃茶（A社）"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"商品"</span>, values_to <span class="op">=</span> <span class="st">"個数"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">降水量の合計mm</span>, y <span class="op">=</span> <span class="va">個数</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"降水量と売上個数の散布図"</span>, x <span class="op">=</span> <span class="st">"降水量"</span>, y <span class="op">=</span> <span class="st">"売上個数"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span>
+<span><span class="va">g_item_rain</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_04_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="1152"></p>
+</figure>
+</div>
+</div>
+</div>
 <p>降水量がゼロとなっている日が多いため，散布図が左に張り付いていて，何かを読み取ることは難しいです。</p>
+<p>最高気温と緑茶の散布図を書いてみましょう。</p>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_pos_weather</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">年月日</span>, <span class="st">"緑茶（自社）"</span>, <span class="st">"最高気温"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">最高気温</span>, y <span class="op">=</span> <span class="va">`緑茶（自社）`</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># 個数が最大の点を強調</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span>data <span class="op">=</span> <span class="va">df_pos_weather</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">`緑茶（自社）`</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">`緑茶（自社）`</span><span class="op">)</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"red"</span>, size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"最高気温と緑茶の散布図"</span>, x <span class="op">=</span> <span class="st">"最高気温"</span>, y <span class="op">=</span> <span class="st">"緑茶（自社）"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_04_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="1152"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="相関係数" class="level2" data-number="4.8"><h2 data-number="4.8" class="anchored" data-anchor-id="相関係数">
+<span class="header-section-number">4.8</span> 相関係数</h2>
+<p>2変数の線形関係の強さを示す<strong>相関係数</strong>(correlation coefficient)を求めます。 相関係数は-1から1の値を取り，1に近いほど正の相関が強く，-1に近いほど負の相関が強いことを表し，以下のように定義されます。</p>
+<p>最も良く使われる相関係数が<strong>ピアソンの積率相関係数</strong>です。</p>
+<p><span class="math display">
+r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i - \bar{x})^2}\sqrt{\sum_{i=1}^{n}(y_i - \bar{y})^2}} = \frac{\sigma_{xy}}{\sigma_x \sigma_y}
+</span></p>
+<p>分子が2変数の共分散で，分母がそれぞれの標準偏差となっています。</p>
+<p>気温と売上個数，降水量と売上個数の相関係数を求めてみます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_pos_weather</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">年月日</span>, <span class="st">"緑茶（自社）"</span>, <span class="st">"濃い茶（自社）"</span>, <span class="st">"おいしい緑茶（A社）"</span>,<span class="st">"おいしい濃茶（A社）"</span>,<span class="st">"平均気温"</span>, <span class="st">"降水量の合計mm"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">pivot_longer</span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"緑茶（自社）"</span>, <span class="st">"濃い茶（自社）"</span>, <span class="st">"おいしい緑茶（A社）"</span>,<span class="st">"おいしい濃茶（A社）"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"商品"</span>, values_to <span class="op">=</span> <span class="st">"個数"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">summarise</span><span class="op">(</span></span>
+<span>    気温と個数 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">平均気温</span>, <span class="va">個数</span>, use <span class="op">=</span> <span class="st">"complete.obs"</span><span class="op">)</span>,</span>
+<span>    雨と個数 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">降水量の合計mm</span>, <span class="va">個数</span>, use <span class="op">=</span> <span class="st">"complete.obs"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">gt</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, decimals <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"相関係数"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tab_options</span><span class="op">(</span></span>
+<span>    heading.title.font.size <span class="op">=</span> <span class="st">"normal"</span>,</span>
+<span>    table.font.size <span class="op">=</span> <span class="st">"large"</span>,</span>
+<span>    table.width <span class="op">=</span> <span class="fu">pct</span><span class="op">(</span><span class="fl">60</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="vwihckdpwu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#vwihckdpwu table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#vwihckdpwu thead, #vwihckdpwu tbody, #vwihckdpwu tfoot, #vwihckdpwu tr, #vwihckdpwu td, #vwihckdpwu th {
+  border-style: none;
+}
+
+#vwihckdpwu p {
+  margin: 0;
+  padding: 0;
+}
+
+#vwihckdpwu .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: large;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: 60%;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#vwihckdpwu .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#vwihckdpwu .gt_title {
+  color: #333333;
+  font-size: normal;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#vwihckdpwu .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#vwihckdpwu .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#vwihckdpwu .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vwihckdpwu .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#vwihckdpwu .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#vwihckdpwu .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#vwihckdpwu .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#vwihckdpwu .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#vwihckdpwu .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#vwihckdpwu .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#vwihckdpwu .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#vwihckdpwu .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#vwihckdpwu .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#vwihckdpwu .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#vwihckdpwu .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#vwihckdpwu .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vwihckdpwu .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#vwihckdpwu .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#vwihckdpwu .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#vwihckdpwu .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vwihckdpwu .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#vwihckdpwu .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#vwihckdpwu .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vwihckdpwu .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vwihckdpwu .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#vwihckdpwu .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vwihckdpwu .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#vwihckdpwu .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vwihckdpwu .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#vwihckdpwu .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vwihckdpwu .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#vwihckdpwu .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vwihckdpwu .gt_left {
+  text-align: left;
+}
+
+#vwihckdpwu .gt_center {
+  text-align: center;
+}
+
+#vwihckdpwu .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#vwihckdpwu .gt_font_normal {
+  font-weight: normal;
+}
+
+#vwihckdpwu .gt_font_bold {
+  font-weight: bold;
+}
+
+#vwihckdpwu .gt_font_italic {
+  font-style: italic;
+}
+
+#vwihckdpwu .gt_super {
+  font-size: 65%;
+}
+
+#vwihckdpwu .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#vwihckdpwu .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#vwihckdpwu .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#vwihckdpwu .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#vwihckdpwu .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#vwihckdpwu .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#vwihckdpwu .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#vwihckdpwu .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#vwihckdpwu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<th colspan="2" class="gt_heading gt_title gt_font_normal gt_bottom_border">相関係数</th>
+</tr>
+<tr class="gt_col_headings even">
+<th id="気温と個数" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">気温と個数</th>
+<th id="雨と個数" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">雨と個数</th>
+</tr>
+</thead>
+<tbody class="gt_table_body"><tr class="odd">
+<td class="gt_row gt_right" headers="気温と個数">0.566</td>
+<td class="gt_row gt_right" headers="雨と個数">0.085</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+</div>
+<p>気温と売上個数との間には<span class="math inline">0.566</span>と強い正の相関がありますが，降水量と売上個数との間には<span class="math inline">0.085</span>とほぼ無相関に近い値が得られました。 これを図に書き込んだものが以下のようになります。</p>
+<div class="cell">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g1</span> <span class="op">&lt;-</span> <span class="va">g_item_temp</span> <span class="op">+</span> <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">g2</span> <span class="op">&lt;-</span> <span class="va">g_item_rain</span> <span class="op">+</span> <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">g1</span> <span class="op">+</span> <span class="va">g2</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_04_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="1152"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 </section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
