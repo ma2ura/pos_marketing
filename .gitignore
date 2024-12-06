@@ -1,8 +1,0 @@
-!/docs/
-/講義資料
-*.ppt
-*.pptx
-*.xlsx
-*.DS_Store
-/temp/
-/.quarto/
