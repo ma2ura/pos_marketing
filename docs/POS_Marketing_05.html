@@ -96,12 +96,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "検索",
     "search-label": "サーチ"
   }
-}</script><link rel="stylesheet" href="mystyle.css">
+}</script><script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script><script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="mystyle.css">
 <meta name="twitter:title" content="5&nbsp; 第5回 併売の分析 – POSとマーケティングデータ分析">
 <meta name="twitter:description" content="">
 <meta name="twitter:card" content="summary">
 </head>
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
@@ -175,11 +214,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
 <li><a href="#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB" id="toc-はじめに" class="nav-link active" data-scroll-target="#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB"><span class="header-section-number">5.1</span> はじめに</a></li>
   <li><a href="#%E4%BD%B5%E5%A3%B2%E3%81%AE%E5%9F%BA%E7%A4%8E%E9%9B%86%E8%A8%88" id="toc-併売の基礎集計" class="nav-link" data-scroll-target="#%E4%BD%B5%E5%A3%B2%E3%81%AE%E5%9F%BA%E7%A4%8E%E9%9B%86%E8%A8%88"><span class="header-section-number">5.2</span> 併売の基礎集計</a></li>
-  <li><a href="#%E3%82%A2%E3%82%BD%E3%82%B7%E3%82%A8%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E5%88%86%E6%9E%90" id="toc-アソシエーション分析" class="nav-link" data-scroll-target="#%E3%82%A2%E3%82%BD%E3%82%B7%E3%82%A8%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E5%88%86%E6%9E%90"><span class="header-section-number">5.3</span> アソシエーション分析</a></li>
+  <li>
+<a href="#%E3%82%A2%E3%82%BD%E3%82%B7%E3%82%A8%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E5%88%86%E6%9E%90" id="toc-アソシエーション分析" class="nav-link" data-scroll-target="#%E3%82%A2%E3%82%BD%E3%82%B7%E3%82%A8%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E5%88%86%E6%9E%90"><span class="header-section-number">6</span> アソシエーション分析</a>
+  <ul class="collapse">
+<li>
+<a href="#%E6%A6%82%E8%A6%81" id="toc-概要" class="nav-link" data-scroll-target="#%E6%A6%82%E8%A6%81"><span class="header-section-number">6.1</span> 概要</a>
+  <ul class="collapse">
+<li><a href="#%E6%94%AF%E6%8C%81%E5%BA%A6" id="toc-支持度" class="nav-link" data-scroll-target="#%E6%94%AF%E6%8C%81%E5%BA%A6"><span class="header-section-number">6.1.1</span> 支持度</a></li>
+  <li><a href="#%E7%A2%BA%E4%BF%A1%E5%BA%A6" id="toc-確信度" class="nav-link" data-scroll-target="#%E7%A2%BA%E4%BF%A1%E5%BA%A6"><span class="header-section-number">6.1.2</span> 確信度</a></li>
+  </ul>
+</li>
+  </ul>
+</li>
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">
 <span class="chapter-number">5</span>&nbsp; <span class="chapter-title">第5回 併売の分析</span>
 </h1>
@@ -335,12 +385,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>各商品が別の商品と購入された回数を調べます。</p>
+<p>まず，各商品が購入された回数を示すように，<code>個数</code>が1以上のとき<code>1</code>を，そうでないときに<code>0</code>を返すダミー変数を作成し，<code>回数</code>という変数とします。</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_wide</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_wide</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">レシート番号</span>, <span class="va">商品名</span>, <span class="va">個数</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 必要な列だけ抽出</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>個数 <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">個数</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 個数が1以上の場合は1、それ以外は0</span></span>
-<span>  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">商品名</span>, values_from <span class="op">=</span> <span class="va">個数</span>, values_fill <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>回数 <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">個数</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 個数が1以上の場合は1、それ以外は0</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">レシート番号</span>, <span class="va">商品名</span>, <span class="va">回数</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">商品名</span>, values_from <span class="op">=</span> <span class="va">回数</span>, values_fill <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df_wide</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="kable-table">
@@ -431,71 +482,73 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>これで、テキストの図5-1と同様に、レシート番号ごとに商品名が列になり、購入された場合に1、購入されなかった場合に0が入ったデータフレームができました。 ここから各商品の購入回数合計を求めます。</p>
 <div class="cell">
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">レシート番号</span>, <span class="va">商品名</span>, <span class="va">個数</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 必要な列だけ抽出</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>個数 <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">個数</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 個数が1以上の場合は1、それ以外は0</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>回数 <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">個数</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 個数が1以上の場合は1、それ以外は0</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">商品名</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 商品ごとにグループ化</span></span>
-<span>  <span class="fu">summarise</span><span class="op">(</span>購入回数 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">個数</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 購入回数を合計</span></span>
+<span>  <span class="fu">summarise</span><span class="op">(</span>購入回数 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">回数</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 購入回数を合計</span></span>
 <span>  <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">購入回数</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="co"># 購入回数で降順ソート</span></span>
 <span>  <span class="fu">gt</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 作表</span></span>
 <span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span>, decimals <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tab_options</span><span class="op">(</span></span>
+<span>    heading.title.font.size <span class="op">=</span> <span class="st">"normal"</span>,</span>
 <span>    table.font.size <span class="op">=</span> <span class="st">"small"</span></span>
-<span>  <span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">gt_theme_pff</span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="yxixakufeh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#yxixakufeh table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+<div id="mwaxvogqkr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+#mwaxvogqkr table {
+  font-family: Roboto, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#yxixakufeh thead, #yxixakufeh tbody, #yxixakufeh tfoot, #yxixakufeh tr, #yxixakufeh td, #yxixakufeh th {
+#mwaxvogqkr thead, #mwaxvogqkr tbody, #mwaxvogqkr tfoot, #mwaxvogqkr tr, #mwaxvogqkr td, #mwaxvogqkr th {
   border-style: none;
 }
 
-#yxixakufeh p {
+#mwaxvogqkr p {
   margin: 0;
   padding: 0;
 }
 
-#yxixakufeh .gt_table {
+#mwaxvogqkr .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
-  font-size: small;
+  font-size: 12px;
   font-weight: normal;
   font-style: normal;
   background-color: #FFFFFF;
   width: auto;
   border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
+  border-top-width: 3px;
+  border-top-color: rgba(255, 255, 255, 0);
   border-right-style: none;
   border-right-width: 2px;
   border-right-color: #D3D3D3;
   border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
+  border-bottom-width: 1px;
+  border-bottom-color: #D3D3D3;
   border-left-style: none;
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
 
-#yxixakufeh .gt_caption {
+#mwaxvogqkr .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#yxixakufeh .gt_title {
+#mwaxvogqkr .gt_title {
   color: #333333;
-  font-size: 125%;
-  font-weight: initial;
+  font-size: 30px;
+  font-weight: bold;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
@@ -504,9 +557,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-width: 0;
 }
 
-#yxixakufeh .gt_subtitle {
+#mwaxvogqkr .gt_subtitle {
   color: #333333;
-  font-size: 85%;
+  font-size: 16px;
   font-weight: initial;
   padding-top: 3px;
   padding-bottom: 5px;
@@ -516,9 +569,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-width: 0;
 }
 
-#yxixakufeh .gt_heading {
+#mwaxvogqkr .gt_heading {
   background-color: #FFFFFF;
-  text-align: center;
+  text-align: left;
   border-bottom-color: #FFFFFF;
   border-left-style: none;
   border-left-width: 1px;
@@ -528,19 +581,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#yxixakufeh .gt_bottom_border {
+#mwaxvogqkr .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#yxixakufeh .gt_col_headings {
+#mwaxvogqkr .gt_col_headings {
   border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
+  border-top-width: 3px;
+  border-top-color: rgba(255, 255, 255, 0);
   border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
+  border-bottom-width: 3px;
+  border-bottom-color: rgba(255, 255, 255, 0);
   border-left-style: none;
   border-left-width: 1px;
   border-left-color: #D3D3D3;
@@ -549,12 +602,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#yxixakufeh .gt_col_heading {
+#mwaxvogqkr .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
   border-left-style: none;
   border-left-width: 1px;
   border-left-color: #D3D3D3;
@@ -562,59 +615,59 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-width: 1px;
   border-right-color: #D3D3D3;
   vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
+  padding-top: 6px;
+  padding-bottom: 7px;
   padding-left: 5px;
   padding-right: 5px;
   overflow-x: hidden;
 }
 
-#yxixakufeh .gt_column_spanner_outer {
+#mwaxvogqkr .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
   padding-top: 0;
   padding-bottom: 0;
   padding-left: 4px;
   padding-right: 4px;
 }
 
-#yxixakufeh .gt_column_spanner_outer:first-child {
+#mwaxvogqkr .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#yxixakufeh .gt_column_spanner_outer:last-child {
+#mwaxvogqkr .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#yxixakufeh .gt_column_spanner {
+#mwaxvogqkr .gt_column_spanner {
   border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
+  border-bottom-width: 3px;
+  border-bottom-color: rgba(255, 255, 255, 0);
   vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 6px;
+  padding-bottom: 6px;
   overflow-x: hidden;
   display: inline-block;
   width: 100%;
 }
 
-#yxixakufeh .gt_spanner_row {
+#mwaxvogqkr .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#yxixakufeh .gt_group_heading {
+#mwaxvogqkr .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
   padding-right: 5px;
   color: #333333;
   background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -631,12 +684,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   text-align: left;
 }
 
-#yxixakufeh .gt_empty_group_heading {
+#mwaxvogqkr .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
+  font-size: 80%;
+  font-weight: bolder;
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -646,23 +699,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: middle;
 }
 
-#yxixakufeh .gt_from_md > :first-child {
+#mwaxvogqkr .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#yxixakufeh .gt_from_md > :last-child {
+#mwaxvogqkr .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#yxixakufeh .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
+#mwaxvogqkr .gt_row {
+  padding-top: 6px;
+  padding-bottom: 6px;
   padding-left: 5px;
   padding-right: 5px;
   margin: 10px;
   border-top-style: solid;
   border-top-width: 1px;
-  border-top-color: #D3D3D3;
+  border-top-color: rgba(255, 255, 255, 0);
   border-left-style: none;
   border-left-width: 1px;
   border-left-color: #D3D3D3;
@@ -673,12 +726,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#yxixakufeh .gt_stub {
+#mwaxvogqkr .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #D3D3D3;
@@ -686,7 +739,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#yxixakufeh .gt_stub_row_group {
+#mwaxvogqkr .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -700,15 +753,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: top;
 }
 
-#yxixakufeh .gt_row_group_first td {
+#mwaxvogqkr .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#yxixakufeh .gt_row_group_first th {
+#mwaxvogqkr .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#yxixakufeh .gt_summary_row {
+#mwaxvogqkr .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -718,16 +771,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#yxixakufeh .gt_first_summary_row {
+#mwaxvogqkr .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#yxixakufeh .gt_first_summary_row.thick {
+#mwaxvogqkr .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#yxixakufeh .gt_last_summary_row {
+#mwaxvogqkr .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -737,7 +790,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#yxixakufeh .gt_grand_summary_row {
+#mwaxvogqkr .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -747,7 +800,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#yxixakufeh .gt_first_grand_summary_row {
+#mwaxvogqkr .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -757,7 +810,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-color: #D3D3D3;
 }
 
-#yxixakufeh .gt_last_grand_summary_row_top {
+#mwaxvogqkr .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -767,11 +820,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#yxixakufeh .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
+#mwaxvogqkr .gt_striped {
+  background-color: #F5F5F5;
 }
 
-#yxixakufeh .gt_table_body {
+#mwaxvogqkr .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -780,7 +833,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#yxixakufeh .gt_footnotes {
+#mwaxvogqkr .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -794,7 +847,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#yxixakufeh .gt_footnote {
+#mwaxvogqkr .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -803,7 +856,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#yxixakufeh .gt_sourcenotes {
+#mwaxvogqkr .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -817,7 +870,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#yxixakufeh .gt_sourcenote {
+#mwaxvogqkr .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -825,79 +878,79 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#yxixakufeh .gt_left {
+#mwaxvogqkr .gt_left {
   text-align: left;
 }
 
-#yxixakufeh .gt_center {
+#mwaxvogqkr .gt_center {
   text-align: center;
 }
 
-#yxixakufeh .gt_right {
+#mwaxvogqkr .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#yxixakufeh .gt_font_normal {
+#mwaxvogqkr .gt_font_normal {
   font-weight: normal;
 }
 
-#yxixakufeh .gt_font_bold {
+#mwaxvogqkr .gt_font_bold {
   font-weight: bold;
 }
 
-#yxixakufeh .gt_font_italic {
+#mwaxvogqkr .gt_font_italic {
   font-style: italic;
 }
 
-#yxixakufeh .gt_super {
+#mwaxvogqkr .gt_super {
   font-size: 65%;
 }
 
-#yxixakufeh .gt_footnote_marks {
+#mwaxvogqkr .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#yxixakufeh .gt_asterisk {
+#mwaxvogqkr .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#yxixakufeh .gt_indent_1 {
+#mwaxvogqkr .gt_indent_1 {
   text-indent: 5px;
 }
 
-#yxixakufeh .gt_indent_2 {
+#mwaxvogqkr .gt_indent_2 {
   text-indent: 10px;
 }
 
-#yxixakufeh .gt_indent_3 {
+#mwaxvogqkr .gt_indent_3 {
   text-indent: 15px;
 }
 
-#yxixakufeh .gt_indent_4 {
+#mwaxvogqkr .gt_indent_4 {
   text-indent: 20px;
 }
 
-#yxixakufeh .gt_indent_5 {
+#mwaxvogqkr .gt_indent_5 {
   text-indent: 25px;
 }
 
-#yxixakufeh .katex-display {
+#mwaxvogqkr .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#yxixakufeh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#mwaxvogqkr div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
 <table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead><tr class="gt_col_headings header">
-<th id="商品名" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">商品名</th>
-<th id="購入回数" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">購入回数</th>
+<th id="商品名" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">商品名</th>
+<th id="購入回数" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">購入回数</th>
 </tr></thead>
 <tbody class="gt_table_body">
 <tr class="odd">
@@ -905,24 +958,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td class="gt_row gt_right" headers="購入回数">84,832</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="商品名">緑茶</td>
-<td class="gt_row gt_right" headers="購入回数">65,755</td>
+<td class="gt_row gt_left gt_striped" headers="商品名">緑茶</td>
+<td class="gt_row gt_right gt_striped" headers="購入回数">65,755</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="商品名">おいしい濃茶</td>
 <td class="gt_row gt_right" headers="購入回数">59,910</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="商品名">静岡の緑茶</td>
-<td class="gt_row gt_right" headers="購入回数">46,516</td>
+<td class="gt_row gt_left gt_striped" headers="商品名">静岡の緑茶</td>
+<td class="gt_row gt_right gt_striped" headers="購入回数">46,516</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="商品名">濃い茶</td>
 <td class="gt_row gt_right" headers="購入回数">45,982</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="商品名">ほうじ茶</td>
-<td class="gt_row gt_right" headers="購入回数">39,190</td>
+<td class="gt_row gt_left gt_striped" headers="商品名">ほうじ茶</td>
+<td class="gt_row gt_right gt_striped" headers="購入回数">39,190</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="商品名">ウーロン茶</td>
@@ -933,12 +986,1906 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="アソシエーション分析" class="level2" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="アソシエーション分析">
-<span class="header-section-number">5.3</span> アソシエーション分析</h2>
+<p>これで、テキストの図5-1と同様に、レシート番号ごとに商品名が列になり、購入された場合に1、購入されなかった場合に0が入ったデータフレームができました。 図5−2と同じになるように、自社商品、競合A社〜D社という製品の並びに変更します。</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_wide</span> <span class="op">&lt;-</span> <span class="va">df_wide</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">レシート番号</span>, <span class="va">緑茶</span>, <span class="va">濃い茶</span>, <span class="va">おいしい緑茶</span>, <span class="va">おいしい濃茶</span>, <span class="va">静岡の緑茶</span>, <span class="va">ほうじ茶</span>, <span class="va">ウーロン茶</span><span class="op">)</span></span>
+<span><span class="va">df_wide</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 13%">
+<col style="width: 10%">
+<col style="width: 13%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">レシート番号</th>
+<th style="text-align: right;">緑茶</th>
+<th style="text-align: right;">濃い茶</th>
+<th style="text-align: right;">おいしい緑茶</th>
+<th style="text-align: right;">おいしい濃茶</th>
+<th style="text-align: right;">静岡の緑茶</th>
+<th style="text-align: right;">ほうじ茶</th>
+<th style="text-align: right;">ウーロン茶</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">R225613</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R225614</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R225615</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R225616</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>ここから、各商品が別の各商品と一緒に購入された回数を集計します。 まずは自社製品の緑茶だけを取り出して、図5-3を再現してみます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_wide</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">緑茶</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 緑茶が購入された場合</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span> <span class="co"># 先頭5行を表示</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 13%">
+<col style="width: 10%">
+<col style="width: 13%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">レシート番号</th>
+<th style="text-align: right;">緑茶</th>
+<th style="text-align: right;">濃い茶</th>
+<th style="text-align: right;">おいしい緑茶</th>
+<th style="text-align: right;">おいしい濃茶</th>
+<th style="text-align: right;">静岡の緑茶</th>
+<th style="text-align: right;">ほうじ茶</th>
+<th style="text-align: right;">ウーロン茶</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">R000005</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R000010</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R000011</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R000012</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R000016</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>変数ごとの合計を求めることで、この緑茶と一緒に購入された回数を商品別に集計します。</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_wide</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">緑茶</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 緑茶が購入された場合</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">緑茶</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">summarise</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="va">濃い茶</span><span class="op">:</span><span class="va">ウーロン茶</span>, <span class="va">sum</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 商品ごとに合計</span></span>
+<span>  <span class="fu">gt</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 作表</span></span>
+<span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, decimals <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tab_options</span><span class="op">(</span></span>
+<span>    table.font.size <span class="op">=</span> <span class="st">"small"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"緑茶と一緒に購入された商品の個数"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">gt_theme_pff</span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="lrdjbygive" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+#lrdjbygive table {
+  font-family: Roboto, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#lrdjbygive thead, #lrdjbygive tbody, #lrdjbygive tfoot, #lrdjbygive tr, #lrdjbygive td, #lrdjbygive th {
+  border-style: none;
+}
+
+#lrdjbygive p {
+  margin: 0;
+  padding: 0;
+}
+
+#lrdjbygive .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#lrdjbygive .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#lrdjbygive .gt_title {
+  color: #333333;
+  font-size: 30px;
+  font-weight: bold;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#lrdjbygive .gt_subtitle {
+  color: #333333;
+  font-size: 16px;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#lrdjbygive .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#lrdjbygive .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lrdjbygive .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: rgba(255, 255, 255, 0);
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#lrdjbygive .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 6px;
+  padding-bottom: 7px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#lrdjbygive .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#lrdjbygive .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#lrdjbygive .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#lrdjbygive .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: rgba(255, 255, 255, 0);
+  vertical-align: bottom;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#lrdjbygive .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#lrdjbygive .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#lrdjbygive .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#lrdjbygive .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#lrdjbygive .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#lrdjbygive .gt_row {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#lrdjbygive .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lrdjbygive .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#lrdjbygive .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#lrdjbygive .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#lrdjbygive .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lrdjbygive .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#lrdjbygive .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#lrdjbygive .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lrdjbygive .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lrdjbygive .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#lrdjbygive .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lrdjbygive .gt_striped {
+  background-color: #F5F5F5;
+}
+
+#lrdjbygive .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lrdjbygive .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#lrdjbygive .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lrdjbygive .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#lrdjbygive .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lrdjbygive .gt_left {
+  text-align: left;
+}
+
+#lrdjbygive .gt_center {
+  text-align: center;
+}
+
+#lrdjbygive .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#lrdjbygive .gt_font_normal {
+  font-weight: normal;
+}
+
+#lrdjbygive .gt_font_bold {
+  font-weight: bold;
+}
+
+#lrdjbygive .gt_font_italic {
+  font-style: italic;
+}
+
+#lrdjbygive .gt_super {
+  font-size: 65%;
+}
+
+#lrdjbygive .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#lrdjbygive .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#lrdjbygive .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#lrdjbygive .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#lrdjbygive .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#lrdjbygive .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#lrdjbygive .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#lrdjbygive .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#lrdjbygive div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<th colspan="6" class="gt_heading gt_title gt_font_normal gt_bottom_border">緑茶と一緒に購入された商品の個数</th>
+</tr>
+<tr class="gt_col_headings even">
+<th id="濃い茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">濃い茶</th>
+<th id="おいしい緑茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">おいしい緑茶</th>
+<th id="おいしい濃茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">おいしい濃茶</th>
+<th id="静岡の緑茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">静岡の緑茶</th>
+<th id="ほうじ茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">ほうじ茶</th>
+<th id="ウーロン茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">ウーロン茶</th>
+</tr>
+</thead>
+<tbody class="gt_table_body"><tr class="odd">
+<td class="gt_row gt_right" headers="濃い茶">11,426</td>
+<td class="gt_row gt_right" headers="おいしい緑茶">15,441</td>
+<td class="gt_row gt_right" headers="おいしい濃茶">10,835</td>
+<td class="gt_row gt_right" headers="静岡の緑茶">9,737</td>
+<td class="gt_row gt_right" headers="ほうじ茶">8,149</td>
+<td class="gt_row gt_right" headers="ウーロン茶">6,668</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+</div>
+<p>これを関数にして、他の商品にも適用し、一緒に購入された回数を集計します。</p>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># 全商品名を取得</span></span>
+<span><span class="va">product_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">df_wide</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="co"># レシート番号以外の列</span></span>
+<span><span class="co"># 各商品の販売回数合計を計算</span></span>
+<span><span class="va">total_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="va">df_wide</span><span class="op">[</span><span class="va">product_names</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co"># 各商品の購入頻度表を作成</span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">product_names</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">map_dfr</span><span class="op">(</span><span class="op">~</span> <span class="op">{</span> <span class="co"># purrr::map_dfr()を使ってデータフレームを結合</span></span>
+<span>    <span class="va">df_wide</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="fu">sym</span><span class="op">(</span><span class="va">.x</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># !!sym()で変数名を展開</span></span>
+<span>      <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">レシート番号</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu">summarise</span><span class="op">(</span></span>
+<span>        <span class="fu">across</span><span class="op">(</span><span class="fu">everything</span><span class="op">(</span><span class="op">)</span>, <span class="va">sum</span><span class="op">)</span></span>
+<span>        <span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 商品ごとに合計</span></span>
+<span>      <span class="fu">mutate</span><span class="op">(</span></span>
+<span>        <span class="fu">across</span><span class="op">(</span><span class="fu">everything</span><span class="op">(</span><span class="op">)</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu">cur_column</span><span class="op">(</span><span class="op">)</span> <span class="op">==</span> <span class="va">.x</span>, <span class="va">total_counts</span><span class="op">[</span><span class="va">.x</span><span class="op">]</span>, <span class="va">.</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>             商品 <span class="op">=</span> <span class="va">.x</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">商品</span>, <span class="fu">everything</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># ここから下は表の設定なので、なくても動作します</span></span>
+<span><span class="va">result</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">gt</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">8</span>, decimals <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tab_options</span><span class="op">(</span></span>
+<span>    table.font.size <span class="op">=</span> <span class="st">"normal"</span>,</span>
+<span>    heading.title.font.size <span class="op">=</span> <span class="st">"normal"</span>,</span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">gt_color_rows</span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">8</span>, palette <span class="op">=</span> <span class="st">"ggsci::blue_material"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"一緒に販売された商品の個数"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">gt_theme_pff</span><span class="op">(</span><span class="op">)</span> </span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="iineqqvfqe" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+#iineqqvfqe table {
+  font-family: Roboto, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#iineqqvfqe thead, #iineqqvfqe tbody, #iineqqvfqe tfoot, #iineqqvfqe tr, #iineqqvfqe td, #iineqqvfqe th {
+  border-style: none;
+}
+
+#iineqqvfqe p {
+  margin: 0;
+  padding: 0;
+}
+
+#iineqqvfqe .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#iineqqvfqe .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#iineqqvfqe .gt_title {
+  color: #333333;
+  font-size: 30px;
+  font-weight: bold;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#iineqqvfqe .gt_subtitle {
+  color: #333333;
+  font-size: 16px;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#iineqqvfqe .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#iineqqvfqe .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#iineqqvfqe .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: rgba(255, 255, 255, 0);
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#iineqqvfqe .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 6px;
+  padding-bottom: 7px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#iineqqvfqe .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#iineqqvfqe .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#iineqqvfqe .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#iineqqvfqe .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: rgba(255, 255, 255, 0);
+  vertical-align: bottom;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#iineqqvfqe .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#iineqqvfqe .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#iineqqvfqe .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#iineqqvfqe .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#iineqqvfqe .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#iineqqvfqe .gt_row {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#iineqqvfqe .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#iineqqvfqe .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#iineqqvfqe .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#iineqqvfqe .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#iineqqvfqe .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#iineqqvfqe .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#iineqqvfqe .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#iineqqvfqe .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#iineqqvfqe .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#iineqqvfqe .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#iineqqvfqe .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#iineqqvfqe .gt_striped {
+  background-color: #F5F5F5;
+}
+
+#iineqqvfqe .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#iineqqvfqe .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#iineqqvfqe .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#iineqqvfqe .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#iineqqvfqe .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#iineqqvfqe .gt_left {
+  text-align: left;
+}
+
+#iineqqvfqe .gt_center {
+  text-align: center;
+}
+
+#iineqqvfqe .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#iineqqvfqe .gt_font_normal {
+  font-weight: normal;
+}
+
+#iineqqvfqe .gt_font_bold {
+  font-weight: bold;
+}
+
+#iineqqvfqe .gt_font_italic {
+  font-style: italic;
+}
+
+#iineqqvfqe .gt_super {
+  font-size: 65%;
+}
+
+#iineqqvfqe .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#iineqqvfqe .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#iineqqvfqe .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#iineqqvfqe .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#iineqqvfqe .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#iineqqvfqe .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#iineqqvfqe .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#iineqqvfqe .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#iineqqvfqe div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<th colspan="8" class="gt_heading gt_title gt_font_normal gt_bottom_border">一緒に販売された商品の個数</th>
+</tr>
+<tr class="gt_col_headings even">
+<th id="商品" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">商品</th>
+<th id="緑茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">緑茶</th>
+<th id="濃い茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">濃い茶</th>
+<th id="おいしい緑茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">おいしい緑茶</th>
+<th id="おいしい濃茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">おいしい濃茶</th>
+<th id="静岡の緑茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">静岡の緑茶</th>
+<th id="ほうじ茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">ほうじ茶</th>
+<th id="ウーロン茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">ウーロン茶</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="商品">緑茶</td>
+<td class="gt_row gt_right" headers="緑茶" style="background-color: #0D47A1; color: #FFFFFF">65,755</td>
+<td class="gt_row gt_right" headers="濃い茶" style="background-color: #A7D4FA; color: #000000">11,426</td>
+<td class="gt_row gt_right" headers="おいしい緑茶" style="background-color: #C3E2FB; color: #000000">15,441</td>
+<td class="gt_row gt_right" headers="おいしい濃茶" style="background-color: #C3E2FB; color: #000000">10,835</td>
+<td class="gt_row gt_right" headers="静岡の緑茶" style="background-color: #B7DCFB; color: #000000">9,737</td>
+<td class="gt_row gt_right" headers="ほうじ茶" style="background-color: #B7DCFB; color: #000000">8,149</td>
+<td class="gt_row gt_right" headers="ウーロン茶" style="background-color: #BFE0FB; color: #000000">6,668</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="商品">濃い茶</td>
+<td class="gt_row gt_right gt_striped" headers="緑茶" style="background-color: #C6E3FC; color: #000000">11,426</td>
+<td class="gt_row gt_right gt_striped" headers="濃い茶" style="background-color: #0D47A1; color: #FFFFFF">45,982</td>
+<td class="gt_row gt_right gt_striped" headers="おいしい緑茶" style="background-color: #D9EDFD; color: #000000">10,761</td>
+<td class="gt_row gt_right gt_striped" headers="おいしい濃茶" style="background-color: #D9EDFD; color: #000000">7,476</td>
+<td class="gt_row gt_right gt_striped" headers="静岡の緑茶" style="background-color: #D1E9FC; color: #000000">6,795</td>
+<td class="gt_row gt_right gt_striped" headers="ほうじ茶" style="background-color: #D1E9FC; color: #000000">5,677</td>
+<td class="gt_row gt_right gt_striped" headers="ウーロン茶" style="background-color: #DAEDFD; color: #000000">4,577</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="商品">おいしい緑茶</td>
+<td class="gt_row gt_right" headers="緑茶" style="background-color: #ADD7FA; color: #000000">15,441</td>
+<td class="gt_row gt_right" headers="濃い茶" style="background-color: #ADD7FA; color: #000000">10,761</td>
+<td class="gt_row gt_right" headers="おいしい緑茶" style="background-color: #0D47A1; color: #FFFFFF">84,832</td>
+<td class="gt_row gt_right" headers="おいしい濃茶" style="background-color: #90CAF9; color: #000000">17,948</td>
+<td class="gt_row gt_right" headers="静岡の緑茶" style="background-color: #9CCFFA; color: #000000">12,663</td>
+<td class="gt_row gt_right" headers="ほうじ茶" style="background-color: #9BCFFA; color: #000000">10,724</td>
+<td class="gt_row gt_right" headers="ウーロン茶" style="background-color: #A5D3FA; color: #000000">8,618</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="商品">おいしい濃茶</td>
+<td class="gt_row gt_right gt_striped" headers="緑茶" style="background-color: #CAE5FC; color: #000000">10,835</td>
+<td class="gt_row gt_right gt_striped" headers="濃い茶" style="background-color: #CAE5FC; color: #000000">7,476</td>
+<td class="gt_row gt_right gt_striped" headers="おいしい緑茶" style="background-color: #B7DCFB; color: #000000">17,948</td>
+<td class="gt_row gt_right gt_striped" headers="おいしい濃茶" style="background-color: #0D47A1; color: #FFFFFF">59,910</td>
+<td class="gt_row gt_right gt_striped" headers="静岡の緑茶" style="background-color: #C0E0FB; color: #000000">8,760</td>
+<td class="gt_row gt_right gt_striped" headers="ほうじ茶" style="background-color: #BFE0FB; color: #000000">7,398</td>
+<td class="gt_row gt_right gt_striped" headers="ウーロン茶" style="background-color: #C8E4FC; color: #000000">5,963</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="商品">静岡の緑茶</td>
+<td class="gt_row gt_right" headers="緑茶" style="background-color: #D1E9FC; color: #000000">9,737</td>
+<td class="gt_row gt_right" headers="濃い茶" style="background-color: #D0E8FC; color: #000000">6,795</td>
+<td class="gt_row gt_right" headers="おいしい緑茶" style="background-color: #D0E8FC; color: #000000">12,663</td>
+<td class="gt_row gt_right" headers="おいしい濃茶" style="background-color: #D1E9FC; color: #000000">8,760</td>
+<td class="gt_row gt_right" headers="静岡の緑茶" style="background-color: #0D47A1; color: #FFFFFF">46,516</td>
+<td class="gt_row gt_right" headers="ほうじ茶" style="background-color: #D1E9FC; color: #000000">5,691</td>
+<td class="gt_row gt_right" headers="ウーロン茶" style="background-color: #DAEDFD; color: #000000">4,622</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="商品">ほうじ茶</td>
+<td class="gt_row gt_right gt_striped" headers="緑茶" style="background-color: #DAEDFD; color: #000000">8,149</td>
+<td class="gt_row gt_right gt_striped" headers="濃い茶" style="background-color: #DAEDFD; color: #000000">5,677</td>
+<td class="gt_row gt_right gt_striped" headers="おいしい緑茶" style="background-color: #D9EDFD; color: #000000">10,724</td>
+<td class="gt_row gt_right gt_striped" headers="おいしい濃茶" style="background-color: #DAEDFD; color: #000000">7,398</td>
+<td class="gt_row gt_right gt_striped" headers="静岡の緑茶" style="background-color: #DAEDFD; color: #000000">5,691</td>
+<td class="gt_row gt_right gt_striped" headers="ほうじ茶" style="background-color: #0D47A1; color: #FFFFFF">39,190</td>
+<td class="gt_row gt_right gt_striped" headers="ウーロン茶" style="background-color: #E3F2FD; color: #000000">3,862</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="商品">ウーロン茶</td>
+<td class="gt_row gt_right" headers="緑茶" style="background-color: #E3F2FD; color: #000000">6,668</td>
+<td class="gt_row gt_right" headers="濃い茶" style="background-color: #E3F2FD; color: #000000">4,577</td>
+<td class="gt_row gt_right" headers="おいしい緑茶" style="background-color: #E3F2FD; color: #000000">8,618</td>
+<td class="gt_row gt_right" headers="おいしい濃茶" style="background-color: #E3F2FD; color: #000000">5,963</td>
+<td class="gt_row gt_right" headers="静岡の緑茶" style="background-color: #E3F2FD; color: #000000">4,622</td>
+<td class="gt_row gt_right" headers="ほうじ茶" style="background-color: #E3F2FD; color: #000000">3,862</td>
+<td class="gt_row gt_right" headers="ウーロン茶" style="background-color: #0D47A1; color: #FFFFFF">31,905</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>各項目の値を合計値で割ることで、商品ごとの購入率を求めます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">result_ratio</span> <span class="op">&lt;-</span> <span class="va">result</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span></span>
+<span>    緑茶 <span class="op">=</span> <span class="va">緑茶</span> <span class="op">/</span> <span class="va">緑茶</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
+<span>    濃い茶 <span class="op">=</span> <span class="va">濃い茶</span> <span class="op">/</span> <span class="va">濃い茶</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,</span>
+<span>    おいしい緑茶 <span class="op">=</span> <span class="va">おいしい緑茶</span> <span class="op">/</span> <span class="va">おいしい緑茶</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>,</span>
+<span>    おいしい濃茶 <span class="op">=</span> <span class="va">おいしい濃茶</span> <span class="op">/</span> <span class="va">おいしい濃茶</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span>,</span>
+<span>    静岡の緑茶 <span class="op">=</span> <span class="va">静岡の緑茶</span> <span class="op">/</span> <span class="va">静岡の緑茶</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span>,</span>
+<span>    ほうじ茶 <span class="op">=</span> <span class="va">ほうじ茶</span> <span class="op">/</span> <span class="va">ほうじ茶</span><span class="op">[</span><span class="fl">6</span><span class="op">]</span>,</span>
+<span>    ウーロン茶 <span class="op">=</span> <span class="va">ウーロン茶</span> <span class="op">/</span> <span class="va">ウーロン茶</span><span class="op">[</span><span class="fl">7</span><span class="op">]</span></span>
+<span>  <span class="op">)</span></span>
+<span>  <span class="co"># ここから下は表の設定</span></span>
+<span><span class="va">result_ratio</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">gt</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">8</span>, decimals <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tab_options</span><span class="op">(</span>table.font.size <span class="op">=</span> <span class="st">"small"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">gt_color_rows</span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">8</span>, palette <span class="op">=</span> <span class="st">"ggsci::blue_material"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"一緒に販売された商品の割合(個数/縦合計)"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">gt_theme_pff</span><span class="op">(</span><span class="op">)</span> </span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Domain not specified, defaulting to observed range within each
+specified column.</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="takejpjyqd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+#takejpjyqd table {
+  font-family: Roboto, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#takejpjyqd thead, #takejpjyqd tbody, #takejpjyqd tfoot, #takejpjyqd tr, #takejpjyqd td, #takejpjyqd th {
+  border-style: none;
+}
+
+#takejpjyqd p {
+  margin: 0;
+  padding: 0;
+}
+
+#takejpjyqd .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#takejpjyqd .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#takejpjyqd .gt_title {
+  color: #333333;
+  font-size: 30px;
+  font-weight: bold;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#takejpjyqd .gt_subtitle {
+  color: #333333;
+  font-size: 16px;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#takejpjyqd .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#takejpjyqd .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#takejpjyqd .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: rgba(255, 255, 255, 0);
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#takejpjyqd .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 6px;
+  padding-bottom: 7px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#takejpjyqd .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#takejpjyqd .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#takejpjyqd .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#takejpjyqd .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: rgba(255, 255, 255, 0);
+  vertical-align: bottom;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#takejpjyqd .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#takejpjyqd .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#takejpjyqd .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#takejpjyqd .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#takejpjyqd .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#takejpjyqd .gt_row {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#takejpjyqd .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#takejpjyqd .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#takejpjyqd .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#takejpjyqd .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#takejpjyqd .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#takejpjyqd .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#takejpjyqd .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#takejpjyqd .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#takejpjyqd .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#takejpjyqd .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#takejpjyqd .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#takejpjyqd .gt_striped {
+  background-color: #F5F5F5;
+}
+
+#takejpjyqd .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#takejpjyqd .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#takejpjyqd .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#takejpjyqd .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#takejpjyqd .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#takejpjyqd .gt_left {
+  text-align: left;
+}
+
+#takejpjyqd .gt_center {
+  text-align: center;
+}
+
+#takejpjyqd .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#takejpjyqd .gt_font_normal {
+  font-weight: normal;
+}
+
+#takejpjyqd .gt_font_bold {
+  font-weight: bold;
+}
+
+#takejpjyqd .gt_font_italic {
+  font-style: italic;
+}
+
+#takejpjyqd .gt_super {
+  font-size: 65%;
+}
+
+#takejpjyqd .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#takejpjyqd .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#takejpjyqd .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#takejpjyqd .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#takejpjyqd .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#takejpjyqd .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#takejpjyqd .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#takejpjyqd .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#takejpjyqd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<th colspan="8" class="gt_heading gt_title gt_font_normal gt_bottom_border">一緒に販売された商品の割合(個数/縦合計)</th>
+</tr>
+<tr class="gt_col_headings even">
+<th id="商品" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">商品</th>
+<th id="緑茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">緑茶</th>
+<th id="濃い茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">濃い茶</th>
+<th id="おいしい緑茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">おいしい緑茶</th>
+<th id="おいしい濃茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">おいしい濃茶</th>
+<th id="静岡の緑茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">静岡の緑茶</th>
+<th id="ほうじ茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">ほうじ茶</th>
+<th id="ウーロン茶" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">ウーロン茶</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="商品">緑茶</td>
+<td class="gt_row gt_right" headers="緑茶" style="background-color: #0D47A1; color: #FFFFFF">1.000</td>
+<td class="gt_row gt_right" headers="濃い茶" style="background-color: #A7D4FA; color: #000000">0.248</td>
+<td class="gt_row gt_right" headers="おいしい緑茶" style="background-color: #C3E2FB; color: #000000">0.182</td>
+<td class="gt_row gt_right" headers="おいしい濃茶" style="background-color: #C3E2FB; color: #000000">0.181</td>
+<td class="gt_row gt_right" headers="静岡の緑茶" style="background-color: #B7DCFB; color: #000000">0.209</td>
+<td class="gt_row gt_right" headers="ほうじ茶" style="background-color: #B7DCFB; color: #000000">0.208</td>
+<td class="gt_row gt_right" headers="ウーロン茶" style="background-color: #BFE0FB; color: #000000">0.209</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="商品">濃い茶</td>
+<td class="gt_row gt_right gt_striped" headers="緑茶" style="background-color: #C6E3FC; color: #000000">0.174</td>
+<td class="gt_row gt_right gt_striped" headers="濃い茶" style="background-color: #0D47A1; color: #FFFFFF">1.000</td>
+<td class="gt_row gt_right gt_striped" headers="おいしい緑茶" style="background-color: #D9EDFD; color: #000000">0.127</td>
+<td class="gt_row gt_right gt_striped" headers="おいしい濃茶" style="background-color: #D9EDFD; color: #000000">0.125</td>
+<td class="gt_row gt_right gt_striped" headers="静岡の緑茶" style="background-color: #D1E9FC; color: #000000">0.146</td>
+<td class="gt_row gt_right gt_striped" headers="ほうじ茶" style="background-color: #D1E9FC; color: #000000">0.145</td>
+<td class="gt_row gt_right gt_striped" headers="ウーロン茶" style="background-color: #DAEDFD; color: #000000">0.143</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="商品">おいしい緑茶</td>
+<td class="gt_row gt_right" headers="緑茶" style="background-color: #ADD7FA; color: #000000">0.235</td>
+<td class="gt_row gt_right" headers="濃い茶" style="background-color: #ADD7FA; color: #000000">0.234</td>
+<td class="gt_row gt_right" headers="おいしい緑茶" style="background-color: #0D47A1; color: #FFFFFF">1.000</td>
+<td class="gt_row gt_right" headers="おいしい濃茶" style="background-color: #90CAF9; color: #000000">0.300</td>
+<td class="gt_row gt_right" headers="静岡の緑茶" style="background-color: #9CCFFA; color: #000000">0.272</td>
+<td class="gt_row gt_right" headers="ほうじ茶" style="background-color: #9BCFFA; color: #000000">0.274</td>
+<td class="gt_row gt_right" headers="ウーロン茶" style="background-color: #A5D3FA; color: #000000">0.270</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="商品">おいしい濃茶</td>
+<td class="gt_row gt_right gt_striped" headers="緑茶" style="background-color: #CAE5FC; color: #000000">0.165</td>
+<td class="gt_row gt_right gt_striped" headers="濃い茶" style="background-color: #CAE5FC; color: #000000">0.163</td>
+<td class="gt_row gt_right gt_striped" headers="おいしい緑茶" style="background-color: #B7DCFB; color: #000000">0.212</td>
+<td class="gt_row gt_right gt_striped" headers="おいしい濃茶" style="background-color: #0D47A1; color: #FFFFFF">1.000</td>
+<td class="gt_row gt_right gt_striped" headers="静岡の緑茶" style="background-color: #C0E0FB; color: #000000">0.188</td>
+<td class="gt_row gt_right gt_striped" headers="ほうじ茶" style="background-color: #BFE0FB; color: #000000">0.189</td>
+<td class="gt_row gt_right gt_striped" headers="ウーロン茶" style="background-color: #C8E4FC; color: #000000">0.187</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="商品">静岡の緑茶</td>
+<td class="gt_row gt_right" headers="緑茶" style="background-color: #D1E9FC; color: #000000">0.148</td>
+<td class="gt_row gt_right" headers="濃い茶" style="background-color: #D0E8FC; color: #000000">0.148</td>
+<td class="gt_row gt_right" headers="おいしい緑茶" style="background-color: #D0E8FC; color: #000000">0.149</td>
+<td class="gt_row gt_right" headers="おいしい濃茶" style="background-color: #D1E9FC; color: #000000">0.146</td>
+<td class="gt_row gt_right" headers="静岡の緑茶" style="background-color: #0D47A1; color: #FFFFFF">1.000</td>
+<td class="gt_row gt_right" headers="ほうじ茶" style="background-color: #D1E9FC; color: #000000">0.145</td>
+<td class="gt_row gt_right" headers="ウーロン茶" style="background-color: #DAEDFD; color: #000000">0.145</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="商品">ほうじ茶</td>
+<td class="gt_row gt_right gt_striped" headers="緑茶" style="background-color: #DAEDFD; color: #000000">0.124</td>
+<td class="gt_row gt_right gt_striped" headers="濃い茶" style="background-color: #DAEDFD; color: #000000">0.123</td>
+<td class="gt_row gt_right gt_striped" headers="おいしい緑茶" style="background-color: #D9EDFD; color: #000000">0.126</td>
+<td class="gt_row gt_right gt_striped" headers="おいしい濃茶" style="background-color: #DAEDFD; color: #000000">0.123</td>
+<td class="gt_row gt_right gt_striped" headers="静岡の緑茶" style="background-color: #DAEDFD; color: #000000">0.122</td>
+<td class="gt_row gt_right gt_striped" headers="ほうじ茶" style="background-color: #0D47A1; color: #FFFFFF">1.000</td>
+<td class="gt_row gt_right gt_striped" headers="ウーロン茶" style="background-color: #E3F2FD; color: #000000">0.121</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="商品">ウーロン茶</td>
+<td class="gt_row gt_right" headers="緑茶" style="background-color: #E3F2FD; color: #000000">0.101</td>
+<td class="gt_row gt_right" headers="濃い茶" style="background-color: #E3F2FD; color: #000000">0.100</td>
+<td class="gt_row gt_right" headers="おいしい緑茶" style="background-color: #E3F2FD; color: #000000">0.102</td>
+<td class="gt_row gt_right" headers="おいしい濃茶" style="background-color: #E3F2FD; color: #000000">0.100</td>
+<td class="gt_row gt_right" headers="静岡の緑茶" style="background-color: #E3F2FD; color: #000000">0.099</td>
+<td class="gt_row gt_right" headers="ほうじ茶" style="background-color: #E3F2FD; color: #000000">0.099</td>
+<td class="gt_row gt_right" headers="ウーロン茶" style="background-color: #0D47A1; color: #FFFFFF">1.000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>次に、ある商品が購入された場合に、他の商品も購入されるかどうかを調べます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_oishi_ryo</span> <span class="op">&lt;-</span> <span class="va">df_wide</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">おいしい緑茶</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">df_oishi_ryo</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 13%">
+<col style="width: 10%">
+<col style="width: 13%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">レシート番号</th>
+<th style="text-align: right;">緑茶</th>
+<th style="text-align: right;">濃い茶</th>
+<th style="text-align: right;">おいしい緑茶</th>
+<th style="text-align: right;">おいしい濃茶</th>
+<th style="text-align: right;">静岡の緑茶</th>
+<th style="text-align: right;">ほうじ茶</th>
+<th style="text-align: right;">ウーロン茶</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">R000001</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R000005</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R000011</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R000012</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R000014</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section><section id="アソシエーション分析" class="level1 page-columns page-full" data-number="6"><h1 data-number="6">
+<span class="header-section-number">6</span> アソシエーション分析</h1>
+<section id="概要" class="level2 page-columns page-full" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="概要">
+<span class="header-section-number">6.1</span> 概要</h2>
+<p>アソシエーション分析とはマーケティングで用いられる分析手法の1つで、POSデータや購買データから、商品の関連性やパターンを見つける分析手法で、 ある製品を買う人はこの製品も買う、という傾向を発見するために使われます。 アソシエーション分析の出力として、「ルール」とその有効性を表す3つの指標「支持度」、「確信度」、「リフト値」を見ます。</p>
+<section id="支持度" class="level3" data-number="6.1.1"><h3 data-number="6.1.1" class="anchored" data-anchor-id="支持度">
+<span class="header-section-number">6.1.1</span> 支持度</h3>
+<p>支持度は、全商品の購買数を<span class="math inline">U</span>、ある商品<span class="math inline">X</span>の購買数を<span class="math inline">X</span>とした場合、<span class="math inline">X</span>の支持度は</p>
+<p><span class="math display">
+\text{支持度} = \frac XU
+</span></p>
+<p>ある商品<span class="math inline">X</span>と商品<span class="math inline">Y</span>を両方購入した場合の割合は</p>
+<p><span class="math display">
+\text{支持度} = \frac {X \cap Y}U
+</span></p>
+<p>となります。 つまりただの積集合の割合です。</p>
+</section><section id="確信度" class="level3 page-columns page-full" data-number="6.1.2"><h3 data-number="6.1.2" class="anchored" data-anchor-id="確信度">
+<span class="header-section-number">6.1.2</span> 確信度</h3>
+<p><span class="math inline">X</span>と<span class="math inline">Y</span>の両方を買った割合を確信度といい、</p>
+<p><span class="math display">
+\text{確信度} = \frac {X \cap Y}X
+</span></p>
+<p>で測定されます。 これもただの積集合の割合です。</p>
 <p>アソシエーション分析のために用いるデータとして7番目のシート「併売データ」を読み込みたいので，<code>sheet = 7</code>を指定します。</p>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/chp5.xlsx"</span>, sheet <span class="op">=</span> <span class="fl">7</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_7</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/chp5.xlsx"</span>, sheet <span class="op">=</span> <span class="fl">7</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df_7</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="kable-table">
 <table class="caption-top table table-sm table-striped small">
@@ -1006,45 +2953,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>行はレシート番号、列は商品名で、各セルには購入された場合に1、購入されなかった場合に0が入っています。</p>
 <p>アソシエーション分析とはマーケティングで用いられる分析手法の1つで、POSデータや購買データから、商品の関連性やパターンを見つける分析手法で、 ある製品を買う人はこの製品も買う、という傾向を発見するために使われます。</p>
-<p>Rでアソシエーション分析を行うために，<code>arules</code>パッケージを使います。 CRANのページにあるマニュアルにMining Association Rules and Frequent Itemsetsとあるように、関連ルールと頻出アイテムセットを見つけるためのパッケージです。 ここで用いる<code>arules</code>パッケージの<code>apriori()</code>関数は、関連ルールに関する制限を識別し、Klemettinen (1994)のアプリオリアルゴリズムを実装しています。</p>
+<p>Rでアソシエーション分析を行うために，<code>arules</code>パッケージを使います。 CRANのページにあるマニュアルにMining Association Rules and Frequent Itemsetsとあるように、関連ルールと頻出アイテムセットを見つけるためのパッケージです。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>具体的な理論とアルゴリズムは，CRANの<a href="https://cran.r-project.org/web/packages/arules/vignettes/arules.pdf">Vignettes:introduction to arules</a>を参照してください。</p>
+</div></div><p>ここで用いる<code>arules</code>パッケージの<code>apriori()</code>関数は、関連ルールに関する制限を識別し、Klemettinen (1994)のアプリオリアルゴリズムを実装しています。</p>
 <p>アソシエーション分析を行うために、まずはデータを<code>transactions</code>オブジェクトに変換します。 <code>arules::as()</code>関数を使って変換します。この関数は引数として<code>list</code>や<code>matrix</code>を受け取り、<code>transactions</code>オブジェクトに変換します。</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span> <span class="co"># 行名をリセット</span></span>
-<span><span class="va">df_tran</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">as</span><span class="op">(</span><span class="st">"transactions"</span><span class="op">)</span> <span class="co"># transactionsオブジェクトに変換</span></span>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">df_7</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span> <span class="co"># 行名をリセット</span></span>
+<span><span class="va">df_tran</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">df_7</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">as</span><span class="op">(</span><span class="st">"transactions"</span><span class="op">)</span> <span class="co"># transactionsオブジェクトに変換</span></span>
 <span><span class="va">df_ap</span> <span class="op">&lt;-</span> <span class="fu">arules</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/arules/man/apriori.html">apriori</a></span><span class="op">(</span></span>
-<span>  <span class="va">df_tran</span>, </span>
+<span>  <span class="va">df_tran</span>,</span>
 <span>  parameter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>support <span class="op">=</span> <span class="fl">0.05</span>, confidence <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span> <span class="co"># サポート0.05、信頼度0.4</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">df_ap</span> <span class="op">|&gt;</span> </span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">df_ap</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span>by <span class="op">=</span> <span class="st">"lift"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># liftでソート</span></span>
 <span>  <span class="fu">inspect</span><span class="op">(</span><span class="op">)</span>  <span class="co"># 結果を表示</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">result</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">result</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"arrow"</span></span>
-<span><span class="va">result</span> <span class="op">|&gt;</span> <span class="fu">gt</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span><span class="va">result</span> <span class="op">|&gt;</span> <span class="fu">gt</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">4</span><span class="op">:</span><span class="fl">7</span>, decimals <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tab_options</span><span class="op">(</span></span>
 <span>    table.font.size <span class="op">=</span> <span class="st">"small"</span></span>
 <span>  <span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="vbllmqrcop" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#vbllmqrcop table {
+<div id="eonsguuafu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#eonsguuafu table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#vbllmqrcop thead, #vbllmqrcop tbody, #vbllmqrcop tfoot, #vbllmqrcop tr, #vbllmqrcop td, #vbllmqrcop th {
+#eonsguuafu thead, #eonsguuafu tbody, #eonsguuafu tfoot, #eonsguuafu tr, #eonsguuafu td, #eonsguuafu th {
   border-style: none;
 }
 
-#vbllmqrcop p {
+#eonsguuafu p {
   margin: 0;
   padding: 0;
 }
 
-#vbllmqrcop .gt_table {
+#eonsguuafu .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1070,12 +3021,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-left-color: #D3D3D3;
 }
 
-#vbllmqrcop .gt_caption {
+#eonsguuafu .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#vbllmqrcop .gt_title {
+#eonsguuafu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1087,7 +3038,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-width: 0;
 }
 
-#vbllmqrcop .gt_subtitle {
+#eonsguuafu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1099,7 +3050,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-width: 0;
 }
 
-#vbllmqrcop .gt_heading {
+#eonsguuafu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1111,13 +3062,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#vbllmqrcop .gt_bottom_border {
+#eonsguuafu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#vbllmqrcop .gt_col_headings {
+#eonsguuafu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1132,7 +3083,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#vbllmqrcop .gt_col_heading {
+#eonsguuafu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1152,7 +3103,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#vbllmqrcop .gt_column_spanner_outer {
+#eonsguuafu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1164,15 +3115,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 4px;
 }
 
-#vbllmqrcop .gt_column_spanner_outer:first-child {
+#eonsguuafu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#vbllmqrcop .gt_column_spanner_outer:last-child {
+#eonsguuafu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#vbllmqrcop .gt_column_spanner {
+#eonsguuafu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1184,11 +3135,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
 }
 
-#vbllmqrcop .gt_spanner_row {
+#eonsguuafu .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#vbllmqrcop .gt_group_heading {
+#eonsguuafu .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1214,7 +3165,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   text-align: left;
 }
 
-#vbllmqrcop .gt_empty_group_heading {
+#eonsguuafu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1229,15 +3180,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: middle;
 }
 
-#vbllmqrcop .gt_from_md > :first-child {
+#eonsguuafu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#vbllmqrcop .gt_from_md > :last-child {
+#eonsguuafu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#vbllmqrcop .gt_row {
+#eonsguuafu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1256,7 +3207,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#vbllmqrcop .gt_stub {
+#eonsguuafu .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1269,7 +3220,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#vbllmqrcop .gt_stub_row_group {
+#eonsguuafu .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1283,15 +3234,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: top;
 }
 
-#vbllmqrcop .gt_row_group_first td {
+#eonsguuafu .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#vbllmqrcop .gt_row_group_first th {
+#eonsguuafu .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#vbllmqrcop .gt_summary_row {
+#eonsguuafu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1301,16 +3252,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#vbllmqrcop .gt_first_summary_row {
+#eonsguuafu .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#vbllmqrcop .gt_first_summary_row.thick {
+#eonsguuafu .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#vbllmqrcop .gt_last_summary_row {
+#eonsguuafu .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1320,7 +3271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#vbllmqrcop .gt_grand_summary_row {
+#eonsguuafu .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1330,7 +3281,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#vbllmqrcop .gt_first_grand_summary_row {
+#eonsguuafu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1340,7 +3291,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-color: #D3D3D3;
 }
 
-#vbllmqrcop .gt_last_grand_summary_row_top {
+#eonsguuafu .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1350,11 +3301,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#vbllmqrcop .gt_striped {
+#eonsguuafu .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#vbllmqrcop .gt_table_body {
+#eonsguuafu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1363,7 +3314,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#vbllmqrcop .gt_footnotes {
+#eonsguuafu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1377,7 +3328,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#vbllmqrcop .gt_footnote {
+#eonsguuafu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1386,7 +3337,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#vbllmqrcop .gt_sourcenotes {
+#eonsguuafu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1400,7 +3351,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#vbllmqrcop .gt_sourcenote {
+#eonsguuafu .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1408,72 +3359,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#vbllmqrcop .gt_left {
+#eonsguuafu .gt_left {
   text-align: left;
 }
 
-#vbllmqrcop .gt_center {
+#eonsguuafu .gt_center {
   text-align: center;
 }
 
-#vbllmqrcop .gt_right {
+#eonsguuafu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vbllmqrcop .gt_font_normal {
+#eonsguuafu .gt_font_normal {
   font-weight: normal;
 }
 
-#vbllmqrcop .gt_font_bold {
+#eonsguuafu .gt_font_bold {
   font-weight: bold;
 }
 
-#vbllmqrcop .gt_font_italic {
+#eonsguuafu .gt_font_italic {
   font-style: italic;
 }
 
-#vbllmqrcop .gt_super {
+#eonsguuafu .gt_super {
   font-size: 65%;
 }
 
-#vbllmqrcop .gt_footnote_marks {
+#eonsguuafu .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#vbllmqrcop .gt_asterisk {
+#eonsguuafu .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#vbllmqrcop .gt_indent_1 {
+#eonsguuafu .gt_indent_1 {
   text-indent: 5px;
 }
 
-#vbllmqrcop .gt_indent_2 {
+#eonsguuafu .gt_indent_2 {
   text-indent: 10px;
 }
 
-#vbllmqrcop .gt_indent_3 {
+#eonsguuafu .gt_indent_3 {
   text-indent: 15px;
 }
 
-#vbllmqrcop .gt_indent_4 {
+#eonsguuafu .gt_indent_4 {
   text-indent: 20px;
 }
 
-#vbllmqrcop .gt_indent_5 {
+#eonsguuafu .gt_indent_5 {
   text-indent: 25px;
 }
 
-#vbllmqrcop .katex-display {
+#eonsguuafu .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#vbllmqrcop div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#eonsguuafu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1697,7 +3648,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><code>arules</code>パッケージで利用できるデータの型は<code>transactions</code>です。 この型に変換するために，<code>arules::as()</code>関数を使います。</p>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1789,7 +3740,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/so-ichi\.com");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
