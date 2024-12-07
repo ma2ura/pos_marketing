@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.36">
+<meta name="generator" content="quarto-1.6.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -37,10 +37,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-01c78b5cd655e4cd89133cf59d535862.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c3c62341195aaca57c6426706fd8d4e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-8473de6a1e397ed40005cc7c12b288ed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -139,6 +139,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">第4回 売上に影響を与える要因</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">第5回 併売の分析</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -152,6 +158,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#posデータで学ぶはじめてのマーケティングデータ分析" id="toc-posデータで学ぶはじめてのマーケティングデータ分析" class="nav-link active" data-scroll-target="#posデータで学ぶはじめてのマーケティングデータ分析">POSデータで学ぶはじめてのマーケティングデータ分析</a>
   <ul class="collapse">
   <li><a href="#資料の紹介" id="toc-資料の紹介" class="nav-link" data-scroll-target="#資料の紹介">資料の紹介</a></li>
+  <li><a href="#本資料のねらい" id="toc-本資料のねらい" class="nav-link" data-scroll-target="#本資料のねらい">本資料のねらい</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -188,7 +195,17 @@ ul.task-list li input[type="checkbox"] {
 <h1 class="unnumbered">POSデータで学ぶはじめてのマーケティングデータ分析</h1>
 <section id="資料の紹介" class="level2">
 <h2 class="anchored" data-anchor-id="資料の紹介">資料の紹介</h2>
-<p>この資料は，<span class="rmarker-s">横山・花井著 (2024) 「POSデータで学ぶはじめてのマーケティングデータ分析」</span>の内容をRで再現したものです。 書籍の内容にはほとんど触れず，書籍内の分析や作表・作図を<span class="rmarker-s">Rで再現すること</span>に焦点を当てています。</p>
+<p>この資料は，<span class="rmarker-s">横山・花井著 (2024) 「POSデータで学ぶはじめてのマーケティングデータ分析」</span>の内容をRで再現することを目的として作成されています。 そのため書籍の内容にはほとんど触れず，<span class="rmarker-s">書籍内の分析や作表・作図をRで再現すること</span>に焦点を当てています。</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/POS_data.jpg" class="img-fluid figure-img" style="width:30.0%"></p>
+<figcaption>POSデータとマーケティングデータ分析</figcaption>
+</figure>
+</div>
+</section>
+<section id="本資料のねらい" class="level2">
+<h2 class="anchored" data-anchor-id="本資料のねらい">本資料のねらい</h2>
+<p>立命館大学では、学生が利用できるデータベースとして<span class="rmarker-s">日経NEEDS 社会科学情報検索システム</span>を契約しており、そこで提供されるデータの1つに<span class="rmarker-s">POSデータ</span>があります。 POSデータとは、Point of Sales Dataの略で、販売時点のデータのことを指します。 この本では、約40万件のレシートデータを利用して、自社と競合他社の製品の分析を行っています。 POSデータを用いることで、小売店における商品の売れ行きや、顧客の購買行動を分析することを通じて、Rでのデータ操作や分析手法を学ぶことができます。</p>
 
 
 </section>
@@ -277,6 +294,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -285,7 +304,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/so-ichi\.com");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -389,6 +408,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
