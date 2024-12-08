@@ -19,6 +19,8 @@ book:
     - POS_Marketing_03.qmd
     - POS_Marketing_04.qmd
     - POS_Marketing_05.qmd
+    - POS_Marketing_06.qmd
+    - POS_Marketing_07.qmd
   page-navigation: true
   back-to-top-navigation: true
   page-footer:
