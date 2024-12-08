@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.36">
+<meta name="generator" content="quarto-1.6.32">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>1&nbsp; 第1回 売上をまとめた表をつくる – POSとマーケティングデータ分析</title>
 <style>
@@ -68,10 +68,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-01c78b5cd655e4cd89133cf59d535862.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5c44332d74a4162fb3c38f61c25c89ea.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-cab8dd47c0aa486acc31b65e685b51e8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -100,8 +100,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script><link rel="stylesheet" href="mystyle.css">
 <meta name="twitter:title" content="1&nbsp; 第1回 売上をまとめた表をつくる – POSとマーケティングデータ分析">
 <meta name="twitter:description" content="">
-<meta name="twitter:image" content="POS_Marketing_01_files/figure-html/unnamed-chunk-21-1.png">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 </head>
 <body class="nav-sidebar floating slimcontent">
 
@@ -122,6 +121,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">POSとマーケティングデータ分析</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/ma2ura/" title="ソースコード" class="quarto-navigation-tool px-1" aria-label="ソースコード"><i class="bi bi-github"></i></a>
+</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -731,7 +733,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 <span>  <span class="fu">gt_theme_pff</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># テーマを適用</span></span>
 <span>  <span class="fu">as_raw_html</span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="offporoprl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="hrxjydauyg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
   
   
 <table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false" data-bgcolor="#FFFFFF">
@@ -788,7 +790,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 <span>  <span class="fu">gt_theme_pff</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># テーマを適用</span></span>
 <span>  <span class="fu">as_raw_html</span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="gcpsamalfh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="jrpmvfxsmy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
   
   
 <table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false" data-bgcolor="#FFFFFF">
@@ -932,24 +934,24 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 <span>    table.width <span class="op">=</span> <span class="fu">pct</span><span class="op">(</span><span class="fl">60</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="jmacioetbk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="gryvxokaod" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-#jmacioetbk table {
+#gryvxokaod table {
   font-family: Roboto, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#jmacioetbk thead, #jmacioetbk tbody, #jmacioetbk tfoot, #jmacioetbk tr, #jmacioetbk td, #jmacioetbk th {
+#gryvxokaod thead, #gryvxokaod tbody, #gryvxokaod tfoot, #gryvxokaod tr, #gryvxokaod td, #gryvxokaod th {
   border-style: none;
 }
 
-#jmacioetbk p {
+#gryvxokaod p {
   margin: 0;
   padding: 0;
 }
 
-#jmacioetbk .gt_table {
+#gryvxokaod .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -975,12 +977,12 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-left-color: #D3D3D3;
 }
 
-#jmacioetbk .gt_caption {
+#gryvxokaod .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#jmacioetbk .gt_title {
+#gryvxokaod .gt_title {
   color: #333333;
   font-size: small;
   font-weight: bold;
@@ -992,7 +994,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-bottom-width: 0;
 }
 
-#jmacioetbk .gt_subtitle {
+#gryvxokaod .gt_subtitle {
   color: #333333;
   font-size: 16px;
   font-weight: initial;
@@ -1004,7 +1006,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-top-width: 0;
 }
 
-#jmacioetbk .gt_heading {
+#gryvxokaod .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -1016,13 +1018,13 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-right-color: #D3D3D3;
 }
 
-#jmacioetbk .gt_bottom_border {
+#gryvxokaod .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jmacioetbk .gt_col_headings {
+#gryvxokaod .gt_col_headings {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: rgba(255, 255, 255, 0);
@@ -1037,7 +1039,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-right-color: #D3D3D3;
 }
 
-#jmacioetbk .gt_col_heading {
+#gryvxokaod .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1057,7 +1059,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   overflow-x: hidden;
 }
 
-#jmacioetbk .gt_column_spanner_outer {
+#gryvxokaod .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1069,15 +1071,15 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 4px;
 }
 
-#jmacioetbk .gt_column_spanner_outer:first-child {
+#gryvxokaod .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jmacioetbk .gt_column_spanner_outer:last-child {
+#gryvxokaod .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jmacioetbk .gt_column_spanner {
+#gryvxokaod .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 3px;
   border-bottom-color: rgba(255, 255, 255, 0);
@@ -1089,11 +1091,11 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   width: 100%;
 }
 
-#jmacioetbk .gt_spanner_row {
+#gryvxokaod .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#jmacioetbk .gt_group_heading {
+#gryvxokaod .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1119,7 +1121,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   text-align: left;
 }
 
-#jmacioetbk .gt_empty_group_heading {
+#gryvxokaod .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1134,15 +1136,15 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   vertical-align: middle;
 }
 
-#jmacioetbk .gt_from_md > :first-child {
+#gryvxokaod .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jmacioetbk .gt_from_md > :last-child {
+#gryvxokaod .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jmacioetbk .gt_row {
+#gryvxokaod .gt_row {
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 5px;
@@ -1161,7 +1163,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   overflow-x: hidden;
 }
 
-#jmacioetbk .gt_stub {
+#gryvxokaod .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1174,7 +1176,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 5px;
 }
 
-#jmacioetbk .gt_stub_row_group {
+#gryvxokaod .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1188,15 +1190,15 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   vertical-align: top;
 }
 
-#jmacioetbk .gt_row_group_first td {
+#gryvxokaod .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#jmacioetbk .gt_row_group_first th {
+#gryvxokaod .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#jmacioetbk .gt_summary_row {
+#gryvxokaod .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1206,16 +1208,16 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 5px;
 }
 
-#jmacioetbk .gt_first_summary_row {
+#gryvxokaod .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#jmacioetbk .gt_first_summary_row.thick {
+#gryvxokaod .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#jmacioetbk .gt_last_summary_row {
+#gryvxokaod .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1225,7 +1227,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-bottom-color: #D3D3D3;
 }
 
-#jmacioetbk .gt_grand_summary_row {
+#gryvxokaod .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1235,7 +1237,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 5px;
 }
 
-#jmacioetbk .gt_first_grand_summary_row {
+#gryvxokaod .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1245,7 +1247,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-top-color: #D3D3D3;
 }
 
-#jmacioetbk .gt_last_grand_summary_row_top {
+#gryvxokaod .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1255,11 +1257,11 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-bottom-color: #D3D3D3;
 }
 
-#jmacioetbk .gt_striped {
+#gryvxokaod .gt_striped {
   background-color: #F5F5F5;
 }
 
-#jmacioetbk .gt_table_body {
+#gryvxokaod .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1268,7 +1270,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-bottom-color: #D3D3D3;
 }
 
-#jmacioetbk .gt_footnotes {
+#gryvxokaod .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1282,7 +1284,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-right-color: #D3D3D3;
 }
 
-#jmacioetbk .gt_footnote {
+#gryvxokaod .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1291,7 +1293,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 5px;
 }
 
-#jmacioetbk .gt_sourcenotes {
+#gryvxokaod .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1305,7 +1307,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-right-color: #D3D3D3;
 }
 
-#jmacioetbk .gt_sourcenote {
+#gryvxokaod .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1313,72 +1315,72 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 5px;
 }
 
-#jmacioetbk .gt_left {
+#gryvxokaod .gt_left {
   text-align: left;
 }
 
-#jmacioetbk .gt_center {
+#gryvxokaod .gt_center {
   text-align: center;
 }
 
-#jmacioetbk .gt_right {
+#gryvxokaod .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jmacioetbk .gt_font_normal {
+#gryvxokaod .gt_font_normal {
   font-weight: normal;
 }
 
-#jmacioetbk .gt_font_bold {
+#gryvxokaod .gt_font_bold {
   font-weight: bold;
 }
 
-#jmacioetbk .gt_font_italic {
+#gryvxokaod .gt_font_italic {
   font-style: italic;
 }
 
-#jmacioetbk .gt_super {
+#gryvxokaod .gt_super {
   font-size: 65%;
 }
 
-#jmacioetbk .gt_footnote_marks {
+#gryvxokaod .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#jmacioetbk .gt_asterisk {
+#gryvxokaod .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#jmacioetbk .gt_indent_1 {
+#gryvxokaod .gt_indent_1 {
   text-indent: 5px;
 }
 
-#jmacioetbk .gt_indent_2 {
+#gryvxokaod .gt_indent_2 {
   text-indent: 10px;
 }
 
-#jmacioetbk .gt_indent_3 {
+#gryvxokaod .gt_indent_3 {
   text-indent: 15px;
 }
 
-#jmacioetbk .gt_indent_4 {
+#gryvxokaod .gt_indent_4 {
   text-indent: 20px;
 }
 
-#jmacioetbk .gt_indent_5 {
+#gryvxokaod .gt_indent_5 {
   text-indent: 25px;
 }
 
-#jmacioetbk .katex-display {
+#gryvxokaod .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#jmacioetbk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#gryvxokaod div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1466,24 +1468,24 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 <span>        table.width <span class="op">=</span> <span class="fu">pct</span><span class="op">(</span><span class="fl">60</span><span class="op">)</span></span>
 <span>        <span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="akwglyijvx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="modxlasvag" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-#akwglyijvx table {
+#modxlasvag table {
   font-family: Roboto, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#akwglyijvx thead, #akwglyijvx tbody, #akwglyijvx tfoot, #akwglyijvx tr, #akwglyijvx td, #akwglyijvx th {
+#modxlasvag thead, #modxlasvag tbody, #modxlasvag tfoot, #modxlasvag tr, #modxlasvag td, #modxlasvag th {
   border-style: none;
 }
 
-#akwglyijvx p {
+#modxlasvag p {
   margin: 0;
   padding: 0;
 }
 
-#akwglyijvx .gt_table {
+#modxlasvag .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1509,12 +1511,12 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-left-color: #D3D3D3;
 }
 
-#akwglyijvx .gt_caption {
+#modxlasvag .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#akwglyijvx .gt_title {
+#modxlasvag .gt_title {
   color: #333333;
   font-size: small;
   font-weight: bold;
@@ -1526,7 +1528,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-bottom-width: 0;
 }
 
-#akwglyijvx .gt_subtitle {
+#modxlasvag .gt_subtitle {
   color: #333333;
   font-size: 16px;
   font-weight: initial;
@@ -1538,7 +1540,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-top-width: 0;
 }
 
-#akwglyijvx .gt_heading {
+#modxlasvag .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -1550,13 +1552,13 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-right-color: #D3D3D3;
 }
 
-#akwglyijvx .gt_bottom_border {
+#modxlasvag .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#akwglyijvx .gt_col_headings {
+#modxlasvag .gt_col_headings {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: rgba(255, 255, 255, 0);
@@ -1571,7 +1573,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-right-color: #D3D3D3;
 }
 
-#akwglyijvx .gt_col_heading {
+#modxlasvag .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1591,7 +1593,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   overflow-x: hidden;
 }
 
-#akwglyijvx .gt_column_spanner_outer {
+#modxlasvag .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1603,15 +1605,15 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 4px;
 }
 
-#akwglyijvx .gt_column_spanner_outer:first-child {
+#modxlasvag .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#akwglyijvx .gt_column_spanner_outer:last-child {
+#modxlasvag .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#akwglyijvx .gt_column_spanner {
+#modxlasvag .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 3px;
   border-bottom-color: rgba(255, 255, 255, 0);
@@ -1623,11 +1625,11 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   width: 100%;
 }
 
-#akwglyijvx .gt_spanner_row {
+#modxlasvag .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#akwglyijvx .gt_group_heading {
+#modxlasvag .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1653,7 +1655,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   text-align: left;
 }
 
-#akwglyijvx .gt_empty_group_heading {
+#modxlasvag .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1668,15 +1670,15 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   vertical-align: middle;
 }
 
-#akwglyijvx .gt_from_md > :first-child {
+#modxlasvag .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#akwglyijvx .gt_from_md > :last-child {
+#modxlasvag .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#akwglyijvx .gt_row {
+#modxlasvag .gt_row {
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 5px;
@@ -1695,7 +1697,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   overflow-x: hidden;
 }
 
-#akwglyijvx .gt_stub {
+#modxlasvag .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1708,7 +1710,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 5px;
 }
 
-#akwglyijvx .gt_stub_row_group {
+#modxlasvag .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1722,15 +1724,15 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   vertical-align: top;
 }
 
-#akwglyijvx .gt_row_group_first td {
+#modxlasvag .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#akwglyijvx .gt_row_group_first th {
+#modxlasvag .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#akwglyijvx .gt_summary_row {
+#modxlasvag .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1740,16 +1742,16 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 5px;
 }
 
-#akwglyijvx .gt_first_summary_row {
+#modxlasvag .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#akwglyijvx .gt_first_summary_row.thick {
+#modxlasvag .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#akwglyijvx .gt_last_summary_row {
+#modxlasvag .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1759,7 +1761,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-bottom-color: #D3D3D3;
 }
 
-#akwglyijvx .gt_grand_summary_row {
+#modxlasvag .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1769,7 +1771,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 5px;
 }
 
-#akwglyijvx .gt_first_grand_summary_row {
+#modxlasvag .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1779,7 +1781,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-top-color: #D3D3D3;
 }
 
-#akwglyijvx .gt_last_grand_summary_row_top {
+#modxlasvag .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1789,11 +1791,11 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-bottom-color: #D3D3D3;
 }
 
-#akwglyijvx .gt_striped {
+#modxlasvag .gt_striped {
   background-color: #F5F5F5;
 }
 
-#akwglyijvx .gt_table_body {
+#modxlasvag .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1802,7 +1804,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-bottom-color: #D3D3D3;
 }
 
-#akwglyijvx .gt_footnotes {
+#modxlasvag .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1816,7 +1818,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-right-color: #D3D3D3;
 }
 
-#akwglyijvx .gt_footnote {
+#modxlasvag .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1825,7 +1827,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 5px;
 }
 
-#akwglyijvx .gt_sourcenotes {
+#modxlasvag .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1839,7 +1841,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-right-color: #D3D3D3;
 }
 
-#akwglyijvx .gt_sourcenote {
+#modxlasvag .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1847,72 +1849,72 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 5px;
 }
 
-#akwglyijvx .gt_left {
+#modxlasvag .gt_left {
   text-align: left;
 }
 
-#akwglyijvx .gt_center {
+#modxlasvag .gt_center {
   text-align: center;
 }
 
-#akwglyijvx .gt_right {
+#modxlasvag .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#akwglyijvx .gt_font_normal {
+#modxlasvag .gt_font_normal {
   font-weight: normal;
 }
 
-#akwglyijvx .gt_font_bold {
+#modxlasvag .gt_font_bold {
   font-weight: bold;
 }
 
-#akwglyijvx .gt_font_italic {
+#modxlasvag .gt_font_italic {
   font-style: italic;
 }
 
-#akwglyijvx .gt_super {
+#modxlasvag .gt_super {
   font-size: 65%;
 }
 
-#akwglyijvx .gt_footnote_marks {
+#modxlasvag .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#akwglyijvx .gt_asterisk {
+#modxlasvag .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#akwglyijvx .gt_indent_1 {
+#modxlasvag .gt_indent_1 {
   text-indent: 5px;
 }
 
-#akwglyijvx .gt_indent_2 {
+#modxlasvag .gt_indent_2 {
   text-indent: 10px;
 }
 
-#akwglyijvx .gt_indent_3 {
+#modxlasvag .gt_indent_3 {
   text-indent: 15px;
 }
 
-#akwglyijvx .gt_indent_4 {
+#modxlasvag .gt_indent_4 {
   text-indent: 20px;
 }
 
-#akwglyijvx .gt_indent_5 {
+#modxlasvag .gt_indent_5 {
   text-indent: 25px;
 }
 
-#akwglyijvx .katex-display {
+#modxlasvag .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#akwglyijvx div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#modxlasvag div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1990,11 +1992,11 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 <div class="cell">
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_maker_sales</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">メーカー</span>, y <span class="op">=</span> <span class="va">売上金額合計</span>, fill <span class="op">=</span> <span class="va">メーカー</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_col</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuProN-W6"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_col</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"Noto San JP"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span> <span class="co"># Tableau 20 パレットを適用</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="2100"></p>
 </figure>
 </div>
 </div>
@@ -2007,7 +2009,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 <span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="2100"></p>
 </figure>
 </div>
 </div>
@@ -2023,7 +2025,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 <span>  <span class="fu">scale_fill_viridis_d</span><span class="op">(</span>direction <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="co"># Viridis パレットを逆順に適用</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="2100"></p>
 </figure>
 </div>
 </div>
@@ -2049,7 +2051,7 @@ argument.</code></pre>
 <span>  <span class="fu">scale_fill_viridis_d</span><span class="op">(</span>direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="2100"></p>
 </figure>
 </div>
 </div>
@@ -2202,6 +2204,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -2210,7 +2214,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/ma2ura\.github\.io\/pos_marketing\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -2314,6 +2318,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

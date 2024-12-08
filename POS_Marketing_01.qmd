@@ -333,7 +333,7 @@ df_time_sales |>
 ```{r}
 df_maker_sales |>
   ggplot() + aes(x = メーカー, y = 売上金額合計, fill = メーカー) +
-  geom_col() + theme_bw(base_family = "HiraKakuProN-W6") +
+  geom_col() + theme_bw(base_family = "Noto San JP") +
   scale_fill_tableau(name = "Tableau 20") # Tableau 20 パレットを適用
 ```
 
