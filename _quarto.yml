@@ -25,6 +25,7 @@ book:
   back-to-top-navigation: true
   page-footer:
       border: true
+      background: light
       left: "Copyright 2024, Soichi Matsuura"
       right:
         - icon: github

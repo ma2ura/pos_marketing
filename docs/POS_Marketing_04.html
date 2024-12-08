@@ -60,6 +60,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./POS_Marketing_05.html" rel="next">
 <link href="./POS_Marketing_03.html" rel="prev">
 <link href="./img/favicon.ico" rel="icon">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -70,7 +71,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-01c78b5cd655e4cd89133cf59d535862.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c3c62341195aaca57c6426706fd8d4e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-5c44332d74a4162fb3c38f61c25c89ea.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -138,9 +139,7 @@ window.Quarto = {
 </script><link rel="stylesheet" href="mystyle.css">
 <meta name="twitter:title" content="4&nbsp; 第4回 売上に影響を与える要因 – POSとマーケティングデータ分析">
 <meta name="twitter:description" content="">
-<meta name="twitter:image" content="https://so-ichi.com/img/weather_data.png">
-<meta name="twitter:image-height" content="568">
-<meta name="twitter:image-width" content="1404">
+<meta name="twitter:image" content="img/weather_data.png">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="nav-sidebar floating">
@@ -199,6 +198,24 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./POS_Marketing_04.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">第4回 売上に影響を与える要因</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">第5回 併売の分析</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">第6回 売れる商品を入荷しよう</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">第7回 回帰分析で新店舗の売上予測</span></span></a>
   </div>
 </li>
     </ul>
@@ -320,9 +337,9 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 </div>
 </section><section id="販売データ" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="販売データ">
 <span class="header-section-number">4.3</span> 販売データ</h2>
-<p>テキストのデータ<code>chp4.xlsx</code>を読み込みます。 <code><a href="https://rdrr.io/pkg/readxl/man/read_excel.html">readxl::read_excel()</a></code>にオプションとして<code>sheet = 1</code>を指定することで、1番目のシートを読み込みます。</p>
+<p>テキストのデータ<code>chp4.xlsx</code>を読み込みます。 <code><a href="https://readxl.tidyverse.org/reference/read_excel.html">readxl::read_excel()</a></code>にオプションとして<code>sheet = 1</code>を指定することで、1番目のシートを読み込みます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/readxl/man/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/chp4.xlsx"</span>, sheet <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/chp4.xlsx"</span>, sheet <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>New names:
 • `` -&gt; `...1`</code></pre>
@@ -555,23 +572,23 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
 <span>    table.width <span class="op">=</span> <span class="fu">pct</span><span class="op">(</span><span class="fl">60</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="vwihckdpwu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#vwihckdpwu table {
+<div id="kawpttycbf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kawpttycbf table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#vwihckdpwu thead, #vwihckdpwu tbody, #vwihckdpwu tfoot, #vwihckdpwu tr, #vwihckdpwu td, #vwihckdpwu th {
+#kawpttycbf thead, #kawpttycbf tbody, #kawpttycbf tfoot, #kawpttycbf tr, #kawpttycbf td, #kawpttycbf th {
   border-style: none;
 }
 
-#vwihckdpwu p {
+#kawpttycbf p {
   margin: 0;
   padding: 0;
 }
 
-#vwihckdpwu .gt_table {
+#kawpttycbf .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -597,12 +614,12 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   border-left-color: #D3D3D3;
 }
 
-#vwihckdpwu .gt_caption {
+#kawpttycbf .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#vwihckdpwu .gt_title {
+#kawpttycbf .gt_title {
   color: #333333;
   font-size: normal;
   font-weight: initial;
@@ -614,7 +631,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   border-bottom-width: 0;
 }
 
-#vwihckdpwu .gt_subtitle {
+#kawpttycbf .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -626,7 +643,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   border-top-width: 0;
 }
 
-#vwihckdpwu .gt_heading {
+#kawpttycbf .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -638,13 +655,13 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   border-right-color: #D3D3D3;
 }
 
-#vwihckdpwu .gt_bottom_border {
+#kawpttycbf .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#vwihckdpwu .gt_col_headings {
+#kawpttycbf .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -659,7 +676,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   border-right-color: #D3D3D3;
 }
 
-#vwihckdpwu .gt_col_heading {
+#kawpttycbf .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -679,7 +696,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   overflow-x: hidden;
 }
 
-#vwihckdpwu .gt_column_spanner_outer {
+#kawpttycbf .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -691,15 +708,15 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   padding-right: 4px;
 }
 
-#vwihckdpwu .gt_column_spanner_outer:first-child {
+#kawpttycbf .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#vwihckdpwu .gt_column_spanner_outer:last-child {
+#kawpttycbf .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#vwihckdpwu .gt_column_spanner {
+#kawpttycbf .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -711,11 +728,11 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   width: 100%;
 }
 
-#vwihckdpwu .gt_spanner_row {
+#kawpttycbf .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#vwihckdpwu .gt_group_heading {
+#kawpttycbf .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -741,7 +758,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   text-align: left;
 }
 
-#vwihckdpwu .gt_empty_group_heading {
+#kawpttycbf .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -756,15 +773,15 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   vertical-align: middle;
 }
 
-#vwihckdpwu .gt_from_md > :first-child {
+#kawpttycbf .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#vwihckdpwu .gt_from_md > :last-child {
+#kawpttycbf .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#vwihckdpwu .gt_row {
+#kawpttycbf .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -783,7 +800,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   overflow-x: hidden;
 }
 
-#vwihckdpwu .gt_stub {
+#kawpttycbf .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -796,7 +813,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   padding-right: 5px;
 }
 
-#vwihckdpwu .gt_stub_row_group {
+#kawpttycbf .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -810,15 +827,15 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   vertical-align: top;
 }
 
-#vwihckdpwu .gt_row_group_first td {
+#kawpttycbf .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#vwihckdpwu .gt_row_group_first th {
+#kawpttycbf .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#vwihckdpwu .gt_summary_row {
+#kawpttycbf .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -828,16 +845,16 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   padding-right: 5px;
 }
 
-#vwihckdpwu .gt_first_summary_row {
+#kawpttycbf .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#vwihckdpwu .gt_first_summary_row.thick {
+#kawpttycbf .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#vwihckdpwu .gt_last_summary_row {
+#kawpttycbf .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -847,7 +864,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   border-bottom-color: #D3D3D3;
 }
 
-#vwihckdpwu .gt_grand_summary_row {
+#kawpttycbf .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -857,7 +874,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   padding-right: 5px;
 }
 
-#vwihckdpwu .gt_first_grand_summary_row {
+#kawpttycbf .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -867,7 +884,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   border-top-color: #D3D3D3;
 }
 
-#vwihckdpwu .gt_last_grand_summary_row_top {
+#kawpttycbf .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -877,11 +894,11 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   border-bottom-color: #D3D3D3;
 }
 
-#vwihckdpwu .gt_striped {
+#kawpttycbf .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#vwihckdpwu .gt_table_body {
+#kawpttycbf .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -890,7 +907,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   border-bottom-color: #D3D3D3;
 }
 
-#vwihckdpwu .gt_footnotes {
+#kawpttycbf .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -904,7 +921,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   border-right-color: #D3D3D3;
 }
 
-#vwihckdpwu .gt_footnote {
+#kawpttycbf .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -913,7 +930,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   padding-right: 5px;
 }
 
-#vwihckdpwu .gt_sourcenotes {
+#kawpttycbf .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -927,7 +944,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   border-right-color: #D3D3D3;
 }
 
-#vwihckdpwu .gt_sourcenote {
+#kawpttycbf .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -935,72 +952,72 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   padding-right: 5px;
 }
 
-#vwihckdpwu .gt_left {
+#kawpttycbf .gt_left {
   text-align: left;
 }
 
-#vwihckdpwu .gt_center {
+#kawpttycbf .gt_center {
   text-align: center;
 }
 
-#vwihckdpwu .gt_right {
+#kawpttycbf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vwihckdpwu .gt_font_normal {
+#kawpttycbf .gt_font_normal {
   font-weight: normal;
 }
 
-#vwihckdpwu .gt_font_bold {
+#kawpttycbf .gt_font_bold {
   font-weight: bold;
 }
 
-#vwihckdpwu .gt_font_italic {
+#kawpttycbf .gt_font_italic {
   font-style: italic;
 }
 
-#vwihckdpwu .gt_super {
+#kawpttycbf .gt_super {
   font-size: 65%;
 }
 
-#vwihckdpwu .gt_footnote_marks {
+#kawpttycbf .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#vwihckdpwu .gt_asterisk {
+#kawpttycbf .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#vwihckdpwu .gt_indent_1 {
+#kawpttycbf .gt_indent_1 {
   text-indent: 5px;
 }
 
-#vwihckdpwu .gt_indent_2 {
+#kawpttycbf .gt_indent_2 {
   text-indent: 10px;
 }
 
-#vwihckdpwu .gt_indent_3 {
+#kawpttycbf .gt_indent_3 {
   text-indent: 15px;
 }
 
-#vwihckdpwu .gt_indent_4 {
+#kawpttycbf .gt_indent_4 {
   text-indent: 20px;
 }
 
-#vwihckdpwu .gt_indent_5 {
+#kawpttycbf .gt_indent_5 {
   text-indent: 25px;
 }
 
-#vwihckdpwu .katex-display {
+#kawpttycbf .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#vwihckdpwu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#kawpttycbf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1130,7 +1147,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/so-ichi\.com");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -1464,6 +1481,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./POS_Marketing_05.html" class="pagination-link" aria-label="第5回 併売の分析">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">第5回 併売の分析</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

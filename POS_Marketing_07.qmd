@@ -112,8 +112,8 @@ $$
 
 
 ```{r}
-result <- lm(月間売上高 ~ 店舗面積 + 商圏人口 + 最寄り駅からの距離 + 駐車場台数 + 競合店舗数, data = df)
-summary(result)
+OLS <- lm(月間売上高 ~ 店舗面積 + 商圏人口 + 最寄り駅からの距離 + 駐車場台数 + 競合店舗数, data = df)
+summary(OLS)
 ```
 
 データを標準化してから回帰分析を行うと、各変数の係数が標準偏差単位で解釈できるので、変数間の比較がしやすくなります。
@@ -130,7 +130,7 @@ df_std <- df |>
   scale() |> # 標準化
   as.data.frame() # データフレームに変換
 result_std <- lm(月間売上高 ~ 店舗面積 + 商圏人口 + 最寄り駅からの距離 + 駐車場台数 + 競合店舗数, data = df_std)
-results <- list(result, result_std)
+results <- list("OLS" = OLS, "標準化" = result_std)
 modelsummary::msummary(results,
                        stars = TRUE,
                        gof_omit = "RMSE|AIC|BIC|Log.Lik",

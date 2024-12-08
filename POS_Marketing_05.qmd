@@ -138,7 +138,7 @@ result |>
     ) |>
   gt_color_rows(2:8, palette = "ggsci::blue_material") |>
   tab_header(title = "一緒に販売された商品の個数") |>
-  gt_theme_pff() 
+  gt_theme_pff()
 ```
 
 
@@ -163,7 +163,7 @@ result_ratio |>
   tab_options(table.font.size = "small") |>
   gt_color_rows(2:8, palette = "ggsci::blue_material") |>
   tab_header(title = "一緒に販売された商品の割合(個数/縦合計)") |>
-  gt_theme_pff() 
+  gt_theme_pff()
 ```
 
 次に、ある商品が購入された場合に、他の商品も購入されるかどうかを調べます。
