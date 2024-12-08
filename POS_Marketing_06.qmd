@@ -1,0 +1,232 @@
+
+# 第6回 売れる商品を入荷しよう
+
+## 店頭カバー率
+
+週次集計POSデータを使って、他の店で売れている商品を見つけ出す。
+
+パッケージとデータを準備する。
+
+第6回ファイルで使うデータは`chp6.xlsx`です。
+まずパッケージを読み込みます。
+
+```{r packages}
+pacman::p_load(tidyverse, readxl, arules, ggthemes, knitr, kableExtra, gt, gtExtras, patchwork)
+```
+
+次にここで用いる`chp6.xlsx`のシート名を確認します。
+
+```{r sheets}
+readxl::excel_sheets("data/chp6.xlsx")
+```
+
+たくさんシートがあるMS Excelファイルですが、1番目の「小魚くんしりーず週次データ」を読み込みます。
+
+
+```{r}
+#| cache: TRUE
+df <- readxl::read_excel("data/chp6.xlsx", sheet = 1)
+glimpse(df)
+```
+
+このデータフレームには、
+
+- 対象週 : 文字列
+- 対象店舗数 : 数値
+- 来店客数 : 数値
+- 商品名 : 文字列
+- 出現店舗数 : 数値
+- 出現店来店客数 : 数値
+- 売上金額 : 数値
+- 売上個数 : 数値
+- 平均価格 : 数値
+
+の9つの変数が含まれています。
+
+:::{.aside}
+それぞれの詳細はテキストp.183を参照してください。
+:::
+
+
+商品名をテーブルにしてみます。
+
+
+```{r}
+df$商品名 |> table() |> t() |> kable()
+```
+
+### 出店カバー率
+
+出店カバー率を次のように定義します。
+
+$$
+\text{出店カバー率} = \frac{\text{出現店舗数}}{\text{対象店舗数}} \times 100
+$$
+
+出店カバー率を計算して、`df`に追加します。
+
+
+```{r}
+df <- df |>
+  mutate(
+    出店カバー率 = 出現店舗数 / 対象店舗数 * 100
+    )
+```
+
+これを週ごとと商品ごとに集計してみます。
+
+
+```{r}
+df |>
+  group_by(対象週, 商品名) |>
+  summarise(
+    平均出店カバー率 = mean(出店カバー率)
+    ) |>
+  pivot_wider(names_from = 商品名, values_from = 平均出店カバー率) |>
+  ungroup() |>
+  select(対象週, クリスマス限定, こだわり味, しびれ味, ピリ辛味, 激辛味, 定番味) |>
+  gt() |>
+  fmt_number(columns = 2:7, decimals = 2) |>
+  tab_header(title = "表6-2 6種の菓子の店頭カバー率の推移") |>
+  tab_options(
+    heading.title.font.size = "normal",
+    table.font.size = "small"
+  ) |>
+  gt_theme_pff()
+```
+
+グラフにしてみます。
+
+
+```{r}
+df_g <- df |>
+  group_by(対象週, 商品名) |>
+  summarise(
+    平均出店カバー率 = mean(出店カバー率)
+    ) |>
+  ungroup()
+
+df_g |>
+  ggplot() + aes(x = 対象週, y = 平均出店カバー率, color = 商品名, group = 商品名) +
+  geom_line() + geom_point() + 
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  # X軸のラベルを45度回転
+  labs(title = "図6-5 6種の菓子の店頭カバー率の推移のグラフ") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  scale_fill_tableau(name = "Tableau 20")
+```
+
+## PI値
+
+PI値(Purchase Index)は次のように定義されます。
+
+$$
+\text{PI値} = \frac{\text{売上個数}}{\text{来店客数}} \times 1000(人)
+$$
+
+PI値を計算して、`df`に追加します。
+
+```{r}
+df <- df |>
+  mutate(
+    PI値 = 売上個数 / 来店客数 * 1000
+    )
+```
+
+これを週ごとと商品ごとに集計してみます。
+ほぼ先ほどの集計表のコードのコピペですが、`PI値`に変更しています。
+
+```{r}
+df |>
+  group_by(対象週, 商品名) |>
+  summarise(
+    平均PI値 = mean(PI値)
+    ) |>
+  pivot_wider(names_from = 商品名, values_from = 平均PI値) |>
+  ungroup() |>
+  select(対象週, クリスマス限定, こだわり味, しびれ味, ピリ辛味, 激辛味, 定番味) |>
+  gt() |>
+  fmt_number(columns = 2:7, decimals = 2) |>
+  tab_header(title = "表6-3 6種の菓子の数量PIの推移") |>
+  tab_options(
+    heading.title.font.size = "normal",
+    table.font.size = "small"
+  ) |>
+  gt_theme_pff()
+```
+
+PI値のグラフを描いてみます。
+
+```{r}
+df_pi <- df |>
+  group_by(対象週, 商品名) |>
+  summarise(
+    平均PI値 = mean(PI値)
+    ) |>
+  ungroup()
+df_pi |>
+  ggplot() + aes(x = 対象週, y = 平均PI値, color = 商品名, group = 商品名) +
+  geom_line() + geom_point() + 
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  labs(title = "図6-8 6種の菓子の数量PIの推移のグラフ") +
+  # X軸のラベルを45度回転
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  scale_fill_tableau(name = "Tableau 20")
+```
+
+### 金額PI値
+
+金額PI値は次のように定義されます。
+
+$$
+\text{金額PI値} = \frac{\text{売上金額}}{\text{来店客数}} \times 1000(人)
+$$
+
+金額PI値を計算して、`df`に追加します。
+
+```{r}
+df <- df |>
+  mutate(
+    金額PI値 = 売上金額 / 来店客数 * 1000
+    )
+```
+
+これを週ごとと商品ごとに集計してみます。
+
+```{r}
+df |>
+  group_by(対象週, 商品名) |>
+  summarise(
+    平均金額PI値 = mean(金額PI値)
+    ) |>
+  pivot_wider(names_from = 商品名, values_from = 平均金額PI値) |>
+  ungroup() |>
+  select(対象週, クリスマス限定, こだわり味, しびれ味, ピリ辛味, 激辛味, 定番味) |>
+  gt() |>
+  fmt_number(columns = 2:7, decimals = 2) |>
+  tab_header(title = "表6-4 6種の菓子の金額PIの推移") |>
+  tab_options(
+    heading.title.font.size = "normal",
+    table.font.size = "small"
+  ) |>
+  gt_theme_pff()
+```
+
+金額PI値のグラフを描いてみます。
+
+```{r}
+df_pi <- df |>
+  group_by(対象週, 商品名) |>
+  summarise(
+    平均金額PI値 = mean(金額PI値)
+    ) |>
+  ungroup()
+df_pi |>
+  ggplot() + aes(x = 対象週, y = 平均金額PI値, color = 商品名, group = 商品名) +
+  geom_line() + geom_point() + 
+  labs(title = "図6-11 6種の菓子の金額PIの推移のグラフ") +
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  # X軸のラベルを45度回転
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  scale_fill_tableau(name = "Tableau 20")
+```

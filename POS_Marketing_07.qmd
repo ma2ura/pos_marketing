@@ -1,0 +1,138 @@
+
+# 第7回 回帰分析で新店舗の売上予測
+
+## 店頭カバー率
+
+週次集計POSデータを使って、他の店で売れている商品を見つけ出す。
+
+パッケージとデータを準備する。
+
+第6回ファイルで使うデータは`chp7.xlsx`です。
+まずパッケージを読み込みます。
+
+```{r packages}
+pacman::p_load(tidyverse, readxl, arules, ggthemes, knitr, kableExtra, gt, gtExtras, patchwork)
+```
+
+次にここで用いる`chp6.xlsx`のシート名を確認します。
+
+```{r sheets}
+readxl::excel_sheets("data/chp7.xlsx")
+```
+
+たくさんシートがあるMS Excelファイルですが、1番目の「2023年11月期データ」を読み込みます。
+
+
+```{r}
+#| cache: TRUE
+df <- readxl::read_excel("data/chp7.xlsx", sheet = 1)
+head(df)
+```
+
+このデータフレームには、
+
+- 店舗 : 文字列
+- 店舗面積 : 数値
+- 商圏人口 : 数値
+- 最寄り駅からの距離 : 数値
+- 駐車場台数 : 数値
+- 競合店舗数 : 数値
+- 月間売上高 : 数値
+
+という7つの変数が含まれています。
+
+:::{.aside}
+それぞれの詳細はテキストp.215を参照してください。
+:::
+
+
+最寄り駅からの距離と月間売上高の散布図を描いてみます。
+グラフの設定を`mystyle`として`list`にまとめておきます。
+```{r}
+mystyle <- list(
+  theme_bw(base_family = "HiraKakuPro-W3"),
+  scale_fill_tableau(name = "Tableau 20")
+)
+```
+
+```{r}
+df |>
+  ggplot() + aes(x = 最寄り駅からの距離, y = 月間売上高) +
+  geom_point() +
+  labs(title = "図7-1 最寄り駅からの距離と月間売上高の散布図") + mystyle
+```
+
+いろんな変数の組み合わせの散布図を描いてみます。
+
+```{r}
+g1 <- df |>
+  ggplot() + aes(x = 店舗面積, y = 月間売上高) +
+  geom_point() +
+  labs(title = "図7-2 店舗面積と月間売上高") + mystyle
+g2 <- df |>
+  ggplot() + aes(x = 商圏人口, y = 月間売上高) +
+  geom_point() +
+  labs(title = "図7-3 商圏人口と月間売上高") + mystyle
+g3 <- df |>
+  ggplot() + aes(x = 駐車場台数, y = 月間売上高) +
+  geom_point() +
+  labs(title = "図7-4 駐車場台数と月間売上高") + mystyle
+g4 <- df |>
+  ggplot() + aes(x = 競合店舗数, y = 月間売上高) +
+  geom_point() +
+  labs(title = "図7-5 競合店舗数と月間売上高") + mystyle
+(g1 + g2) / (g3 + g4)
+```
+
+店舗面積、商圏人口、駐車場台数、競合店舗数と月間売上高の相関係数を計算してみます。
+
+```{r}
+pacman::p_load(corrplot)
+par(family= "HiraKakuProN-W3")
+df |>
+  select(店舗面積, 商圏人口, 最寄り駅からの距離, 駐車場台数, 競合店舗数, 月間売上高) |>
+  cor() |>
+  corrplot(method = "number")
+```
+
+
+## 回帰分析
+
+テキストでは独立変数が1つの単回帰を繰り返していますが、通常は複数の独立変数を組み込んだ重回帰モデルを構築します。
+
+$$
+\begin{aligned}
+\text{月間売上高}_i & = \beta_0 + \beta_1  店舗面積_i + \beta_2 商圏人口_i + \\
+                   & + \beta_3 最寄り駅からの距離_i + \beta_4 駐車場台数_i + \\
+                   & + \beta_5 競合店舗数_i + \varepsilon_i
+\end{aligned}
+$$
+
+このモデルをRで推定します。
+
+
+```{r}
+result <- lm(月間売上高 ~ 店舗面積 + 商圏人口 + 最寄り駅からの距離 + 駐車場台数 + 競合店舗数, data = df)
+summary(result)
+```
+
+データを標準化してから回帰分析を行うと、各変数の係数が標準偏差単位で解釈できるので、変数間の比較がしやすくなります。
+先ほどの回帰分析の結果と変数を標準化した結果を比較してみます。
+
+:::{.aside}
+標準化は，変数の平均を0，標準偏差を1にする変換で，観測値から平均を引いて標準偏差で割ることで行います。
+Rでは`scale()`関数を使って標準化を行います。
+:::
+
+```{r}
+df_std <- df |>
+  select(店舗面積, 商圏人口, 最寄り駅からの距離, 駐車場台数, 競合店舗数, 月間売上高) |>
+  scale() |> # 標準化
+  as.data.frame() # データフレームに変換
+result_std <- lm(月間売上高 ~ 店舗面積 + 商圏人口 + 最寄り駅からの距離 + 駐車場台数 + 競合店舗数, data = df_std)
+results <- list(result, result_std)
+modelsummary::msummary(results,
+                       stars = TRUE,
+                       gof_omit = "RMSE|AIC|BIC|Log.Lik",
+                       digits = 3)
+```

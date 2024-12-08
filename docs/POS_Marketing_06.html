@@ -1,0 +1,2776 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.36">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>6&nbsp; 第6回 売れる商品を入荷しよう – POSとマーケティングデータ分析</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./POS_Marketing_07.html" rel="next">
+<link href="./POS_Marketing_05.html" rel="prev">
+<link href="./img/favicon.ico" rel="icon">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-01c78b5cd655e4cd89133cf59d535862.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c3c62341195aaca57c6426706fd8d4e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "一致なし",
+    "search-matching-documents-text": "一致した文書",
+    "search-copy-link-title": "検索へのリンクをコピー",
+    "search-hide-matches-text": "追加の検索結果を非表示",
+    "search-more-match-text": "追加の検索結果",
+    "search-more-matches-text": "追加の検索結果",
+    "search-clear-button-title": "消去",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "検索",
+    "search-label": "サーチ"
+  }
+}</script><script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script><script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="mystyle.css">
+<meta name="twitter:title" content="6&nbsp; 第6回 売れる商品を入荷しよう – POSとマーケティングデータ分析">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="POS_Marketing_06_files/figure-html/unnamed-chunk-5-1.png">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./POS_Marketing_06.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">第6回 売れる商品を入荷しよう</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="サーチ" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">POSとマーケティングデータ分析</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="サーチ"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">POSデータで学ぶはじめてのマーケティングデータ分析</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">第1回 売上をまとめた表をつくる</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">第2回 顧客層別の売上</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">第3回 売上の時系列データ分析</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">第4回 売上に影響を与える要因</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">第5回 併売の分析</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_06.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">第6回 売れる商品を入荷しよう</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">第7回 回帰分析で新店舗の売上予測</span></span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">目次</h2>
+   
+  <ul>
+<li>
+<a href="#%E5%BA%97%E9%A0%AD%E3%82%AB%E3%83%90%E3%83%BC%E7%8E%87" id="toc-店頭カバー率" class="nav-link active" data-scroll-target="#%E5%BA%97%E9%A0%AD%E3%82%AB%E3%83%90%E3%83%BC%E7%8E%87"><span class="header-section-number">6.1</span> 店頭カバー率</a>
+  <ul class="collapse">
+<li><a href="#%E5%87%BA%E5%BA%97%E3%82%AB%E3%83%90%E3%83%BC%E7%8E%87" id="toc-出店カバー率" class="nav-link" data-scroll-target="#%E5%87%BA%E5%BA%97%E3%82%AB%E3%83%90%E3%83%BC%E7%8E%87"><span class="header-section-number">6.1.1</span> 出店カバー率</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#pi%E5%80%A4" id="toc-pi値" class="nav-link" data-scroll-target="#pi%E5%80%A4"><span class="header-section-number">6.2</span> PI値</a>
+  <ul class="collapse">
+<li><a href="#%E9%87%91%E9%A1%8Dpi%E5%80%A4" id="toc-金額pi値" class="nav-link" data-scroll-target="#%E9%87%91%E9%A1%8Dpi%E5%80%A4"><span class="header-section-number">6.2.1</span> 金額PI値</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">6</span>&nbsp; <span class="chapter-title">第6回 売れる商品を入荷しよう</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="店頭カバー率" class="level2 page-columns page-full" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="店頭カバー率">
+<span class="header-section-number">6.1</span> 店頭カバー率</h2>
+<p>週次集計POSデータを使って、他の店で売れている商品を見つけ出す。</p>
+<p>パッケージとデータを準備する。</p>
+<p>第6回ファイルで使うデータは<code>chp6.xlsx</code>です。 まずパッケージを読み込みます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>, <span class="va">readxl</span>, <span class="va">arules</span>, <span class="va">ggthemes</span>, <span class="va">knitr</span>, <span class="va">kableExtra</span>, <span class="va">gt</span>, <span class="va">gtExtras</span>, <span class="va">patchwork</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>次にここで用いる<code>chp6.xlsx</code>のシート名を確認します。</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/excel_sheets.html">excel_sheets</a></span><span class="op">(</span><span class="st">"data/chp6.xlsx"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "小魚くんシリーズ週次データ"  "ピボットテーブル"           
+[3] "図6-2・図6-6・図6-9・図6-13" "表6-2・図6-5"               
+[5] "表6-3・図6-8"                "表6-4・図6-11"              
+[7] "表6-6・図6-15"               "表6-7・図6-17"              </code></pre>
+</div>
+</div>
+<p>たくさんシートがあるMS Excelファイルですが、1番目の「小魚くんしりーず週次データ」を読み込みます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/chp6.xlsx"</span>, sheet <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu">glimpse</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 79
+Columns: 9
+$ 対象週         &lt;chr&gt; "2023/10/30週", "2023/11/06週", "2023/11/13週", "2023/1…
+$ 対象店舗数     &lt;dbl&gt; 102, 102, 102, 102, 102, 102, 102, 102, 102, 103, 103, …
+$ 来店客数       &lt;dbl&gt; 2549796, 2549898, 2549796, 2549765, 2549898, 2550102, 2…
+$ 商品名         &lt;chr&gt; "定番味", "定番味", "定番味", "定番味", "定番味", "定番…
+$ 出現店舗数     &lt;dbl&gt; 80, 81, 81, 81, 81, 80, 80, 80, 80, 80, 80, 81, 81, 81,…
+$ 出現店来店客数 &lt;dbl&gt; 2000080, 2025081, 2024919, 2025081, 2025000, 1999920, 1…
+$ 売上金額       &lt;dbl&gt; 2065350, 1988920, 2027100, 1936000, 2040620, 1947770, 2…
+$ 売上個数       &lt;dbl&gt; 13770, 13475, 13515, 12840, 13514, 12730, 13474, 13239,…
+$ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1, 151.7,…</code></pre>
+</div>
+</div>
+<p>このデータフレームには、</p>
+<ul>
+<li>対象週 : 文字列</li>
+<li>対象店舗数 : 数値</li>
+<li>来店客数 : 数値</li>
+<li>商品名 : 文字列</li>
+<li>出現店舗数 : 数値</li>
+<li>出現店来店客数 : 数値</li>
+<li>売上金額 : 数値</li>
+<li>売上個数 : 数値</li>
+<li>平均価格 : 数値</li>
+</ul>
+<p>の9つの変数が含まれています。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>それぞれの詳細はテキストp.183を参照してください。</p>
+</div></div><p>商品名をテーブルにしてみます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span><span class="op">$</span><span class="va">商品名</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">kable</span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: right;">クリスマス限定</th>
+<th style="text-align: right;">こだわり味</th>
+<th style="text-align: right;">しびれ味</th>
+<th style="text-align: right;">ピリ辛味</th>
+<th style="text-align: right;">激辛味</th>
+<th style="text-align: right;">定番味</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">14</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+<section id="出店カバー率" class="level3" data-number="6.1.1"><h3 data-number="6.1.1" class="anchored" data-anchor-id="出店カバー率">
+<span class="header-section-number">6.1.1</span> 出店カバー率</h3>
+<p>出店カバー率を次のように定義します。</p>
+<p><span class="math display">
+\text{出店カバー率} = \frac{\text{出現店舗数}}{\text{対象店舗数}} \times 100
+</span></p>
+<p>出店カバー率を計算して、<code>df</code>に追加します。</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span></span>
+<span>    出店カバー率 <span class="op">=</span> <span class="va">出現店舗数</span> <span class="op">/</span> <span class="va">対象店舗数</span> <span class="op">*</span> <span class="fl">100</span></span>
+<span>    <span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>これを週ごとと商品ごとに集計してみます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">対象週</span>, <span class="va">商品名</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">summarise</span><span class="op">(</span></span>
+<span>    平均出店カバー率 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">出店カバー率</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">商品名</span>, values_from <span class="op">=</span> <span class="va">平均出店カバー率</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">対象週</span>, <span class="va">クリスマス限定</span>, <span class="va">こだわり味</span>, <span class="va">しびれ味</span>, <span class="va">ピリ辛味</span>, <span class="va">激辛味</span>, <span class="va">定番味</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">gt</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">7</span>, decimals <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"表6-2 6種の菓子の店頭カバー率の推移"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tab_options</span><span class="op">(</span></span>
+<span>    heading.title.font.size <span class="op">=</span> <span class="st">"normal"</span>,</span>
+<span>    table.font.size <span class="op">=</span> <span class="st">"small"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">gt_theme_pff</span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by '対象週'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="sdoxvxrhpc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+#sdoxvxrhpc table {
+  font-family: Roboto, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#sdoxvxrhpc thead, #sdoxvxrhpc tbody, #sdoxvxrhpc tfoot, #sdoxvxrhpc tr, #sdoxvxrhpc td, #sdoxvxrhpc th {
+  border-style: none;
+}
+
+#sdoxvxrhpc p {
+  margin: 0;
+  padding: 0;
+}
+
+#sdoxvxrhpc .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#sdoxvxrhpc .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#sdoxvxrhpc .gt_title {
+  color: #333333;
+  font-size: 30px;
+  font-weight: bold;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#sdoxvxrhpc .gt_subtitle {
+  color: #333333;
+  font-size: 16px;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#sdoxvxrhpc .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#sdoxvxrhpc .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sdoxvxrhpc .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: rgba(255, 255, 255, 0);
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#sdoxvxrhpc .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 6px;
+  padding-bottom: 7px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#sdoxvxrhpc .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#sdoxvxrhpc .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#sdoxvxrhpc .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#sdoxvxrhpc .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: rgba(255, 255, 255, 0);
+  vertical-align: bottom;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#sdoxvxrhpc .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#sdoxvxrhpc .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#sdoxvxrhpc .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#sdoxvxrhpc .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#sdoxvxrhpc .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#sdoxvxrhpc .gt_row {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#sdoxvxrhpc .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sdoxvxrhpc .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#sdoxvxrhpc .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#sdoxvxrhpc .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#sdoxvxrhpc .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sdoxvxrhpc .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#sdoxvxrhpc .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#sdoxvxrhpc .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sdoxvxrhpc .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sdoxvxrhpc .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#sdoxvxrhpc .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sdoxvxrhpc .gt_striped {
+  background-color: #F5F5F5;
+}
+
+#sdoxvxrhpc .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sdoxvxrhpc .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#sdoxvxrhpc .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sdoxvxrhpc .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#sdoxvxrhpc .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sdoxvxrhpc .gt_left {
+  text-align: left;
+}
+
+#sdoxvxrhpc .gt_center {
+  text-align: center;
+}
+
+#sdoxvxrhpc .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#sdoxvxrhpc .gt_font_normal {
+  font-weight: normal;
+}
+
+#sdoxvxrhpc .gt_font_bold {
+  font-weight: bold;
+}
+
+#sdoxvxrhpc .gt_font_italic {
+  font-style: italic;
+}
+
+#sdoxvxrhpc .gt_super {
+  font-size: 65%;
+}
+
+#sdoxvxrhpc .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#sdoxvxrhpc .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#sdoxvxrhpc .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#sdoxvxrhpc .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#sdoxvxrhpc .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#sdoxvxrhpc .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#sdoxvxrhpc .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#sdoxvxrhpc .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#sdoxvxrhpc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<th colspan="7" class="gt_heading gt_title gt_font_normal gt_bottom_border">表6-2 6種の菓子の店頭カバー率の推移</th>
+</tr>
+<tr class="gt_col_headings even">
+<th id="対象週" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">対象週</th>
+<th id="クリスマス限定" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">クリスマス限定</th>
+<th id="こだわり味" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">こだわり味</th>
+<th id="しびれ味" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">しびれ味</th>
+<th id="ピリ辛味" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">ピリ辛味</th>
+<th id="激辛味" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">激辛味</th>
+<th id="定番味" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">定番味</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="対象週">2023/10/30週</td>
+<td class="gt_row gt_right" headers="クリスマス限定">65.69</td>
+<td class="gt_row gt_right" headers="こだわり味">75.49</td>
+<td class="gt_row gt_right" headers="しびれ味">NA</td>
+<td class="gt_row gt_right" headers="ピリ辛味">49.02</td>
+<td class="gt_row gt_right" headers="激辛味">19.61</td>
+<td class="gt_row gt_right" headers="定番味">78.43</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="対象週">2023/11/06週</td>
+<td class="gt_row gt_right gt_striped" headers="クリスマス限定">65.69</td>
+<td class="gt_row gt_right gt_striped" headers="こだわり味">75.49</td>
+<td class="gt_row gt_right gt_striped" headers="しびれ味">NA</td>
+<td class="gt_row gt_right gt_striped" headers="ピリ辛味">49.02</td>
+<td class="gt_row gt_right gt_striped" headers="激辛味">20.59</td>
+<td class="gt_row gt_right gt_striped" headers="定番味">79.41</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="対象週">2023/11/13週</td>
+<td class="gt_row gt_right" headers="クリスマス限定">68.63</td>
+<td class="gt_row gt_right" headers="こだわり味">75.49</td>
+<td class="gt_row gt_right" headers="しびれ味">NA</td>
+<td class="gt_row gt_right" headers="ピリ辛味">50.00</td>
+<td class="gt_row gt_right" headers="激辛味">19.61</td>
+<td class="gt_row gt_right" headers="定番味">79.41</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="対象週">2023/11/20週</td>
+<td class="gt_row gt_right gt_striped" headers="クリスマス限定">60.78</td>
+<td class="gt_row gt_right gt_striped" headers="こだわり味">73.53</td>
+<td class="gt_row gt_right gt_striped" headers="しびれ味">NA</td>
+<td class="gt_row gt_right gt_striped" headers="ピリ辛味">50.00</td>
+<td class="gt_row gt_right gt_striped" headers="激辛味">21.57</td>
+<td class="gt_row gt_right gt_striped" headers="定番味">79.41</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="対象週">2023/11/27週</td>
+<td class="gt_row gt_right" headers="クリスマス限定">60.78</td>
+<td class="gt_row gt_right" headers="こだわり味">75.49</td>
+<td class="gt_row gt_right" headers="しびれ味">NA</td>
+<td class="gt_row gt_right" headers="ピリ辛味">49.02</td>
+<td class="gt_row gt_right" headers="激辛味">33.33</td>
+<td class="gt_row gt_right" headers="定番味">79.41</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="対象週">2023/12/04週</td>
+<td class="gt_row gt_right gt_striped" headers="クリスマス限定">77.45</td>
+<td class="gt_row gt_right gt_striped" headers="こだわり味">75.49</td>
+<td class="gt_row gt_right gt_striped" headers="しびれ味">19.61</td>
+<td class="gt_row gt_right gt_striped" headers="ピリ辛味">50.00</td>
+<td class="gt_row gt_right gt_striped" headers="激辛味">45.10</td>
+<td class="gt_row gt_right gt_striped" headers="定番味">78.43</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="対象週">2023/12/11週</td>
+<td class="gt_row gt_right" headers="クリスマス限定">77.45</td>
+<td class="gt_row gt_right" headers="こだわり味">73.53</td>
+<td class="gt_row gt_right" headers="しびれ味">21.57</td>
+<td class="gt_row gt_right" headers="ピリ辛味">50.00</td>
+<td class="gt_row gt_right" headers="激辛味">50.98</td>
+<td class="gt_row gt_right" headers="定番味">78.43</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="対象週">2023/12/18週</td>
+<td class="gt_row gt_right gt_striped" headers="クリスマス限定">76.47</td>
+<td class="gt_row gt_right gt_striped" headers="こだわり味">75.49</td>
+<td class="gt_row gt_right gt_striped" headers="しびれ味">22.55</td>
+<td class="gt_row gt_right gt_striped" headers="ピリ辛味">50.00</td>
+<td class="gt_row gt_right gt_striped" headers="激辛味">58.82</td>
+<td class="gt_row gt_right gt_striped" headers="定番味">78.43</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="対象週">2023/12/25週</td>
+<td class="gt_row gt_right" headers="クリスマス限定">59.80</td>
+<td class="gt_row gt_right" headers="こだわり味">76.47</td>
+<td class="gt_row gt_right" headers="しびれ味">29.41</td>
+<td class="gt_row gt_right" headers="ピリ辛味">49.02</td>
+<td class="gt_row gt_right" headers="激辛味">62.75</td>
+<td class="gt_row gt_right" headers="定番味">78.43</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="対象週">2024/01/01週</td>
+<td class="gt_row gt_right gt_striped" headers="クリスマス限定">44.66</td>
+<td class="gt_row gt_right gt_striped" headers="こだわり味">73.79</td>
+<td class="gt_row gt_right gt_striped" headers="しびれ味">32.04</td>
+<td class="gt_row gt_right gt_striped" headers="ピリ辛味">49.51</td>
+<td class="gt_row gt_right gt_striped" headers="激辛味">63.11</td>
+<td class="gt_row gt_right gt_striped" headers="定番味">77.67</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="対象週">2024/01/08週</td>
+<td class="gt_row gt_right" headers="クリスマス限定">44.66</td>
+<td class="gt_row gt_right" headers="こだわり味">75.73</td>
+<td class="gt_row gt_right" headers="しびれ味">33.01</td>
+<td class="gt_row gt_right" headers="ピリ辛味">49.51</td>
+<td class="gt_row gt_right" headers="激辛味">65.05</td>
+<td class="gt_row gt_right" headers="定番味">77.67</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="対象週">2024/01/15週</td>
+<td class="gt_row gt_right gt_striped" headers="クリスマス限定">45.63</td>
+<td class="gt_row gt_right gt_striped" headers="こだわり味">75.73</td>
+<td class="gt_row gt_right gt_striped" headers="しびれ味">36.89</td>
+<td class="gt_row gt_right gt_striped" headers="ピリ辛味">49.51</td>
+<td class="gt_row gt_right gt_striped" headers="激辛味">69.90</td>
+<td class="gt_row gt_right gt_striped" headers="定番味">78.64</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="対象週">2024/01/22週</td>
+<td class="gt_row gt_right" headers="クリスマス限定">46.60</td>
+<td class="gt_row gt_right" headers="こだわり味">73.79</td>
+<td class="gt_row gt_right" headers="しびれ味">40.78</td>
+<td class="gt_row gt_right" headers="ピリ辛味">48.54</td>
+<td class="gt_row gt_right" headers="激辛味">69.90</td>
+<td class="gt_row gt_right" headers="定番味">78.64</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="対象週">2024/01/29週</td>
+<td class="gt_row gt_right gt_striped" headers="クリスマス限定">48.54</td>
+<td class="gt_row gt_right gt_striped" headers="こだわり味">75.73</td>
+<td class="gt_row gt_right gt_striped" headers="しびれ味">43.69</td>
+<td class="gt_row gt_right gt_striped" headers="ピリ辛味">48.54</td>
+<td class="gt_row gt_right gt_striped" headers="激辛味">69.90</td>
+<td class="gt_row gt_right gt_striped" headers="定番味">78.64</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>グラフにしてみます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_g</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">対象週</span>, <span class="va">商品名</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">summarise</span><span class="op">(</span></span>
+<span>    平均出店カバー率 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">出店カバー率</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by '対象週'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_g</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">対象週</span>, y <span class="op">=</span> <span class="va">平均出店カバー率</span>, color <span class="op">=</span> <span class="va">商品名</span>, group <span class="op">=</span> <span class="va">商品名</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># X軸のラベルを45度回転</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"図6-5 6種の菓子の店頭カバー率の推移のグラフ"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_06_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section></section><section id="pi値" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="pi値">
+<span class="header-section-number">6.2</span> PI値</h2>
+<p>PI値(Purchase Index)は次のように定義されます。</p>
+<p><span class="math display">
+\text{PI値} = \frac{\text{売上個数}}{\text{来店客数}} \times 1000(人)
+</span></p>
+<p>PI値を計算して、<code>df</code>に追加します。</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span></span>
+<span>    PI値 <span class="op">=</span> <span class="va">売上個数</span> <span class="op">/</span> <span class="va">来店客数</span> <span class="op">*</span> <span class="fl">1000</span></span>
+<span>    <span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>これを週ごとと商品ごとに集計してみます。 ほぼ先ほどの集計表のコードのコピペですが、<code>PI値</code>に変更しています。</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">対象週</span>, <span class="va">商品名</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">summarise</span><span class="op">(</span></span>
+<span>    平均PI値 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">PI値</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">商品名</span>, values_from <span class="op">=</span> <span class="va">平均PI値</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">対象週</span>, <span class="va">クリスマス限定</span>, <span class="va">こだわり味</span>, <span class="va">しびれ味</span>, <span class="va">ピリ辛味</span>, <span class="va">激辛味</span>, <span class="va">定番味</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">gt</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">7</span>, decimals <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"表6-3 6種の菓子の数量PIの推移"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tab_options</span><span class="op">(</span></span>
+<span>    heading.title.font.size <span class="op">=</span> <span class="st">"normal"</span>,</span>
+<span>    table.font.size <span class="op">=</span> <span class="st">"small"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">gt_theme_pff</span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by '対象週'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="lnqgmlkrtc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+#lnqgmlkrtc table {
+  font-family: Roboto, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#lnqgmlkrtc thead, #lnqgmlkrtc tbody, #lnqgmlkrtc tfoot, #lnqgmlkrtc tr, #lnqgmlkrtc td, #lnqgmlkrtc th {
+  border-style: none;
+}
+
+#lnqgmlkrtc p {
+  margin: 0;
+  padding: 0;
+}
+
+#lnqgmlkrtc .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#lnqgmlkrtc .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#lnqgmlkrtc .gt_title {
+  color: #333333;
+  font-size: 30px;
+  font-weight: bold;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#lnqgmlkrtc .gt_subtitle {
+  color: #333333;
+  font-size: 16px;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#lnqgmlkrtc .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#lnqgmlkrtc .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lnqgmlkrtc .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: rgba(255, 255, 255, 0);
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#lnqgmlkrtc .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 6px;
+  padding-bottom: 7px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#lnqgmlkrtc .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#lnqgmlkrtc .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#lnqgmlkrtc .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#lnqgmlkrtc .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: rgba(255, 255, 255, 0);
+  vertical-align: bottom;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#lnqgmlkrtc .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#lnqgmlkrtc .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#lnqgmlkrtc .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#lnqgmlkrtc .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#lnqgmlkrtc .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#lnqgmlkrtc .gt_row {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#lnqgmlkrtc .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lnqgmlkrtc .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#lnqgmlkrtc .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#lnqgmlkrtc .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#lnqgmlkrtc .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lnqgmlkrtc .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#lnqgmlkrtc .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#lnqgmlkrtc .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lnqgmlkrtc .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lnqgmlkrtc .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#lnqgmlkrtc .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lnqgmlkrtc .gt_striped {
+  background-color: #F5F5F5;
+}
+
+#lnqgmlkrtc .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lnqgmlkrtc .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#lnqgmlkrtc .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lnqgmlkrtc .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#lnqgmlkrtc .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lnqgmlkrtc .gt_left {
+  text-align: left;
+}
+
+#lnqgmlkrtc .gt_center {
+  text-align: center;
+}
+
+#lnqgmlkrtc .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#lnqgmlkrtc .gt_font_normal {
+  font-weight: normal;
+}
+
+#lnqgmlkrtc .gt_font_bold {
+  font-weight: bold;
+}
+
+#lnqgmlkrtc .gt_font_italic {
+  font-style: italic;
+}
+
+#lnqgmlkrtc .gt_super {
+  font-size: 65%;
+}
+
+#lnqgmlkrtc .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#lnqgmlkrtc .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#lnqgmlkrtc .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#lnqgmlkrtc .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#lnqgmlkrtc .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#lnqgmlkrtc .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#lnqgmlkrtc .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#lnqgmlkrtc .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#lnqgmlkrtc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<th colspan="7" class="gt_heading gt_title gt_font_normal gt_bottom_border">表6-3 6種の菓子の数量PIの推移</th>
+</tr>
+<tr class="gt_col_headings even">
+<th id="対象週" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">対象週</th>
+<th id="クリスマス限定" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">クリスマス限定</th>
+<th id="こだわり味" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">こだわり味</th>
+<th id="しびれ味" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">しびれ味</th>
+<th id="ピリ辛味" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">ピリ辛味</th>
+<th id="激辛味" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">激辛味</th>
+<th id="定番味" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">定番味</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="対象週">2023/10/30週</td>
+<td class="gt_row gt_right" headers="クリスマス限定">4.70</td>
+<td class="gt_row gt_right" headers="こだわり味">4.00</td>
+<td class="gt_row gt_right" headers="しびれ味">NA</td>
+<td class="gt_row gt_right" headers="ピリ辛味">4.50</td>
+<td class="gt_row gt_right" headers="激辛味">3.50</td>
+<td class="gt_row gt_right" headers="定番味">5.40</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="対象週">2023/11/06週</td>
+<td class="gt_row gt_right gt_striped" headers="クリスマス限定">4.80</td>
+<td class="gt_row gt_right gt_striped" headers="こだわり味">4.10</td>
+<td class="gt_row gt_right gt_striped" headers="しびれ味">NA</td>
+<td class="gt_row gt_right gt_striped" headers="ピリ辛味">4.50</td>
+<td class="gt_row gt_right gt_striped" headers="激辛味">3.60</td>
+<td class="gt_row gt_right gt_striped" headers="定番味">5.28</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="対象週">2023/11/13週</td>
+<td class="gt_row gt_right" headers="クリスマス限定">4.90</td>
+<td class="gt_row gt_right" headers="こだわり味">4.10</td>
+<td class="gt_row gt_right" headers="しびれ味">NA</td>
+<td class="gt_row gt_right" headers="ピリ辛味">4.50</td>
+<td class="gt_row gt_right" headers="激辛味">4.00</td>
+<td class="gt_row gt_right" headers="定番味">5.30</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="対象週">2023/11/20週</td>
+<td class="gt_row gt_right gt_striped" headers="クリスマス限定">4.30</td>
+<td class="gt_row gt_right gt_striped" headers="こだわり味">3.90</td>
+<td class="gt_row gt_right gt_striped" headers="しびれ味">NA</td>
+<td class="gt_row gt_right gt_striped" headers="ピリ辛味">4.40</td>
+<td class="gt_row gt_right gt_striped" headers="激辛味">4.10</td>
+<td class="gt_row gt_right gt_striped" headers="定番味">5.04</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="対象週">2023/11/27週</td>
+<td class="gt_row gt_right" headers="クリスマス限定">5.00</td>
+<td class="gt_row gt_right" headers="こだわり味">4.00</td>
+<td class="gt_row gt_right" headers="しびれ味">NA</td>
+<td class="gt_row gt_right" headers="ピリ辛味">4.60</td>
+<td class="gt_row gt_right" headers="激辛味">4.50</td>
+<td class="gt_row gt_right" headers="定番味">5.30</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="対象週">2023/12/04週</td>
+<td class="gt_row gt_right gt_striped" headers="クリスマス限定">5.70</td>
+<td class="gt_row gt_right gt_striped" headers="こだわり味">3.90</td>
+<td class="gt_row gt_right gt_striped" headers="しびれ味">0.80</td>
+<td class="gt_row gt_right gt_striped" headers="ピリ辛味">4.50</td>
+<td class="gt_row gt_right gt_striped" headers="激辛味">4.80</td>
+<td class="gt_row gt_right gt_striped" headers="定番味">4.99</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="対象週">2023/12/11週</td>
+<td class="gt_row gt_right" headers="クリスマス限定">5.90</td>
+<td class="gt_row gt_right" headers="こだわり味">3.90</td>
+<td class="gt_row gt_right" headers="しびれ味">0.70</td>
+<td class="gt_row gt_right" headers="ピリ辛味">4.60</td>
+<td class="gt_row gt_right" headers="激辛味">5.10</td>
+<td class="gt_row gt_right" headers="定番味">5.28</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="対象週">2023/12/18週</td>
+<td class="gt_row gt_right gt_striped" headers="クリスマス限定">5.00</td>
+<td class="gt_row gt_right gt_striped" headers="こだわり味">4.00</td>
+<td class="gt_row gt_right gt_striped" headers="しびれ味">1.20</td>
+<td class="gt_row gt_right gt_striped" headers="ピリ辛味">4.50</td>
+<td class="gt_row gt_right gt_striped" headers="激辛味">5.00</td>
+<td class="gt_row gt_right gt_striped" headers="定番味">5.19</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="対象週">2023/12/25週</td>
+<td class="gt_row gt_right" headers="クリスマス限定">3.90</td>
+<td class="gt_row gt_right" headers="こだわり味">4.10</td>
+<td class="gt_row gt_right" headers="しびれ味">1.80</td>
+<td class="gt_row gt_right" headers="ピリ辛味">4.60</td>
+<td class="gt_row gt_right" headers="激辛味">5.00</td>
+<td class="gt_row gt_right" headers="定番味">5.40</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="対象週">2024/01/01週</td>
+<td class="gt_row gt_right gt_striped" headers="クリスマス限定">3.88</td>
+<td class="gt_row gt_right gt_striped" headers="こだわり味">4.00</td>
+<td class="gt_row gt_right gt_striped" headers="しびれ味">2.00</td>
+<td class="gt_row gt_right gt_striped" headers="ピリ辛味">4.60</td>
+<td class="gt_row gt_right gt_striped" headers="激辛味">4.80</td>
+<td class="gt_row gt_right gt_striped" headers="定番味">5.20</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="対象週">2024/01/08週</td>
+<td class="gt_row gt_right" headers="クリスマス限定">3.60</td>
+<td class="gt_row gt_right" headers="こだわり味">3.90</td>
+<td class="gt_row gt_right" headers="しびれ味">2.50</td>
+<td class="gt_row gt_right" headers="ピリ辛味">4.40</td>
+<td class="gt_row gt_right" headers="激辛味">4.20</td>
+<td class="gt_row gt_right" headers="定番味">5.30</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="対象週">2024/01/15週</td>
+<td class="gt_row gt_right gt_striped" headers="クリスマス限定">4.50</td>
+<td class="gt_row gt_right gt_striped" headers="こだわり味">4.00</td>
+<td class="gt_row gt_right gt_striped" headers="しびれ味">3.20</td>
+<td class="gt_row gt_right gt_striped" headers="ピリ辛味">4.60</td>
+<td class="gt_row gt_right gt_striped" headers="激辛味">4.20</td>
+<td class="gt_row gt_right gt_striped" headers="定番味">5.30</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="対象週">2024/01/22週</td>
+<td class="gt_row gt_right" headers="クリスマス限定">4.54</td>
+<td class="gt_row gt_right" headers="こだわり味">3.90</td>
+<td class="gt_row gt_right" headers="しびれ味">4.10</td>
+<td class="gt_row gt_right" headers="ピリ辛味">4.60</td>
+<td class="gt_row gt_right" headers="激辛味">3.80</td>
+<td class="gt_row gt_right" headers="定番味">5.08</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="対象週">2024/01/29週</td>
+<td class="gt_row gt_right gt_striped" headers="クリスマス限定">4.20</td>
+<td class="gt_row gt_right gt_striped" headers="こだわり味">3.90</td>
+<td class="gt_row gt_right gt_striped" headers="しびれ味">4.30</td>
+<td class="gt_row gt_right gt_striped" headers="ピリ辛味">4.50</td>
+<td class="gt_row gt_right gt_striped" headers="激辛味">3.50</td>
+<td class="gt_row gt_right gt_striped" headers="定番味">5.20</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>PI値のグラフを描いてみます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_pi</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">対象週</span>, <span class="va">商品名</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">summarise</span><span class="op">(</span></span>
+<span>    平均PI値 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">PI値</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by '対象週'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_pi</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">対象週</span>, y <span class="op">=</span> <span class="va">平均PI値</span>, color <span class="op">=</span> <span class="va">商品名</span>, group <span class="op">=</span> <span class="va">商品名</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"図6-8 6種の菓子の数量PIの推移のグラフ"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># X軸のラベルを45度回転</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_06_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="金額pi値" class="level3" data-number="6.2.1"><h3 data-number="6.2.1" class="anchored" data-anchor-id="金額pi値">
+<span class="header-section-number">6.2.1</span> 金額PI値</h3>
+<p>金額PI値は次のように定義されます。</p>
+<p><span class="math display">
+\text{金額PI値} = \frac{\text{売上金額}}{\text{来店客数}} \times 1000(人)
+</span></p>
+<p>金額PI値を計算して、<code>df</code>に追加します。</p>
+<div class="cell">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span></span>
+<span>    金額PI値 <span class="op">=</span> <span class="va">売上金額</span> <span class="op">/</span> <span class="va">来店客数</span> <span class="op">*</span> <span class="fl">1000</span></span>
+<span>    <span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>これを週ごとと商品ごとに集計してみます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">対象週</span>, <span class="va">商品名</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">summarise</span><span class="op">(</span></span>
+<span>    平均金額PI値 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">金額PI値</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">商品名</span>, values_from <span class="op">=</span> <span class="va">平均金額PI値</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">対象週</span>, <span class="va">クリスマス限定</span>, <span class="va">こだわり味</span>, <span class="va">しびれ味</span>, <span class="va">ピリ辛味</span>, <span class="va">激辛味</span>, <span class="va">定番味</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">gt</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">7</span>, decimals <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"表6-4 6種の菓子の金額PIの推移"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tab_options</span><span class="op">(</span></span>
+<span>    heading.title.font.size <span class="op">=</span> <span class="st">"normal"</span>,</span>
+<span>    table.font.size <span class="op">=</span> <span class="st">"small"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">gt_theme_pff</span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by '対象週'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="xlpthzhyoi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+#xlpthzhyoi table {
+  font-family: Roboto, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#xlpthzhyoi thead, #xlpthzhyoi tbody, #xlpthzhyoi tfoot, #xlpthzhyoi tr, #xlpthzhyoi td, #xlpthzhyoi th {
+  border-style: none;
+}
+
+#xlpthzhyoi p {
+  margin: 0;
+  padding: 0;
+}
+
+#xlpthzhyoi .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#xlpthzhyoi .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#xlpthzhyoi .gt_title {
+  color: #333333;
+  font-size: 30px;
+  font-weight: bold;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#xlpthzhyoi .gt_subtitle {
+  color: #333333;
+  font-size: 16px;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#xlpthzhyoi .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#xlpthzhyoi .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xlpthzhyoi .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: rgba(255, 255, 255, 0);
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#xlpthzhyoi .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 6px;
+  padding-bottom: 7px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#xlpthzhyoi .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#xlpthzhyoi .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#xlpthzhyoi .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#xlpthzhyoi .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: rgba(255, 255, 255, 0);
+  vertical-align: bottom;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#xlpthzhyoi .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#xlpthzhyoi .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#xlpthzhyoi .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#xlpthzhyoi .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#xlpthzhyoi .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#xlpthzhyoi .gt_row {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#xlpthzhyoi .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xlpthzhyoi .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#xlpthzhyoi .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#xlpthzhyoi .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#xlpthzhyoi .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xlpthzhyoi .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#xlpthzhyoi .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#xlpthzhyoi .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xlpthzhyoi .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xlpthzhyoi .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#xlpthzhyoi .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xlpthzhyoi .gt_striped {
+  background-color: #F5F5F5;
+}
+
+#xlpthzhyoi .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xlpthzhyoi .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#xlpthzhyoi .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xlpthzhyoi .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#xlpthzhyoi .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xlpthzhyoi .gt_left {
+  text-align: left;
+}
+
+#xlpthzhyoi .gt_center {
+  text-align: center;
+}
+
+#xlpthzhyoi .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#xlpthzhyoi .gt_font_normal {
+  font-weight: normal;
+}
+
+#xlpthzhyoi .gt_font_bold {
+  font-weight: bold;
+}
+
+#xlpthzhyoi .gt_font_italic {
+  font-style: italic;
+}
+
+#xlpthzhyoi .gt_super {
+  font-size: 65%;
+}
+
+#xlpthzhyoi .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#xlpthzhyoi .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#xlpthzhyoi .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#xlpthzhyoi .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#xlpthzhyoi .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#xlpthzhyoi .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#xlpthzhyoi .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#xlpthzhyoi .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#xlpthzhyoi div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<th colspan="7" class="gt_heading gt_title gt_font_normal gt_bottom_border">表6-4 6種の菓子の金額PIの推移</th>
+</tr>
+<tr class="gt_col_headings even">
+<th id="対象週" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">対象週</th>
+<th id="クリスマス限定" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">クリスマス限定</th>
+<th id="こだわり味" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">こだわり味</th>
+<th id="しびれ味" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">しびれ味</th>
+<th id="ピリ辛味" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">ピリ辛味</th>
+<th id="激辛味" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">激辛味</th>
+<th id="定番味" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">定番味</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="対象週">2023/10/30週</td>
+<td class="gt_row gt_right" headers="クリスマス限定">756.70</td>
+<td class="gt_row gt_right" headers="こだわり味">875.98</td>
+<td class="gt_row gt_right" headers="しびれ味">NA</td>
+<td class="gt_row gt_right" headers="ピリ辛味">679.49</td>
+<td class="gt_row gt_right" headers="激辛味">563.48</td>
+<td class="gt_row gt_right" headers="定番味">810.01</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="対象週">2023/11/06週</td>
+<td class="gt_row gt_right gt_striped" headers="クリスマス限定">758.43</td>
+<td class="gt_row gt_right gt_striped" headers="こだわり味">902.04</td>
+<td class="gt_row gt_right gt_striped" headers="しびれ味">NA</td>
+<td class="gt_row gt_right gt_striped" headers="ピリ辛味">679.53</td>
+<td class="gt_row gt_right gt_striped" headers="激辛味">568.82</td>
+<td class="gt_row gt_right gt_striped" headers="定番味">780.00</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="対象週">2023/11/13週</td>
+<td class="gt_row gt_right" headers="クリスマス限定">779.10</td>
+<td class="gt_row gt_right" headers="こだわり味">893.79</td>
+<td class="gt_row gt_right" headers="しびれ味">NA</td>
+<td class="gt_row gt_right" headers="ピリ辛味">670.50</td>
+<td class="gt_row gt_right" headers="激辛味">647.99</td>
+<td class="gt_row gt_right" headers="定番味">795.00</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="対象週">2023/11/20週</td>
+<td class="gt_row gt_right gt_striped" headers="クリスマス限定">692.37</td>
+<td class="gt_row gt_right gt_striped" headers="こだわり味">850.28</td>
+<td class="gt_row gt_right gt_striped" headers="しびれ味">NA</td>
+<td class="gt_row gt_right gt_striped" headers="ピリ辛味">655.66</td>
+<td class="gt_row gt_right gt_striped" headers="激辛味">647.86</td>
+<td class="gt_row gt_right gt_striped" headers="定番味">759.29</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="対象週">2023/11/27週</td>
+<td class="gt_row gt_right" headers="クリスマス限定">799.97</td>
+<td class="gt_row gt_right" headers="こだわり味">876.04</td>
+<td class="gt_row gt_right" headers="しびれ味">NA</td>
+<td class="gt_row gt_right" headers="ピリ辛味">694.63</td>
+<td class="gt_row gt_right" headers="激辛味">715.53</td>
+<td class="gt_row gt_right" headers="定番味">800.28</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="対象週">2023/12/04週</td>
+<td class="gt_row gt_right gt_striped" headers="クリスマス限定">912.03</td>
+<td class="gt_row gt_right gt_striped" headers="こだわり味">865.77</td>
+<td class="gt_row gt_right gt_striped" headers="しびれ味">127.19</td>
+<td class="gt_row gt_right gt_striped" headers="ピリ辛味">670.48</td>
+<td class="gt_row gt_right gt_striped" headers="激辛味">777.57</td>
+<td class="gt_row gt_right gt_striped" headers="定番味">763.80</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="対象週">2023/12/11週</td>
+<td class="gt_row gt_right" headers="クリスマス限定">949.91</td>
+<td class="gt_row gt_right" headers="こだわり味">861.88</td>
+<td class="gt_row gt_right" headers="しびれ味">112.01</td>
+<td class="gt_row gt_right" headers="ピリ辛味">690.00</td>
+<td class="gt_row gt_right" headers="激辛味">826.20</td>
+<td class="gt_row gt_right" headers="定番味">788.15</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="対象週">2023/12/18週</td>
+<td class="gt_row gt_right gt_striped" headers="クリスマス限定">809.37</td>
+<td class="gt_row gt_right gt_striped" headers="こだわり味">883.29</td>
+<td class="gt_row gt_right gt_striped" headers="しびれ味">191.86</td>
+<td class="gt_row gt_right gt_striped" headers="ピリ辛味">678.96</td>
+<td class="gt_row gt_right gt_striped" headers="激辛味">804.37</td>
+<td class="gt_row gt_right gt_striped" headers="定番味">786.93</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="対象週">2023/12/25週</td>
+<td class="gt_row gt_right" headers="クリスマス限定">209.29</td>
+<td class="gt_row gt_right" headers="こだわり味">893.76</td>
+<td class="gt_row gt_right" headers="しびれ味">287.99</td>
+<td class="gt_row gt_right" headers="ピリ辛味">685.37</td>
+<td class="gt_row gt_right" headers="激辛味">795.03</td>
+<td class="gt_row gt_right" headers="定番味">804.63</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="対象週">2024/01/01週</td>
+<td class="gt_row gt_right gt_striped" headers="クリスマス限定">243.13</td>
+<td class="gt_row gt_right gt_striped" headers="こだわり味">872.00</td>
+<td class="gt_row gt_right gt_striped" headers="しびれ味">324.00</td>
+<td class="gt_row gt_right gt_striped" headers="ピリ辛味">694.60</td>
+<td class="gt_row gt_right gt_striped" headers="激辛味">768.00</td>
+<td class="gt_row gt_right gt_striped" headers="定番味">774.80</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="対象週">2024/01/08週</td>
+<td class="gt_row gt_right" headers="クリスマス限定">169.23</td>
+<td class="gt_row gt_right" headers="こだわり味">850.30</td>
+<td class="gt_row gt_right" headers="しびれ味">405.04</td>
+<td class="gt_row gt_right" headers="ピリ辛味">655.65</td>
+<td class="gt_row gt_right" headers="激辛味">667.85</td>
+<td class="gt_row gt_right" headers="定番味">789.75</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="対象週">2024/01/15週</td>
+<td class="gt_row gt_right gt_striped" headers="クリスマス限定">246.99</td>
+<td class="gt_row gt_right gt_striped" headers="こだわり味">871.98</td>
+<td class="gt_row gt_right gt_striped" headers="しびれ味">505.58</td>
+<td class="gt_row gt_right gt_striped" headers="ピリ辛味">694.60</td>
+<td class="gt_row gt_right gt_striped" headers="激辛味">676.19</td>
+<td class="gt_row gt_right gt_striped" headers="定番味">789.69</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="対象週">2024/01/22週</td>
+<td class="gt_row gt_right" headers="クリスマス限定">199.51</td>
+<td class="gt_row gt_right" headers="こだわり味">854.08</td>
+<td class="gt_row gt_right" headers="しびれ味">660.08</td>
+<td class="gt_row gt_right" headers="ピリ辛味">685.40</td>
+<td class="gt_row gt_right" headers="激辛味">615.61</td>
+<td class="gt_row gt_right" headers="定番味">788.83</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="対象週">2024/01/29週</td>
+<td class="gt_row gt_right gt_striped" headers="クリスマス限定">182.01</td>
+<td class="gt_row gt_right gt_striped" headers="こだわり味">854.13</td>
+<td class="gt_row gt_right gt_striped" headers="しびれ味">683.72</td>
+<td class="gt_row gt_right gt_striped" headers="ピリ辛味">675.02</td>
+<td class="gt_row gt_right gt_striped" headers="激辛味">553.02</td>
+<td class="gt_row gt_right gt_striped" headers="定番味">780.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>金額PI値のグラフを描いてみます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_pi</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">対象週</span>, <span class="va">商品名</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">summarise</span><span class="op">(</span></span>
+<span>    平均金額PI値 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">金額PI値</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by '対象週'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_pi</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">対象週</span>, y <span class="op">=</span> <span class="va">平均金額PI値</span>, color <span class="op">=</span> <span class="va">商品名</span>, group <span class="op">=</span> <span class="va">商品名</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"図6-11 6種の菓子の金額PIの推移のグラフ"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># X軸のラベルを45度回転</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_06_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "コピーしました");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "コピーしました");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./POS_Marketing_05.html" class="pagination-link" aria-label="第5回 併売の分析">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">第5回 併売の分析</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./POS_Marketing_07.html" class="pagination-link" aria-label="第7回 回帰分析で新店舗の売上予測">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">第7回 回帰分析で新店舗の売上予測</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Soichi Matsuura</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ma2ura">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/matsuura_rits">
+      <i class="bi bi-twitter" role="img" aria-label="Twitter">
+</i> 
+    </a>
+  </li>  
+</ul>
+</div>
+  </div>
+</footer>
+
+
+</body></html>

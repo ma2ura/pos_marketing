@@ -12,7 +12,7 @@
 パッケージを読み込みます。
 
 ```{r packages}
-pacman::p_load(tidyverse, readxl, arules, ggthemes, gt, gtExtras, patchwork)
+pacman::p_load(tidyverse, readxl, arules, ggthemes, knitr, kableExtra, gt, gtExtras, patchwork)
 ```
 
 ここで用いる`chp5.xlsx`のシート名を確認します。
@@ -175,56 +175,29 @@ df_oishi_ryo |> head(5)
 ```
 
 
-# アソシエーション分析
-
-## 概要
-
+## アソシエーション分析
 
 アソシエーション分析とはマーケティングで用いられる分析手法の1つで、POSデータや購買データから、商品の関連性やパターンを見つける分析手法で、
-ある製品を買う人はこの製品も買う、という傾向を発見するために使われます。
-アソシエーション分析の出力として、「ルール」とその有効性を表す3つの指標「支持度」、「確信度」、「リフト値」を見ます。
+ある製品を買う人はこの製品も買う、という傾向を発見するため、以下の尺度を用いて分析します。
 
-### 支持度
 
-支持度は、全商品の購買数を$U$、ある商品$X$の購買数を$X$とした場合、$X$の支持度は
+- **支持度** : ある商品の購買数を全商品の購買数で割った割合
+- **確信度** : 商品Aから商品Bへの確信度は、商品Aと商品Bの同時購入数を商品Aの購入数で割った割合
+- **リフト値** : 商品AからBへのリフト値は、商品AからBへの確信度を商品Bの支持度で割った値
 
-$$
-\text{支持度} = \frac XU
-$$
 
-ある商品$X$と商品$Y$を両方購入した場合の割合は
-
-$$
-\text{支持度} = \frac {X \cap Y}U
-$$
-
-となります。
-つまりただの積集合の割合です。
-
-### 確信度
-
-$X$と$Y$の両方を買った割合を確信度といい、
-
-$$
-\text{確信度} = \frac {X \cap Y}X
-$$
-
-で測定されます。
-これもただの積集合の割合です。
+### Rでアソシエーション分析
 
 アソシエーション分析のために用いるデータとして7番目のシート「併売データ」を読み込みたいので，`sheet = 7`を指定します。
 
 ```{r readxl}
-df_7 <- readxl::read_excel("data/chp5.xlsx", sheet = 7)
-head(df_7)
+df_associ <- readxl::read_excel("data/chp5.xlsx", sheet = 7)
+head(df_associ)
 ```
 
-行はレシート番号、列は商品名で、各セルには購入された場合に1、購入されなかった場合に0が入っています。
+列は商品名で、各セルには購入された場合に1、購入されなかった場合に0が入っている観測値1000のデータフレームが読み込まれました。
 
-
-
-アソシエーション分析とはマーケティングで用いられる分析手法の1つで、POSデータや購買データから、商品の関連性やパターンを見つける分析手法で、
-ある製品を買う人はこの製品も買う、という傾向を発見するために使われます。
+### `arules`パッケージ
 
 Rでアソシエーション分析を行うために，`arules`パッケージを使います。
 CRANのページにあるマニュアルにMining Association Rules and Frequent Itemsetsとあるように、関連ルールと頻出アイテムセットを見つけるためのパッケージです。
@@ -239,20 +212,37 @@ CRANのページにあるマニュアルにMining Association Rules and Frequent
 アソシエーション分析を行うために、まずはデータを`transactions`オブジェクトに変換します。
 `arules::as()`関数を使って変換します。この関数は引数として`list`や`matrix`を受け取り、`transactions`オブジェクトに変換します。
 
+順番に処理していきます。
+`df_associ`は`read_excel()`関数で読み込んだため、`data.frame`型となっています。
+これを`as.matrix()`で行列型に変換し、その後`arules::as()`関数で`transactions`オブジェクトに変換し、`df_tran`に代入します。
+
+```{r}
+df_tran <- as.matrix(df_associ) |> as("transactions") # transactionsオブジェクトに変換
+```
+
+次に、`apriori()`関数を使ってアソシエーション分析を行います。
+この関数は、`transactions`オブジェクトを引数として受け取り、`parameter`引数でサポートと信頼度を指定します。
+ここでは、サポートを`0.05`、信頼度を`0.4`とし、結果を`df_ap`に代入します。
+
 ```{r transaction}
 #| output: false
 #| message: false
 #| warning: false
-rownames(df_7) <- NULL # 行名をリセット
-df_tran <- as.matrix(df_7) |> as("transactions") # transactionsオブジェクトに変換
 df_ap <- arules::apriori(
   df_tran,
   parameter = list(support = 0.05, confidence = 0.4) # サポート0.05、信頼度0.4
   )
+```
+
+`df_ap`には、アソシエーション分析の結果が格納されているので、`sort()`関数を使って`lift`でソートし、`inspect()`関数で結果を表示します。
+
+```{r}
 result <- df_ap |>
   sort(by = "lift") |> # liftでソート
   inspect()  # 結果を表示
 ```
+
+結果が見づらいので、`arules::apriori()`関数の結果を`data.frame`型に変換し、変数名を補い、`gt()`関数で表形式にします。
 
 ```{r}
 result <- result |> as.data.frame()
@@ -264,10 +254,44 @@ result |> gt() |>
   )
 ```
 
-`arules`パッケージで利用できるデータの型は`transactions`です。
-この型に変換するために，`arules::as()`関数を使います。
 
 
 
+### 併売データの基礎集計
 
+次に併売データの基礎集計を行います。
+商品ごとの購買回数を集計します。
+
+```{r}
+df_associ |>
+  colSums() |> # 列ごとに合計
+  t() |> kable()
+```
+
+1度に何種類の商品を購入するかを集計します。
+
+
+```{r}
+df_associ |>
+  rowSums() |> # 行ごとに合計
+  table() |> t() |> kable()
+```
+
+同時に2種類の商品を購入するケースが最も多いようです。
+どの商品との組み合わせが多いのかを、商品の組ごとの購買回数を調べます。
+
+```{r}
+prod_name <- colnames(df_associ)
+prod_pair <- combn(prod_name, 2, simplify = FALSE)
+prod_counts <- sapply(prod_pair, function(pair) {
+  sum(df_associ[[pair[1]]] & df_associ[[pair[2]]])
+  })
+
+result <- data.frame(
+  商品ペア = sapply(prod_pair, paste, collapse = " & "),
+  購入回数 = prod_counts
+  ) |>
+  arrange(desc(購入回数))
+result
+```
 

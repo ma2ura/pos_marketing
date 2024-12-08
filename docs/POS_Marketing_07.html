@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.36">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>7&nbsp; 第7回 回帰分析で新店舗の売上予測 – POSとマーケティングデータ分析</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./POS_Marketing_06.html" rel="prev">
+<link href="./img/favicon.ico" rel="icon">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-01c78b5cd655e4cd89133cf59d535862.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c3c62341195aaca57c6426706fd8d4e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "一致なし",
+    "search-matching-documents-text": "一致した文書",
+    "search-copy-link-title": "検索へのリンクをコピー",
+    "search-hide-matches-text": "追加の検索結果を非表示",
+    "search-more-match-text": "追加の検索結果",
+    "search-more-matches-text": "追加の検索結果",
+    "search-clear-button-title": "消去",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "検索",
+    "search-label": "サーチ"
+  }
+}</script><script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script><script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="mystyle.css">
+<meta name="twitter:title" content="7&nbsp; 第7回 回帰分析で新店舗の売上予測 – POSとマーケティングデータ分析">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="POS_Marketing_07_files/figure-html/unnamed-chunk-3-1.png">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./POS_Marketing_07.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">第7回 回帰分析で新店舗の売上予測</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="サーチ" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">POSとマーケティングデータ分析</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="サーチ"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">POSデータで学ぶはじめてのマーケティングデータ分析</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">第1回 売上をまとめた表をつくる</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">第2回 顧客層別の売上</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">第3回 売上の時系列データ分析</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">第4回 売上に影響を与える要因</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">第5回 併売の分析</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">第6回 売れる商品を入荷しよう</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./POS_Marketing_07.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">第7回 回帰分析で新店舗の売上予測</span></span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">目次</h2>
+   
+  <ul>
+<li><a href="#%E5%BA%97%E9%A0%AD%E3%82%AB%E3%83%90%E3%83%BC%E7%8E%87" id="toc-店頭カバー率" class="nav-link active" data-scroll-target="#%E5%BA%97%E9%A0%AD%E3%82%AB%E3%83%90%E3%83%BC%E7%8E%87"><span class="header-section-number">7.1</span> 店頭カバー率</a></li>
+  <li><a href="#%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90" id="toc-回帰分析" class="nav-link" data-scroll-target="#%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90"><span class="header-section-number">7.2</span> 回帰分析</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">7</span>&nbsp; <span class="chapter-title">第7回 回帰分析で新店舗の売上予測</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="店頭カバー率" class="level2 page-columns page-full" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="店頭カバー率">
+<span class="header-section-number">7.1</span> 店頭カバー率</h2>
+<p>週次集計POSデータを使って、他の店で売れている商品を見つけ出す。</p>
+<p>パッケージとデータを準備する。</p>
+<p>第6回ファイルで使うデータは<code>chp7.xlsx</code>です。 まずパッケージを読み込みます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>, <span class="va">readxl</span>, <span class="va">arules</span>, <span class="va">ggthemes</span>, <span class="va">knitr</span>, <span class="va">kableExtra</span>, <span class="va">gt</span>, <span class="va">gtExtras</span>, <span class="va">patchwork</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>次にここで用いる<code>chp6.xlsx</code>のシート名を確認します。</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/excel_sheets.html">excel_sheets</a></span><span class="op">(</span><span class="st">"data/chp7.xlsx"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "2023年11月期データ" "図7-1-図7-5"        "図7-7"             
+ [4] "図7-11-図7-15"      "図7-18-図7-20"      "図7-22-図7-25"     
+ [7] "図7-27"             "図7-28"             "表7-2"             
+[10] "図7-29"             "図7-30"             "表7-3"             
+[13] "図7-31"             "表7-4"              "図7-32"            
+[16] "表7-5"              "表7-6"              "図7-33"            
+[19] "図7-35"            </code></pre>
+</div>
+</div>
+<p>たくさんシートがあるMS Excelファイルですが、1番目の「2023年11月期データ」を読み込みます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/chp7.xlsx"</span>, sheet <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+  店舗  店舗面積 商圏人口 最寄り駅からの距離 駐車場台数 競合店舗数 月間売上高
+  &lt;chr&gt;    &lt;dbl&gt;    &lt;dbl&gt;              &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+1 A001      1500     208.                100         27         12     130069
+2 A002      1010     211.                590         20          3      72981
+3 A003      1260     174.                180         57         19      84050
+4 A004      1180     289.                580         57          9     108947
+5 A005      1160     216.               1170         65         16      65733
+6 A006      1290     251                 570         43          2     114216</code></pre>
+</div>
+</div>
+<p>このデータフレームには、</p>
+<ul>
+<li>店舗 : 文字列</li>
+<li>店舗面積 : 数値</li>
+<li>商圏人口 : 数値</li>
+<li>最寄り駅からの距離 : 数値</li>
+<li>駐車場台数 : 数値</li>
+<li>競合店舗数 : 数値</li>
+<li>月間売上高 : 数値</li>
+</ul>
+<p>という7つの変数が含まれています。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>それぞれの詳細はテキストp.215を参照してください。</p>
+</div></div><p>最寄り駅からの距離と月間売上高の散布図を描いてみます。 グラフの設定を<code>mystyle</code>として<code>list</code>にまとめておきます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mystyle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span>,</span>
+<span>  <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">最寄り駅からの距離</span>, y <span class="op">=</span> <span class="va">月間売上高</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"図7-1 最寄り駅からの距離と月間売上高の散布図"</span><span class="op">)</span> <span class="op">+</span> <span class="va">mystyle</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_07_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>いろんな変数の組み合わせの散布図を描いてみます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g1</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">店舗面積</span>, y <span class="op">=</span> <span class="va">月間売上高</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"図7-2 店舗面積と月間売上高"</span><span class="op">)</span> <span class="op">+</span> <span class="va">mystyle</span></span>
+<span><span class="va">g2</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">商圏人口</span>, y <span class="op">=</span> <span class="va">月間売上高</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"図7-3 商圏人口と月間売上高"</span><span class="op">)</span> <span class="op">+</span> <span class="va">mystyle</span></span>
+<span><span class="va">g3</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">駐車場台数</span>, y <span class="op">=</span> <span class="va">月間売上高</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"図7-4 駐車場台数と月間売上高"</span><span class="op">)</span> <span class="op">+</span> <span class="va">mystyle</span></span>
+<span><span class="va">g4</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">競合店舗数</span>, y <span class="op">=</span> <span class="va">月間売上高</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"図7-5 競合店舗数と月間売上高"</span><span class="op">)</span> <span class="op">+</span> <span class="va">mystyle</span></span>
+<span><span class="op">(</span><span class="va">g1</span> <span class="op">+</span> <span class="va">g2</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">g3</span> <span class="op">+</span> <span class="va">g4</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_07_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>店舗面積、商圏人口、駐車場台数、競合店舗数と月間売上高の相関係数を計算してみます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">corrplot</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>family<span class="op">=</span> <span class="st">"HiraKakuProN-W3"</span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">店舗面積</span>, <span class="va">商圏人口</span>, <span class="va">最寄り駅からの距離</span>, <span class="va">駐車場台数</span>, <span class="va">競合店舗数</span>, <span class="va">月間売上高</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">corrplot</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"number"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_07_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="回帰分析" class="level2 page-columns page-full" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="回帰分析">
+<span class="header-section-number">7.2</span> 回帰分析</h2>
+<p>テキストでは独立変数が1つの単回帰を繰り返していますが、通常は複数の独立変数を組み込んだ重回帰モデルを構築します。</p>
+<p><span class="math display">
+\begin{aligned}
+\text{月間売上高}_i &amp; = \beta_0 + \beta_1  店舗面積_i + \beta_2 商圏人口_i + \\
+                   &amp; + \beta_3 最寄り駅からの距離_i + \beta_4 駐車場台数_i + \\
+                   &amp; + \beta_5 競合店舗数_i + \varepsilon_i
+\end{aligned}
+</span></p>
+<p>このモデルをRで推定します。</p>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">月間売上高</span> <span class="op">~</span> <span class="va">店舗面積</span> <span class="op">+</span> <span class="va">商圏人口</span> <span class="op">+</span> <span class="va">最寄り駅からの距離</span> <span class="op">+</span> <span class="va">駐車場台数</span> <span class="op">+</span> <span class="va">競合店舗数</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = 月間売上高 ~ 店舗面積 + 商圏人口 + 
+    最寄り駅からの距離 + 駐車場台数 + 競合店舗数, 
+    data = df)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-22884.9  -8871.7    594.1   9150.0  24149.5 
+
+Coefficients:
+                    Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)        70086.274   9100.157   7.702 1.15e-11 ***
+店舗面積               4.403      4.763   0.924    0.358    
+商圏人口             199.768     24.087   8.294 6.36e-13 ***
+最寄り駅からの距離   -47.798      3.691 -12.951  &lt; 2e-16 ***
+駐車場台数             9.441     54.552   0.173    0.863    
+競合店舗数          -159.811    195.141  -0.819    0.415    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 11470 on 97 degrees of freedom
+Multiple R-squared:  0.7144,    Adjusted R-squared:  0.6997 
+F-statistic: 48.53 on 5 and 97 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>データを標準化してから回帰分析を行うと、各変数の係数が標準偏差単位で解釈できるので、変数間の比較がしやすくなります。 先ほどの回帰分析の結果と変数を標準化した結果を比較してみます。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>標準化は，変数の平均を0，標準偏差を1にする変換で，観測値から平均を引いて標準偏差で割ることで行います。 Rでは<code><a href="https://rdrr.io/r/base/scale.html">scale()</a></code>関数を使って標準化を行います。</p>
+</div></div><div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_std</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">店舗面積</span>, <span class="va">商圏人口</span>, <span class="va">最寄り駅からの距離</span>, <span class="va">駐車場台数</span>, <span class="va">競合店舗数</span>, <span class="va">月間売上高</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 標準化</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># データフレームに変換</span></span>
+<span><span class="va">result_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">月間売上高</span> <span class="op">~</span> <span class="va">店舗面積</span> <span class="op">+</span> <span class="va">商圏人口</span> <span class="op">+</span> <span class="va">最寄り駅からの距離</span> <span class="op">+</span> <span class="va">駐車場台数</span> <span class="op">+</span> <span class="va">競合店舗数</span>, data <span class="op">=</span> <span class="va">df_std</span><span class="op">)</span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">result</span>, <span class="va">result_std</span><span class="op">)</span></span>
+<span><span class="fu">modelsummary</span><span class="fu">::</span><span class="fu"><a href="https://modelsummary.com/man/msummary.html">msummary</a></span><span class="op">(</span><span class="va">results</span>,</span>
+<span>                       stars <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                       gof_omit <span class="op">=</span> <span class="st">"RMSE|AIC|BIC|Log.Lik"</span>,</span>
+<span>                       digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script>
+      function styleCell_ctabrdyen9j4km56684n(i, j, css_id) {
+        var table = document.getElementById("tinytable_ctabrdyen9j4km56684n");
+        table.rows[i].cells[j].classList.add(css_id);
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_ctabrdyen9j4km56684n');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_ctabrdyen9j4km56684n(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_ctabrdyen9j4km56684n");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(0, 0, 'tinytable_css_idzkspu1r87vahuk42940t') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(0, 1, 'tinytable_css_iddiu960219blqb0kdbkrh') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(0, 2, 'tinytable_css_iddiu960219blqb0kdbkrh') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(1, 0, 'tinytable_css_idera8xwmxmjdlig70jgly') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(1, 1, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(1, 2, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(2, 0, 'tinytable_css_idera8xwmxmjdlig70jgly') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(2, 1, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(2, 2, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(3, 0, 'tinytable_css_idera8xwmxmjdlig70jgly') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(3, 1, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(3, 2, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(4, 0, 'tinytable_css_idera8xwmxmjdlig70jgly') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(4, 1, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(4, 2, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(5, 0, 'tinytable_css_idera8xwmxmjdlig70jgly') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(5, 1, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(5, 2, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(6, 0, 'tinytable_css_idera8xwmxmjdlig70jgly') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(6, 1, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(6, 2, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(7, 0, 'tinytable_css_idera8xwmxmjdlig70jgly') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(7, 1, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(7, 2, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(8, 0, 'tinytable_css_idera8xwmxmjdlig70jgly') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(8, 1, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(8, 2, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(9, 0, 'tinytable_css_idera8xwmxmjdlig70jgly') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(9, 1, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(9, 2, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(10, 0, 'tinytable_css_idera8xwmxmjdlig70jgly') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(10, 1, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(10, 2, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(11, 0, 'tinytable_css_idera8xwmxmjdlig70jgly') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(11, 1, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(11, 2, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(12, 0, 'tinytable_css_id24mzwxkqd0uyytby9o0c') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(12, 1, 'tinytable_css_ido41kby0hxlipjf6j60lt') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(12, 2, 'tinytable_css_ido41kby0hxlipjf6j60lt') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(13, 0, 'tinytable_css_idera8xwmxmjdlig70jgly') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(13, 1, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(13, 2, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(14, 0, 'tinytable_css_idera8xwmxmjdlig70jgly') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(14, 1, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(14, 2, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(15, 0, 'tinytable_css_idera8xwmxmjdlig70jgly') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(15, 1, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(15, 2, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(16, 0, 'tinytable_css_idera8xwmxmjdlig70jgly') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(16, 1, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(16, 2, 'tinytable_css_iduj7qxwe0p1226jxd56kk') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(17, 0, 'tinytable_css_idera8xwmxmjdlig70jgly') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(17, 1, 'tinytable_css_idera8xwmxmjdlig70jgly') })
+window.addEventListener('load', function () { styleCell_ctabrdyen9j4km56684n(17, 2, 'tinytable_css_idera8xwmxmjdlig70jgly') })
+    </script><style>
+    .table td.tinytable_css_idzkspu1r87vahuk42940t, .table th.tinytable_css_idzkspu1r87vahuk42940t {  text-align: left;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_iddiu960219blqb0kdbkrh, .table th.tinytable_css_iddiu960219blqb0kdbkrh {  text-align: center;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_idera8xwmxmjdlig70jgly, .table th.tinytable_css_idera8xwmxmjdlig70jgly {  text-align: left; }
+    .table td.tinytable_css_iduj7qxwe0p1226jxd56kk, .table th.tinytable_css_iduj7qxwe0p1226jxd56kk {  text-align: center; }
+    .table td.tinytable_css_id24mzwxkqd0uyytby9o0c, .table th.tinytable_css_id24mzwxkqd0uyytby9o0c {  border-bottom: solid 0.05em black;  text-align: left; }
+    .table td.tinytable_css_ido41kby0hxlipjf6j60lt, .table th.tinytable_css_ido41kby0hxlipjf6j60lt {  border-bottom: solid 0.05em black;  text-align: center; }
+    </style>
+<div class="container">
+      <table class="table table-borderless" id="tinytable_ctabrdyen9j4km56684n" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<thead><tr>
+<th scope="col"> </th>
+                <th scope="col">(1)</th>
+                <th scope="col">(2)</th>
+              </tr></thead>
+<tfoot><tr><td colspan="3">+ p </td></tr></tfoot>
+<tbody>
+<tr>
+<td>(Intercept)       </td>
+                  <td>70086.274***</td>
+                  <td>0.000    </td>
+                </tr>
+<tr>
+<td>                  </td>
+                  <td>(9100.157)  </td>
+                  <td>(0.054)  </td>
+                </tr>
+<tr>
+<td>店舗面積          </td>
+                  <td>4.403       </td>
+                  <td>0.052    </td>
+                </tr>
+<tr>
+<td>                  </td>
+                  <td>(4.763)     </td>
+                  <td>(0.056)  </td>
+                </tr>
+<tr>
+<td>商圏人口          </td>
+                  <td>199.768***  </td>
+                  <td>0.465*** </td>
+                </tr>
+<tr>
+<td>                  </td>
+                  <td>(24.087)    </td>
+                  <td>(0.056)  </td>
+                </tr>
+<tr>
+<td>最寄り駅からの距離</td>
+                  <td>-47.798***  </td>
+                  <td>-0.715***</td>
+                </tr>
+<tr>
+<td>                  </td>
+                  <td>(3.691)     </td>
+                  <td>(0.055)  </td>
+                </tr>
+<tr>
+<td>駐車場台数        </td>
+                  <td>9.441       </td>
+                  <td>0.010    </td>
+                </tr>
+<tr>
+<td>                  </td>
+                  <td>(54.552)    </td>
+                  <td>(0.056)  </td>
+                </tr>
+<tr>
+<td>競合店舗数        </td>
+                  <td>-159.811    </td>
+                  <td>-0.045   </td>
+                </tr>
+<tr>
+<td>                  </td>
+                  <td>(195.141)   </td>
+                  <td>(0.055)  </td>
+                </tr>
+<tr>
+<td>Num.Obs.          </td>
+                  <td>103         </td>
+                  <td>103      </td>
+                </tr>
+<tr>
+<td>R2                </td>
+                  <td>0.714       </td>
+                  <td>0.714    </td>
+                </tr>
+<tr>
+<td>R2 Adj.           </td>
+                  <td>0.700       </td>
+                  <td>0.700    </td>
+                </tr>
+<tr>
+<td>F                 </td>
+                  <td>48.527      </td>
+                  <td>48.527   </td>
+                </tr>
+</tbody>
+</table>
+</div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "コピーしました");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "コピーしました");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./POS_Marketing_06.html" class="pagination-link" aria-label="第6回 売れる商品を入荷しよう">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">第6回 売れる商品を入荷しよう</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Soichi Matsuura</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ma2ura">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/matsuura_rits">
+      <i class="bi bi-twitter" role="img" aria-label="Twitter">
+</i> 
+    </a>
+  </li>  
+</ul>
+</div>
+  </div>
+</footer>
+
+
+</body></html>
