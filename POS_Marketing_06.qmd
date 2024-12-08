@@ -230,3 +230,19 @@ df_pi |>
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
   scale_fill_tableau(name = "Tableau 20")
 ```
+
+## 隠れヒット商品を見つける
+
+出現店舗数ベースのPI値を調べる。
+
+まず、出現店舗数ベースの数量PIと金額PIを計算します。
+
+
+```{r}
+df <- df |>
+  mutate(
+    出現店数量PI = 売上個数 / 出現店来店客数 * 1000,
+    出現店金額PI = 売上金額 / 出現店来店客数 * 1000
+    )
+```
+
