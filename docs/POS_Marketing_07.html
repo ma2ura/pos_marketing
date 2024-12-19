@@ -274,16 +274,85 @@ window.Quarto = {
 <div class="cell">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/chp7.xlsx"</span>, sheet <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 7
-  店舗  店舗面積 商圏人口 最寄り駅からの距離 駐車場台数 競合店舗数 月間売上高
-  &lt;chr&gt;    &lt;dbl&gt;    &lt;dbl&gt;              &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
-1 A001      1500     208.                100         27         12     130069
-2 A002      1010     211.                590         20          3      72981
-3 A003      1260     174.                180         57         19      84050
-4 A004      1180     289.                580         57          9     108947
-5 A005      1160     216.               1170         65         16      65733
-6 A006      1290     251                 570         43          2     114216</code></pre>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 25%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">店舗</th>
+<th style="text-align: right;">店舗面積</th>
+<th style="text-align: right;">商圏人口</th>
+<th style="text-align: right;">最寄り駅からの距離</th>
+<th style="text-align: right;">駐車場台数</th>
+<th style="text-align: right;">競合店舗数</th>
+<th style="text-align: right;">月間売上高</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A001</td>
+<td style="text-align: right;">1500</td>
+<td style="text-align: right;">207.6</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">130069</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A002</td>
+<td style="text-align: right;">1010</td>
+<td style="text-align: right;">210.8</td>
+<td style="text-align: right;">590</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">72981</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A003</td>
+<td style="text-align: right;">1260</td>
+<td style="text-align: right;">174.5</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">84050</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A004</td>
+<td style="text-align: right;">1180</td>
+<td style="text-align: right;">288.8</td>
+<td style="text-align: right;">580</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">108947</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A005</td>
+<td style="text-align: right;">1160</td>
+<td style="text-align: right;">216.1</td>
+<td style="text-align: right;">1170</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">65733</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A006</td>
+<td style="text-align: right;">1290</td>
+<td style="text-align: right;">251.0</td>
+<td style="text-align: right;">570</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">114216</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 <p>このデータフレームには、</p>
@@ -302,26 +371,26 @@ window.Quarto = {
 <p>それぞれの詳細はテキストp.215を参照してください。</p>
 </div></div><p>最寄り駅からの距離と月間売上高の散布図を描いてみます。 グラフの設定を<code>mystyle</code>として<code>list</code>にまとめておきます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mystyle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mystyle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
 <span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span>,</span>
 <span>  <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">最寄り駅からの距離</span>, y <span class="op">=</span> <span class="va">月間売上高</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"図7-1 最寄り駅からの距離と月間売上高の散布図"</span><span class="op">)</span> <span class="op">+</span> <span class="va">mystyle</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_07_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="POS_Marketing_07_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="2100"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>いろんな変数の組み合わせの散布図を描いてみます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g1</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g1</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">店舗面積</span>, y <span class="op">=</span> <span class="va">月間売上高</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"図7-2 店舗面積と月間売上高"</span><span class="op">)</span> <span class="op">+</span> <span class="va">mystyle</span></span>
@@ -340,14 +409,14 @@ window.Quarto = {
 <span><span class="op">(</span><span class="va">g1</span> <span class="op">+</span> <span class="va">g2</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">g3</span> <span class="op">+</span> <span class="va">g4</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_07_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="POS_Marketing_07_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="2100"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>店舗面積、商圏人口、駐車場台数、競合店舗数と月間売上高の相関係数を計算してみます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">corrplot</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">corrplot</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>family<span class="op">=</span> <span class="st">"HiraKakuProN-W3"</span><span class="op">)</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">店舗面積</span>, <span class="va">商圏人口</span>, <span class="va">最寄り駅からの距離</span>, <span class="va">駐車場台数</span>, <span class="va">競合店舗数</span>, <span class="va">月間売上高</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -355,7 +424,7 @@ window.Quarto = {
 <span>  <span class="fu">corrplot</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"number"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_07_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="POS_Marketing_07_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="2100"></p>
 </figure>
 </div>
 </div>
@@ -372,7 +441,7 @@ window.Quarto = {
 </span></p>
 <p>このモデルをRで推定します。</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">OLS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">月間売上高</span> <span class="op">~</span> <span class="va">店舗面積</span> <span class="op">+</span> <span class="va">商圏人口</span> <span class="op">+</span> <span class="va">最寄り駅からの距離</span> <span class="op">+</span> <span class="va">駐車場台数</span> <span class="op">+</span> <span class="va">競合店舗数</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">OLS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">月間売上高</span> <span class="op">~</span> <span class="va">店舗面積</span> <span class="op">+</span> <span class="va">商圏人口</span> <span class="op">+</span> <span class="va">最寄り駅からの距離</span> <span class="op">+</span> <span class="va">駐車場台数</span> <span class="op">+</span> <span class="va">競合店舗数</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">OLS</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -401,12 +470,33 @@ Multiple R-squared:  0.7144,    Adjusted R-squared:  0.6997
 F-statistic: 48.53 on 5 and 97 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-<p>データを標準化してから回帰分析を行うと、各変数の係数が標準偏差単位で解釈できるので、変数間の比較がしやすくなります。 先ほどの回帰分析の結果と変数を標準化した結果を比較してみます。</p>
+<p>データを標準化してから回帰分析を行うと、各変数の係数が標準偏差単位で解釈できるので、変数間の比較がしやすくなります。 変数を標準化するとどうなるのか確認してみましょう。</p>
+<p>月刊売上高の分布を確認します。</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">月間売上高</span>, main <span class="op">=</span> <span class="st">"月間売上高の分布"</span>, xlab <span class="op">=</span> <span class="st">"月間売上高"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_07_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="2100"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>正規化を行うと、平均が0、標準偏差が1になります。</p>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">月間売上高</span><span class="op">)</span>, main <span class="op">=</span> <span class="st">"月間売上高の標準化"</span>, xlab <span class="op">=</span> <span class="st">"月間売上高"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_07_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="2100"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>先ほどの回帰分析の結果と変数を標準化した結果を比較してみます。</p>
 
 <div class="no-row-height column-margin column-container"><div class="margin-aside">
 <p>標準化は，変数の平均を0，標準偏差を1にする変換で，観測値から平均を引いて標準偏差で割ることで行います。 Rでは<code><a href="https://rdrr.io/r/base/scale.html">scale()</a></code>関数を使って標準化を行います。</p>
 </div></div><div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_std</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_std</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">店舗面積</span>, <span class="va">商圏人口</span>, <span class="va">最寄り駅からの距離</span>, <span class="va">駐車場台数</span>, <span class="va">競合店舗数</span>, <span class="va">月間売上高</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 標準化</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># データフレームに変換</span></span>
@@ -417,113 +507,30 @@ F-statistic: 48.53 on 5 and 97 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span>                       gof_omit <span class="op">=</span> <span class="st">"RMSE|AIC|BIC|Log.Lik"</span>,</span>
 <span>                       digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<!-- preamble start -->
+ 
 
-    <script>
-      function styleCell_595x7waon2xxg5prin7z(i, j, css_id) {
-        var table = document.getElementById("tinytable_595x7waon2xxg5prin7z");
-        table.rows[i].cells[j].classList.add(css_id);
-      }
-      function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_595x7waon2xxg5prin7z');
-        var newRow = table.insertRow(i);
-        var newCell = newRow.insertCell(0);
-        newCell.setAttribute("colspan", colspan);
-        // newCell.innerText = content;
-        // this may be unsafe, but innerText does not interpret <br>
-        newCell.innerHTML = content;
-      }
-      function spanCell_595x7waon2xxg5prin7z(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_595x7waon2xxg5prin7z");
-        const targetRow = table.rows[i];
-        const targetCell = targetRow.cells[j];
-        for (let r = 0; r < rowspan; r++) {
-          // Only start deleting cells to the right for the first row (r == 0)
-          if (r === 0) {
-            // Delete cells to the right of the target cell in the first row
-            for (let c = colspan - 1; c > 0; c--) {
-              if (table.rows[i + r].cells[j + c]) {
-                table.rows[i + r].deleteCell(j + c);
-              }
-            }
-          }
-          // For rows below the first, delete starting from the target column
-          if (r > 0) {
-            for (let c = colspan - 1; c >= 0; c--) {
-              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
-                table.rows[i + r].deleteCell(j);
-              }
-            }
-          }
-        }
-        // Set rowspan and colspan of the target cell
-        targetCell.rowSpan = rowspan;
-        targetCell.colSpan = colspan;
-      }
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(0, 0, 'tinytable_css_id9qeodhwln0ipvud0urie') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(0, 1, 'tinytable_css_ide7cke1hroe6l9lv159u8') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(0, 2, 'tinytable_css_ide7cke1hroe6l9lv159u8') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(1, 0, 'tinytable_css_id2n2nj4o6xl54and06mq0') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(1, 1, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(1, 2, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(2, 0, 'tinytable_css_id2n2nj4o6xl54and06mq0') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(2, 1, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(2, 2, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(3, 0, 'tinytable_css_id2n2nj4o6xl54and06mq0') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(3, 1, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(3, 2, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(4, 0, 'tinytable_css_id2n2nj4o6xl54and06mq0') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(4, 1, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(4, 2, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(5, 0, 'tinytable_css_id2n2nj4o6xl54and06mq0') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(5, 1, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(5, 2, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(6, 0, 'tinytable_css_id2n2nj4o6xl54and06mq0') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(6, 1, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(6, 2, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(7, 0, 'tinytable_css_id2n2nj4o6xl54and06mq0') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(7, 1, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(7, 2, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(8, 0, 'tinytable_css_id2n2nj4o6xl54and06mq0') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(8, 1, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(8, 2, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(9, 0, 'tinytable_css_id2n2nj4o6xl54and06mq0') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(9, 1, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(9, 2, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(10, 0, 'tinytable_css_id2n2nj4o6xl54and06mq0') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(10, 1, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(10, 2, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(11, 0, 'tinytable_css_id2n2nj4o6xl54and06mq0') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(11, 1, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(11, 2, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(12, 0, 'tinytable_css_idh8j5nga35ehdpwqbwvxa') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(12, 1, 'tinytable_css_idz6ylqxjd62m46xniokiu') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(12, 2, 'tinytable_css_idz6ylqxjd62m46xniokiu') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(13, 0, 'tinytable_css_id2n2nj4o6xl54and06mq0') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(13, 1, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(13, 2, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(14, 0, 'tinytable_css_id2n2nj4o6xl54and06mq0') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(14, 1, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(14, 2, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(15, 0, 'tinytable_css_id2n2nj4o6xl54and06mq0') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(15, 1, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(15, 2, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(16, 0, 'tinytable_css_id2n2nj4o6xl54and06mq0') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(16, 1, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(16, 2, 'tinytable_css_idzo5k4ehi6y1dgex924am') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(17, 0, 'tinytable_css_id2n2nj4o6xl54and06mq0') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(17, 1, 'tinytable_css_id2n2nj4o6xl54and06mq0') })
-window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(17, 2, 'tinytable_css_id2n2nj4o6xl54and06mq0') })
-    </script><style>
-    .table td.tinytable_css_id9qeodhwln0ipvud0urie, .table th.tinytable_css_id9qeodhwln0ipvud0urie {  text-align: left;  border-bottom: solid 0.1em #d3d8dc; }
-    .table td.tinytable_css_ide7cke1hroe6l9lv159u8, .table th.tinytable_css_ide7cke1hroe6l9lv159u8 {  text-align: center;  border-bottom: solid 0.1em #d3d8dc; }
-    .table td.tinytable_css_id2n2nj4o6xl54and06mq0, .table th.tinytable_css_id2n2nj4o6xl54and06mq0 {  text-align: left; }
-    .table td.tinytable_css_idzo5k4ehi6y1dgex924am, .table th.tinytable_css_idzo5k4ehi6y1dgex924am {  text-align: center; }
-    .table td.tinytable_css_idh8j5nga35ehdpwqbwvxa, .table th.tinytable_css_idh8j5nga35ehdpwqbwvxa {  border-bottom: solid 0.05em black;  text-align: left; }
-    .table td.tinytable_css_idz6ylqxjd62m46xniokiu, .table th.tinytable_css_idz6ylqxjd62m46xniokiu {  border-bottom: solid 0.05em black;  text-align: center; }
+  
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>tinytable_f1xrixww9yvu7me0h1d2</title>
+<style>
+.table td.tinytable_css_bmdrk3miod62iyrm8u0g, .table th.tinytable_css_bmdrk3miod62iyrm8u0g {    border-bottom: solid 0.1em #d3d8dc; }
+.table td.tinytable_css_guwyj32hxvp4m6dylkuh, .table th.tinytable_css_guwyj32hxvp4m6dylkuh {    text-align: left; }
+.table td.tinytable_css_jmvpxcuv3qq13uwpdaz7, .table th.tinytable_css_jmvpxcuv3qq13uwpdaz7 {    text-align: center; }
+.table td.tinytable_css_uaysmfyuk14t4t0zgm1h, .table th.tinytable_css_uaysmfyuk14t4t0zgm1h {    text-align: center; }
+.table td.tinytable_css_ue7l74ivm58pp01kx8kn, .table th.tinytable_css_ue7l74ivm58pp01kx8kn {    border-bottom: solid 0.05em black; }
     </style>
-<div class="container">
-      <table class="table table-borderless" id="tinytable_595x7waon2xxg5prin7z" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+    </script><div class="container">
+      <table class="table table-borderless" id="tinytable_f1xrixww9yvu7me0h1d2" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
 <thead><tr>
 <th scope="col"> </th>
                 <th scope="col">OLS</th>
@@ -614,7 +621,107 @@ window.addEventListener('load', function () { styleCell_595x7waon2xxg5prin7z(17,
 </tbody>
 </table>
 </div>
-<!-- hack to avoid NA insertion in last line -->
+
+    <script>
+      function styleCell_tinytable_9kdlv6u697h998kpvel4(i, j, css_id) {
+        var table = document.getElementById("tinytable_f1xrixww9yvu7me0h1d2");
+        table.rows[i].cells[j].classList.add(css_id);
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_f1xrixww9yvu7me0h1d2');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_tinytable_9kdlv6u697h998kpvel4(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_f1xrixww9yvu7me0h1d2");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(0, 0, 'tinytable_css_bmdrk3miod62iyrm8u0g') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(0, 1, 'tinytable_css_bmdrk3miod62iyrm8u0g') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(0, 2, 'tinytable_css_bmdrk3miod62iyrm8u0g') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(0, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(1, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(2, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(3, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(4, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(5, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(6, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(7, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(8, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(9, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(10, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(11, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(12, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(13, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(14, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(15, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(16, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(0, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(1, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(2, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(3, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(4, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(5, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(6, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(7, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(8, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(9, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(10, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(11, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(12, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(13, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(14, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(15, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(16, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(0, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(1, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(2, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(3, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(4, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(5, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(6, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(7, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(8, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(9, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(10, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(11, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(12, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(13, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(14, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(15, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(16, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(12, 0, 'tinytable_css_ue7l74ivm58pp01kx8kn') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(12, 1, 'tinytable_css_ue7l74ivm58pp01kx8kn') })
+window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(12, 2, 'tinytable_css_ue7l74ivm58pp01kx8kn') })
+    </script>
 </div>
 </div>
 
