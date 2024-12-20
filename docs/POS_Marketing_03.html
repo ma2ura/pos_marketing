@@ -234,23 +234,123 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>         メーカー <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">メーカー</span><span class="op">)</span>,</span>
 <span>         商品名 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">商品名</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="co"># 戦闘6行を表示</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 11
-  レシート番号 日付                曜日   時間 性別  年代  メーカー 商品名  単価
-  &lt;chr&gt;        &lt;dttm&gt;              &lt;ord&gt; &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;fct&gt;    &lt;fct&gt;  &lt;dbl&gt;
-1 R000001      2023-01-02 00:00:00 月       10 女性  30代  競合A    おい…    160
-2 R000001      2023-01-02 00:00:00 月       10 女性  30代  競合B    静岡…    170
-3 R000002      2023-01-02 00:00:00 月       10 男性  60歳… 競合B    静岡…    170
-4 R000002      2023-01-02 00:00:00 月       10 男性  60歳… 競合A    おい…    160
-5 R000003      2023-01-02 00:00:00 月       10 男性  50代  競合C    ほう…    140
-6 R000004      2023-01-02 00:00:00 月       10 女性  50代  競合D    ウー…    140
-# ℹ 2 more variables: 個数 &lt;dbl&gt;, 金額 &lt;dbl&gt;</code></pre>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 12%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 15%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">レシート番号</th>
+<th style="text-align: left;">日付</th>
+<th style="text-align: left;">曜日</th>
+<th style="text-align: right;">時間</th>
+<th style="text-align: left;">性別</th>
+<th style="text-align: left;">年代</th>
+<th style="text-align: left;">メーカー</th>
+<th style="text-align: left;">商品名</th>
+<th style="text-align: right;">単価</th>
+<th style="text-align: right;">個数</th>
+<th style="text-align: right;">金額</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">R000001</td>
+<td style="text-align: left;">2023-01-02</td>
+<td style="text-align: left;">月</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">女性</td>
+<td style="text-align: left;">30代</td>
+<td style="text-align: left;">競合A</td>
+<td style="text-align: left;">おいしい緑茶</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">320</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R000001</td>
+<td style="text-align: left;">2023-01-02</td>
+<td style="text-align: left;">月</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">女性</td>
+<td style="text-align: left;">30代</td>
+<td style="text-align: left;">競合B</td>
+<td style="text-align: left;">静岡の緑茶</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">340</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R000002</td>
+<td style="text-align: left;">2023-01-02</td>
+<td style="text-align: left;">月</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">男性</td>
+<td style="text-align: left;">60歳以上</td>
+<td style="text-align: left;">競合B</td>
+<td style="text-align: left;">静岡の緑茶</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">680</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R000002</td>
+<td style="text-align: left;">2023-01-02</td>
+<td style="text-align: left;">月</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">男性</td>
+<td style="text-align: left;">60歳以上</td>
+<td style="text-align: left;">競合A</td>
+<td style="text-align: left;">おいしい濃茶</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">320</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R000003</td>
+<td style="text-align: left;">2023-01-02</td>
+<td style="text-align: left;">月</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">男性</td>
+<td style="text-align: left;">50代</td>
+<td style="text-align: left;">競合C</td>
+<td style="text-align: left;">ほうじ茶</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">140</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R000004</td>
+<td style="text-align: left;">2023-01-02</td>
+<td style="text-align: left;">月</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">女性</td>
+<td style="text-align: left;">50代</td>
+<td style="text-align: left;">競合D</td>
+<td style="text-align: left;">ウーロン茶</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">280</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 </section><section id="商品と月ごとの売上個数" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="商品と月ごとの売上個数">
 <span class="header-section-number">3.2</span> 商品と月ごとの売上個数</h2>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">mutate</span><span class="op">(</span></span>
 <span>        分類 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">メーカー</span>, <span class="va">商品名</span><span class="op">)</span>,</span>
 <span>        月 <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">日付</span><span class="op">)</span>,</span>
@@ -265,28 +365,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>`summarise()` has grouped output by '分類'. You can override using the
 `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_month_item</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_month_item</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">分類</span>, values_from <span class="op">=</span> <span class="va">売上個数</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">gt</span><span class="op">(</span><span class="op">)</span><span class="op">|&gt;</span></span>
 <span>    <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">8</span>, decimals <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="mrhoctqpkq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#mrhoctqpkq table {
+<div id="yywittxmxb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#yywittxmxb table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#mrhoctqpkq thead, #mrhoctqpkq tbody, #mrhoctqpkq tfoot, #mrhoctqpkq tr, #mrhoctqpkq td, #mrhoctqpkq th {
+#yywittxmxb thead, #yywittxmxb tbody, #yywittxmxb tfoot, #yywittxmxb tr, #yywittxmxb td, #yywittxmxb th {
   border-style: none;
 }
 
-#mrhoctqpkq p {
+#yywittxmxb p {
   margin: 0;
   padding: 0;
 }
 
-#mrhoctqpkq .gt_table {
+#yywittxmxb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -312,12 +412,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-left-color: #D3D3D3;
 }
 
-#mrhoctqpkq .gt_caption {
+#yywittxmxb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#mrhoctqpkq .gt_title {
+#yywittxmxb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -329,7 +429,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-width: 0;
 }
 
-#mrhoctqpkq .gt_subtitle {
+#yywittxmxb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -341,7 +441,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-width: 0;
 }
 
-#mrhoctqpkq .gt_heading {
+#yywittxmxb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -353,13 +453,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#mrhoctqpkq .gt_bottom_border {
+#yywittxmxb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mrhoctqpkq .gt_col_headings {
+#yywittxmxb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -374,7 +474,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#mrhoctqpkq .gt_col_heading {
+#yywittxmxb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -394,7 +494,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#mrhoctqpkq .gt_column_spanner_outer {
+#yywittxmxb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -406,15 +506,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 4px;
 }
 
-#mrhoctqpkq .gt_column_spanner_outer:first-child {
+#yywittxmxb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mrhoctqpkq .gt_column_spanner_outer:last-child {
+#yywittxmxb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mrhoctqpkq .gt_column_spanner {
+#yywittxmxb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -426,11 +526,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
 }
 
-#mrhoctqpkq .gt_spanner_row {
+#yywittxmxb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#mrhoctqpkq .gt_group_heading {
+#yywittxmxb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -456,7 +556,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   text-align: left;
 }
 
-#mrhoctqpkq .gt_empty_group_heading {
+#yywittxmxb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -471,15 +571,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: middle;
 }
 
-#mrhoctqpkq .gt_from_md > :first-child {
+#yywittxmxb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mrhoctqpkq .gt_from_md > :last-child {
+#yywittxmxb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mrhoctqpkq .gt_row {
+#yywittxmxb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -498,7 +598,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#mrhoctqpkq .gt_stub {
+#yywittxmxb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -511,7 +611,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#mrhoctqpkq .gt_stub_row_group {
+#yywittxmxb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -525,15 +625,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: top;
 }
 
-#mrhoctqpkq .gt_row_group_first td {
+#yywittxmxb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#mrhoctqpkq .gt_row_group_first th {
+#yywittxmxb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#mrhoctqpkq .gt_summary_row {
+#yywittxmxb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -543,16 +643,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#mrhoctqpkq .gt_first_summary_row {
+#yywittxmxb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#mrhoctqpkq .gt_first_summary_row.thick {
+#yywittxmxb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#mrhoctqpkq .gt_last_summary_row {
+#yywittxmxb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -562,7 +662,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#mrhoctqpkq .gt_grand_summary_row {
+#yywittxmxb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -572,7 +672,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#mrhoctqpkq .gt_first_grand_summary_row {
+#yywittxmxb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -582,7 +682,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-color: #D3D3D3;
 }
 
-#mrhoctqpkq .gt_last_grand_summary_row_top {
+#yywittxmxb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -592,11 +692,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#mrhoctqpkq .gt_striped {
+#yywittxmxb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mrhoctqpkq .gt_table_body {
+#yywittxmxb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -605,7 +705,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#mrhoctqpkq .gt_footnotes {
+#yywittxmxb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -619,7 +719,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#mrhoctqpkq .gt_footnote {
+#yywittxmxb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -628,7 +728,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#mrhoctqpkq .gt_sourcenotes {
+#yywittxmxb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -642,7 +742,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#mrhoctqpkq .gt_sourcenote {
+#yywittxmxb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -650,72 +750,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#mrhoctqpkq .gt_left {
+#yywittxmxb .gt_left {
   text-align: left;
 }
 
-#mrhoctqpkq .gt_center {
+#yywittxmxb .gt_center {
   text-align: center;
 }
 
-#mrhoctqpkq .gt_right {
+#yywittxmxb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mrhoctqpkq .gt_font_normal {
+#yywittxmxb .gt_font_normal {
   font-weight: normal;
 }
 
-#mrhoctqpkq .gt_font_bold {
+#yywittxmxb .gt_font_bold {
   font-weight: bold;
 }
 
-#mrhoctqpkq .gt_font_italic {
+#yywittxmxb .gt_font_italic {
   font-style: italic;
 }
 
-#mrhoctqpkq .gt_super {
+#yywittxmxb .gt_super {
   font-size: 65%;
 }
 
-#mrhoctqpkq .gt_footnote_marks {
+#yywittxmxb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#mrhoctqpkq .gt_asterisk {
+#yywittxmxb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#mrhoctqpkq .gt_indent_1 {
+#yywittxmxb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#mrhoctqpkq .gt_indent_2 {
+#yywittxmxb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#mrhoctqpkq .gt_indent_3 {
+#yywittxmxb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#mrhoctqpkq .gt_indent_4 {
+#yywittxmxb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#mrhoctqpkq .gt_indent_5 {
+#yywittxmxb .gt_indent_5 {
   text-indent: 25px;
 }
 
-#mrhoctqpkq .katex-display {
+#yywittxmxb .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#mrhoctqpkq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#yywittxmxb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -857,7 +957,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_month_item</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_month_item</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月</span>, y <span class="op">=</span> <span class="va">売上個数</span>, group <span class="op">=</span> <span class="va">分類</span>, color <span class="op">=</span> <span class="va">分類</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -868,14 +968,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>    <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="2100"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>個人的に気に入っているグラフの描き方です。</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_name</span> <span class="op">&lt;-</span> <span class="va">df_month_item</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">月</span> <span class="op">==</span> <span class="fl">12</span><span class="op">)</span> <span class="co"># 12月のデータを抽出</span></span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_name</span> <span class="op">&lt;-</span> <span class="va">df_month_item</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">月</span> <span class="op">==</span> <span class="fl">12</span><span class="op">)</span> <span class="co"># 12月のデータを抽出</span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">df_month_item</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月</span>, y <span class="op">=</span> <span class="va">売上個数</span>, group <span class="op">=</span> <span class="va">分類</span>, color <span class="op">=</span> <span class="va">分類</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># 線と点を描く</span></span>
@@ -887,7 +987,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="va">g</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="1152"></p>
+<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="3600"></p>
 </figure>
 </div>
 </div>
@@ -895,7 +995,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section><section id="日別の売上個数" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="日別の売上個数">
 <span class="header-section-number">3.3</span> 日別の売上個数</h2>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_md_item</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_md_item</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">分類</span>, <span class="va">月日</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">summarise</span><span class="op">(</span>売上個数 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">個数</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -903,29 +1003,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>`summarise()` has grouped output by '分類'. You can override using the
 `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_md_item</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_md_item</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">分類</span>, values_from <span class="op">=</span> <span class="va">売上個数</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">gt</span><span class="op">(</span><span class="op">)</span><span class="op">|&gt;</span></span>
 <span>    <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">8</span>, decimals <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="qyrxqiynng" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qyrxqiynng table {
+<div id="xgoibbkgxg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xgoibbkgxg table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#qyrxqiynng thead, #qyrxqiynng tbody, #qyrxqiynng tfoot, #qyrxqiynng tr, #qyrxqiynng td, #qyrxqiynng th {
+#xgoibbkgxg thead, #xgoibbkgxg tbody, #xgoibbkgxg tfoot, #xgoibbkgxg tr, #xgoibbkgxg td, #xgoibbkgxg th {
   border-style: none;
 }
 
-#qyrxqiynng p {
+#xgoibbkgxg p {
   margin: 0;
   padding: 0;
 }
 
-#qyrxqiynng .gt_table {
+#xgoibbkgxg .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -951,12 +1051,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-left-color: #D3D3D3;
 }
 
-#qyrxqiynng .gt_caption {
+#xgoibbkgxg .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#qyrxqiynng .gt_title {
+#xgoibbkgxg .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -968,7 +1068,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-width: 0;
 }
 
-#qyrxqiynng .gt_subtitle {
+#xgoibbkgxg .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -980,7 +1080,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-width: 0;
 }
 
-#qyrxqiynng .gt_heading {
+#xgoibbkgxg .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -992,13 +1092,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#qyrxqiynng .gt_bottom_border {
+#xgoibbkgxg .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qyrxqiynng .gt_col_headings {
+#xgoibbkgxg .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1013,7 +1113,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#qyrxqiynng .gt_col_heading {
+#xgoibbkgxg .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1033,7 +1133,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#qyrxqiynng .gt_column_spanner_outer {
+#xgoibbkgxg .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1045,15 +1145,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 4px;
 }
 
-#qyrxqiynng .gt_column_spanner_outer:first-child {
+#xgoibbkgxg .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qyrxqiynng .gt_column_spanner_outer:last-child {
+#xgoibbkgxg .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qyrxqiynng .gt_column_spanner {
+#xgoibbkgxg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1065,11 +1165,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
 }
 
-#qyrxqiynng .gt_spanner_row {
+#xgoibbkgxg .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#qyrxqiynng .gt_group_heading {
+#xgoibbkgxg .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1095,7 +1195,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   text-align: left;
 }
 
-#qyrxqiynng .gt_empty_group_heading {
+#xgoibbkgxg .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1110,15 +1210,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: middle;
 }
 
-#qyrxqiynng .gt_from_md > :first-child {
+#xgoibbkgxg .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qyrxqiynng .gt_from_md > :last-child {
+#xgoibbkgxg .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qyrxqiynng .gt_row {
+#xgoibbkgxg .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1137,7 +1237,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#qyrxqiynng .gt_stub {
+#xgoibbkgxg .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1150,7 +1250,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#qyrxqiynng .gt_stub_row_group {
+#xgoibbkgxg .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1164,15 +1264,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: top;
 }
 
-#qyrxqiynng .gt_row_group_first td {
+#xgoibbkgxg .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qyrxqiynng .gt_row_group_first th {
+#xgoibbkgxg .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#qyrxqiynng .gt_summary_row {
+#xgoibbkgxg .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1182,16 +1282,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#qyrxqiynng .gt_first_summary_row {
+#xgoibbkgxg .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qyrxqiynng .gt_first_summary_row.thick {
+#xgoibbkgxg .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qyrxqiynng .gt_last_summary_row {
+#xgoibbkgxg .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1201,7 +1301,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#qyrxqiynng .gt_grand_summary_row {
+#xgoibbkgxg .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1211,7 +1311,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#qyrxqiynng .gt_first_grand_summary_row {
+#xgoibbkgxg .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1221,7 +1321,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-color: #D3D3D3;
 }
 
-#qyrxqiynng .gt_last_grand_summary_row_top {
+#xgoibbkgxg .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1231,11 +1331,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#qyrxqiynng .gt_striped {
+#xgoibbkgxg .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qyrxqiynng .gt_table_body {
+#xgoibbkgxg .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1244,7 +1344,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#qyrxqiynng .gt_footnotes {
+#xgoibbkgxg .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1258,7 +1358,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#qyrxqiynng .gt_footnote {
+#xgoibbkgxg .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1267,7 +1367,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#qyrxqiynng .gt_sourcenotes {
+#xgoibbkgxg .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1281,7 +1381,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#qyrxqiynng .gt_sourcenote {
+#xgoibbkgxg .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1289,72 +1389,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#qyrxqiynng .gt_left {
+#xgoibbkgxg .gt_left {
   text-align: left;
 }
 
-#qyrxqiynng .gt_center {
+#xgoibbkgxg .gt_center {
   text-align: center;
 }
 
-#qyrxqiynng .gt_right {
+#xgoibbkgxg .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qyrxqiynng .gt_font_normal {
+#xgoibbkgxg .gt_font_normal {
   font-weight: normal;
 }
 
-#qyrxqiynng .gt_font_bold {
+#xgoibbkgxg .gt_font_bold {
   font-weight: bold;
 }
 
-#qyrxqiynng .gt_font_italic {
+#xgoibbkgxg .gt_font_italic {
   font-style: italic;
 }
 
-#qyrxqiynng .gt_super {
+#xgoibbkgxg .gt_super {
   font-size: 65%;
 }
 
-#qyrxqiynng .gt_footnote_marks {
+#xgoibbkgxg .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#qyrxqiynng .gt_asterisk {
+#xgoibbkgxg .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qyrxqiynng .gt_indent_1 {
+#xgoibbkgxg .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qyrxqiynng .gt_indent_2 {
+#xgoibbkgxg .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qyrxqiynng .gt_indent_3 {
+#xgoibbkgxg .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qyrxqiynng .gt_indent_4 {
+#xgoibbkgxg .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qyrxqiynng .gt_indent_5 {
+#xgoibbkgxg .gt_indent_5 {
   text-indent: 25px;
 }
 
-#qyrxqiynng .katex-display {
+#xgoibbkgxg .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#qyrxqiynng div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#xgoibbkgxg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1476,7 +1576,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_md_item</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_md_item</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月日</span>, y <span class="op">=</span> <span class="va">売上個数</span>, group <span class="op">=</span> <span class="va">分類</span>, color <span class="op">=</span> <span class="va">分類</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu">geom_line</span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1488,13 +1588,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>    <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="1152"></p>
+<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="3600"></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">月</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">分類</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"競合Aおいしい濃茶"</span>, <span class="st">"競合Aおいしい緑茶"</span>, <span class="st">"自社濃い茶"</span>, <span class="st">"自社緑茶"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">分類</span>, <span class="va">月日</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -1514,13 +1614,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="2100"></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">分類</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"競合Aおいしい濃茶"</span>, <span class="st">"競合Aおいしい緑茶"</span>, <span class="st">"自社濃い茶"</span>, <span class="st">"自社緑茶"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">分類</span>, <span class="va">曜日</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">summarise</span><span class="op">(</span>売上個数 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">個数</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -1538,7 +1638,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="2100"></p>
 </figure>
 </div>
 </div>
@@ -1556,7 +1656,7 @@ $$
 -->
 <p>移動平均を計算するためには、<code>zoo</code>パッケージを使います。</p>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">zoo</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">zoo</span><span class="op">)</span></span>
 <span><span class="va">df_mv_item</span> <span class="op">&lt;-</span> <span class="va">df_md_item</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">分類</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"競合Aおいしい濃茶"</span>, <span class="st">"競合Aおいしい緑茶"</span>, <span class="st">"自社濃い茶"</span>, <span class="st">"自社緑茶"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">分類</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -1567,7 +1667,7 @@ $$
 <div class="cell-output cell-output-stdout">
 <pre><code>NULL</code></pre>
 </div>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_mv_item</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_mv_item</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月日</span>, y <span class="op">=</span> <span class="va">移動平均</span>, group <span class="op">=</span> <span class="va">分類</span>, color <span class="op">=</span> <span class="va">分類</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu">geom_line</span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"の売上個数の7日移動平均"</span>,</span>
@@ -1577,7 +1677,7 @@ $$
 <span>    <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="1152"></p>
+<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="3600"></p>
 </figure>
 </div>
 </div>
