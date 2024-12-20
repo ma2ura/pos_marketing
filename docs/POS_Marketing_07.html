@@ -96,21 +96,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "検索",
     "search-label": "サーチ"
   }
-}</script><script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script><script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
-<script type="text/javascript">
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -227,8 +213,16 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">目次</h2>
    
   <ul>
-<li><a href="#%E5%BA%97%E9%A0%AD%E3%82%AB%E3%83%90%E3%83%BC%E7%8E%87" id="toc-店頭カバー率" class="nav-link active" data-scroll-target="#%E5%BA%97%E9%A0%AD%E3%82%AB%E3%83%90%E3%83%BC%E7%8E%87"><span class="header-section-number">7.1</span> 店頭カバー率</a></li>
-  <li><a href="#%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90" id="toc-回帰分析" class="nav-link" data-scroll-target="#%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90"><span class="header-section-number">7.2</span> 回帰分析</a></li>
+<li><a href="#%E6%BA%96%E5%82%99" id="toc-準備" class="nav-link active" data-scroll-target="#%E6%BA%96%E5%82%99"><span class="header-section-number">7.1</span> 準備</a></li>
+  <li><a href="#%E6%95%A3%E5%B8%83%E5%9B%B3" id="toc-散布図" class="nav-link" data-scroll-target="#%E6%95%A3%E5%B8%83%E5%9B%B3"><span class="header-section-number">7.2</span> 散布図</a></li>
+  <li><a href="#%E7%9B%B8%E9%96%A2%E4%BF%82%E6%95%B0" id="toc-相関係数" class="nav-link" data-scroll-target="#%E7%9B%B8%E9%96%A2%E4%BF%82%E6%95%B0"><span class="header-section-number">7.3</span> 相関係数</a></li>
+  <li>
+<a href="#%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90" id="toc-回帰分析" class="nav-link" data-scroll-target="#%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90"><span class="header-section-number">7.4</span> 回帰分析</a>
+  <ul class="collapse">
+<li><a href="#%E5%9B%9E%E5%B8%B0%E3%83%A2%E3%83%87%E3%83%AB" id="toc-回帰モデル" class="nav-link" data-scroll-target="#%E5%9B%9E%E5%B8%B0%E3%83%A2%E3%83%87%E3%83%AB"><span class="header-section-number">7.4.1</span> 回帰モデル</a></li>
+  <li><a href="#%E6%A8%99%E6%BA%96%E5%8C%96" id="toc-標準化" class="nav-link" data-scroll-target="#%E6%A8%99%E6%BA%96%E5%8C%96"><span class="header-section-number">7.4.2</span> 標準化</a></li>
+  </ul>
+</li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -249,13 +243,14 @@ window.Quarto = {
   
 
 
-</header><section id="店頭カバー率" class="level2 page-columns page-full" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="店頭カバー率">
-<span class="header-section-number">7.1</span> 店頭カバー率</h2>
+</header><section id="準備" class="level2 page-columns page-full" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="準備">
+<span class="header-section-number">7.1</span> 準備</h2>
 <p>週次集計POSデータを使って、他の店で売れている商品を見つけ出す。</p>
 <p>パッケージとデータを準備する。</p>
 <p>第6回ファイルで使うデータは<code>chp7.xlsx</code>です。 まずパッケージを読み込みます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>, <span class="va">readxl</span>, <span class="va">arules</span>, <span class="va">ggthemes</span>, <span class="va">knitr</span>, <span class="va">kableExtra</span>, <span class="va">gt</span>, <span class="va">gtExtras</span>, <span class="va">patchwork</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>, <span class="va">readxl</span>, <span class="va">ggthemes</span>, <span class="va">gt</span>, <span class="va">gtExtras</span>, <span class="va">patchwork</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>scipen<span class="op">=</span><span class="fl">100</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>次にここで用いる<code>chp6.xlsx</code>のシート名を確認します。</p>
 <div class="cell">
@@ -270,10 +265,10 @@ window.Quarto = {
 [19] "図7-35"            </code></pre>
 </div>
 </div>
-<p>たくさんシートがあるMS Excelファイルですが、1番目の「2023年11月期データ」を読み込みます。</p>
+<p>たくさんシートがあるMS Excelファイルですが、1番目の「2023年11月期データ」を読み込みます。 <code>readxl</code>パッケージの<code>read_excel()</code>関数に<code>sheet = 1</code>を指定することで、1番目のシートを読み込むことができます。</p>
 <div class="cell">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/chp7.xlsx"</span>, sheet <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="co"># 先頭6行を表示</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="kable-table">
 <table class="caption-top table table-sm table-striped small">
@@ -369,17 +364,21 @@ window.Quarto = {
 
 <div class="no-row-height column-margin column-container"><div class="margin-aside">
 <p>それぞれの詳細はテキストp.215を参照してください。</p>
-</div></div><p>最寄り駅からの距離と月間売上高の散布図を描いてみます。 グラフの設定を<code>mystyle</code>として<code>list</code>にまとめておきます。</p>
+</div></div></section><section id="散布図" class="level2" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="散布図">
+<span class="header-section-number">7.2</span> 散布図</h2>
+<p>2変数の関係を視覚的に表すグラフとして散布図(scatter diagram)があります。 サンプルサイズが <span class="math inline">\(i = 1,\dots, n\)</span> この変数 <span class="math inline">\(X\)</span> と <span class="math inline">\(Y\)</span> の<span class="math inline">\(i\)</span>番目の観測値を <span class="math inline">\((x_i, y_i)\)</span> とすると、散布図はこれらの点を座標平面上にプロットしたものです。</p>
+<p>まず最寄り駅からの距離と月間売上高の散布図を描いてみます。 フォントの設定や見た目の設定を<code>mystyle</code>として<code>list</code>にまとめておきます。</p>
 <div class="cell">
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mystyle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span>,</span>
-<span>  <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span>
+<span>  <span class="fu">theme_calc</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span>, <span class="co"># フォントの設定</span></span>
+<span>  <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span> <span class="co"># カラーパレットの設定</span></span>
 <span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><code>ggplot2</code>パッケージの<code>ggplot()</code>関数を使い、<code>geom_point()</code>で散布図を描きます。</p>
 <div class="cell">
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">最寄り駅からの距離</span>, y <span class="op">=</span> <span class="va">月間売上高</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">最寄り駅からの距離</span>, y <span class="op">=</span> <span class="va">月間売上高</span><span class="op">)</span> <span class="op">+</span> <span class="co"># 軸の設定</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># 散布図の描画</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"図7-1 最寄り駅からの距離と月間売上高の散布図"</span><span class="op">)</span> <span class="op">+</span> <span class="va">mystyle</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
@@ -388,23 +387,27 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>いろんな変数の組み合わせの散布図を描いてみます。</p>
+<p>いろんな変数の組み合わせの散布図を描いてみます。 ここでは教科書に合わせて原点を0にしていますが、散布図では原点を0にすることはあまり意味がないので、特に軸の範囲を指定しなくてもよいです。</p>
 <div class="cell">
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g1</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">店舗面積</span>, y <span class="op">=</span> <span class="va">月間売上高</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">xlim</span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2000</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ylim</span><span class="op">(</span><span class="fl">0</span>,<span class="fl">160000</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"図7-2 店舗面積と月間売上高"</span><span class="op">)</span> <span class="op">+</span> <span class="va">mystyle</span></span>
 <span><span class="va">g2</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">商圏人口</span>, y <span class="op">=</span> <span class="va">月間売上高</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">xlim</span><span class="op">(</span><span class="fl">0</span>, <span class="fl">350</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ylim</span><span class="op">(</span><span class="fl">0</span>,<span class="fl">160000</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"図7-3 商圏人口と月間売上高"</span><span class="op">)</span> <span class="op">+</span> <span class="va">mystyle</span></span>
 <span><span class="va">g3</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">駐車場台数</span>, y <span class="op">=</span> <span class="va">月間売上高</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">xlim</span><span class="op">(</span><span class="fl">0</span>, <span class="fl">90</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ylim</span><span class="op">(</span><span class="fl">0</span>,<span class="fl">160000</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"図7-4 駐車場台数と月間売上高"</span><span class="op">)</span> <span class="op">+</span> <span class="va">mystyle</span></span>
 <span><span class="va">g4</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">競合店舗数</span>, y <span class="op">=</span> <span class="va">月間売上高</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">xlim</span><span class="op">(</span><span class="fl">0</span>, <span class="fl">25</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ylim</span><span class="op">(</span><span class="fl">0</span>,<span class="fl">160000</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"図7-5 競合店舗数と月間売上高"</span><span class="op">)</span> <span class="op">+</span> <span class="va">mystyle</span></span>
 <span><span class="op">(</span><span class="va">g1</span> <span class="op">+</span> <span class="va">g2</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">g3</span> <span class="op">+</span> <span class="va">g4</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -414,14 +417,22 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>店舗面積、商圏人口、駐車場台数、競合店舗数と月間売上高の相関係数を計算してみます。</p>
-<div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">corrplot</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>family<span class="op">=</span> <span class="st">"HiraKakuProN-W3"</span><span class="op">)</span></span>
+</section><section id="相関係数" class="level2 page-columns page-full" data-number="7.3"><h2 data-number="7.3" class="anchored" data-anchor-id="相関係数">
+<span class="header-section-number">7.3</span> 相関係数</h2>
+<p>2変数間の関係を数値で表す指標として<span class="markp"><strong>相関係数</strong>(correlation coefficient)</span>があります。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>相関係数という尺度にはいろんな種類があり、最もよく利用されているのがピアソンの積率相関係数です。 他にも、スピアマンの順位相関係数、ケンドールの順位相関係数などがありますが、最もよく利用されるのがピアソンの積率相関係数なので、 ここでは相関係数といえばピアソンの積率相関係数を指すことにします。</p>
+</div></div><p>店舗面積、商圏人口、駐車場台数、競合店舗数と月間売上高の相関係数を計算してみます。 Rには相関係数を返す基本関数として<code><a href="https://rdrr.io/r/stats/cor.html">cor()</a></code>があります。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p><code><a href="https://rdrr.io/r/stats/cor.html">cor()</a></code>関数はデフォルトでピアソンの積率相関係数を計算します。 <code><a href="https://rdrr.io/r/stats/cor.html">cor()</a></code>は引数として2つ以上のベクトルを取り、それぞれの変数の相関係数を返します。 <code><a href="https://rdrr.io/r/stats/cor.html">cor()</a></code>関数の引数に<code>use = "complete.obs"</code>を指定することで欠損値を含む行を削除して相関係数を計算することができます。 <code><a href="https://rdrr.io/r/stats/cor.html">cor()</a></code>関数の引数に<code>use = "pairwise.complete.obs"</code>を指定することで欠損値を含む行を削除せずに相関係数を計算することができます。 また<code>method = "spearman"</code>を指定することでスピアマンの順位相関係数を計算することもできます。</p>
+</div></div><div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>family<span class="op">=</span> <span class="st">"HiraKakuProN-W3"</span><span class="op">)</span> <span class="co"># macの文字化け対策</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">店舗面積</span>, <span class="va">商圏人口</span>, <span class="va">最寄り駅からの距離</span>, <span class="va">駐車場台数</span>, <span class="va">競合店舗数</span>, <span class="va">月間売上高</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">corrplot</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"number"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">店舗面積</span>, <span class="va">商圏人口</span>, <span class="va">最寄り駅からの距離</span>, <span class="va">駐車場台数</span>, <span class="va">競合店舗数</span>, <span class="va">月間売上高</span><span class="op">)</span> <span class="op">|&gt;</span>　<span class="co"># 変数を選択</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 相関係数行列を計算</span></span>
+<span>  <span class="fu">corrplot</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/corrplot/man/corrplot.html">corrplot</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"number"</span><span class="op">)</span> <span class="co"># 相関係数行列を可視化</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="POS_Marketing_07_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -429,61 +440,151 @@ window.Quarto = {
 </div>
 </div>
 </div>
-</section><section id="回帰分析" class="level2 page-columns page-full" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="回帰分析">
-<span class="header-section-number">7.2</span> 回帰分析</h2>
-<p>テキストでは独立変数が1つの単回帰を繰り返していますが、通常は複数の独立変数を組み込んだ重回帰モデルを構築します。</p>
-<p><span class="math display">
+<p>月間売上高と相関関係があるのは、最寄り駅からの距離(<span class="math inline">\(-0.71\)</span>)と、商圏人口(<span class="math inline">\(0.45\)</span>)といえます。</p>
+</section><section id="回帰分析" class="level2 page-columns page-full" data-number="7.4"><h2 data-number="7.4" class="anchored" data-anchor-id="回帰分析">
+<span class="header-section-number">7.4</span> 回帰分析</h2>
+<p>次に、月間売上高を説明するための回帰モデルを構築します。 <span class="marky">回帰分析では、結果を表す変数と原因を表す変数の関係、つまり<strong>因果関係</strong>(causal relationship)を調べます。</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead><tr class="header">
+<th>用語法</th>
+<th>結果を表す変数</th>
+<th>原因を表す変数</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>一般的?</td>
+<td>従属変数 (dependent variable)</td>
+<td>独立変数 (independent variables)</td>
+</tr>
+<tr class="even">
+<td>経済系?</td>
+<td>被説明変数 (explaned variable)</td>
+<td>説明変数 (explanatory variables)</td>
+</tr>
+<tr class="odd">
+<td>統計系?</td>
+<td>目的変数 (objective variable)</td>
+<td>説明変数 (explanatory variables)</td>
+</tr>
+<tr class="even">
+<td>機械学習?</td>
+<td>応答変数 (response variable)</td>
+<td>予測変数 (predictor variable)</td>
+</tr>
+</tbody>
+</table>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>用語法は文脈によって異なります。ここでの分類は完全に松浦の主観です。</p>
+</div></div><section id="回帰モデル" class="level3" data-number="7.4.1"><h3 data-number="7.4.1" class="anchored" data-anchor-id="回帰モデル">
+<span class="header-section-number">7.4.1</span> 回帰モデル</h3>
+<p>回帰モデルは、従属変数と独立変数の関係を数学的に表現するモデルを構築することです。 従属変数を <span class="math inline">\(1 \times n\)</span> ベクトル<span class="math inline">\(y\)</span>で、独立変数を <span class="math inline">\(k \times n\)</span> 行列 <span class="math inline">\(X\)</span>とすると、回帰モデルは以下のように表されます。</p>
+<p><span class="math display">\[
+\boldsymbol{y} = \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon}
+\]</span></p>
+<p>ここで、<span class="math inline">\(\boldsymbol{\beta}\)</span>は <span class="math inline">\(k \times 1\)</span> ベクトルで、<span class="math inline">\(\boldsymbol{\varepsilon}\)</span>は <span class="math inline">\(1 \times n\)</span> ベクトルで、誤差項を表します。 成分を書き下すと以下のようになります。</p>
+<p><span class="math display">\[
+\begin{aligned}
+\begin{pmatrix}
+y_1 \\
+y_2 \\
+\vdots \\
+y_n
+\end{pmatrix}
+=
+\begin{pmatrix}
+1 &amp; x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1k} \\
+1 &amp; x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2k} \\
+\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+1 &amp; x_{n1} &amp; x_{n2} &amp; \cdots &amp; x_{nk} \\
+\end{pmatrix}
+\begin{pmatrix}
+\beta_0 \\
+\beta_1 \\
+\vdots \\
+\beta_k
+\end{pmatrix}
++
+\begin{pmatrix}
+\varepsilon_1 \\
+\varepsilon_2 \\
+\vdots \\
+\varepsilon_n
+\end{pmatrix}
+\end{aligned}
+\]</span></p>
+<p>これを展開すると、よく教科書に出てくるような次の式になります。</p>
+<p><span class="math display">\[
+\begin{aligned}
+y_i &amp; = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_k x_{ik} + \varepsilon_i \\
+    &amp; = \beta_0 + \sum_{j=1}^{k} \beta_j x_{ij} + \varepsilon_i
+\end{aligned}
+\]</span></p>
+<p>とりわけ<span class="math inline">\(k=1\)</span>の場合、つまり独立変数が1つだけの回帰モデルを<strong>単回帰モデル</strong>と呼ばれます。 テキストでは単回帰を繰り返していますが、通常は複数の独立変数を組み込んだ重回帰モデルを構築します。</p>
+<p><span class="math display">\[
 \begin{aligned}
 \text{月間売上高}_i &amp; = \beta_0 + \beta_1  店舗面積_i + \beta_2 商圏人口_i + \\
                    &amp; + \beta_3 最寄り駅からの距離_i + \beta_4 駐車場台数_i + \\
                    &amp; + \beta_5 競合店舗数_i + \varepsilon_i
 \end{aligned}
-</span></p>
+\]</span></p>
 <p>このモデルをRで推定します。</p>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">OLS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">月間売上高</span> <span class="op">~</span> <span class="va">店舗面積</span> <span class="op">+</span> <span class="va">商圏人口</span> <span class="op">+</span> <span class="va">最寄り駅からの距離</span> <span class="op">+</span> <span class="va">駐車場台数</span> <span class="op">+</span> <span class="va">競合店舗数</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">OLS</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># 回帰モデルを`reg_model`に格納</span></span>
+<span><span class="va">reg_model</span> <span class="op">&lt;-</span> <span class="st">"月間売上高 ~ 店舗面積 + 商圏人口 + 最寄り駅からの距離 + 駐車場台数 + 競合店舗数"</span></span>
+<span><span class="va">OLS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">reg_model</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span> <span class="co"># 最小二乗法で回帰分析</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">OLS</span><span class="op">)</span> <span class="co"># 結果を出力</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = 月間売上高 ~ 店舗面積 + 商圏人口 + 
-    最寄り駅からの距離 + 駐車場台数 + 競合店舗数, 
-    data = df)
+lm(formula = reg_model, data = df)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
 -22884.9  -8871.7    594.1   9150.0  24149.5 
 
 Coefficients:
-                    Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)        70086.274   9100.157   7.702 1.15e-11 ***
-店舗面積               4.403      4.763   0.924    0.358    
-商圏人口             199.768     24.087   8.294 6.36e-13 ***
-最寄り駅からの距離   -47.798      3.691 -12.951  &lt; 2e-16 ***
-駐車場台数             9.441     54.552   0.173    0.863    
-競合店舗数          -159.811    195.141  -0.819    0.415    
+                    Estimate Std. Error t value             Pr(&gt;|t|)    
+(Intercept)        70086.274   9100.157   7.702    0.000000000011489 ***
+店舗面積               4.403      4.763   0.924                0.358    
+商圏人口             199.768     24.087   8.294    0.000000000000636 ***
+最寄り駅からの距離   -47.798      3.691 -12.951 &lt; 0.0000000000000002 ***
+駐車場台数             9.441     54.552   0.173                0.863    
+競合店舗数          -159.811    195.141  -0.819                0.415    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 11470 on 97 degrees of freedom
 Multiple R-squared:  0.7144,    Adjusted R-squared:  0.6997 
-F-statistic: 48.53 on 5 and 97 DF,  p-value: &lt; 2.2e-16</code></pre>
+F-statistic: 48.53 on 5 and 97 DF,  p-value: &lt; 0.00000000000000022</code></pre>
 </div>
 </div>
-<p>データを標準化してから回帰分析を行うと、各変数の係数が標準偏差単位で解釈できるので、変数間の比較がしやすくなります。 変数を標準化するとどうなるのか確認してみましょう。</p>
-<p>月刊売上高の分布を確認します。</p>
+<p><code>Estimate</code>は係数の推定値、<code>Std. Error</code>は標準誤差、<code>t value</code>はt値、<code>Pr(&gt;|t|)</code>はp値です。 ここでは、<code>商圏人口</code>と<code>最寄り駅からの距離</code>が<code>0.1</code>％水準で統計的に有意となり、商圏人口が月間売上高に正の影響を、最寄り駅からの距離が負の影響を与えていることが分かります。 商圏人口は人数、最寄り駅からの距離は長さといったように変数ごとに単位が異なっているため、回帰係数の大小を比較することはできません。 しかし<span class="markp">データを標準化してから回帰分析を行うと、各変数の係数が標準偏差単位で解釈できる</span>ので、変数間の比較がしやすくなります。</p>
+</section><section id="標準化" class="level3" data-number="7.4.2"><h3 data-number="7.4.2" class="anchored" data-anchor-id="標準化">
+<span class="header-section-number">7.4.2</span> 標準化</h3>
+<p>標準化(standardization)は、変数の単位を揃えるために行います。 確率変数<span class="math inline">\(X\)</span>を標準化するには、平均<span class="math inline">\(\bar{X}\)</span>を引いて標準偏差<span class="math inline">\(s\)</span>で割ります。</p>
+<p><span class="math display">\[
+\begin{aligned}
+Z_i &amp; = \frac{X_i - \bar{X}}{s}
+\end{aligned}
+\]</span></p>
+<p>この<span class="marky">標準化された確率変数<span class="math inline">\(Z\)</span>は平均が0、標準偏差が1になります。</span></p>
+<p>月刊売上高で確認してみましょう。 月間売上高の平均は92501.56、標準偏差は20931.89です。 標準化を行うために便利なパッケージである<code><a href="https://rdrr.io/r/base/scale.html">scale()</a></code>関数を使います。</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">月間売上高</span>, main <span class="op">=</span> <span class="st">"月間売上高の分布"</span>, xlab <span class="op">=</span> <span class="st">"月間売上高"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="POS_Marketing_07_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="2100"></p>
-</figure>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span></span>
+<span>    標準化月間売上高 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">月間売上高</span><span class="op">)</span> <span class="co"># 月間売上高を標準化</span></span>
+<span>  <span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-</div>
-<p>正規化を行うと、平均が0、標準偏差が1になります。</p>
+<p>標準化月間売上高の平均は0、標準偏差は1となっていることが確認できました。 分布を図で表すためにヒストグラムを描いてみます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">月間売上高</span><span class="op">)</span>, main <span class="op">=</span> <span class="st">"月間売上高の標準化"</span>, xlab <span class="op">=</span> <span class="st">"月間売上高"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">月間売上高</span>, main <span class="op">=</span> <span class="st">"月間売上高の分布"</span>, xlab <span class="op">=</span> <span class="st">"月間売上高"</span><span class="op">)</span> <span class="co"># ヒストグラム</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">月間売上高</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"red"</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="co"># 平均値に赤線を追加</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="POS_Marketing_07_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -491,12 +592,20 @@ F-statistic: 48.53 on 5 and 97 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </div>
-<p>先ほどの回帰分析の結果と変数を標準化した結果を比較してみます。</p>
-
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p>標準化は，変数の平均を0，標準偏差を1にする変換で，観測値から平均を引いて標準偏差で割ることで行います。 Rでは<code><a href="https://rdrr.io/r/base/scale.html">scale()</a></code>関数を使って標準化を行います。</p>
-</div></div><div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_std</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<p>正規化したヒストグラムを描いてみます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">月間売上高</span><span class="op">)</span>, main <span class="op">=</span> <span class="st">"月間売上高の標準化"</span>, xlab <span class="op">=</span> <span class="st">"月間売上高"</span><span class="op">)</span> <span class="co"># 標準化したヒストグラム</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">月間売上高</span><span class="op">)</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"red"</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="co"># 平均値に赤線を追加</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="POS_Marketing_07_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="2100"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>正規化する前とした後の回帰分析の結果を比較してみましょう。 ここでは、<code>modelsummary</code>パッケージを使って結果をまとめて表示します。</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_std</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">店舗面積</span>, <span class="va">商圏人口</span>, <span class="va">最寄り駅からの距離</span>, <span class="va">駐車場台数</span>, <span class="va">競合店舗数</span>, <span class="va">月間売上高</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 標準化</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># データフレームに変換</span></span>
@@ -504,7 +613,6 @@ F-statistic: 48.53 on 5 and 97 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"OLS"</span> <span class="op">=</span> <span class="va">OLS</span>, <span class="st">"標準化"</span> <span class="op">=</span> <span class="va">result_std</span><span class="op">)</span></span>
 <span><span class="fu">modelsummary</span><span class="fu">::</span><span class="fu"><a href="https://modelsummary.com/man/msummary.html">msummary</a></span><span class="op">(</span><span class="va">results</span>,</span>
 <span>                       stars <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                       gof_omit <span class="op">=</span> <span class="st">"RMSE|AIC|BIC|Log.Lik"</span>,</span>
 <span>                       digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
  
@@ -512,13 +620,13 @@ F-statistic: 48.53 on 5 and 97 DF,  p-value: &lt; 2.2e-16</code></pre>
   
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>tinytable_f1xrixww9yvu7me0h1d2</title>
+<title>tinytable_d7rywx7o9qmjoy8dy62g</title>
 <style>
-.table td.tinytable_css_bmdrk3miod62iyrm8u0g, .table th.tinytable_css_bmdrk3miod62iyrm8u0g {    border-bottom: solid 0.1em #d3d8dc; }
-.table td.tinytable_css_guwyj32hxvp4m6dylkuh, .table th.tinytable_css_guwyj32hxvp4m6dylkuh {    text-align: left; }
-.table td.tinytable_css_jmvpxcuv3qq13uwpdaz7, .table th.tinytable_css_jmvpxcuv3qq13uwpdaz7 {    text-align: center; }
-.table td.tinytable_css_uaysmfyuk14t4t0zgm1h, .table th.tinytable_css_uaysmfyuk14t4t0zgm1h {    text-align: center; }
-.table td.tinytable_css_ue7l74ivm58pp01kx8kn, .table th.tinytable_css_ue7l74ivm58pp01kx8kn {    border-bottom: solid 0.05em black; }
+.table td.tinytable_css_bfvbd1vh3fif7atknt84, .table th.tinytable_css_bfvbd1vh3fif7atknt84 {    border-bottom: solid 0.1em #d3d8dc; }
+.table td.tinytable_css_pii7vsmzh7lk6ptnx0cg, .table th.tinytable_css_pii7vsmzh7lk6ptnx0cg {    text-align: left; }
+.table td.tinytable_css_5h45oumfkc46a8095r47, .table th.tinytable_css_5h45oumfkc46a8095r47 {    text-align: center; }
+.table td.tinytable_css_qidsqt8wyurvmvaiwx9f, .table th.tinytable_css_qidsqt8wyurvmvaiwx9f {    text-align: center; }
+.table td.tinytable_css_z8bd8hnvugbk3bhexrf4, .table th.tinytable_css_z8bd8hnvugbk3bhexrf4 {    border-bottom: solid 0.05em black; }
     </style>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script>
     MathJax = {
@@ -530,7 +638,7 @@ F-statistic: 48.53 on 5 and 97 DF,  p-value: &lt; 2.2e-16</code></pre>
       }
     };
     </script><div class="container">
-      <table class="table table-borderless" id="tinytable_f1xrixww9yvu7me0h1d2" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_d7rywx7o9qmjoy8dy62g" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
 <thead><tr>
 <th scope="col"> </th>
                 <th scope="col">OLS</th>
@@ -614,21 +722,41 @@ F-statistic: 48.53 on 5 and 97 DF,  p-value: &lt; 2.2e-16</code></pre>
                   <td>0.700    </td>
                 </tr>
 <tr>
+<td>AIC               </td>
+                  <td>2225.7      </td>
+                  <td>176.2    </td>
+                </tr>
+<tr>
+<td>BIC               </td>
+                  <td>2244.2      </td>
+                  <td>194.7    </td>
+                </tr>
+<tr>
+<td>Log.Lik.          </td>
+                  <td>-1105.860   </td>
+                  <td>-81.110  </td>
+                </tr>
+<tr>
 <td>F                 </td>
                   <td>48.527      </td>
                   <td>48.527   </td>
+                </tr>
+<tr>
+<td>RMSE              </td>
+                  <td>11131.88    </td>
+                  <td>0.53     </td>
                 </tr>
 </tbody>
 </table>
 </div>
 
     <script>
-      function styleCell_tinytable_9kdlv6u697h998kpvel4(i, j, css_id) {
-        var table = document.getElementById("tinytable_f1xrixww9yvu7me0h1d2");
+      function styleCell_tinytable_i7xz1or0935uk1wwfrqc(i, j, css_id) {
+        var table = document.getElementById("tinytable_d7rywx7o9qmjoy8dy62g");
         table.rows[i].cells[j].classList.add(css_id);
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_f1xrixww9yvu7me0h1d2');
+        var table = document.getElementById('tinytable_d7rywx7o9qmjoy8dy62g');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -636,8 +764,8 @@ F-statistic: 48.53 on 5 and 97 DF,  p-value: &lt; 2.2e-16</code></pre>
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_tinytable_9kdlv6u697h998kpvel4(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_f1xrixww9yvu7me0h1d2");
+      function spanCell_tinytable_i7xz1or0935uk1wwfrqc(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_d7rywx7o9qmjoy8dy62g");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -664,69 +792,81 @@ F-statistic: 48.53 on 5 and 97 DF,  p-value: &lt; 2.2e-16</code></pre>
         targetCell.colSpan = colspan;
       }
 
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(0, 0, 'tinytable_css_bmdrk3miod62iyrm8u0g') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(0, 1, 'tinytable_css_bmdrk3miod62iyrm8u0g') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(0, 2, 'tinytable_css_bmdrk3miod62iyrm8u0g') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(0, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(1, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(2, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(3, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(4, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(5, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(6, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(7, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(8, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(9, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(10, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(11, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(12, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(13, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(14, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(15, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(16, 0, 'tinytable_css_guwyj32hxvp4m6dylkuh') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(0, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(1, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(2, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(3, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(4, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(5, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(6, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(7, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(8, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(9, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(10, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(11, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(12, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(13, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(14, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(15, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(16, 1, 'tinytable_css_jmvpxcuv3qq13uwpdaz7') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(0, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(1, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(2, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(3, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(4, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(5, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(6, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(7, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(8, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(9, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(10, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(11, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(12, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(13, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(14, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(15, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(16, 2, 'tinytable_css_uaysmfyuk14t4t0zgm1h') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(12, 0, 'tinytable_css_ue7l74ivm58pp01kx8kn') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(12, 1, 'tinytable_css_ue7l74ivm58pp01kx8kn') })
-window.addEventListener('load', function () { styleCell_tinytable_9kdlv6u697h998kpvel4(12, 2, 'tinytable_css_ue7l74ivm58pp01kx8kn') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(0, 0, 'tinytable_css_bfvbd1vh3fif7atknt84') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(0, 1, 'tinytable_css_bfvbd1vh3fif7atknt84') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(0, 2, 'tinytable_css_bfvbd1vh3fif7atknt84') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(0, 0, 'tinytable_css_pii7vsmzh7lk6ptnx0cg') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(1, 0, 'tinytable_css_pii7vsmzh7lk6ptnx0cg') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(2, 0, 'tinytable_css_pii7vsmzh7lk6ptnx0cg') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(3, 0, 'tinytable_css_pii7vsmzh7lk6ptnx0cg') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(4, 0, 'tinytable_css_pii7vsmzh7lk6ptnx0cg') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(5, 0, 'tinytable_css_pii7vsmzh7lk6ptnx0cg') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(6, 0, 'tinytable_css_pii7vsmzh7lk6ptnx0cg') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(7, 0, 'tinytable_css_pii7vsmzh7lk6ptnx0cg') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(8, 0, 'tinytable_css_pii7vsmzh7lk6ptnx0cg') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(9, 0, 'tinytable_css_pii7vsmzh7lk6ptnx0cg') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(10, 0, 'tinytable_css_pii7vsmzh7lk6ptnx0cg') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(11, 0, 'tinytable_css_pii7vsmzh7lk6ptnx0cg') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(12, 0, 'tinytable_css_pii7vsmzh7lk6ptnx0cg') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(13, 0, 'tinytable_css_pii7vsmzh7lk6ptnx0cg') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(14, 0, 'tinytable_css_pii7vsmzh7lk6ptnx0cg') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(15, 0, 'tinytable_css_pii7vsmzh7lk6ptnx0cg') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(16, 0, 'tinytable_css_pii7vsmzh7lk6ptnx0cg') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(17, 0, 'tinytable_css_pii7vsmzh7lk6ptnx0cg') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(18, 0, 'tinytable_css_pii7vsmzh7lk6ptnx0cg') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(19, 0, 'tinytable_css_pii7vsmzh7lk6ptnx0cg') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(20, 0, 'tinytable_css_pii7vsmzh7lk6ptnx0cg') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(0, 1, 'tinytable_css_5h45oumfkc46a8095r47') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(1, 1, 'tinytable_css_5h45oumfkc46a8095r47') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(2, 1, 'tinytable_css_5h45oumfkc46a8095r47') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(3, 1, 'tinytable_css_5h45oumfkc46a8095r47') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(4, 1, 'tinytable_css_5h45oumfkc46a8095r47') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(5, 1, 'tinytable_css_5h45oumfkc46a8095r47') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(6, 1, 'tinytable_css_5h45oumfkc46a8095r47') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(7, 1, 'tinytable_css_5h45oumfkc46a8095r47') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(8, 1, 'tinytable_css_5h45oumfkc46a8095r47') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(9, 1, 'tinytable_css_5h45oumfkc46a8095r47') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(10, 1, 'tinytable_css_5h45oumfkc46a8095r47') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(11, 1, 'tinytable_css_5h45oumfkc46a8095r47') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(12, 1, 'tinytable_css_5h45oumfkc46a8095r47') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(13, 1, 'tinytable_css_5h45oumfkc46a8095r47') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(14, 1, 'tinytable_css_5h45oumfkc46a8095r47') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(15, 1, 'tinytable_css_5h45oumfkc46a8095r47') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(16, 1, 'tinytable_css_5h45oumfkc46a8095r47') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(17, 1, 'tinytable_css_5h45oumfkc46a8095r47') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(18, 1, 'tinytable_css_5h45oumfkc46a8095r47') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(19, 1, 'tinytable_css_5h45oumfkc46a8095r47') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(20, 1, 'tinytable_css_5h45oumfkc46a8095r47') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(0, 2, 'tinytable_css_qidsqt8wyurvmvaiwx9f') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(1, 2, 'tinytable_css_qidsqt8wyurvmvaiwx9f') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(2, 2, 'tinytable_css_qidsqt8wyurvmvaiwx9f') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(3, 2, 'tinytable_css_qidsqt8wyurvmvaiwx9f') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(4, 2, 'tinytable_css_qidsqt8wyurvmvaiwx9f') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(5, 2, 'tinytable_css_qidsqt8wyurvmvaiwx9f') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(6, 2, 'tinytable_css_qidsqt8wyurvmvaiwx9f') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(7, 2, 'tinytable_css_qidsqt8wyurvmvaiwx9f') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(8, 2, 'tinytable_css_qidsqt8wyurvmvaiwx9f') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(9, 2, 'tinytable_css_qidsqt8wyurvmvaiwx9f') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(10, 2, 'tinytable_css_qidsqt8wyurvmvaiwx9f') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(11, 2, 'tinytable_css_qidsqt8wyurvmvaiwx9f') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(12, 2, 'tinytable_css_qidsqt8wyurvmvaiwx9f') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(13, 2, 'tinytable_css_qidsqt8wyurvmvaiwx9f') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(14, 2, 'tinytable_css_qidsqt8wyurvmvaiwx9f') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(15, 2, 'tinytable_css_qidsqt8wyurvmvaiwx9f') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(16, 2, 'tinytable_css_qidsqt8wyurvmvaiwx9f') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(17, 2, 'tinytable_css_qidsqt8wyurvmvaiwx9f') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(18, 2, 'tinytable_css_qidsqt8wyurvmvaiwx9f') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(19, 2, 'tinytable_css_qidsqt8wyurvmvaiwx9f') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(20, 2, 'tinytable_css_qidsqt8wyurvmvaiwx9f') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(12, 0, 'tinytable_css_z8bd8hnvugbk3bhexrf4') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(12, 1, 'tinytable_css_z8bd8hnvugbk3bhexrf4') })
+window.addEventListener('load', function () { styleCell_tinytable_i7xz1or0935uk1wwfrqc(12, 2, 'tinytable_css_z8bd8hnvugbk3bhexrf4') })
     </script>
 </div>
 </div>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");

@@ -97,21 +97,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "検索",
     "search-label": "サーチ"
   }
-}</script><script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script><script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
-<script type="text/javascript">
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -340,9 +326,9 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
 <section id="出店カバー率" class="level3" data-number="6.1.1"><h3 data-number="6.1.1" class="anchored" data-anchor-id="出店カバー率">
 <span class="header-section-number">6.1.1</span> 出店カバー率</h3>
 <p>出店カバー率を次のように定義します。</p>
-<p><span class="math display">
+<p><span class="math display">\[
 \text{出店カバー率} = \frac{\text{出現店舗数}}{\text{対象店舗数}} \times 100
-</span></p>
+\]</span></p>
 <p>出店カバー率を計算して、<code>df</code>に追加します。</p>
 <div class="cell">
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
@@ -373,24 +359,24 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
 `.groups` argument.</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="vyzynksgem" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="mwjlvmfszb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-#vyzynksgem table {
+#mwjlvmfszb table {
   font-family: Roboto, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#vyzynksgem thead, #vyzynksgem tbody, #vyzynksgem tfoot, #vyzynksgem tr, #vyzynksgem td, #vyzynksgem th {
+#mwjlvmfszb thead, #mwjlvmfszb tbody, #mwjlvmfszb tfoot, #mwjlvmfszb tr, #mwjlvmfszb td, #mwjlvmfszb th {
   border-style: none;
 }
 
-#vyzynksgem p {
+#mwjlvmfszb p {
   margin: 0;
   padding: 0;
 }
 
-#vyzynksgem .gt_table {
+#mwjlvmfszb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -416,12 +402,12 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-left-color: #D3D3D3;
 }
 
-#vyzynksgem .gt_caption {
+#mwjlvmfszb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#vyzynksgem .gt_title {
+#mwjlvmfszb .gt_title {
   color: #333333;
   font-size: 30px;
   font-weight: bold;
@@ -433,7 +419,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-bottom-width: 0;
 }
 
-#vyzynksgem .gt_subtitle {
+#mwjlvmfszb .gt_subtitle {
   color: #333333;
   font-size: 16px;
   font-weight: initial;
@@ -445,7 +431,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-top-width: 0;
 }
 
-#vyzynksgem .gt_heading {
+#mwjlvmfszb .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -457,13 +443,13 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-right-color: #D3D3D3;
 }
 
-#vyzynksgem .gt_bottom_border {
+#mwjlvmfszb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#vyzynksgem .gt_col_headings {
+#mwjlvmfszb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: rgba(255, 255, 255, 0);
@@ -478,7 +464,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-right-color: #D3D3D3;
 }
 
-#vyzynksgem .gt_col_heading {
+#mwjlvmfszb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -498,7 +484,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   overflow-x: hidden;
 }
 
-#vyzynksgem .gt_column_spanner_outer {
+#mwjlvmfszb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -510,15 +496,15 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   padding-right: 4px;
 }
 
-#vyzynksgem .gt_column_spanner_outer:first-child {
+#mwjlvmfszb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#vyzynksgem .gt_column_spanner_outer:last-child {
+#mwjlvmfszb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#vyzynksgem .gt_column_spanner {
+#mwjlvmfszb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 3px;
   border-bottom-color: rgba(255, 255, 255, 0);
@@ -530,11 +516,11 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   width: 100%;
 }
 
-#vyzynksgem .gt_spanner_row {
+#mwjlvmfszb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#vyzynksgem .gt_group_heading {
+#mwjlvmfszb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -560,7 +546,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   text-align: left;
 }
 
-#vyzynksgem .gt_empty_group_heading {
+#mwjlvmfszb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -575,15 +561,15 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   vertical-align: middle;
 }
 
-#vyzynksgem .gt_from_md > :first-child {
+#mwjlvmfszb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#vyzynksgem .gt_from_md > :last-child {
+#mwjlvmfszb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#vyzynksgem .gt_row {
+#mwjlvmfszb .gt_row {
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 5px;
@@ -602,7 +588,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   overflow-x: hidden;
 }
 
-#vyzynksgem .gt_stub {
+#mwjlvmfszb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -615,7 +601,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   padding-right: 5px;
 }
 
-#vyzynksgem .gt_stub_row_group {
+#mwjlvmfszb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -629,15 +615,15 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   vertical-align: top;
 }
 
-#vyzynksgem .gt_row_group_first td {
+#mwjlvmfszb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#vyzynksgem .gt_row_group_first th {
+#mwjlvmfszb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#vyzynksgem .gt_summary_row {
+#mwjlvmfszb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -647,16 +633,16 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   padding-right: 5px;
 }
 
-#vyzynksgem .gt_first_summary_row {
+#mwjlvmfszb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#vyzynksgem .gt_first_summary_row.thick {
+#mwjlvmfszb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#vyzynksgem .gt_last_summary_row {
+#mwjlvmfszb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -666,7 +652,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-bottom-color: #D3D3D3;
 }
 
-#vyzynksgem .gt_grand_summary_row {
+#mwjlvmfszb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -676,7 +662,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   padding-right: 5px;
 }
 
-#vyzynksgem .gt_first_grand_summary_row {
+#mwjlvmfszb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -686,7 +672,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-top-color: #D3D3D3;
 }
 
-#vyzynksgem .gt_last_grand_summary_row_top {
+#mwjlvmfszb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -696,11 +682,11 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-bottom-color: #D3D3D3;
 }
 
-#vyzynksgem .gt_striped {
+#mwjlvmfszb .gt_striped {
   background-color: #F5F5F5;
 }
 
-#vyzynksgem .gt_table_body {
+#mwjlvmfszb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -709,7 +695,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-bottom-color: #D3D3D3;
 }
 
-#vyzynksgem .gt_footnotes {
+#mwjlvmfszb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -723,7 +709,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-right-color: #D3D3D3;
 }
 
-#vyzynksgem .gt_footnote {
+#mwjlvmfszb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -732,7 +718,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   padding-right: 5px;
 }
 
-#vyzynksgem .gt_sourcenotes {
+#mwjlvmfszb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -746,7 +732,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-right-color: #D3D3D3;
 }
 
-#vyzynksgem .gt_sourcenote {
+#mwjlvmfszb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -754,72 +740,72 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   padding-right: 5px;
 }
 
-#vyzynksgem .gt_left {
+#mwjlvmfszb .gt_left {
   text-align: left;
 }
 
-#vyzynksgem .gt_center {
+#mwjlvmfszb .gt_center {
   text-align: center;
 }
 
-#vyzynksgem .gt_right {
+#mwjlvmfszb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vyzynksgem .gt_font_normal {
+#mwjlvmfszb .gt_font_normal {
   font-weight: normal;
 }
 
-#vyzynksgem .gt_font_bold {
+#mwjlvmfszb .gt_font_bold {
   font-weight: bold;
 }
 
-#vyzynksgem .gt_font_italic {
+#mwjlvmfszb .gt_font_italic {
   font-style: italic;
 }
 
-#vyzynksgem .gt_super {
+#mwjlvmfszb .gt_super {
   font-size: 65%;
 }
 
-#vyzynksgem .gt_footnote_marks {
+#mwjlvmfszb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#vyzynksgem .gt_asterisk {
+#mwjlvmfszb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#vyzynksgem .gt_indent_1 {
+#mwjlvmfszb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#vyzynksgem .gt_indent_2 {
+#mwjlvmfszb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#vyzynksgem .gt_indent_3 {
+#mwjlvmfszb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#vyzynksgem .gt_indent_4 {
+#mwjlvmfszb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#vyzynksgem .gt_indent_5 {
+#mwjlvmfszb .gt_indent_5 {
   text-indent: 25px;
 }
 
-#vyzynksgem .katex-display {
+#mwjlvmfszb .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#vyzynksgem div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#mwjlvmfszb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -992,7 +978,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
 <span>  <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_06_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="POS_Marketing_06_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="2100"></p>
 </figure>
 </div>
 </div>
@@ -1000,9 +986,9 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
 </section></section><section id="pi値" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="pi値">
 <span class="header-section-number">6.2</span> PI値</h2>
 <p>PI値(Purchase Index)は次のように定義されます。</p>
-<p><span class="math display">
+<p><span class="math display">\[
 \text{PI値} = \frac{\text{売上個数}}{\text{来店客数}} \times 1000(人)
-</span></p>
+\]</span></p>
 <p>PI値を計算して、<code>df</code>に追加します。</p>
 <div class="cell">
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
@@ -1033,24 +1019,24 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
 `.groups` argument.</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="pnhhbxgkpk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="bsmqktqlcb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-#pnhhbxgkpk table {
+#bsmqktqlcb table {
   font-family: Roboto, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#pnhhbxgkpk thead, #pnhhbxgkpk tbody, #pnhhbxgkpk tfoot, #pnhhbxgkpk tr, #pnhhbxgkpk td, #pnhhbxgkpk th {
+#bsmqktqlcb thead, #bsmqktqlcb tbody, #bsmqktqlcb tfoot, #bsmqktqlcb tr, #bsmqktqlcb td, #bsmqktqlcb th {
   border-style: none;
 }
 
-#pnhhbxgkpk p {
+#bsmqktqlcb p {
   margin: 0;
   padding: 0;
 }
 
-#pnhhbxgkpk .gt_table {
+#bsmqktqlcb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1076,12 +1062,12 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-left-color: #D3D3D3;
 }
 
-#pnhhbxgkpk .gt_caption {
+#bsmqktqlcb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#pnhhbxgkpk .gt_title {
+#bsmqktqlcb .gt_title {
   color: #333333;
   font-size: 30px;
   font-weight: bold;
@@ -1093,7 +1079,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-bottom-width: 0;
 }
 
-#pnhhbxgkpk .gt_subtitle {
+#bsmqktqlcb .gt_subtitle {
   color: #333333;
   font-size: 16px;
   font-weight: initial;
@@ -1105,7 +1091,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-top-width: 0;
 }
 
-#pnhhbxgkpk .gt_heading {
+#bsmqktqlcb .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -1117,13 +1103,13 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-right-color: #D3D3D3;
 }
 
-#pnhhbxgkpk .gt_bottom_border {
+#bsmqktqlcb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#pnhhbxgkpk .gt_col_headings {
+#bsmqktqlcb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: rgba(255, 255, 255, 0);
@@ -1138,7 +1124,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-right-color: #D3D3D3;
 }
 
-#pnhhbxgkpk .gt_col_heading {
+#bsmqktqlcb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1158,7 +1144,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   overflow-x: hidden;
 }
 
-#pnhhbxgkpk .gt_column_spanner_outer {
+#bsmqktqlcb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1170,15 +1156,15 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   padding-right: 4px;
 }
 
-#pnhhbxgkpk .gt_column_spanner_outer:first-child {
+#bsmqktqlcb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#pnhhbxgkpk .gt_column_spanner_outer:last-child {
+#bsmqktqlcb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#pnhhbxgkpk .gt_column_spanner {
+#bsmqktqlcb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 3px;
   border-bottom-color: rgba(255, 255, 255, 0);
@@ -1190,11 +1176,11 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   width: 100%;
 }
 
-#pnhhbxgkpk .gt_spanner_row {
+#bsmqktqlcb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#pnhhbxgkpk .gt_group_heading {
+#bsmqktqlcb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1220,7 +1206,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   text-align: left;
 }
 
-#pnhhbxgkpk .gt_empty_group_heading {
+#bsmqktqlcb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1235,15 +1221,15 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   vertical-align: middle;
 }
 
-#pnhhbxgkpk .gt_from_md > :first-child {
+#bsmqktqlcb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#pnhhbxgkpk .gt_from_md > :last-child {
+#bsmqktqlcb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#pnhhbxgkpk .gt_row {
+#bsmqktqlcb .gt_row {
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 5px;
@@ -1262,7 +1248,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   overflow-x: hidden;
 }
 
-#pnhhbxgkpk .gt_stub {
+#bsmqktqlcb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1275,7 +1261,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   padding-right: 5px;
 }
 
-#pnhhbxgkpk .gt_stub_row_group {
+#bsmqktqlcb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1289,15 +1275,15 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   vertical-align: top;
 }
 
-#pnhhbxgkpk .gt_row_group_first td {
+#bsmqktqlcb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#pnhhbxgkpk .gt_row_group_first th {
+#bsmqktqlcb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#pnhhbxgkpk .gt_summary_row {
+#bsmqktqlcb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1307,16 +1293,16 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   padding-right: 5px;
 }
 
-#pnhhbxgkpk .gt_first_summary_row {
+#bsmqktqlcb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#pnhhbxgkpk .gt_first_summary_row.thick {
+#bsmqktqlcb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#pnhhbxgkpk .gt_last_summary_row {
+#bsmqktqlcb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1326,7 +1312,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-bottom-color: #D3D3D3;
 }
 
-#pnhhbxgkpk .gt_grand_summary_row {
+#bsmqktqlcb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1336,7 +1322,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   padding-right: 5px;
 }
 
-#pnhhbxgkpk .gt_first_grand_summary_row {
+#bsmqktqlcb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1346,7 +1332,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-top-color: #D3D3D3;
 }
 
-#pnhhbxgkpk .gt_last_grand_summary_row_top {
+#bsmqktqlcb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1356,11 +1342,11 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-bottom-color: #D3D3D3;
 }
 
-#pnhhbxgkpk .gt_striped {
+#bsmqktqlcb .gt_striped {
   background-color: #F5F5F5;
 }
 
-#pnhhbxgkpk .gt_table_body {
+#bsmqktqlcb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1369,7 +1355,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-bottom-color: #D3D3D3;
 }
 
-#pnhhbxgkpk .gt_footnotes {
+#bsmqktqlcb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1383,7 +1369,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-right-color: #D3D3D3;
 }
 
-#pnhhbxgkpk .gt_footnote {
+#bsmqktqlcb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1392,7 +1378,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   padding-right: 5px;
 }
 
-#pnhhbxgkpk .gt_sourcenotes {
+#bsmqktqlcb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1406,7 +1392,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-right-color: #D3D3D3;
 }
 
-#pnhhbxgkpk .gt_sourcenote {
+#bsmqktqlcb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1414,72 +1400,72 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   padding-right: 5px;
 }
 
-#pnhhbxgkpk .gt_left {
+#bsmqktqlcb .gt_left {
   text-align: left;
 }
 
-#pnhhbxgkpk .gt_center {
+#bsmqktqlcb .gt_center {
   text-align: center;
 }
 
-#pnhhbxgkpk .gt_right {
+#bsmqktqlcb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#pnhhbxgkpk .gt_font_normal {
+#bsmqktqlcb .gt_font_normal {
   font-weight: normal;
 }
 
-#pnhhbxgkpk .gt_font_bold {
+#bsmqktqlcb .gt_font_bold {
   font-weight: bold;
 }
 
-#pnhhbxgkpk .gt_font_italic {
+#bsmqktqlcb .gt_font_italic {
   font-style: italic;
 }
 
-#pnhhbxgkpk .gt_super {
+#bsmqktqlcb .gt_super {
   font-size: 65%;
 }
 
-#pnhhbxgkpk .gt_footnote_marks {
+#bsmqktqlcb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#pnhhbxgkpk .gt_asterisk {
+#bsmqktqlcb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#pnhhbxgkpk .gt_indent_1 {
+#bsmqktqlcb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#pnhhbxgkpk .gt_indent_2 {
+#bsmqktqlcb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#pnhhbxgkpk .gt_indent_3 {
+#bsmqktqlcb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#pnhhbxgkpk .gt_indent_4 {
+#bsmqktqlcb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#pnhhbxgkpk .gt_indent_5 {
+#bsmqktqlcb .gt_indent_5 {
   text-indent: 25px;
 }
 
-#pnhhbxgkpk .katex-display {
+#bsmqktqlcb .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#pnhhbxgkpk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#bsmqktqlcb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1652,7 +1638,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
 <span>  <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_06_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="POS_Marketing_06_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="2100"></p>
 </figure>
 </div>
 </div>
@@ -1660,9 +1646,9 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
 <section id="金額pi値" class="level3" data-number="6.2.1"><h3 data-number="6.2.1" class="anchored" data-anchor-id="金額pi値">
 <span class="header-section-number">6.2.1</span> 金額PI値</h3>
 <p>金額PI値は次のように定義されます。</p>
-<p><span class="math display">
+<p><span class="math display">\[
 \text{金額PI値} = \frac{\text{売上金額}}{\text{来店客数}} \times 1000(人)
-</span></p>
+\]</span></p>
 <p>金額PI値を計算して、<code>df</code>に追加します。</p>
 <div class="cell">
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
@@ -1693,24 +1679,24 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
 `.groups` argument.</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="usxpzzuxor" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="jmhoulfres" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-#usxpzzuxor table {
+#jmhoulfres table {
   font-family: Roboto, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#usxpzzuxor thead, #usxpzzuxor tbody, #usxpzzuxor tfoot, #usxpzzuxor tr, #usxpzzuxor td, #usxpzzuxor th {
+#jmhoulfres thead, #jmhoulfres tbody, #jmhoulfres tfoot, #jmhoulfres tr, #jmhoulfres td, #jmhoulfres th {
   border-style: none;
 }
 
-#usxpzzuxor p {
+#jmhoulfres p {
   margin: 0;
   padding: 0;
 }
 
-#usxpzzuxor .gt_table {
+#jmhoulfres .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1736,12 +1722,12 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-left-color: #D3D3D3;
 }
 
-#usxpzzuxor .gt_caption {
+#jmhoulfres .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#usxpzzuxor .gt_title {
+#jmhoulfres .gt_title {
   color: #333333;
   font-size: 30px;
   font-weight: bold;
@@ -1753,7 +1739,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-bottom-width: 0;
 }
 
-#usxpzzuxor .gt_subtitle {
+#jmhoulfres .gt_subtitle {
   color: #333333;
   font-size: 16px;
   font-weight: initial;
@@ -1765,7 +1751,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-top-width: 0;
 }
 
-#usxpzzuxor .gt_heading {
+#jmhoulfres .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -1777,13 +1763,13 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-right-color: #D3D3D3;
 }
 
-#usxpzzuxor .gt_bottom_border {
+#jmhoulfres .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#usxpzzuxor .gt_col_headings {
+#jmhoulfres .gt_col_headings {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: rgba(255, 255, 255, 0);
@@ -1798,7 +1784,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-right-color: #D3D3D3;
 }
 
-#usxpzzuxor .gt_col_heading {
+#jmhoulfres .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1818,7 +1804,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   overflow-x: hidden;
 }
 
-#usxpzzuxor .gt_column_spanner_outer {
+#jmhoulfres .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1830,15 +1816,15 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   padding-right: 4px;
 }
 
-#usxpzzuxor .gt_column_spanner_outer:first-child {
+#jmhoulfres .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#usxpzzuxor .gt_column_spanner_outer:last-child {
+#jmhoulfres .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#usxpzzuxor .gt_column_spanner {
+#jmhoulfres .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 3px;
   border-bottom-color: rgba(255, 255, 255, 0);
@@ -1850,11 +1836,11 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   width: 100%;
 }
 
-#usxpzzuxor .gt_spanner_row {
+#jmhoulfres .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#usxpzzuxor .gt_group_heading {
+#jmhoulfres .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1880,7 +1866,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   text-align: left;
 }
 
-#usxpzzuxor .gt_empty_group_heading {
+#jmhoulfres .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1895,15 +1881,15 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   vertical-align: middle;
 }
 
-#usxpzzuxor .gt_from_md > :first-child {
+#jmhoulfres .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#usxpzzuxor .gt_from_md > :last-child {
+#jmhoulfres .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#usxpzzuxor .gt_row {
+#jmhoulfres .gt_row {
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 5px;
@@ -1922,7 +1908,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   overflow-x: hidden;
 }
 
-#usxpzzuxor .gt_stub {
+#jmhoulfres .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1935,7 +1921,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   padding-right: 5px;
 }
 
-#usxpzzuxor .gt_stub_row_group {
+#jmhoulfres .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1949,15 +1935,15 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   vertical-align: top;
 }
 
-#usxpzzuxor .gt_row_group_first td {
+#jmhoulfres .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#usxpzzuxor .gt_row_group_first th {
+#jmhoulfres .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#usxpzzuxor .gt_summary_row {
+#jmhoulfres .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1967,16 +1953,16 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   padding-right: 5px;
 }
 
-#usxpzzuxor .gt_first_summary_row {
+#jmhoulfres .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#usxpzzuxor .gt_first_summary_row.thick {
+#jmhoulfres .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#usxpzzuxor .gt_last_summary_row {
+#jmhoulfres .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1986,7 +1972,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-bottom-color: #D3D3D3;
 }
 
-#usxpzzuxor .gt_grand_summary_row {
+#jmhoulfres .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1996,7 +1982,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   padding-right: 5px;
 }
 
-#usxpzzuxor .gt_first_grand_summary_row {
+#jmhoulfres .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2006,7 +1992,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-top-color: #D3D3D3;
 }
 
-#usxpzzuxor .gt_last_grand_summary_row_top {
+#jmhoulfres .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2016,11 +2002,11 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-bottom-color: #D3D3D3;
 }
 
-#usxpzzuxor .gt_striped {
+#jmhoulfres .gt_striped {
   background-color: #F5F5F5;
 }
 
-#usxpzzuxor .gt_table_body {
+#jmhoulfres .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2029,7 +2015,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-bottom-color: #D3D3D3;
 }
 
-#usxpzzuxor .gt_footnotes {
+#jmhoulfres .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2043,7 +2029,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-right-color: #D3D3D3;
 }
 
-#usxpzzuxor .gt_footnote {
+#jmhoulfres .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2052,7 +2038,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   padding-right: 5px;
 }
 
-#usxpzzuxor .gt_sourcenotes {
+#jmhoulfres .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2066,7 +2052,7 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   border-right-color: #D3D3D3;
 }
 
-#usxpzzuxor .gt_sourcenote {
+#jmhoulfres .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2074,72 +2060,72 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
   padding-right: 5px;
 }
 
-#usxpzzuxor .gt_left {
+#jmhoulfres .gt_left {
   text-align: left;
 }
 
-#usxpzzuxor .gt_center {
+#jmhoulfres .gt_center {
   text-align: center;
 }
 
-#usxpzzuxor .gt_right {
+#jmhoulfres .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#usxpzzuxor .gt_font_normal {
+#jmhoulfres .gt_font_normal {
   font-weight: normal;
 }
 
-#usxpzzuxor .gt_font_bold {
+#jmhoulfres .gt_font_bold {
   font-weight: bold;
 }
 
-#usxpzzuxor .gt_font_italic {
+#jmhoulfres .gt_font_italic {
   font-style: italic;
 }
 
-#usxpzzuxor .gt_super {
+#jmhoulfres .gt_super {
   font-size: 65%;
 }
 
-#usxpzzuxor .gt_footnote_marks {
+#jmhoulfres .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#usxpzzuxor .gt_asterisk {
+#jmhoulfres .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#usxpzzuxor .gt_indent_1 {
+#jmhoulfres .gt_indent_1 {
   text-indent: 5px;
 }
 
-#usxpzzuxor .gt_indent_2 {
+#jmhoulfres .gt_indent_2 {
   text-indent: 10px;
 }
 
-#usxpzzuxor .gt_indent_3 {
+#jmhoulfres .gt_indent_3 {
   text-indent: 15px;
 }
 
-#usxpzzuxor .gt_indent_4 {
+#jmhoulfres .gt_indent_4 {
   text-indent: 20px;
 }
 
-#usxpzzuxor .gt_indent_5 {
+#jmhoulfres .gt_indent_5 {
   text-indent: 25px;
 }
 
-#usxpzzuxor .katex-display {
+#jmhoulfres .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#usxpzzuxor div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#jmhoulfres div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2312,15 +2298,14 @@ $ 平均価格       &lt;dbl&gt; 150.0, 147.6, 150.0, 150.8, 151.0, 153.0, 149.1
 <span>  <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_06_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="POS_Marketing_06_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="2100"></p>
 </figure>
 </div>
 </div>
 </div>
 </section></section><section id="隠れヒット商品を見つける" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="隠れヒット商品を見つける">
 <span class="header-section-number">6.3</span> 隠れヒット商品を見つける</h2>
-<p>出現店舗数ベースのPI値を調べる。</p>
-<p>まず、出現店舗数ベースの数量PIと金額PIを計算します。</p>
+<p>特定店舗でのみ馬鹿売れしている隠れヒット商品を探すために出現店舗数ベースのPI値を調べる。 まず、出現店舗数ベースの数量PIと金額PIを計算します。</p>
 <div class="cell">
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span></span>
