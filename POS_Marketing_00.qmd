@@ -1,0 +1,445 @@
+# 第1回 売上をまとめた表をつくる
+
+## はじめに
+
+第1回の内容は，POSデータを集約して，売上金額や売上個数の合計を計算し，販売状況の特徴を把握しやすい図や表を作成することです。
+
+## この章で使うファイルとパッケージ
+
+ここで用いるファイルは，MS Excelのファイルです。
+MS Excelで作成されたフィアルは拡張子に`.xlsx`がついています。
+
+:::{.aside}
+**拡張子**(extension)は，ファイル名の最後についている`.xlsx`や`.csv`などの文字列のことで，ファイルの種類を示しています。Windowsではデフォルトで拡張子が表示されない設定になっているかもしれないので，必ず拡張子を表示させる設定にしておいてください。`.exe`ファイルを知らずに実行すると，ウイルスに感染する可能性があるので，拡張子を表示させることはセキュリティ上も重要です。
+:::
+
+- `chp1.xlsx`
+
+Rの機能を拡張するために，ここでは以下のパッケージを用います。
+
+- `tidyverse` : データの読み込み，加工，可視化に使うパッケージ
+- `readxl` : Excelファイルを読み込むためのパッケージ
+
+通常，Rでは`install.packages()`関数を使ってパッケージをインストールし，`library()`で読み出しますが，ここでは`pacman`パッケージを使って一括でインストール・読み込みを行います。
+
+`pacman`パッケージを使うために，以下のコードを実行してください。
+
+```{r}
+#| eval: false
+install.packages("tinytex")
+install.packages("pacman") # 最初の1回だけ実行
+```
+
+`pacman`パッケージには便利な関数がいろいろありますが，ここでは`p_load()`関数を使って複数のパッケージを一括で読み込みます。まだインストールされていないパッケージがあれば，自動でインストールされます。
+便利なパッケージをいろいろ読み込んでおきましょう。
+
+```{r}
+pacman::p_load(tidyverse, readxl, ggthemes, gt, gtExtras)
+```
+
+- `ggtheme` : グラフのテーマを変更するためのパッケージ
+- `gt` : 表を作成するためのパッケージ
+- `gtExtras` : `gt`パッケージの拡張機能を提供するパッケージ
+
+
+:::{.aside}
+`pacman::p_load()`のように，「パッケージ名`::`関数名」という書き方で，パッケージ名を指定して関数を使うと，`p_load()`関数が`pacman`パッケージの関数であることが分かりやすいので，似たような名前の関数があるときは，パッケージ名をつけて使うといいでしょう。
+たとえば，`dplyr::select()`関数や`readxl::read_excel()`関数です。
+:::
+
+この章で使うファイルは作業ディレクトリの`data`フォルダにいれておきましょう。
+<span class="rmarker-s">Rは作業ディレクトリとなっているフォルダを軸にしてファイルを読み込む</span>ため，ファイルの場所に注意してください。
+ここでは作業ディレクトリの中に`data`フォルダを作り，そこに`chp1.xlsx`を保存してあるので，`data/chp1.xlsx`と指定することでファイルにアクセスしています。
+
+
+## Rの準備
+
+- Rをインストールしておきましょう。
+- RStudioかVS Codeをインストールしておきましょう。
+- Rのパッケージ`tidyverse`をインストールしておきましょう。
+- 作業ディレクトリを設定しておきましょう。
+
+これらの内容が分からない場合は，R入門の資料や本を参照してください。
+
+## データの読み込み
+
+まずは`readxl`パッケージを使ってデータ`chp1.xlsx`を読み込んでみましょう。
+このExcelファイルのシートの一覧を表示してみます。
+
+```{r}
+readxl::excel_sheets("data/chp1.xlsx")
+```
+
+<span class="rmarker-s">`excel_sheets()`関数はデフォルトで1番目のシートを読み込みます</span>。
+「いつものPOSデータ」を読み込みたいので，特に指定せずに`read_excel()`関数を使って読み込みます。
+
+```{r}
+#| cache=TRUE
+df <- readxl::read_excel("data/chp1.xlsx")
+head(df) # 戦闘6行を表示
+```
+
+どんな変数があるのか確認するには`names()`関数を使います。
+
+```{r}
+names(df)
+```
+
+## データの属性を確認する。
+
+データの属性や型を確認するには`str()`関数を使います。
+
+```{r}
+str(df)
+```
+
+`dplyr::glimpse()`関数を使うと，データの概要をより見やすく表示できます。
+
+```{r}
+dplyr::glimpse(df)
+```
+
+この表の上部をみると、このデータには変数が11個，観測値が374,090個あることが分かります。
+また，変数名の横に`<chr>`や`<dbl>`といった文字が表示されていますが，これは変数の型を示しています。
+`<chr>`は文字列型，`<dbl>`は数値型，`<dttm>`は日付型を示しています。
+
+:::{.aside}
+文字型，数値型，日付型以外にも，
+
+- `<fct>`: 因子型
+- `<int>`: 整数型
+- `<lgl>`: 論理型
+
+などがあります。
+:::
+
+## データの概要を確認する
+
+データの属性を確認するために，`summary()`関数を使ってみましょう。
+基本関数`summary()`は，データの記述統計量などを返してくれる関数です。
+
+```{r}
+summary(df)
+```
+
+この表より，
+
+- 日付は2023年1月2日から2023年12月31日まで
+- 時間は10:00から21:00まで
+- 単価は数値で，140〜170
+- 個数は数値で，1〜14
+- 金額は数値で，140〜2100
+
+となっていることがわかります。
+また文字型となっている`曜日`，`性別`，`年代`，`メーカー`，`商品名`はデータの個数として`Length:`が出力されていることがわかります。
+文字列の`summary()`を出力しても意味がないので，文字型の変数を除外して，数値型の変数だけを表示するには，`select()`関数と`where()`関数を使い，
+`is.double`関数を使って数値型の変数だけを選択します。
+
+```{r}
+df |>
+  select(where(is.double)) |>
+  summary()
+```
+
+:::{.aside}
+`is.double()`関数は，引数の型が数値型かどうかを判定する関数で，数値型の場合は`TRUE`を返し，そうでない場合は`FALSE`を返します。このように，`is.型名()`関数は，型を判定する関数として使われます。
+条件を満たす変数だけを選択する`dplyr::select()`関数と，`dplyr::where()`関数を使うことで変数の型を指定して変数を抽出できます。
+:::
+
+## 因子型
+
+これらの文字型変数`曜日`，`性別`，`年代`，`メーカー`，`商品名`は，どのカテゴリーに属しているかを表している**カテゴリカルデータ**であるため，
+文字型から**因子型**(factor)に変換しておきましょう。
+変数を因子型に変更するには，`facor()`関数や`as.factor()`関数を使います。
+ここでは，曜日に順番があるため，`levels`オプションと`ordered`オプションで曜日の種類と順番を指定しています。
+
+```{r}
+df <- df %>%
+  mutate(曜日 = factor(曜日, levels = c("月", "火", "水", "木", "金", "土", "日"), ordered = TRUE),
+         性別 = as.factor(性別),
+         年代 = as.factor(年代),
+         メーカー = as.factor(メーカー),
+         商品名 = as.factor(商品名))
+```
+
+変数の型を変更したので，もう一度，`summary()`関数を使ってデータを確認してみましょう。
+
+```{r}
+summary(df)
+```
+
+すると，`曜日`，`性別`，`年代`，`メーカー`，`商品名`がカテゴリー変数として認識され，カテゴリーごとの個数が表示されています。
+
+## 条件によるデータの抽出
+
+`メーカー`変数が`自社`の場合だけを抽出するには，`dplyr::filter()`関数を使います。
+`filter()`関数は，引数に`メーカー == "自社`という条件を指定することで，条件に合致するデータだけを抽出します。
+
+
+```{r}
+df |>
+  dplyr::filter(メーカー == "自社") |>
+  head()
+```
+
+## 基礎集計でデータの傾向をチェック
+
+メーカーごとの売上金額合計を示す表を作成してみましょう。
+Excelでピボットテーブルを使う手続が教科書で解説されていますが，Rだと`dplyr`パッケージを使って簡単にできます。
+
+```{r}
+#| class-output: code-output
+df_maker_sales <- df |>
+  dplyr::group_by(メーカー) |>
+  dplyr::summarise(売上金額合計 = sum(金額))
+df_maker_sales
+```
+
+これだけです。
+キレイな表にするなら，`gt()`関数と`gtExtra`パッケージを使うといいでしょう。
+
+```{r}
+df_maker_sales |>
+  gt() |>
+  fmt_number(columns = 2:2, decimals = 0) |>
+  tab_header(title = "表1-2 メーカーごとの売上金額") |>
+  gt_theme_pff() |> # テーマを適用
+  as_raw_html()
+```
+
+次に，各メーカーのどの商品が，平均何円で売られているのか，を調べてみましょう。
+`group_by()`関数の引数に，`メーカー`と`商品名`を指定して，`summarise()`関数でグループごとの平均単価を計算し，
+`arrange()`関数でメーカーと平均単価でソートします。`desc()`関数は降順にソートするための関数です。
+```{r}
+df_maker_item <- df |>
+  group_by(メーカー, 商品名) |> # メーカーと商品名でグループ化
+  summarise(平均単価 = mean(単価)) |> # 平均単価を計算
+  arrange(メーカー, desc(平均単価)) |># メーカーと平均単価でソート
+  ungroup()
+df_maker_item |>
+  gt() |>
+  fmt_number(columns = 3:3, decimals = 0) |>
+  tab_header(title = "表1−3 商品ごとの単価") |>
+  gt_theme_pff() |> # テーマを適用
+  as_raw_html()
+```
+
+## 資料作成に必要なデータを取り出す
+
+データ全体における売上金額と売上個数を計算して，各月と各時間帯にの売上金額を計算してみる。
+
+
+```{r}
+#| class-output: code-output
+# 全体の売上金額と売上個数
+df |>
+  summarise(
+    売上金額合計 = sum(金額),
+    売上個数合計 = sum(個数)
+    )
+```
+
+自社製品ごとの個数と金額を計算してみましょう。
+
+```{r}
+#| class-output: code-output
+df_jisha_total <- df |>
+  filter(メーカー == "自社") |> # 自社製品だけを抽出
+  group_by(商品名) |>
+  summarise(
+    売上金額合計 = sum(金額),
+    売上個数合計 = sum(個数)
+    ) |>
+  arrange(desc(売上金額合計))
+df_jisha_total
+```
+
+これで自社の製品ごとの売上金額と売上個数の合計が計算されました。
+ここで注意しないといけないことは，`group_by()`関数と`summarise()`関数を使った場合，グループごとに1つの統計量を返すため，上のコードだと，
+自社の2商品ごとの売上金額と売上個数の合計が出力され，2行2列のデータフレームが返されていることが分かります。
+
+
+次に，各月ごとの売上金額を計算してみましょう。
+`日付`変数の型を確認します。
+
+```{r}
+#| class-output: code-output
+class(df$日付)
+```
+
+`POSIXct` `POSIXt` という日付型のデータです。
+この変数`日付`から月を取り出すには，`lubridate`パッケージを使います。
+日付データは`2023-05-14 UTC`といった形式で格納されているため，`lubridate::month()`関数を使って月を取り出します。
+
+
+
+```{r}
+df_month_sales <- df |>
+  filter(メーカー == "自社") |>
+  mutate(月 = lubridate::month(日付, label = TRUE)) |>
+  group_by(月) |> # 月ごとにグループ化
+  summarise(売上金額合計 = sum(金額)) |>
+  arrange(月) |>
+  ungroup()
+
+df_month_sales |>
+  gt() |>
+  fmt_number(columns = 2:2, decimals = 0) |>
+  tab_header(title = "表1−5 自社商品の月ごとの売上金額") |>
+  gt_theme_pff() |> # テーマを適用
+  tab_options(
+    heading.title.font.size = "small",
+    table.font.size = "large",
+    table.width = pct(60)
+    )
+```
+
+同じように各時間帯ごとの売上金額を計算してみましょう。
+
+```{r}
+df_time_sales <- df |>
+  filter(メーカー == "自社") |>
+  group_by(時間) |>
+  summarise(売上金額合計 = sum(金額)) |>
+  arrange(時間) |>
+  ungroup()
+
+df_time_sales |>
+  gt() |>
+  fmt_number(columns = 2:2, decimals = 0) |>
+  gt_theme_pff() |> # テーマを適用
+  tab_header(title = "表1−6 自社商品の時間帯別売上高") |>
+  tab_options(
+        heading.title.font.size = "small",
+        table.font.size = "large",
+        table.width = pct(60)
+        )
+```
+
+## 集計結果をグラフで可視化
+
+可視化はRの得意分野です。
+`ggplot2`パッケージを使って，いろんなグラフで表示してみましょう。
+
+:::{.aside}
+`ggplot2`パッケージで日本語を表示させるためには，一手間必要になります。
+しかもMacOSとWindowsでやり方が異なるので，注意してください。
+松浦の環境はMacOSであるため，ヒラギノフォントを指定してます。
+ついでに，カラーパレットもユニバーサルデザインに配慮した`scale_fill_tableau(name = "Tableau 20")`を指定してます。
+:::
+
+
+メーカー別の売上合計金額を棒グラフにします。
+
+```{r}
+df_maker_sales |>
+  ggplot() + aes(x = メーカー, y = 売上金額合計, fill = メーカー) +
+  geom_col() + theme_bw(base_family = "Noto San JP") +
+  scale_fill_tableau(name = "Tableau 20") # Tableau 20 パレットを適用
+```
+
+月別売上高を折れ線グラフにします。
+
+```{r}
+df_month_sales |>
+  ggplot() + aes(x = 月, y = 売上金額合計, group = 1) +
+  geom_line() + geom_point() +
+  theme_bw(base_family = "HiraKakuPro-W3")
+```
+
+夏に売上高がピークを迎えていることが分かります。
+
+時間帯別売上高を棒グラフにします。
+
+```{r}
+#| class-output: code-output
+df_time_sales |>
+  ggplot() +
+  aes(x = 時間, y = 売上金額合計, fill = factor(時間, levels = rev(unique(時間)))) + # 時間の順序を逆にする
+  geom_col() + theme_bw(base_family = "HiraKakuPro-W3") + # テーマとフォント
+  guides(fill = guide_legend(title = "時間帯")) +
+  scale_fill_viridis_d(direction = 1) # Viridis パレットを逆順に適用
+```
+
+12時ころと17時ころに売上高が大きくなっているので，昼食・夕食の時間帯に売上が伸びていることが分かります。
+
+さらに，月ごと，時間ごとの棒グラフを重ねて表示してみましょう。
+
+```{r}
+df_month_time_sales <- df |>
+  filter(メーカー == "自社") |>
+  mutate(月 = lubridate::month(日付, label = TRUE),
+         時間 = as.factor(時間)) |>
+  group_by(月, 時間) |>
+  summarise(売上金額合計 = sum(金額)) |>
+  arrange(月, 時間)
+
+df_month_time_sales |>
+  ggplot() + aes(x = 月, y = 売上金額合計, fill = 時間) +
+  geom_col(position = "dodge") + theme_bw(base_family = "HiraKakuPro-W3") +
+  guides(fill = guide_legend(title = "時間帯")) +
+  scale_fill_viridis_d(direction = -1)
+```
+
+昼食時と夕食前に売上が伸びる傾向は1月から12月まで観察されていますが，その差は夏が非常に多く，冬には昼食時と夕食前とそれ以外の売上の差が小さくなっていることが分かります。
+
+これをアニメーションにしてみましょう。
+Rには`ggplot2`パッケージで作ったグラフをアニメーションにする`gganimate`パッケージがあります。
+ここでは，`transition_states()`関数と`enter_fade()`関数，`exit_fade()`関数を使って，時間帯ごとの売上高をアニメーションで表示してみます。
+
+- `transition_states()`: アニメーションの状態を指定します。
+- `enter_fade()`: アニメーションの開始時のエフェクトを指定します。
+- `exit_fade()`: アニメーションの終了時のエフェクトを指定します。
+
+```{r}
+pacman::p_load(gganimate)
+```
+
+```{r}
+#| cache: true
+df_month_time_sales |>
+  ggplot() +
+  aes(x = 月, y = 売上金額合計, fill = 時間) +
+  geom_col(position = "dodge") +
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  guides(fill = guide_legend(title = "時間帯")) +
+  scale_fill_viridis_d(direction = -1) +
+  transition_states(時間, transition_length = 2, state_length = 1) +
+  labs(
+    title = "月ごとの時間帯別売上高: 時間帯 {closest_state} 時",
+    x = "月",
+    y = "売上金額合計"
+  ) +
+  enter_fade() +
+  exit_fade()
+```
+
+同じように，月と時間を入れ替えてみましょう。
+
+```{r}
+#| cache: true
+df_month_time_sales |>
+  ggplot() +
+  aes(x = 時間, y = 売上金額合計, fill = 月) +
+  geom_col(position = "dodge") +
+  theme_bw(base_family = "HiraKakuPro-W3") +
+  guides(fill = guide_legend(title = "月")) +
+  scale_fill_viridis_d(direction = -1) +
+  transition_states(月, transition_length = 2, state_length = 1) +
+  labs(
+    title = "時間ごとの月別売上高:  {closest_state} 月",
+    x = "時間",
+    y = "売上金額合計"
+  ) +
+  enter_fade() +
+  exit_fade()
+```
+
+
+テキストの気温と販売個数の散布図は，気温データがないため作れません。
+
+## 提出用の資料を作成する。
+
+テキストではMS Excelで作成した表を、MS Powerpointに貼り付けてスライド資料を作成するようになっていますが、
+RとQuartoを使えば、データ分析と資料作成を同じ場所で行うことができます。
+
