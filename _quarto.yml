@@ -11,7 +11,8 @@ book:
   date: "11/28/2024"
   favicon: img/favicon.ico
   twitter-card: true
-  # site-url: https://so-ichi.com
+  site-url: https://ma2ura.github.io/pos_marketing/
+  repo-url: https://github.com/ma2ura/
   chapters:
     - index.qmd
     - POS_Marketing_01.qmd
@@ -38,15 +39,20 @@ format:
   html:
     theme: cerulean
     toc: true
-    html-math-method: katex
+    html-math-method: mathjax
     code-copy: true
     code-overflow: wrap
     code-link: true
     link-external-icon: true
     df-print: kable
+    
     grid:
       sidebar-width: 200px
       body-width: 1200px
     css:
       - "mystyle.css"
 lang: "ja"
+knitr: 
+  opts_chunk: 
+    dev: "ragg_png"
+    dpi: 300
