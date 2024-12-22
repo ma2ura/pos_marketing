@@ -15,6 +15,7 @@
 パッケージを読み込みます。
 
 ```{r}
+options(scipen=100)
 pacman::p_load(tidyverse, readxl, ggthemes, gt, gtExtras)
 ```
 
@@ -389,7 +390,7 @@ $\chi^2$検定で用いられる統計量は、$\chi^2$統計量と呼ばれ、�
 $$
 \chi^2 = \sum_{i=1}^n \sum_{j=1}^m \frac{(O_{ij} - E_{ij})^2}{E_{ij}}
 $$
-ここで、$O_{ij}$は観測された度数(観測度数)、$E_{ij}$は理論的に予測される度数(期待度数)です。$n$と$m$はカテゴリー変数のカテゴリー数です。
+ここで、<span class="markp">$O_{ij}$は観測された度数(観測度数)、$E_{ij}$は理論的に予測される度数(期待度数)です。$n$と$m$はカテゴリー変数のカテゴリー数です。</span>
 つまり、2つのカテゴリー変数の関連性を調べる場合、$\chi^2$統計量は次のように計算されます。
 
 $$
@@ -405,7 +406,7 @@ $$
 $$
 E_{ij} = \frac{O_{i\cdot} \times O_{\cdot j}}{O_{\cdot \cdot}}
 $$
-ここで、$O_{i\cdot}$は$i$行目の合計(横の合計)、$O_{\cdot j}$は$j$列目の合計(縦の合計)、$O_{\cdot \cdot}$は全体の合計です。
+ここで、<span class = "markp">$O_{i\cdot}$は$i$行目の合計(横の合計)、$O_{\cdot j}$は$j$列目の合計(縦の合計)、$O_{\cdot \cdot}$は全体の合計です</span>。
 
 先のメガネの例で計算してみます。
 観察度数$O$は次のようになります。
@@ -506,19 +507,21 @@ qchisq(1 - 0.05, 1)
 では先程計算した$\chi^2$統計量は、有意水準5%で帰無仮説を棄却するかどうかを調べてみましょう。
 
 ```{r}
-chi2 <- 7.2
+chi2 <- 56.51731
 qchisq(1 - alpha, degf) < chi2
 ```
-より、$\chi^2$統計量は有意水準5%で帰無仮説を棄却することが分かりました。
+より、 $\chi^2$ 統計量 $56.51731$ は有意水準5%で帰無仮説を棄却することが分かりました。
 ちなみに、自由度1のカイ二乗分布の確率密度関数と$\chi^2$統計量の位置を重ねてみると次のようになります。
 
 ```{r}
+#| warning: false
+#| message: false
 df_chi_graph |>
   pivot_wider(names_from = "y", values_from = "value") |>
   ggplot() + aes(x = x,y = y1) + geom_line(linewidth = 1) +
   ylab("密度") + xlab("カイ二乗値") +
   scale_y_continuous(expand = c(0,0), limits = c(0,1)) +
-  scale_x_continuous(expand = c(0,0), limits = c(-0.1,10)) +
+  scale_x_continuous(expand = c(0,0), limits = c(-0.1,60)) +
   geom_vline(xintercept = chi2, linetype = "dashed", color = "red") +
   annotate("text", x = chi2, y = 0.1, label = "χ2 statistics", color = "red") +
   ggtitle("自由度1のχ2分布の確率密度") + theme_bw(base_family = "HiraKakuPro-W3") +
