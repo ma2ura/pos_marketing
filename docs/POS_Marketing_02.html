@@ -266,7 +266,8 @@ window.Quarto = {
 </ul>
 <p>パッケージを読み込みます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>, <span class="va">readxl</span>, <span class="va">ggthemes</span>, <span class="va">gt</span>, <span class="va">gtExtras</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>scipen<span class="op">=</span><span class="fl">100</span><span class="op">)</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>, <span class="va">readxl</span>, <span class="va">ggthemes</span>, <span class="va">gt</span>, <span class="va">gtExtras</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>readxl</code>パッケージを使ってデータ<code>chp2.xlsx</code>を読み込んでみましょう。 前章と同様にこのExcelファイルのシートの一覧を表示してみます。</p>
 <div class="cell">
@@ -509,23 +510,23 @@ window.Quarto = {
 <span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, decimals <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"表2-1 性別・年代ごとの購入回数をまとめてクロス集計表"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="zunkchviea" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zunkchviea table {
+<div id="fnkgwwgevt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fnkgwwgevt table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#zunkchviea thead, #zunkchviea tbody, #zunkchviea tfoot, #zunkchviea tr, #zunkchviea td, #zunkchviea th {
+#fnkgwwgevt thead, #fnkgwwgevt tbody, #fnkgwwgevt tfoot, #fnkgwwgevt tr, #fnkgwwgevt td, #fnkgwwgevt th {
   border-style: none;
 }
 
-#zunkchviea p {
+#fnkgwwgevt p {
   margin: 0;
   padding: 0;
 }
 
-#zunkchviea .gt_table {
+#fnkgwwgevt .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -551,12 +552,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#zunkchviea .gt_caption {
+#fnkgwwgevt .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#zunkchviea .gt_title {
+#fnkgwwgevt .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -568,7 +569,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#zunkchviea .gt_subtitle {
+#fnkgwwgevt .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -580,7 +581,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#zunkchviea .gt_heading {
+#fnkgwwgevt .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -592,13 +593,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#zunkchviea .gt_bottom_border {
+#fnkgwwgevt .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zunkchviea .gt_col_headings {
+#fnkgwwgevt .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -613,7 +614,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#zunkchviea .gt_col_heading {
+#fnkgwwgevt .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -633,7 +634,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#zunkchviea .gt_column_spanner_outer {
+#fnkgwwgevt .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -645,15 +646,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#zunkchviea .gt_column_spanner_outer:first-child {
+#fnkgwwgevt .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zunkchviea .gt_column_spanner_outer:last-child {
+#fnkgwwgevt .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zunkchviea .gt_column_spanner {
+#fnkgwwgevt .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -665,11 +666,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#zunkchviea .gt_spanner_row {
+#fnkgwwgevt .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#zunkchviea .gt_group_heading {
+#fnkgwwgevt .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -695,7 +696,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#zunkchviea .gt_empty_group_heading {
+#fnkgwwgevt .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -710,15 +711,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#zunkchviea .gt_from_md > :first-child {
+#fnkgwwgevt .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zunkchviea .gt_from_md > :last-child {
+#fnkgwwgevt .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zunkchviea .gt_row {
+#fnkgwwgevt .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -737,7 +738,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#zunkchviea .gt_stub {
+#fnkgwwgevt .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -750,7 +751,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#zunkchviea .gt_stub_row_group {
+#fnkgwwgevt .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -764,15 +765,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#zunkchviea .gt_row_group_first td {
+#fnkgwwgevt .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#zunkchviea .gt_row_group_first th {
+#fnkgwwgevt .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#zunkchviea .gt_summary_row {
+#fnkgwwgevt .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -782,16 +783,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#zunkchviea .gt_first_summary_row {
+#fnkgwwgevt .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#zunkchviea .gt_first_summary_row.thick {
+#fnkgwwgevt .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#zunkchviea .gt_last_summary_row {
+#fnkgwwgevt .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -801,7 +802,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#zunkchviea .gt_grand_summary_row {
+#fnkgwwgevt .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -811,7 +812,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#zunkchviea .gt_first_grand_summary_row {
+#fnkgwwgevt .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -821,7 +822,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#zunkchviea .gt_last_grand_summary_row_top {
+#fnkgwwgevt .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -831,11 +832,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#zunkchviea .gt_striped {
+#fnkgwwgevt .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#zunkchviea .gt_table_body {
+#fnkgwwgevt .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -844,7 +845,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#zunkchviea .gt_footnotes {
+#fnkgwwgevt .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -858,7 +859,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#zunkchviea .gt_footnote {
+#fnkgwwgevt .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -867,7 +868,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#zunkchviea .gt_sourcenotes {
+#fnkgwwgevt .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -881,7 +882,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#zunkchviea .gt_sourcenote {
+#fnkgwwgevt .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -889,72 +890,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#zunkchviea .gt_left {
+#fnkgwwgevt .gt_left {
   text-align: left;
 }
 
-#zunkchviea .gt_center {
+#fnkgwwgevt .gt_center {
   text-align: center;
 }
 
-#zunkchviea .gt_right {
+#fnkgwwgevt .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zunkchviea .gt_font_normal {
+#fnkgwwgevt .gt_font_normal {
   font-weight: normal;
 }
 
-#zunkchviea .gt_font_bold {
+#fnkgwwgevt .gt_font_bold {
   font-weight: bold;
 }
 
-#zunkchviea .gt_font_italic {
+#fnkgwwgevt .gt_font_italic {
   font-style: italic;
 }
 
-#zunkchviea .gt_super {
+#fnkgwwgevt .gt_super {
   font-size: 65%;
 }
 
-#zunkchviea .gt_footnote_marks {
+#fnkgwwgevt .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#zunkchviea .gt_asterisk {
+#fnkgwwgevt .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#zunkchviea .gt_indent_1 {
+#fnkgwwgevt .gt_indent_1 {
   text-indent: 5px;
 }
 
-#zunkchviea .gt_indent_2 {
+#fnkgwwgevt .gt_indent_2 {
   text-indent: 10px;
 }
 
-#zunkchviea .gt_indent_3 {
+#fnkgwwgevt .gt_indent_3 {
   text-indent: 15px;
 }
 
-#zunkchviea .gt_indent_4 {
+#fnkgwwgevt .gt_indent_4 {
   text-indent: 20px;
 }
 
-#zunkchviea .gt_indent_5 {
+#fnkgwwgevt .gt_indent_5 {
   text-indent: 25px;
 }
 
-#zunkchviea .katex-display {
+#fnkgwwgevt .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#zunkchviea div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#fnkgwwgevt div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1037,23 +1038,23 @@ window.Quarto = {
 <span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">3</span>, decimals <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"表2-2 性別・年代ごとの自社商品の売上金額"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="wyifvjzcqn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#wyifvjzcqn table {
+<div id="ttoeqdjzzr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ttoeqdjzzr table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#wyifvjzcqn thead, #wyifvjzcqn tbody, #wyifvjzcqn tfoot, #wyifvjzcqn tr, #wyifvjzcqn td, #wyifvjzcqn th {
+#ttoeqdjzzr thead, #ttoeqdjzzr tbody, #ttoeqdjzzr tfoot, #ttoeqdjzzr tr, #ttoeqdjzzr td, #ttoeqdjzzr th {
   border-style: none;
 }
 
-#wyifvjzcqn p {
+#ttoeqdjzzr p {
   margin: 0;
   padding: 0;
 }
 
-#wyifvjzcqn .gt_table {
+#ttoeqdjzzr .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1079,12 +1080,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#wyifvjzcqn .gt_caption {
+#ttoeqdjzzr .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#wyifvjzcqn .gt_title {
+#ttoeqdjzzr .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1096,7 +1097,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#wyifvjzcqn .gt_subtitle {
+#ttoeqdjzzr .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1108,7 +1109,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#wyifvjzcqn .gt_heading {
+#ttoeqdjzzr .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1120,13 +1121,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#wyifvjzcqn .gt_bottom_border {
+#ttoeqdjzzr .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wyifvjzcqn .gt_col_headings {
+#ttoeqdjzzr .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1141,7 +1142,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#wyifvjzcqn .gt_col_heading {
+#ttoeqdjzzr .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1161,7 +1162,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#wyifvjzcqn .gt_column_spanner_outer {
+#ttoeqdjzzr .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1173,15 +1174,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#wyifvjzcqn .gt_column_spanner_outer:first-child {
+#ttoeqdjzzr .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wyifvjzcqn .gt_column_spanner_outer:last-child {
+#ttoeqdjzzr .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wyifvjzcqn .gt_column_spanner {
+#ttoeqdjzzr .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1193,11 +1194,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#wyifvjzcqn .gt_spanner_row {
+#ttoeqdjzzr .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#wyifvjzcqn .gt_group_heading {
+#ttoeqdjzzr .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1223,7 +1224,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#wyifvjzcqn .gt_empty_group_heading {
+#ttoeqdjzzr .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1238,15 +1239,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#wyifvjzcqn .gt_from_md > :first-child {
+#ttoeqdjzzr .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wyifvjzcqn .gt_from_md > :last-child {
+#ttoeqdjzzr .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wyifvjzcqn .gt_row {
+#ttoeqdjzzr .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1265,7 +1266,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#wyifvjzcqn .gt_stub {
+#ttoeqdjzzr .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1278,7 +1279,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#wyifvjzcqn .gt_stub_row_group {
+#ttoeqdjzzr .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1292,15 +1293,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#wyifvjzcqn .gt_row_group_first td {
+#ttoeqdjzzr .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#wyifvjzcqn .gt_row_group_first th {
+#ttoeqdjzzr .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#wyifvjzcqn .gt_summary_row {
+#ttoeqdjzzr .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1310,16 +1311,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#wyifvjzcqn .gt_first_summary_row {
+#ttoeqdjzzr .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#wyifvjzcqn .gt_first_summary_row.thick {
+#ttoeqdjzzr .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#wyifvjzcqn .gt_last_summary_row {
+#ttoeqdjzzr .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1329,7 +1330,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#wyifvjzcqn .gt_grand_summary_row {
+#ttoeqdjzzr .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1339,7 +1340,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#wyifvjzcqn .gt_first_grand_summary_row {
+#ttoeqdjzzr .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1349,7 +1350,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#wyifvjzcqn .gt_last_grand_summary_row_top {
+#ttoeqdjzzr .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1359,11 +1360,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#wyifvjzcqn .gt_striped {
+#ttoeqdjzzr .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#wyifvjzcqn .gt_table_body {
+#ttoeqdjzzr .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1372,7 +1373,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#wyifvjzcqn .gt_footnotes {
+#ttoeqdjzzr .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1386,7 +1387,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#wyifvjzcqn .gt_footnote {
+#ttoeqdjzzr .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1395,7 +1396,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#wyifvjzcqn .gt_sourcenotes {
+#ttoeqdjzzr .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1409,7 +1410,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#wyifvjzcqn .gt_sourcenote {
+#ttoeqdjzzr .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1417,72 +1418,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#wyifvjzcqn .gt_left {
+#ttoeqdjzzr .gt_left {
   text-align: left;
 }
 
-#wyifvjzcqn .gt_center {
+#ttoeqdjzzr .gt_center {
   text-align: center;
 }
 
-#wyifvjzcqn .gt_right {
+#ttoeqdjzzr .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wyifvjzcqn .gt_font_normal {
+#ttoeqdjzzr .gt_font_normal {
   font-weight: normal;
 }
 
-#wyifvjzcqn .gt_font_bold {
+#ttoeqdjzzr .gt_font_bold {
   font-weight: bold;
 }
 
-#wyifvjzcqn .gt_font_italic {
+#ttoeqdjzzr .gt_font_italic {
   font-style: italic;
 }
 
-#wyifvjzcqn .gt_super {
+#ttoeqdjzzr .gt_super {
   font-size: 65%;
 }
 
-#wyifvjzcqn .gt_footnote_marks {
+#ttoeqdjzzr .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#wyifvjzcqn .gt_asterisk {
+#ttoeqdjzzr .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#wyifvjzcqn .gt_indent_1 {
+#ttoeqdjzzr .gt_indent_1 {
   text-indent: 5px;
 }
 
-#wyifvjzcqn .gt_indent_2 {
+#ttoeqdjzzr .gt_indent_2 {
   text-indent: 10px;
 }
 
-#wyifvjzcqn .gt_indent_3 {
+#ttoeqdjzzr .gt_indent_3 {
   text-indent: 15px;
 }
 
-#wyifvjzcqn .gt_indent_4 {
+#ttoeqdjzzr .gt_indent_4 {
   text-indent: 20px;
 }
 
-#wyifvjzcqn .gt_indent_5 {
+#ttoeqdjzzr .gt_indent_5 {
   text-indent: 25px;
 }
 
-#wyifvjzcqn .katex-display {
+#ttoeqdjzzr .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#wyifvjzcqn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ttoeqdjzzr div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1627,23 +1628,23 @@ window.Quarto = {
 <span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, decimals <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"表2-4 自社商品の売上金額における性別・年代の比率(%)"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="huvnylhojy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#huvnylhojy table {
+<div id="yavnoddyym" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#yavnoddyym table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#huvnylhojy thead, #huvnylhojy tbody, #huvnylhojy tfoot, #huvnylhojy tr, #huvnylhojy td, #huvnylhojy th {
+#yavnoddyym thead, #yavnoddyym tbody, #yavnoddyym tfoot, #yavnoddyym tr, #yavnoddyym td, #yavnoddyym th {
   border-style: none;
 }
 
-#huvnylhojy p {
+#yavnoddyym p {
   margin: 0;
   padding: 0;
 }
 
-#huvnylhojy .gt_table {
+#yavnoddyym .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1669,12 +1670,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#huvnylhojy .gt_caption {
+#yavnoddyym .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#huvnylhojy .gt_title {
+#yavnoddyym .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1686,7 +1687,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#huvnylhojy .gt_subtitle {
+#yavnoddyym .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1698,7 +1699,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#huvnylhojy .gt_heading {
+#yavnoddyym .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1710,13 +1711,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#huvnylhojy .gt_bottom_border {
+#yavnoddyym .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#huvnylhojy .gt_col_headings {
+#yavnoddyym .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1731,7 +1732,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#huvnylhojy .gt_col_heading {
+#yavnoddyym .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1751,7 +1752,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#huvnylhojy .gt_column_spanner_outer {
+#yavnoddyym .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1763,15 +1764,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#huvnylhojy .gt_column_spanner_outer:first-child {
+#yavnoddyym .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#huvnylhojy .gt_column_spanner_outer:last-child {
+#yavnoddyym .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#huvnylhojy .gt_column_spanner {
+#yavnoddyym .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1783,11 +1784,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#huvnylhojy .gt_spanner_row {
+#yavnoddyym .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#huvnylhojy .gt_group_heading {
+#yavnoddyym .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1813,7 +1814,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#huvnylhojy .gt_empty_group_heading {
+#yavnoddyym .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1828,15 +1829,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#huvnylhojy .gt_from_md > :first-child {
+#yavnoddyym .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#huvnylhojy .gt_from_md > :last-child {
+#yavnoddyym .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#huvnylhojy .gt_row {
+#yavnoddyym .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1855,7 +1856,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#huvnylhojy .gt_stub {
+#yavnoddyym .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1868,7 +1869,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#huvnylhojy .gt_stub_row_group {
+#yavnoddyym .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1882,15 +1883,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#huvnylhojy .gt_row_group_first td {
+#yavnoddyym .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#huvnylhojy .gt_row_group_first th {
+#yavnoddyym .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#huvnylhojy .gt_summary_row {
+#yavnoddyym .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1900,16 +1901,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#huvnylhojy .gt_first_summary_row {
+#yavnoddyym .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#huvnylhojy .gt_first_summary_row.thick {
+#yavnoddyym .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#huvnylhojy .gt_last_summary_row {
+#yavnoddyym .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1919,7 +1920,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#huvnylhojy .gt_grand_summary_row {
+#yavnoddyym .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1929,7 +1930,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#huvnylhojy .gt_first_grand_summary_row {
+#yavnoddyym .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1939,7 +1940,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#huvnylhojy .gt_last_grand_summary_row_top {
+#yavnoddyym .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1949,11 +1950,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#huvnylhojy .gt_striped {
+#yavnoddyym .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#huvnylhojy .gt_table_body {
+#yavnoddyym .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1962,7 +1963,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#huvnylhojy .gt_footnotes {
+#yavnoddyym .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1976,7 +1977,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#huvnylhojy .gt_footnote {
+#yavnoddyym .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1985,7 +1986,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#huvnylhojy .gt_sourcenotes {
+#yavnoddyym .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1999,7 +2000,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#huvnylhojy .gt_sourcenote {
+#yavnoddyym .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2007,72 +2008,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#huvnylhojy .gt_left {
+#yavnoddyym .gt_left {
   text-align: left;
 }
 
-#huvnylhojy .gt_center {
+#yavnoddyym .gt_center {
   text-align: center;
 }
 
-#huvnylhojy .gt_right {
+#yavnoddyym .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#huvnylhojy .gt_font_normal {
+#yavnoddyym .gt_font_normal {
   font-weight: normal;
 }
 
-#huvnylhojy .gt_font_bold {
+#yavnoddyym .gt_font_bold {
   font-weight: bold;
 }
 
-#huvnylhojy .gt_font_italic {
+#yavnoddyym .gt_font_italic {
   font-style: italic;
 }
 
-#huvnylhojy .gt_super {
+#yavnoddyym .gt_super {
   font-size: 65%;
 }
 
-#huvnylhojy .gt_footnote_marks {
+#yavnoddyym .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#huvnylhojy .gt_asterisk {
+#yavnoddyym .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#huvnylhojy .gt_indent_1 {
+#yavnoddyym .gt_indent_1 {
   text-indent: 5px;
 }
 
-#huvnylhojy .gt_indent_2 {
+#yavnoddyym .gt_indent_2 {
   text-indent: 10px;
 }
 
-#huvnylhojy .gt_indent_3 {
+#yavnoddyym .gt_indent_3 {
   text-indent: 15px;
 }
 
-#huvnylhojy .gt_indent_4 {
+#yavnoddyym .gt_indent_4 {
   text-indent: 20px;
 }
 
-#huvnylhojy .gt_indent_5 {
+#yavnoddyym .gt_indent_5 {
   text-indent: 25px;
 }
 
-#huvnylhojy .katex-display {
+#yavnoddyym .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#huvnylhojy div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#yavnoddyym div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2144,23 +2145,23 @@ window.Quarto = {
 <span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">3</span>, decimals <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"表2-5 各性別を100%とした場合の性別に対する年代の比率 (%)"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="hjzguymhxp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#hjzguymhxp table {
+<div id="obdtosgozn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#obdtosgozn table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#hjzguymhxp thead, #hjzguymhxp tbody, #hjzguymhxp tfoot, #hjzguymhxp tr, #hjzguymhxp td, #hjzguymhxp th {
+#obdtosgozn thead, #obdtosgozn tbody, #obdtosgozn tfoot, #obdtosgozn tr, #obdtosgozn td, #obdtosgozn th {
   border-style: none;
 }
 
-#hjzguymhxp p {
+#obdtosgozn p {
   margin: 0;
   padding: 0;
 }
 
-#hjzguymhxp .gt_table {
+#obdtosgozn .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2186,12 +2187,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#hjzguymhxp .gt_caption {
+#obdtosgozn .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#hjzguymhxp .gt_title {
+#obdtosgozn .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2203,7 +2204,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#hjzguymhxp .gt_subtitle {
+#obdtosgozn .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2215,7 +2216,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#hjzguymhxp .gt_heading {
+#obdtosgozn .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2227,13 +2228,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#hjzguymhxp .gt_bottom_border {
+#obdtosgozn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#hjzguymhxp .gt_col_headings {
+#obdtosgozn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2248,7 +2249,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#hjzguymhxp .gt_col_heading {
+#obdtosgozn .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2268,7 +2269,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#hjzguymhxp .gt_column_spanner_outer {
+#obdtosgozn .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2280,15 +2281,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#hjzguymhxp .gt_column_spanner_outer:first-child {
+#obdtosgozn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#hjzguymhxp .gt_column_spanner_outer:last-child {
+#obdtosgozn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#hjzguymhxp .gt_column_spanner {
+#obdtosgozn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2300,11 +2301,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#hjzguymhxp .gt_spanner_row {
+#obdtosgozn .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#hjzguymhxp .gt_group_heading {
+#obdtosgozn .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2330,7 +2331,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#hjzguymhxp .gt_empty_group_heading {
+#obdtosgozn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2345,15 +2346,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#hjzguymhxp .gt_from_md > :first-child {
+#obdtosgozn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#hjzguymhxp .gt_from_md > :last-child {
+#obdtosgozn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#hjzguymhxp .gt_row {
+#obdtosgozn .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2372,7 +2373,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#hjzguymhxp .gt_stub {
+#obdtosgozn .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2385,7 +2386,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#hjzguymhxp .gt_stub_row_group {
+#obdtosgozn .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2399,15 +2400,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#hjzguymhxp .gt_row_group_first td {
+#obdtosgozn .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#hjzguymhxp .gt_row_group_first th {
+#obdtosgozn .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#hjzguymhxp .gt_summary_row {
+#obdtosgozn .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2417,16 +2418,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#hjzguymhxp .gt_first_summary_row {
+#obdtosgozn .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#hjzguymhxp .gt_first_summary_row.thick {
+#obdtosgozn .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#hjzguymhxp .gt_last_summary_row {
+#obdtosgozn .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2436,7 +2437,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#hjzguymhxp .gt_grand_summary_row {
+#obdtosgozn .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2446,7 +2447,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#hjzguymhxp .gt_first_grand_summary_row {
+#obdtosgozn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2456,7 +2457,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#hjzguymhxp .gt_last_grand_summary_row_top {
+#obdtosgozn .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2466,11 +2467,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#hjzguymhxp .gt_striped {
+#obdtosgozn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#hjzguymhxp .gt_table_body {
+#obdtosgozn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2479,7 +2480,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#hjzguymhxp .gt_footnotes {
+#obdtosgozn .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2493,7 +2494,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#hjzguymhxp .gt_footnote {
+#obdtosgozn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2502,7 +2503,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#hjzguymhxp .gt_sourcenotes {
+#obdtosgozn .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2516,7 +2517,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#hjzguymhxp .gt_sourcenote {
+#obdtosgozn .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2524,72 +2525,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#hjzguymhxp .gt_left {
+#obdtosgozn .gt_left {
   text-align: left;
 }
 
-#hjzguymhxp .gt_center {
+#obdtosgozn .gt_center {
   text-align: center;
 }
 
-#hjzguymhxp .gt_right {
+#obdtosgozn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#hjzguymhxp .gt_font_normal {
+#obdtosgozn .gt_font_normal {
   font-weight: normal;
 }
 
-#hjzguymhxp .gt_font_bold {
+#obdtosgozn .gt_font_bold {
   font-weight: bold;
 }
 
-#hjzguymhxp .gt_font_italic {
+#obdtosgozn .gt_font_italic {
   font-style: italic;
 }
 
-#hjzguymhxp .gt_super {
+#obdtosgozn .gt_super {
   font-size: 65%;
 }
 
-#hjzguymhxp .gt_footnote_marks {
+#obdtosgozn .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#hjzguymhxp .gt_asterisk {
+#obdtosgozn .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#hjzguymhxp .gt_indent_1 {
+#obdtosgozn .gt_indent_1 {
   text-indent: 5px;
 }
 
-#hjzguymhxp .gt_indent_2 {
+#obdtosgozn .gt_indent_2 {
   text-indent: 10px;
 }
 
-#hjzguymhxp .gt_indent_3 {
+#obdtosgozn .gt_indent_3 {
   text-indent: 15px;
 }
 
-#hjzguymhxp .gt_indent_4 {
+#obdtosgozn .gt_indent_4 {
   text-indent: 20px;
 }
 
-#hjzguymhxp .gt_indent_5 {
+#obdtosgozn .gt_indent_5 {
   text-indent: 25px;
 }
 
-#hjzguymhxp .katex-display {
+#obdtosgozn .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#hjzguymhxp div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#obdtosgozn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2702,23 +2703,23 @@ window.Quarto = {
 <span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">3</span>, decimals <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"表2-3 自社商品の年代別・性別別売上金額"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fgxiovkpgj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#fgxiovkpgj table {
+<div id="fxpqepioii" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fxpqepioii table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#fgxiovkpgj thead, #fgxiovkpgj tbody, #fgxiovkpgj tfoot, #fgxiovkpgj tr, #fgxiovkpgj td, #fgxiovkpgj th {
+#fxpqepioii thead, #fxpqepioii tbody, #fxpqepioii tfoot, #fxpqepioii tr, #fxpqepioii td, #fxpqepioii th {
   border-style: none;
 }
 
-#fgxiovkpgj p {
+#fxpqepioii p {
   margin: 0;
   padding: 0;
 }
 
-#fgxiovkpgj .gt_table {
+#fxpqepioii .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2744,12 +2745,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#fgxiovkpgj .gt_caption {
+#fxpqepioii .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#fgxiovkpgj .gt_title {
+#fxpqepioii .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2761,7 +2762,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#fgxiovkpgj .gt_subtitle {
+#fxpqepioii .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2773,7 +2774,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#fgxiovkpgj .gt_heading {
+#fxpqepioii .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2785,13 +2786,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#fgxiovkpgj .gt_bottom_border {
+#fxpqepioii .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fgxiovkpgj .gt_col_headings {
+#fxpqepioii .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2806,7 +2807,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#fgxiovkpgj .gt_col_heading {
+#fxpqepioii .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2826,7 +2827,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#fgxiovkpgj .gt_column_spanner_outer {
+#fxpqepioii .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2838,15 +2839,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#fgxiovkpgj .gt_column_spanner_outer:first-child {
+#fxpqepioii .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fgxiovkpgj .gt_column_spanner_outer:last-child {
+#fxpqepioii .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fgxiovkpgj .gt_column_spanner {
+#fxpqepioii .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2858,11 +2859,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#fgxiovkpgj .gt_spanner_row {
+#fxpqepioii .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#fgxiovkpgj .gt_group_heading {
+#fxpqepioii .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2888,7 +2889,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#fgxiovkpgj .gt_empty_group_heading {
+#fxpqepioii .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2903,15 +2904,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#fgxiovkpgj .gt_from_md > :first-child {
+#fxpqepioii .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fgxiovkpgj .gt_from_md > :last-child {
+#fxpqepioii .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fgxiovkpgj .gt_row {
+#fxpqepioii .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2930,7 +2931,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#fgxiovkpgj .gt_stub {
+#fxpqepioii .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2943,7 +2944,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#fgxiovkpgj .gt_stub_row_group {
+#fxpqepioii .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2957,15 +2958,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#fgxiovkpgj .gt_row_group_first td {
+#fxpqepioii .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#fgxiovkpgj .gt_row_group_first th {
+#fxpqepioii .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#fgxiovkpgj .gt_summary_row {
+#fxpqepioii .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2975,16 +2976,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#fgxiovkpgj .gt_first_summary_row {
+#fxpqepioii .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#fgxiovkpgj .gt_first_summary_row.thick {
+#fxpqepioii .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#fgxiovkpgj .gt_last_summary_row {
+#fxpqepioii .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2994,7 +2995,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#fgxiovkpgj .gt_grand_summary_row {
+#fxpqepioii .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3004,7 +3005,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#fgxiovkpgj .gt_first_grand_summary_row {
+#fxpqepioii .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3014,7 +3015,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#fgxiovkpgj .gt_last_grand_summary_row_top {
+#fxpqepioii .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3024,11 +3025,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#fgxiovkpgj .gt_striped {
+#fxpqepioii .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fgxiovkpgj .gt_table_body {
+#fxpqepioii .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3037,7 +3038,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#fgxiovkpgj .gt_footnotes {
+#fxpqepioii .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3051,7 +3052,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#fgxiovkpgj .gt_footnote {
+#fxpqepioii .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3060,7 +3061,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#fgxiovkpgj .gt_sourcenotes {
+#fxpqepioii .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3074,7 +3075,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#fgxiovkpgj .gt_sourcenote {
+#fxpqepioii .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3082,72 +3083,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#fgxiovkpgj .gt_left {
+#fxpqepioii .gt_left {
   text-align: left;
 }
 
-#fgxiovkpgj .gt_center {
+#fxpqepioii .gt_center {
   text-align: center;
 }
 
-#fgxiovkpgj .gt_right {
+#fxpqepioii .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fgxiovkpgj .gt_font_normal {
+#fxpqepioii .gt_font_normal {
   font-weight: normal;
 }
 
-#fgxiovkpgj .gt_font_bold {
+#fxpqepioii .gt_font_bold {
   font-weight: bold;
 }
 
-#fgxiovkpgj .gt_font_italic {
+#fxpqepioii .gt_font_italic {
   font-style: italic;
 }
 
-#fgxiovkpgj .gt_super {
+#fxpqepioii .gt_super {
   font-size: 65%;
 }
 
-#fgxiovkpgj .gt_footnote_marks {
+#fxpqepioii .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#fgxiovkpgj .gt_asterisk {
+#fxpqepioii .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#fgxiovkpgj .gt_indent_1 {
+#fxpqepioii .gt_indent_1 {
   text-indent: 5px;
 }
 
-#fgxiovkpgj .gt_indent_2 {
+#fxpqepioii .gt_indent_2 {
   text-indent: 10px;
 }
 
-#fgxiovkpgj .gt_indent_3 {
+#fxpqepioii .gt_indent_3 {
   text-indent: 15px;
 }
 
-#fgxiovkpgj .gt_indent_4 {
+#fxpqepioii .gt_indent_4 {
   text-indent: 20px;
 }
 
-#fgxiovkpgj .gt_indent_5 {
+#fxpqepioii .gt_indent_5 {
   text-indent: 25px;
 }
 
-#fgxiovkpgj .katex-display {
+#fxpqepioii .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#fgxiovkpgj div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#fxpqepioii div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3220,23 +3221,23 @@ window.Quarto = {
 <span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, decimals <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"表2-6 年代・性別ごとの競合A社の売上個数"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="cjainndtcf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#cjainndtcf table {
+<div id="xwnusjzrzd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xwnusjzrzd table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#cjainndtcf thead, #cjainndtcf tbody, #cjainndtcf tfoot, #cjainndtcf tr, #cjainndtcf td, #cjainndtcf th {
+#xwnusjzrzd thead, #xwnusjzrzd tbody, #xwnusjzrzd tfoot, #xwnusjzrzd tr, #xwnusjzrzd td, #xwnusjzrzd th {
   border-style: none;
 }
 
-#cjainndtcf p {
+#xwnusjzrzd p {
   margin: 0;
   padding: 0;
 }
 
-#cjainndtcf .gt_table {
+#xwnusjzrzd .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3262,12 +3263,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#cjainndtcf .gt_caption {
+#xwnusjzrzd .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#cjainndtcf .gt_title {
+#xwnusjzrzd .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3279,7 +3280,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#cjainndtcf .gt_subtitle {
+#xwnusjzrzd .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3291,7 +3292,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#cjainndtcf .gt_heading {
+#xwnusjzrzd .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3303,13 +3304,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#cjainndtcf .gt_bottom_border {
+#xwnusjzrzd .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#cjainndtcf .gt_col_headings {
+#xwnusjzrzd .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3324,7 +3325,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#cjainndtcf .gt_col_heading {
+#xwnusjzrzd .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3344,7 +3345,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#cjainndtcf .gt_column_spanner_outer {
+#xwnusjzrzd .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3356,15 +3357,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#cjainndtcf .gt_column_spanner_outer:first-child {
+#xwnusjzrzd .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#cjainndtcf .gt_column_spanner_outer:last-child {
+#xwnusjzrzd .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#cjainndtcf .gt_column_spanner {
+#xwnusjzrzd .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3376,11 +3377,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#cjainndtcf .gt_spanner_row {
+#xwnusjzrzd .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#cjainndtcf .gt_group_heading {
+#xwnusjzrzd .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3406,7 +3407,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#cjainndtcf .gt_empty_group_heading {
+#xwnusjzrzd .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3421,15 +3422,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#cjainndtcf .gt_from_md > :first-child {
+#xwnusjzrzd .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#cjainndtcf .gt_from_md > :last-child {
+#xwnusjzrzd .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#cjainndtcf .gt_row {
+#xwnusjzrzd .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3448,7 +3449,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#cjainndtcf .gt_stub {
+#xwnusjzrzd .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3461,7 +3462,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#cjainndtcf .gt_stub_row_group {
+#xwnusjzrzd .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3475,15 +3476,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#cjainndtcf .gt_row_group_first td {
+#xwnusjzrzd .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#cjainndtcf .gt_row_group_first th {
+#xwnusjzrzd .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#cjainndtcf .gt_summary_row {
+#xwnusjzrzd .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3493,16 +3494,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#cjainndtcf .gt_first_summary_row {
+#xwnusjzrzd .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#cjainndtcf .gt_first_summary_row.thick {
+#xwnusjzrzd .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#cjainndtcf .gt_last_summary_row {
+#xwnusjzrzd .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3512,7 +3513,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#cjainndtcf .gt_grand_summary_row {
+#xwnusjzrzd .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3522,7 +3523,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#cjainndtcf .gt_first_grand_summary_row {
+#xwnusjzrzd .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3532,7 +3533,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#cjainndtcf .gt_last_grand_summary_row_top {
+#xwnusjzrzd .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3542,11 +3543,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#cjainndtcf .gt_striped {
+#xwnusjzrzd .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#cjainndtcf .gt_table_body {
+#xwnusjzrzd .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3555,7 +3556,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#cjainndtcf .gt_footnotes {
+#xwnusjzrzd .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3569,7 +3570,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#cjainndtcf .gt_footnote {
+#xwnusjzrzd .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3578,7 +3579,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#cjainndtcf .gt_sourcenotes {
+#xwnusjzrzd .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3592,7 +3593,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#cjainndtcf .gt_sourcenote {
+#xwnusjzrzd .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3600,72 +3601,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#cjainndtcf .gt_left {
+#xwnusjzrzd .gt_left {
   text-align: left;
 }
 
-#cjainndtcf .gt_center {
+#xwnusjzrzd .gt_center {
   text-align: center;
 }
 
-#cjainndtcf .gt_right {
+#xwnusjzrzd .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#cjainndtcf .gt_font_normal {
+#xwnusjzrzd .gt_font_normal {
   font-weight: normal;
 }
 
-#cjainndtcf .gt_font_bold {
+#xwnusjzrzd .gt_font_bold {
   font-weight: bold;
 }
 
-#cjainndtcf .gt_font_italic {
+#xwnusjzrzd .gt_font_italic {
   font-style: italic;
 }
 
-#cjainndtcf .gt_super {
+#xwnusjzrzd .gt_super {
   font-size: 65%;
 }
 
-#cjainndtcf .gt_footnote_marks {
+#xwnusjzrzd .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#cjainndtcf .gt_asterisk {
+#xwnusjzrzd .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#cjainndtcf .gt_indent_1 {
+#xwnusjzrzd .gt_indent_1 {
   text-indent: 5px;
 }
 
-#cjainndtcf .gt_indent_2 {
+#xwnusjzrzd .gt_indent_2 {
   text-indent: 10px;
 }
 
-#cjainndtcf .gt_indent_3 {
+#xwnusjzrzd .gt_indent_3 {
   text-indent: 15px;
 }
 
-#cjainndtcf .gt_indent_4 {
+#xwnusjzrzd .gt_indent_4 {
   text-indent: 20px;
 }
 
-#cjainndtcf .gt_indent_5 {
+#xwnusjzrzd .gt_indent_5 {
   text-indent: 25px;
 }
 
-#cjainndtcf .katex-display {
+#xwnusjzrzd .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#cjainndtcf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#xwnusjzrzd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3765,23 +3766,23 @@ window.Quarto = {
 <span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">5</span>, decimals <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"表2-7 自社と競合A社の年代・性別別売上個数"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="izoqvapcyq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#izoqvapcyq table {
+<div id="gmrqcnjavn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#gmrqcnjavn table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#izoqvapcyq thead, #izoqvapcyq tbody, #izoqvapcyq tfoot, #izoqvapcyq tr, #izoqvapcyq td, #izoqvapcyq th {
+#gmrqcnjavn thead, #gmrqcnjavn tbody, #gmrqcnjavn tfoot, #gmrqcnjavn tr, #gmrqcnjavn td, #gmrqcnjavn th {
   border-style: none;
 }
 
-#izoqvapcyq p {
+#gmrqcnjavn p {
   margin: 0;
   padding: 0;
 }
 
-#izoqvapcyq .gt_table {
+#gmrqcnjavn .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3807,12 +3808,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#izoqvapcyq .gt_caption {
+#gmrqcnjavn .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#izoqvapcyq .gt_title {
+#gmrqcnjavn .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3824,7 +3825,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#izoqvapcyq .gt_subtitle {
+#gmrqcnjavn .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3836,7 +3837,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#izoqvapcyq .gt_heading {
+#gmrqcnjavn .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3848,13 +3849,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#izoqvapcyq .gt_bottom_border {
+#gmrqcnjavn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#izoqvapcyq .gt_col_headings {
+#gmrqcnjavn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3869,7 +3870,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#izoqvapcyq .gt_col_heading {
+#gmrqcnjavn .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3889,7 +3890,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#izoqvapcyq .gt_column_spanner_outer {
+#gmrqcnjavn .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3901,15 +3902,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#izoqvapcyq .gt_column_spanner_outer:first-child {
+#gmrqcnjavn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#izoqvapcyq .gt_column_spanner_outer:last-child {
+#gmrqcnjavn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#izoqvapcyq .gt_column_spanner {
+#gmrqcnjavn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3921,11 +3922,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#izoqvapcyq .gt_spanner_row {
+#gmrqcnjavn .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#izoqvapcyq .gt_group_heading {
+#gmrqcnjavn .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3951,7 +3952,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#izoqvapcyq .gt_empty_group_heading {
+#gmrqcnjavn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3966,15 +3967,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#izoqvapcyq .gt_from_md > :first-child {
+#gmrqcnjavn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#izoqvapcyq .gt_from_md > :last-child {
+#gmrqcnjavn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#izoqvapcyq .gt_row {
+#gmrqcnjavn .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3993,7 +3994,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#izoqvapcyq .gt_stub {
+#gmrqcnjavn .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4006,7 +4007,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#izoqvapcyq .gt_stub_row_group {
+#gmrqcnjavn .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4020,15 +4021,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#izoqvapcyq .gt_row_group_first td {
+#gmrqcnjavn .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#izoqvapcyq .gt_row_group_first th {
+#gmrqcnjavn .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#izoqvapcyq .gt_summary_row {
+#gmrqcnjavn .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4038,16 +4039,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#izoqvapcyq .gt_first_summary_row {
+#gmrqcnjavn .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#izoqvapcyq .gt_first_summary_row.thick {
+#gmrqcnjavn .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#izoqvapcyq .gt_last_summary_row {
+#gmrqcnjavn .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4057,7 +4058,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#izoqvapcyq .gt_grand_summary_row {
+#gmrqcnjavn .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4067,7 +4068,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#izoqvapcyq .gt_first_grand_summary_row {
+#gmrqcnjavn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4077,7 +4078,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#izoqvapcyq .gt_last_grand_summary_row_top {
+#gmrqcnjavn .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4087,11 +4088,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#izoqvapcyq .gt_striped {
+#gmrqcnjavn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#izoqvapcyq .gt_table_body {
+#gmrqcnjavn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4100,7 +4101,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#izoqvapcyq .gt_footnotes {
+#gmrqcnjavn .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4114,7 +4115,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#izoqvapcyq .gt_footnote {
+#gmrqcnjavn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -4123,7 +4124,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#izoqvapcyq .gt_sourcenotes {
+#gmrqcnjavn .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4137,7 +4138,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#izoqvapcyq .gt_sourcenote {
+#gmrqcnjavn .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -4145,72 +4146,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#izoqvapcyq .gt_left {
+#gmrqcnjavn .gt_left {
   text-align: left;
 }
 
-#izoqvapcyq .gt_center {
+#gmrqcnjavn .gt_center {
   text-align: center;
 }
 
-#izoqvapcyq .gt_right {
+#gmrqcnjavn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#izoqvapcyq .gt_font_normal {
+#gmrqcnjavn .gt_font_normal {
   font-weight: normal;
 }
 
-#izoqvapcyq .gt_font_bold {
+#gmrqcnjavn .gt_font_bold {
   font-weight: bold;
 }
 
-#izoqvapcyq .gt_font_italic {
+#gmrqcnjavn .gt_font_italic {
   font-style: italic;
 }
 
-#izoqvapcyq .gt_super {
+#gmrqcnjavn .gt_super {
   font-size: 65%;
 }
 
-#izoqvapcyq .gt_footnote_marks {
+#gmrqcnjavn .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#izoqvapcyq .gt_asterisk {
+#gmrqcnjavn .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#izoqvapcyq .gt_indent_1 {
+#gmrqcnjavn .gt_indent_1 {
   text-indent: 5px;
 }
 
-#izoqvapcyq .gt_indent_2 {
+#gmrqcnjavn .gt_indent_2 {
   text-indent: 10px;
 }
 
-#izoqvapcyq .gt_indent_3 {
+#gmrqcnjavn .gt_indent_3 {
   text-indent: 15px;
 }
 
-#izoqvapcyq .gt_indent_4 {
+#gmrqcnjavn .gt_indent_4 {
   text-indent: 20px;
 }
 
-#izoqvapcyq .gt_indent_5 {
+#gmrqcnjavn .gt_indent_5 {
   text-indent: 25px;
 }
 
-#izoqvapcyq .katex-display {
+#gmrqcnjavn .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#izoqvapcyq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#gmrqcnjavn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -4384,7 +4385,7 @@ window.Quarto = {
 <p><span class="math inline">\(\chi^2\)</span>検定で用いられる統計量は、<span class="math inline">\(\chi^2\)</span>統計量と呼ばれ、次の式で計算されます。</p>
 <p><span class="math display">\[
 \chi^2 = \sum_{i=1}^n \sum_{j=1}^m \frac{(O_{ij} - E_{ij})^2}{E_{ij}}
-\]</span> ここで、<span class="math inline">\(O_{ij}\)</span>は観測された度数(観測度数)、<span class="math inline">\(E_{ij}\)</span>は理論的に予測される度数(期待度数)です。<span class="math inline">\(n\)</span>と<span class="math inline">\(m\)</span>はカテゴリー変数のカテゴリー数です。 つまり、2つのカテゴリー変数の関連性を調べる場合、<span class="math inline">\(\chi^2\)</span>統計量は次のように計算されます。</p>
+\]</span> ここで、<span class="markp"><span class="math inline">\(O_{ij}\)</span>は観測された度数(観測度数)、<span class="math inline">\(E_{ij}\)</span>は理論的に予測される度数(期待度数)です。<span class="math inline">\(n\)</span>と<span class="math inline">\(m\)</span>はカテゴリー変数のカテゴリー数です。</span> つまり、2つのカテゴリー変数の関連性を調べる場合、<span class="math inline">\(\chi^2\)</span>統計量は次のように計算されます。</p>
 <p><span class="math display">\[
 \begin{aligned}
 \chi^2 &amp;= \frac{(O_{11} - E_{11})^2}{E_{11}} + \frac{(O_{12} - E_{12})^2}{E_{12}} \\
@@ -4394,7 +4395,7 @@ window.Quarto = {
 <p>ここで、<mark class="marky">期待度数<span class="math inline">\(E\)</span>をどうやって求めるのか</mark>、が問題となります。 期待度数の「期待」の意味は、帰無仮説のもとで期待される度数です。</p>
 <p><span class="math display">\[
 E_{ij} = \frac{O_{i\cdot} \times O_{\cdot j}}{O_{\cdot \cdot}}
-\]</span> ここで、<span class="math inline">\(O_{i\cdot}\)</span>は<span class="math inline">\(i\)</span>行目の合計(横の合計)、<span class="math inline">\(O_{\cdot j}\)</span>は<span class="math inline">\(j\)</span>列目の合計(縦の合計)、<span class="math inline">\(O_{\cdot \cdot}\)</span>は全体の合計です。</p>
+\]</span> ここで、<span class="markp"><span class="math inline">\(O_{i\cdot}\)</span>は<span class="math inline">\(i\)</span>行目の合計(横の合計)、<span class="math inline">\(O_{\cdot j}\)</span>は<span class="math inline">\(j\)</span>列目の合計(縦の合計)、<span class="math inline">\(O_{\cdot \cdot}\)</span>は全体の合計です</span>。</p>
 <p>先のメガネの例で計算してみます。 観察度数<span class="math inline">\(O\)</span>は次のようになります。</p>
 <table class="caption-top table">
 <thead><tr class="header">
@@ -4537,28 +4538,24 @@ E_{女, メガネ無} &amp;= \frac{155 \times 278}{400} = 107.725
 <p>自由度1のカイ二乗分布における有意水準5%の値は3.84であることが分かりました。 この値を超えると、有意水準5%で帰無仮説を棄却することになります。</p>
 <p>では先程計算した<span class="math inline">\(\chi^2\)</span>統計量は、有意水準5%で帰無仮説を棄却するかどうかを調べてみましょう。</p>
 <div class="cell">
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">chi2</span> <span class="op">&lt;-</span> <span class="fl">7.2</span></span>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">chi2</span> <span class="op">&lt;-</span> <span class="fl">56.51731</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html">qchisq</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">alpha</span>, <span class="va">degf</span><span class="op">)</span> <span class="op">&lt;</span> <span class="va">chi2</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
 </div>
-<p>より、<span class="math inline">\(\chi^2\)</span>統計量は有意水準5%で帰無仮説を棄却することが分かりました。 ちなみに、自由度1のカイ二乗分布の確率密度関数と<span class="math inline">\(\chi^2\)</span>統計量の位置を重ねてみると次のようになります。</p>
+<p>より、 <span class="math inline">\(\chi^2\)</span> 統計量 <span class="math inline">\(56.51731\)</span> は有意水準5%で帰無仮説を棄却することが分かりました。 ちなみに、自由度1のカイ二乗分布の確率密度関数と<span class="math inline">\(\chi^2\)</span>統計量の位置を重ねてみると次のようになります。</p>
 <div class="cell">
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_chi_graph</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="st">"y"</span>, values_from <span class="op">=</span> <span class="st">"value"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>,y <span class="op">=</span> <span class="va">y1</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_line</span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"密度"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">xlab</span><span class="op">(</span><span class="st">"カイ二乗値"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>, limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">scale_x_continuous</span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>, limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.1</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_x_continuous</span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>, limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.1</span>,<span class="fl">60</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_vline</span><span class="op">(</span>xintercept <span class="op">=</span> <span class="va">chi2</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">annotate</span><span class="op">(</span><span class="st">"text"</span>, x <span class="op">=</span> <span class="va">chi2</span>, y <span class="op">=</span> <span class="fl">0.1</span>, label <span class="op">=</span> <span class="st">"χ2 statistics"</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"自由度1のχ2分布の確率密度"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 34 rows containing missing values or values outside the scale range
-(`geom_line()`).</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="POS_Marketing_02_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -4568,9 +4565,9 @@ E_{女, メガネ無} &amp;= \frac{155 \times 278}{400} = 107.725
 </div>
 <p>このように、<span class="math inline">\(\chi^2\)</span>統計量は、自由度1のカイ二乗分布のもとで生じる確率は、</p>
 <div class="cell">
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html">pchisq</a></span><span class="op">(</span><span class="va">chi2</span>, df <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html">pchisq</a></span><span class="op">(</span><span class="va">chi2</span>, df <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.007290358</code></pre>
+<pre><code>[1] 0.0000000000000557332</code></pre>
 </div>
 </div>
 <p>となり、非常に小さな値であることが分かりました。 つまり、2つのカテゴリー変数の間に関係がない、という帰無仮説の下で、観測された度数が発生することはほぼありえない、ということが言えるので、帰無仮説は棄却され、2つのカテゴリー変数には関係があると結論付けられます。</p>
@@ -4579,7 +4576,7 @@ E_{女, メガネ無} &amp;= \frac{155 \times 278}{400} = 107.725
 <p>Rでは<code><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test()</a></code>関数を使ってχ2検定を行うことができます。 引数は、<code>x</code>に度数表、<code>correct</code>に補正を行うかどうか、<code>p</code>に期待度数を指定します。</p>
 <p>先ほどの男女とメガネの例をここでも使ってみます。 まず<code><a href="https://rdrr.io/r/base/matrix.html">matrix()</a></code>関数を使ってクロス集計表を行列として作成します。</p>
 <div class="cell">
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">O</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">41</span>, <span class="fl">81</span>, <span class="fl">204</span>, <span class="fl">74</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">O</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">41</span>, <span class="fl">81</span>, <span class="fl">204</span>, <span class="fl">74</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">O</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"男性"</span>, <span class="st">"女性"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">O</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"メガネ"</span>, <span class="st">"メガネなし"</span><span class="op">)</span></span>
 <span></span>
@@ -4596,7 +4593,7 @@ E_{女, メガネ無} &amp;= \frac{155 \times 278}{400} = 107.725
 男性     41        204
 女性     81         74</code></pre>
 </div>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">E</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">E</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       [,1]    [,2]
 [1,] 74.725 170.275
@@ -4605,7 +4602,7 @@ E_{女, メガネ無} &amp;= \frac{155 \times 278}{400} = 107.725
 </div>
 <p>この観察度数と期待度数から、定義通りに<span class="math inline">\(\chi^2\)</span>統計量を計算してみます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">chi</span> <span class="op">&lt;-</span>  <span class="op">(</span><span class="op">(</span><span class="va">O</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">]</span> <span class="op">-</span> <span class="va">E</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="va">E</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="co">#男眼鏡</span></span>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">chi</span> <span class="op">&lt;-</span>  <span class="op">(</span><span class="op">(</span><span class="va">O</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">]</span> <span class="op">-</span> <span class="va">E</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="va">E</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="co">#男眼鏡</span></span>
 <span>        <span class="op">(</span><span class="op">(</span><span class="va">O</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">]</span> <span class="op">-</span> <span class="va">E</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="va">E</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="co">#男眼鏡無</span></span>
 <span>        <span class="op">(</span><span class="op">(</span><span class="va">O</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">]</span> <span class="op">-</span> <span class="va">E</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="va">E</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="co">#女眼鏡</span></span>
 <span>        <span class="op">(</span><span class="op">(</span><span class="va">O</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">]</span> <span class="op">-</span> <span class="va">E</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="va">E</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span>   <span class="co">#女眼鏡無</span></span>
@@ -4616,34 +4613,34 @@ E_{女, メガネ無} &amp;= \frac{155 \times 278}{400} = 107.725
 </div>
 <p><span class="math inline">\(\chi^2\)</span> 統計量が 56.5173098 となりました。 この <span class="math inline">\(\chi^2\)</span> 統計量が自由度1の <span class="math inline">\(\chi^2\)</span> 分布にしたがう場合，この統計量が得られる確率は次のようになります。</p>
 <div class="cell">
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">prop</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html">pchisq</a></span><span class="op">(</span><span class="va">chi</span>, df <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">prop</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html">pchisq</a></span><span class="op">(</span><span class="va">chi</span>, df <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">prop</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 5.57332e-14</code></pre>
+<pre><code>[1] 0.0000000000000557332</code></pre>
 </div>
 </div>
 <p>この確率は<code>0.0000000000000055733</code>となり，ほぼゼロであることが分かりました。 よって、2つのカテゴリー変数は無関係である，という帰無仮説は棄却され、2つのカテゴリー変数には関係があると結論付けられます。</p>
 <p>ちなみに，上記のようなめんどくさい処理をしなくても，<code>R</code>には<code><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test()</a></code>という関数が用意されています。 <code><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test()</a></code>は引数として、<code>x</code>に度数表、<code>correct</code>に補正を行うかどうか、<code>p</code>に期待度数を指定します。 補正は行わないので，<code>correct</code>は<code>FALSE</code>とします。 <code>p</code>はデフォルトで等確率となっているので，今回は省略します。</p>
 <div class="cell">
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="va">O</span>, correct <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="va">O</span>, correct <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's Chi-squared test
 
 data:  O
-X-squared = 56.517, df = 1, p-value = 5.571e-14</code></pre>
+X-squared = 56.517, df = 1, p-value = 0.00000000000005571</code></pre>
 </div>
 </div>
 <p>となり，先ほどの結果と一致しました。</p>
 <p>各マスに入る度数が少ない場合には、フィッシャーの直接確率検定を使います。</p>
 <div class="cell">
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/fisher.test.html">fisher.test</a></span><span class="op">(</span><span class="va">O</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/fisher.test.html">fisher.test</a></span><span class="op">(</span><span class="va">O</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Fisher's Exact Test for Count Data
 
 data:  O
-p-value = 1.204e-13
+p-value = 0.0000000000001204
 alternative hypothesis: true odds ratio is not equal to 1
 95 percent confidence interval:
  0.1127341 0.2982245
@@ -4663,7 +4660,7 @@ odds ratio
 </ul>
 <p>この仮説を検定するために、<span class="math inline">\(\chi^2\)</span>検定を行います。 年代別・性別ごとの売上個数のクロス集計表を作成します。</p>
 <div class="cell">
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_chi2</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_chi2</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">メーカー</span> <span class="op">==</span> <span class="st">"自社"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">年代</span>, <span class="va">性別</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">summarise</span><span class="op">(</span>販売個数 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">個数</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -4671,7 +4668,7 @@ odds ratio
 </div>
 <p>このクロス表から期待度数を計算してみます。 期待度数は，男女別合計と年代別合計を乗して，全体の合計で割ることで求められます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_chi2</span> <span class="op">&lt;-</span> <span class="va">df_chi2</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_chi2</span> <span class="op">&lt;-</span> <span class="va">df_chi2</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>合計 <span class="op">=</span> <span class="va">男性</span> <span class="op">+</span> <span class="va">女性</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>男性期待 <span class="op">=</span> <span class="va">合計</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">男性</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">合計</span><span class="op">)</span>,</span>
 <span>         女性期待 <span class="op">=</span> <span class="va">合計</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">女性</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">合計</span><span class="op">)</span></span>
@@ -4742,7 +4739,7 @@ odds ratio
 </div>
 <p>期待度数を計算したデータフレーム<code>df_chi_kitai</code>を作れたので， 観察された度数<code>df_chi2</code>と期待度数<code>df_chi_kitai</code>から<span class="math inline">\(\chi^2\)</span>統計量を計算します。</p>
 <div class="cell">
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_chi_test</span>  <span class="op">&lt;-</span> <span class="va">df_chi2</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_chi_test</span>  <span class="op">&lt;-</span> <span class="va">df_chi2</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">pivot_longer</span><span class="op">(</span></span>
 <span>    cols <span class="op">=</span> <span class="op">-</span><span class="va">年代</span>, <span class="co"># 年代以外の列を長い形式に変換</span></span>
 <span>    names_to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"性別"</span>, <span class="st">"種別"</span><span class="op">)</span>, <span class="co"># 新しい列の名前を指定</span></span>
