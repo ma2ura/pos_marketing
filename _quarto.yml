@@ -4,15 +4,17 @@ project:
 
 book:
   title: "POSとマーケティングデータ分析"
+  reader-mode: true
   author:
     - name: "Soichi Matsuura"
     - affiliation: Ritsumeikan University
     - email: matsuura@fc.ritsumei.ac.jp
   date: "11/28/2024"
   favicon: img/favicon.ico
+  site-url: https://so-ichi.com
+  repo-url: https://github.com/ma2ura/pos_marketing/
+  repo-branch: main
   twitter-card: true
-  site-url: https://ma2ura.github.io/pos_marketing/
-  repo-url: https://github.com/ma2ura/
   chapters:
     - index.qmd
     - POS_Marketing_01.qmd
@@ -55,4 +57,4 @@ lang: "ja"
 knitr: 
   opts_chunk: 
     dev: "ragg_png"
-    dpi: 300
+    dpi: 600
