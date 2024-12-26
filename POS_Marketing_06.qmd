@@ -89,6 +89,8 @@ df_cover <- df |>
 ```
 
 週と商品名ごとに出店カバー率の平均値を計算したので、商品名を列にして、列の順番を変えて、表として出力します。
+セルの値ごとに色を濃くすることで、店頭カバー率の推移が分かりやすくしています。
+
 ```{r}
 #| warning: false
 #| message: false
@@ -103,9 +105,9 @@ df_cover |>
   gt_theme_pff() # テーマを適用
 ```
 
-しびれ味は集計期間の途中から発売されたので、NAが含まれています。
+「クリスマス限定」はクリスマスを境に店頭カバー率が激減し、「しびれ味」と「激辛味」は増加傾向で、他の商品は安定しているようです。
 
-横軸を週、縦軸を出店カバー率の平均値としたグラフにしてみます。
+つぎに、横軸を週、縦軸を出店カバー率の平均値としたグラフにしてみます。
 `ggplot()`関数で、`group = 商品名`とすることで、商品ごとの折れ線グラフを作ります。
 
 ```{r}
@@ -154,7 +156,9 @@ df_pi |>
   select(対象週, クリスマス限定, こだわり味, しびれ味, ピリ辛味, 激辛味, 定番味) |>
   gt() |>
   fmt_number(columns = 2:7, decimals = 2) |>
-  tab_header(title = "表6-3 6種の菓子の数量PIの推移") |>
+  fmt_missing(columns = 2:7, missing_text = "") |>
+  gt_color_rows(2:7, domain = c(0, 7), palette = "ggsci::blue_material") |>
+  tab_header(title = "表6-3: 6種の菓子の数量PIの推移") |>
   tab_options(
     heading.title.font.size = "normal",
     table.font.size = "small"
@@ -208,7 +212,9 @@ df_kinpi |>
   select(対象週, クリスマス限定, こだわり味, しびれ味, ピリ辛味, 激辛味, 定番味) |>
   gt() |>
   fmt_number(columns = 2:7, decimals = 2) |>
-  tab_header(title = "表6-4 6種の菓子の金額PIの推移") |>
+  fmt_missing(columns = 2:7, missing_text = "") |>
+  gt_color_rows(2:7, domain = c(100, 1000), palette = "ggsci::blue_material") |>
+  tab_header(title = "表6-4: 6種の菓子の金額PIの推移") |>
   tab_options(
     heading.title.font.size = "normal",
     table.font.size = "small"
@@ -259,7 +265,9 @@ df_shutu_pi |>
   select(対象週, クリスマス限定, こだわり味, しびれ味, ピリ辛味, 激辛味, 定番味) |>
   gt() |>
   fmt_number(columns = 2:7, decimals = 2) |>
-  tab_header(title = "表6-4 6種の菓子の金額PIの推移") |>
+  fmt_missing(columns = 2:7, missing_text = "") |>
+  gt_color_rows(2:7, domain = c(3, 21), palette = "ggsci::blue_material") |>
+  tab_header(title = "表6-6: 6種類のスナック菓子の出現店・数量PIの推移") |>
   tab_options(
     heading.title.font.size = "normal",
     table.font.size = "small"
@@ -272,7 +280,7 @@ df_shutu_pi |>
 df_shutu_pi |>
   ggplot() + aes(x = 対象週, y = 平均出現店数量PI, color = 商品名, group = 商品名) +
   geom_line() + geom_point() +
-  labs(title = "平均出現店数量PI") +
+  labs(title = "図6-15: 6種類のスナック菓子の出現店数量PIの推移") +
   theme_bw(base_family = "HiraKakuPro-W3") +
   # X軸のラベルを45度回転
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
@@ -296,7 +304,9 @@ df_shutu_kin_pi |>
   select(対象週, クリスマス限定, こだわり味, しびれ味, ピリ辛味, 激辛味, 定番味) |>
   gt() |>
   fmt_number(columns = 2:7, decimals = 2) |>
-  tab_header(title = "平均出現店金額PI") |>
+  fmt_missing(columns = 2:7, missing_text = "") |>
+  gt_color_rows(2:7, domain = c(300, 3400), palette = "ggsci::blue_material") |>
+  tab_header(title = "表6-7: 6種類のスナック菓子の出現店金額PI") |>
   tab_options(
     heading.title.font.size = "normal",
     table.font.size = "small"
@@ -310,7 +320,7 @@ df_shutu_kin_pi |>
 df_shutu_kin_pi |>
   ggplot() + aes(x = 対象週, y = 平均出現店金額PI, color = 商品名, group = 商品名) +
   geom_line() + geom_point() +
-  labs(title = "平均出現店金額PI") +
+  labs(title = "図6-17: 6種類のスナック菓子の出現店金額PIの推移") +
   theme_bw(base_family = "HiraKakuPro-W3") +
   # X軸のラベルを45度回転
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
