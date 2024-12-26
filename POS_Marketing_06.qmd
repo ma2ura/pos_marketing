@@ -1,17 +1,18 @@
 
 # 第6回 売れる商品を入荷しよう
 
-## 店頭カバー率
-
 週次集計POSデータを使って、他の店で売れている商品を見つけ出す。
 
-パッケージとデータを準備する。
+
+## 準備
+
+パッケージとデータを準備します。
 
 第6回ファイルで使うデータは`chp6.xlsx`です。
 まずパッケージを読み込みます。
 
 ```{r packages}
-pacman::p_load(tidyverse, readxl, arules, ggthemes, gt, gtExtras, patchwork, knitr)
+pacman::p_load(tidyverse, readxl, ggthemes, gt, gtExtras, patchwork, knitr)
 ```
 
 次にここで用いる`chp6.xlsx`のシート名を確認します。
@@ -49,14 +50,15 @@ glimpse(df)
 
 
 商品名をテーブルにしてみます。
+「しびれ味」だけ測定期間の途中で販売が開始されたため，他の商品とはデータの個数が異なります。
 
 ```{r}
 df$商品名 |> table() |> t() |> kable()
 ```
 
-### 出店カバー率
+## 出店カバー率
 
-出店カバー率を次のように定義します。
+ある商品売れた店舗の数を全店舗数で除したものを出店カバー率と定義します。
 
 $$
 \text{出店カバー率} = \frac{\text{出現店舗数}}{\text{対象店舗数}} \times 100
@@ -95,6 +97,8 @@ df_cover |>
   select(対象週, クリスマス限定, こだわり味, しびれ味, ピリ辛味, 激辛味, 定番味) |> # 列の順番を変更
   gt() |> # 表を作成
   fmt_number(columns = 2:7, decimals = 2) |> # 2〜7列を小数点2桁に
+  fmt_missing(columns = 2:7, missing_text = "") |>
+  gt_color_rows(2:7, domain = c(19, 100), palette = "ggsci::blue_material") |>
   tab_header(title = "表6-2 6種の菓子の店頭カバー率の推移") |> # タイトルをつける
   gt_theme_pff() # テーマを適用
 ```
