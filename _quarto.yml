@@ -62,3 +62,7 @@ knitr:
   opts_chunk: 
     dev: "ragg_png"
     dpi: 600
+
+execute:
+  error: false
+  message: false

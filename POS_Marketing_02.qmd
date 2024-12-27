@@ -65,10 +65,13 @@ df_jisha_age_sex_num
 ```{r}
 total_sex <- df_jisha_age_sex_num |>
   group_by(性別) |> # 性別ごとに
-  summarise(合計 = sum(販売個数合計)) |> # 個数を合計
+  summarise(
+    合計 = sum(販売個数合計)
+    ) |> # 個数を合計
+  ungroup() |> # グループ化解除
   pivot_wider(names_from = 性別, values_from = 合計) |> # ワイドに
-  mutate(年代 = "合計") |> # 年代に"合計"を追加
-  ungroup() # グループ化解除
+  mutate(年代 = "合計") # 年代に"合計"を追加
+
 df_jisha_age_sex_num |> # ワイドに
   pivot_wider(names_from = 性別, values_from = 販売個数合計) |>
   rbind(total_sex) |> # 合計の行を追加
@@ -237,14 +240,15 @@ df_sales_total <- df |>
     売上合計 = sum(金額),
     .groups = "drop"
   ) |>
+  ungroup() |>
   pivot_wider(names_from = 性別, values_from = c(売上合計))
+  
 df_sales_total |>
   rowwise() |>  # 行ごとに処理
   mutate(
     # 年代以外の列で，行を合計で割る
     across(-年代, ~ . / sum(c_across(-年代), na.rm = TRUE))
     ) |>
-  ungroup() |>
   gt() |>
   fmt_number(columns = 2:3, decimals = 2) |>
   tab_header(title = "表2-3 自社商品の年代別・性別別売上金額")
