@@ -521,15 +521,18 @@ qchisq(1 - alpha, degf) < chi2
 #| warning: false
 #| message: false
 df_chi_graph |>
-  pivot_wider(names_from = "y", values_from = "value") |>
-  ggplot() + aes(x = x,y = y1) + geom_line(linewidth = 1) +
-  ylab("密度") + xlab("カイ二乗値") +
-  scale_y_continuous(expand = c(0,0), limits = c(0,1)) +
-  scale_x_continuous(expand = c(0,0), limits = c(-0.1,60)) +
+  pivot_wider(names_from = "y", values_from = "value") |> # ワイド型に変換
+  # 折れ線グラフを作成
+  ggplot() + aes(x = x, y = y1) + geom_line(linewidth = 1) +
   geom_vline(xintercept = chi2, linetype = "dashed", color = "red") +
   annotate("text", x = chi2, y = 0.1, label = "χ2 statistics", color = "red") +
-  ggtitle("自由度1のχ2分布の確率密度") + theme_bw(base_family = "HiraKakuPro-W3") +
-  scale_fill_tableau(name = "Tableau 20")
+  # グラフの見た目の設定
+  ggtitle("自由度1のχ2分布の確率密度") +  # タイトル
+  ylab("密度") + xlab("カイ二乗値") + # 軸ラベル
+  scale_y_continuous(expand = c(0,0), limits = c(0,1)) +
+  scale_x_continuous(expand = c(0,0), limits = c(-0.1,60)) +
+  theme_bw(base_family = "HiraKakuPro-W3") + # テーマの設定
+  scale_fill_tableau(name = "Tableau 20") # カラーパレットの設定
 ```
 
 このように、$\chi^2$統計量は、自由度1のカイ二乗分布のもとで生じる確率は、
@@ -624,6 +627,25 @@ df_chi2 <- df |>
   pivot_wider(names_from = 性別, values_from = 販売個数)
 ```
 
+`df_chi2`は`data.frame`型なので、そのままでは`chisq.test()`関数に渡すことができません。
+そのため、`matrix`型に変換します。
+
+```{r}
+mat_chi2 <- as.matrix(df_chi2[,2:3])
+mat_chi2
+```
+
+作成した行列型`mat_chi2`を使って$\chi^2$検定を行います。
+
+```{r}
+chisq.test(mat_chi2, correct = FALSE)
+```
+
+$chi^2$ 値が`288.42`となり、 $p$ 値が`2.2e-16`とほぼゼロとなっていることから、
+「自社と競合A社の年代・性別別売上個数に差がない」という帰無仮説は棄却されました。
+
+<!---
+
 このクロス表から期待度数を計算してみます。
 期待度数は，男女別合計と年代別合計を乗して，全体の合計で割ることで求められます。
 
@@ -654,3 +676,5 @@ df_chi_test  <- df_chi2 |>
   )
 df_chi_test
 ```
+
+--->
