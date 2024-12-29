@@ -307,7 +307,7 @@ CRANのページにあるマニュアルにMining Association Rules and Frequent
 
 順番に処理していきます。
 `df_associ`は`read_excel()`関数で読み込んだため、`data.frame`型となっています。
-これを`as.matrix()`で行列型に変換し、その後`arules::as()`関数で`transactions`オブジェクトに変換し、`df_tran`に代入します。
+これを`as.matrix()`で行列型に変換し、その後`as()`関数で`transactions`オブジェクトに変換し、`df_tran`に代入します。
 
 ```{r}
 df_tran <- df_associ |>
