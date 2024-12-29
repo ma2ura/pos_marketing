@@ -310,7 +310,9 @@ CRANのページにあるマニュアルにMining Association Rules and Frequent
 これを`as.matrix()`で行列型に変換し、その後`arules::as()`関数で`transactions`オブジェクトに変換し、`df_tran`に代入します。
 
 ```{r}
-df_tran <- as.matrix(df_associ) |> as("transactions") # transactionsオブジェクトに変換
+df_tran <- df_associ |>
+  as.matrix() |> # 行列型に変換
+  as("transactions") # transactionsオブジェクトに変換
 ```
 
 次に、`apriori()`関数を使ってアソシエーション分析を行います。
@@ -323,7 +325,10 @@ df_tran <- as.matrix(df_associ) |> as("transactions") # transactionsオブジェ
 #| warning: false
 df_ap <- arules::apriori(
   df_tran,
-  parameter = list(support = 0.05, confidence = 0.4) # サポート0.05、信頼度0.4
+  parameter = list(
+    support = 0.05, # サポート 0.05
+    confidence = 0.4 # 信頼度 0.4
+    ) 
   )
 ```
 
@@ -338,9 +343,12 @@ result <- df_ap |>
 結果が見づらいので、`arules::apriori()`関数の結果を`data.frame`型に変換し、変数名を補い、`gt()`関数で表形式にします。
 
 ```{r}
-result <- result |> as.data.frame()
-names(result)[2] <- "arrow"
-result |> gt() |>
+result <- result |> 
+  as.data.frame() # data.frame型に変換
+names(result)[2] <- "arrow" # 変数名を補う
+
+result |> 
+  gt() |> # 表形式にする
   fmt_number(columns = 4:7, decimals = 2) |>
   tab_options(
     table.font.size = "small"
@@ -358,7 +366,8 @@ result |> gt() |>
 ```{r}
 df_associ |>
   colSums() |> # 列ごとに合計
-  t() |> kable()
+  t() |> # 行と列を入れ替え
+  kable() # 表形式にする
 ```
 
 1度に何種類の商品を購入するかを集計します。

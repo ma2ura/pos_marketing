@@ -22,8 +22,8 @@
 /POS_Marketing_06_files/
 /POS_Marketing_07_cache/
 /POS_Marketing_07_files/
-data/
-img/
+/data/
+/img/
 README_files/
 *.log
 *.tex

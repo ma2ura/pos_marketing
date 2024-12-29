@@ -36,7 +36,7 @@ book:
       left: "Copyright 2024, Soichi Matsuura"
       right:
         - icon: github
-          href: https://github.com/ma2ura
+          href: https://github.com/ma2ura/pos_marketing/
         - icon: twitter
           href: https://twitter.com/matsuura_rits
           aria-label: Twitter
