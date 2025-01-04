@@ -242,7 +242,7 @@ df_sales_total <- df |>
   ) |>
   ungroup() |>
   pivot_wider(names_from = 性別, values_from = c(売上合計))
-  
+
 df_sales_total |>
   rowwise() |>  # 行ごとに処理
   mutate(
@@ -641,8 +641,8 @@ mat_chi2
 chisq.test(mat_chi2, correct = FALSE)
 ```
 
-$chi^2$ 値が`288.42`となり、 $p$ 値が`2.2e-16`とほぼゼロとなっていることから、
-「自社と競合A社の年代・性別別売上個数に差がない」という帰無仮説は棄却されました。
+$\chi^2$ 値が`288.42`となり、 $p$ 値が`0.00000000000000022`とほぼゼロとなっていることから、
+<span class="markp">「自社と競合A社の年代・性別別売上個数に差がない」という帰無仮説は棄却されました</span>。
 
 <!---
 
