@@ -132,12 +132,12 @@ df |>
 次に、月間売上高を説明するための回帰モデルを構築します。
 <span class="marky">回帰分析では、結果を表す変数と原因を表す変数の関係、つまり**因果関係**(causal relationship)を調べます。</span>
 
-| 用語法 | 結果を表す変数 | 原因を表す変数 |
+| 種類 | 結果を表す変数・出力 | 原因を表す変数・入力 |
 |---|---|---|
-| 一般的? | 従属変数 (dependent variable) | 独立変数 (independent variables) |
-| 経済系? | 被説明変数 (explaned variable) | 説明変数 (explanatory variables)   |
-| 統計系? | 目的変数 (objective variable) | 説明変数 (explanatory variables) |
-| 機械学習? | 応答変数 (response variable) | 予測変数 (predictor variable) |
+| パターン1 | 従属変数 (dependent variable) | 独立変数 (independent variables) |
+| パターン2 | 被説明変数 (explaned variable) | 説明変数 (explanatory variables)   |
+| パターン3 | 目的変数 (objective variable) | 説明変数 (explanatory variables) |
+| パターン4 | 応答変数 (response variable) | 予測変数 (predictor variable) |
 
 :::{.aside}
 用語法は文脈によって異なります。ここでの分類は完全に松浦の主観です。
