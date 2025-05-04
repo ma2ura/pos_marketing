@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.36">
+<meta name="generator" content="quarto-1.6.43">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>4&nbsp; 第4回 売上に影響を与える要因 – POSとマーケティングデータ分析</title>
 <style>
@@ -68,10 +68,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-01c78b5cd655e4cd89133cf59d535862.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d4d76bf8491c20bad77d141916dc28e1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5c44332d74a4162fb3c38f61c25c89ea.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-80b834ae1716a04d83e6dab7004e7410.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -252,17 +252,17 @@ window.Quarto = {
 
 </header><section id="はじめに" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="はじめに">
 <span class="header-section-number">4.1</span> はじめに</h2>
-<p>パッケージとデータを準備する。</p>
-<p>第3回ファイルで使うデータは<code>chp4.xlsx</code>です。</p>
+<p>いつもどおり、パッケージとデータを準備します。 第3回ファイルで使うデータは、</p>
 <ul>
 <li><code>chp4.xlsx</code></li>
 </ul>
-<p>パッケージを読み込みます。</p>
+<p>です。このExcelデータが<code>data</code>フォルダに保存されていることを確認してください。 次に、必要なパッケージを<code><a href="https://rdrr.io/pkg/pacman/man/p_load.html">pacman::p_load()</a></code>を使って読み込みます。</p>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>, <span class="va">readxl</span>, <span class="va">ggthemes</span>, <span class="va">gt</span>, <span class="va">gtExtras</span>, <span class="va">patchwork</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="天気データ" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="天気データ">
 <span class="header-section-number">4.2</span> 天気データ</h2>
+<p>gdf1HzC2KkA2nt</p>
 <p>気象庁のウェブサイトからテキストの通りにデータを取得し、<code>weather.csv</code>として<code>data</code>フォルダに保存してください。 このファイルをMS Excelで開くと、次のようなデータが表示されます。</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="img/weather_data.png" class="img-fluid figure-img"></p>
@@ -370,7 +370,7 @@ $ 最高気温              &lt;dbl&gt; 12.1, 11.0, 11.0, 10.6, 9.9, 10.4, 12.5,
 $ 最低気温              &lt;dbl&gt; 2.0, 0.5, 1.3, 2.6, 0.0, 3.0, 1.6, 2.4, 2.8, 1.5…
 $ 降水量の合計mm        &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0…
 $ 一時間降水量の最大mm  &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0…
-$ `天気概況6-18h`       &lt;chr&gt; "晴", "快晴", "晴", "快晴", "薄曇時々晴", "晴", …</code></pre>
+$ `天気概況6-18h`       &lt;chr&gt; "晴", "快晴", "晴", "快晴", "薄曇時々晴", "晴", "快晴", "快晴", …</code></pre>
 </div>
 </div>
 </section><section id="気温のグラフ" class="level2" data-number="4.5"><h2 data-number="4.5" class="anchored" data-anchor-id="気温のグラフ">
@@ -568,23 +568,23 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
 <span>    table.width <span class="op">=</span> <span class="fu">pct</span><span class="op">(</span><span class="fl">60</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="nrbxgmxqqa" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#nrbxgmxqqa table {
+<div id="kdroxyvujb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kdroxyvujb table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#nrbxgmxqqa thead, #nrbxgmxqqa tbody, #nrbxgmxqqa tfoot, #nrbxgmxqqa tr, #nrbxgmxqqa td, #nrbxgmxqqa th {
+#kdroxyvujb thead, #kdroxyvujb tbody, #kdroxyvujb tfoot, #kdroxyvujb tr, #kdroxyvujb td, #kdroxyvujb th {
   border-style: none;
 }
 
-#nrbxgmxqqa p {
+#kdroxyvujb p {
   margin: 0;
   padding: 0;
 }
 
-#nrbxgmxqqa .gt_table {
+#kdroxyvujb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -610,12 +610,12 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   border-left-color: #D3D3D3;
 }
 
-#nrbxgmxqqa .gt_caption {
+#kdroxyvujb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#nrbxgmxqqa .gt_title {
+#kdroxyvujb .gt_title {
   color: #333333;
   font-size: normal;
   font-weight: initial;
@@ -627,7 +627,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   border-bottom-width: 0;
 }
 
-#nrbxgmxqqa .gt_subtitle {
+#kdroxyvujb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -639,7 +639,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   border-top-width: 0;
 }
 
-#nrbxgmxqqa .gt_heading {
+#kdroxyvujb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -651,13 +651,13 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   border-right-color: #D3D3D3;
 }
 
-#nrbxgmxqqa .gt_bottom_border {
+#kdroxyvujb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#nrbxgmxqqa .gt_col_headings {
+#kdroxyvujb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -672,7 +672,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   border-right-color: #D3D3D3;
 }
 
-#nrbxgmxqqa .gt_col_heading {
+#kdroxyvujb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -692,7 +692,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   overflow-x: hidden;
 }
 
-#nrbxgmxqqa .gt_column_spanner_outer {
+#kdroxyvujb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -704,15 +704,15 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   padding-right: 4px;
 }
 
-#nrbxgmxqqa .gt_column_spanner_outer:first-child {
+#kdroxyvujb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#nrbxgmxqqa .gt_column_spanner_outer:last-child {
+#kdroxyvujb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#nrbxgmxqqa .gt_column_spanner {
+#kdroxyvujb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -724,11 +724,11 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   width: 100%;
 }
 
-#nrbxgmxqqa .gt_spanner_row {
+#kdroxyvujb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#nrbxgmxqqa .gt_group_heading {
+#kdroxyvujb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -754,7 +754,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   text-align: left;
 }
 
-#nrbxgmxqqa .gt_empty_group_heading {
+#kdroxyvujb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -769,15 +769,15 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   vertical-align: middle;
 }
 
-#nrbxgmxqqa .gt_from_md > :first-child {
+#kdroxyvujb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#nrbxgmxqqa .gt_from_md > :last-child {
+#kdroxyvujb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#nrbxgmxqqa .gt_row {
+#kdroxyvujb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -796,7 +796,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   overflow-x: hidden;
 }
 
-#nrbxgmxqqa .gt_stub {
+#kdroxyvujb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -809,7 +809,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   padding-right: 5px;
 }
 
-#nrbxgmxqqa .gt_stub_row_group {
+#kdroxyvujb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -823,15 +823,15 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   vertical-align: top;
 }
 
-#nrbxgmxqqa .gt_row_group_first td {
+#kdroxyvujb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#nrbxgmxqqa .gt_row_group_first th {
+#kdroxyvujb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#nrbxgmxqqa .gt_summary_row {
+#kdroxyvujb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -841,16 +841,16 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   padding-right: 5px;
 }
 
-#nrbxgmxqqa .gt_first_summary_row {
+#kdroxyvujb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#nrbxgmxqqa .gt_first_summary_row.thick {
+#kdroxyvujb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#nrbxgmxqqa .gt_last_summary_row {
+#kdroxyvujb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -860,7 +860,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   border-bottom-color: #D3D3D3;
 }
 
-#nrbxgmxqqa .gt_grand_summary_row {
+#kdroxyvujb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -870,7 +870,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   padding-right: 5px;
 }
 
-#nrbxgmxqqa .gt_first_grand_summary_row {
+#kdroxyvujb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -880,7 +880,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   border-top-color: #D3D3D3;
 }
 
-#nrbxgmxqqa .gt_last_grand_summary_row_top {
+#kdroxyvujb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -890,11 +890,11 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   border-bottom-color: #D3D3D3;
 }
 
-#nrbxgmxqqa .gt_striped {
+#kdroxyvujb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#nrbxgmxqqa .gt_table_body {
+#kdroxyvujb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -903,7 +903,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   border-bottom-color: #D3D3D3;
 }
 
-#nrbxgmxqqa .gt_footnotes {
+#kdroxyvujb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -917,7 +917,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   border-right-color: #D3D3D3;
 }
 
-#nrbxgmxqqa .gt_footnote {
+#kdroxyvujb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -926,7 +926,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   padding-right: 5px;
 }
 
-#nrbxgmxqqa .gt_sourcenotes {
+#kdroxyvujb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -940,7 +940,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   border-right-color: #D3D3D3;
 }
 
-#nrbxgmxqqa .gt_sourcenote {
+#kdroxyvujb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -948,72 +948,72 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
   padding-right: 5px;
 }
 
-#nrbxgmxqqa .gt_left {
+#kdroxyvujb .gt_left {
   text-align: left;
 }
 
-#nrbxgmxqqa .gt_center {
+#kdroxyvujb .gt_center {
   text-align: center;
 }
 
-#nrbxgmxqqa .gt_right {
+#kdroxyvujb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#nrbxgmxqqa .gt_font_normal {
+#kdroxyvujb .gt_font_normal {
   font-weight: normal;
 }
 
-#nrbxgmxqqa .gt_font_bold {
+#kdroxyvujb .gt_font_bold {
   font-weight: bold;
 }
 
-#nrbxgmxqqa .gt_font_italic {
+#kdroxyvujb .gt_font_italic {
   font-style: italic;
 }
 
-#nrbxgmxqqa .gt_super {
+#kdroxyvujb .gt_super {
   font-size: 65%;
 }
 
-#nrbxgmxqqa .gt_footnote_marks {
+#kdroxyvujb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#nrbxgmxqqa .gt_asterisk {
+#kdroxyvujb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#nrbxgmxqqa .gt_indent_1 {
+#kdroxyvujb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#nrbxgmxqqa .gt_indent_2 {
+#kdroxyvujb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#nrbxgmxqqa .gt_indent_3 {
+#kdroxyvujb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#nrbxgmxqqa .gt_indent_4 {
+#kdroxyvujb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#nrbxgmxqqa .gt_indent_5 {
+#kdroxyvujb .gt_indent_5 {
   text-indent: 25px;
 }
 
-#nrbxgmxqqa .katex-display {
+#kdroxyvujb .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#nrbxgmxqqa div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#kdroxyvujb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1023,8 +1023,8 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
 <th colspan="2" class="gt_heading gt_title gt_font_normal gt_bottom_border">相関係数</th>
 </tr>
 <tr class="gt_col_headings even">
-<th id="気温と個数" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">気温と個数</th>
-<th id="雨と個数" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">雨と個数</th>
+<th id="a気温と個数" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">気温と個数</th>
+<th id="a雨と個数" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">雨と個数</th>
 </tr>
 </thead>
 <tbody class="gt_table_body"><tr class="odd">
