@@ -3,13 +3,13 @@
 
 ## はじめに
 
-パッケージとデータを準備する。
-
-第3回ファイルで使うデータは`chp4.xlsx`です。
+いつもどおり、パッケージとデータを準備します。
+第3回ファイルで使うデータは、
 
 - `chp4.xlsx`
 
-パッケージを読み込みます。
+です。このExcelデータが`data`フォルダに保存されていることを確認してください。
+次に、必要なパッケージを`pacman::p_load()`を使って読み込みます。
 
 ```{r}
 pacman::p_load(tidyverse, readxl, ggthemes, gt, gtExtras, patchwork)
@@ -17,6 +17,8 @@ pacman::p_load(tidyverse, readxl, ggthemes, gt, gtExtras, patchwork)
 
 
 ## 天気データ
+
+gdf1HzC2KkA2nt
 
 気象庁のウェブサイトからテキストの通りにデータを取得し、`weather.csv`として`data`フォルダに保存してください。
 このファイルをMS Excelで開くと、次のようなデータが表示されます。

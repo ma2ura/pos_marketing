@@ -1,21 +1,21 @@
-
 # 第2回 顧客層別の売上
 
 ## はじめに
 
-年代ごとの客層に違いがあるのかや、自社と他社の顧客層に違いがあるのかを調べる方法を学ぶ。
+年代ごとの客層に違いがあるのかや、自社と他社の顧客層に違いがあるのかを調べる方法として、
 クロス表の作成方法やカイ二乗検定の方法を学びます。
 
 ## この章で使うファイルとパッケージ
 
-第2回ファイルで使うデータは`chp2.xlsx`です。
+第2回ファイルで使うデータは
 
 - `chp2.xlsx`
 
-パッケージを読み込みます。
+です。
+ではまず必要なパッケージを読み込みます。
 
 ```{r}
-options(scipen=100)
+options(scipen = 100)
 pacman::p_load(tidyverse, readxl, ggthemes, gt, gtExtras)
 ```
 
@@ -26,13 +26,13 @@ pacman::p_load(tidyverse, readxl, ggthemes, gt, gtExtras)
 readxl::excel_sheets("data/chp2.xlsx")
 ```
 
-第1章のデータと同じでした。
-「いつものPOSデータ」を読み込みたいので，特に指定せずに`read_excel()`関数を使って読み込みます。
-ついでに文字列をカテゴリー変数として因子型に変換しておきます。
+最初のシート「いつものPOSデータ」を読み込みたいので、シート番号を指定せずに`read_excel()`関数を使ってExcelファイルを読み込みます。
+ついでに<span class = "marky">文字列をカテゴリー変数として因子型に変換しておきます</span>。
 ```{r}
-#| cache=TRUE
-df <- readxl::read_excel("data/chp2.xlsx")
-df <- df %>%
+#| cache: FALSE
+#| warning: FALSE
+df <- readxl::read_excel("data/chp2.xlsx") # データを読み込む
+df <- df |> # 文字列を因子型に変換
   mutate(曜日 = factor(曜日, levels = c("月", "火", "水", "木", "金", "土", "日"), ordered = TRUE),
          性別 = factor(性別, levels = c("男性", "女性"), ordered = TRUE),
          年代 = factor(年代, levels = c("20歳未満", "20代", "30代", "40代", "50代", "60歳以上"), ordered = TRUE),
@@ -48,7 +48,8 @@ head(df) # 戦闘6行を表示
 顧客を属性で分類することを**セグメンテーション**といいます。
 年代や性別といったセグメントごとの顧客の特徴を調べてみます。
 
-まずは<span class="rmarker-s">自社商品におおける年代別と性別ごとの販売個数</span>を計算してみましょう。
+まずは<span class = "markp">自社商品におおける年代別と性別ごとの販売個数</span>を計算してみましょう。
+
 
 ```{r}
 df_jisha_age_sex_num <- df |>
