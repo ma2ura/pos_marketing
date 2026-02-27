@@ -160,10 +160,16 @@ df_pos_weather |>
 ```{r}
 #| fig.width: 12
 df_pos_weather |>
-  mutate(月 = factor(month(年月日), unique(month(年月日)))) |>
-  group_by(月) |>
-  summarise(降水量の合計mm = sum(降水量の合計mm)) |>
-  ggplot(aes(x = 月, y = 降水量の合計mm)) +  geom_col() +
+  mutate(
+    月 = factor(month(年月日), unique(month(年月日)))
+  ) |>
+  summarise(
+    .by = c(月),
+    降水量の合計mm = sum(降水量の合計mm)
+  ) |>
+  ggplot() +
+  aes(x = 月, y = 降水量の合計mm) +
+  geom_col() +
   theme_bw(base_family = "HiraKakuPro-W3") +
   labs(title = "月ごとの降水量の合計(mm)", x = "月", y = "降水量(mm)") +
   theme_bw(base_family = "HiraKakuPro-W3") +
@@ -177,7 +183,7 @@ df_pos_weather |>
 #| fig.width: 12
 
 df_pos_weather |>
-  ggplot(aes(x = 降水量の合計mm)) +
+  ggplot() + aes(x = 降水量の合計mm) +
   geom_histogram(binwidth = 5) +
   theme_bw(base_family = "HiraKakuPro-W3") +
   labs(title = "降水量の合計(mm)", x = "降水量(mm)", y = "頻度") +
@@ -197,9 +203,15 @@ df_pos_weather |>
 #| fig.width: 12
 #| fig.height: 12
 g_item_temp <- df_pos_weather |>
-  select(年月日, "緑茶（自社）", "濃い茶（自社）", "おいしい緑茶（A社）","おいしい濃茶（A社）","平均気温", "最高気温") |>
-  pivot_longer(cols = c("緑茶（自社）", "濃い茶（自社）", "おいしい緑茶（A社）","おいしい濃茶（A社）"), names_to = "商品", values_to = "個数") |>
-  ggplot(aes(x = 平均気温, y = 個数)) +
+  select(
+    年月日, "緑茶（自社）", "濃い茶（自社）", "おいしい緑茶（A社）","おいしい濃茶（A社）","平均気温", "最高気温"
+  ) |>
+  pivot_longer(
+    cols = c("緑茶（自社）", "濃い茶（自社）", "おいしい緑茶（A社）","おいしい濃茶（A社）"),
+    names_to = "商品",
+    values_to = "個数"
+  ) |>
+  ggplot() + aes(x = 平均気温, y = 個数) +
   geom_point() +
   theme_bw(base_family = "HiraKakuPro-W3") +
   labs(title = "最高気温と売上個数の散布図", x = "平均気温", y = "売上個数") +
@@ -217,9 +229,15 @@ g_item_temp
 #| fig.height: 12
 
 g_item_rain <- df_pos_weather |>
-  select(年月日, "緑茶（自社）", "濃い茶（自社）", "おいしい緑茶（A社）","おいしい濃茶（A社）","平均気温", "降水量の合計mm") |>
-  pivot_longer(cols = c("緑茶（自社）", "濃い茶（自社）", "おいしい緑茶（A社）","おいしい濃茶（A社）"), names_to = "商品", values_to = "個数") |>
-  ggplot(aes(x = 降水量の合計mm, y = 個数)) +
+  select(
+    年月日, "緑茶（自社）", "濃い茶（自社）", "おいしい緑茶（A社）","おいしい濃茶（A社）","平均気温", "降水量の合計mm"
+  ) |>
+  pivot_longer(
+    cols = c("緑茶（自社）", "濃い茶（自社）", "おいしい緑茶（A社）","おいしい濃茶（A社）"),
+    names_to = "商品",
+    values_to = "個数"
+  ) |>
+  ggplot() + aes(x = 降水量の合計mm, y = 個数) +
   geom_point() +
   theme_bw(base_family = "HiraKakuPro-W3") +
   labs(title = "降水量と売上個数の散布図", x = "降水量", y = "売上個数") +
