@@ -54,9 +54,11 @@ head(df) # 戦闘6行を表示
 ```{r}
 df_jisha_age_sex_num <- df |>
   filter(メーカー == "自社") |> # 自社商品のみ抽出
-  group_by(年代, 性別) |> # 年代と性別ごとに
-  summarise(販売個数合計 = sum(個数)) |> # 個数を合計
-  ungroup() # グループ化解除
+  summarise(
+    .by = c(年代, 性別),# 年代と性別ごとに
+    販売個数合計 = sum(個数) # 個数を合計
+  )
+
 df_jisha_age_sex_num
 ```
 
@@ -65,11 +67,10 @@ df_jisha_age_sex_num
 
 ```{r}
 total_sex <- df_jisha_age_sex_num |>
-  group_by(性別) |> # 性別ごとに
   summarise(
-    合計 = sum(販売個数合計)
-    ) |> # 個数を合計
-  ungroup() |> # グループ化解除
+    .by = c(性別), # 性別ごとに
+    合計 = sum(販売個数合計) # 個数を合計
+    ) |>
   pivot_wider(names_from = 性別, values_from = 合計) |> # ワイドに
   mutate(年代 = "合計") # 年代に"合計"を追加
 
@@ -90,11 +91,10 @@ df_jisha_age_sex_num |> # ワイドに
 ```{r}
 df_jisha_sale_age_sex <- df |>
   filter(メーカー == "自社") |>
-  group_by(性別, 年代) |>
   summarise(
-    売上合計 = sum(金額)
-  ) |>
-  ungroup()
+    .by = c(年代, 性別), # 年代と性別ごとに
+    売上合計 = sum(金額) # 金額を合計
+  )
 
 df_jisha_sale_age_sex |>
   pivot_wider(names_from = 性別, values_from = 売上合計) |>
@@ -152,8 +152,10 @@ df_jisha_sale_age_sex |>
 ```{r}
 df |>
   filter(メーカー == "自社") |>
-  group_by(年代, 性別) |>
-  summarise(販売個数 = sum(個数)) |>
+  summarise(
+    .by = c(年代, 性別), # 年代と性別ごとに
+    販売個数 = sum(個数) # 個数を合計
+  ) |>
   ggplot() + aes(x = 年代, y = 販売個数, fill = 性別) +
   geom_col(position = "dodge") +
   labs(title = "図2-4 性別・年代ごとの自社商品の売上個数",
@@ -236,12 +238,10 @@ df_row_ratio |>
 ```{r}
 df_sales_total <- df |>
   dplyr::filter(メーカー == "自社") |>
-  group_by(年代, 性別) |>
   summarise(
-    売上合計 = sum(金額),
-    .groups = "drop"
+    .by = c(年代, 性別),
+    売上合計 = sum(金額)
   ) |>
-  ungroup() |>
   pivot_wider(names_from = 性別, values_from = c(売上合計))
 
 df_sales_total |>
@@ -261,9 +261,10 @@ df_sales_total |>
 
 ```{r}
 df_maker_age_sex <- df |>
-  group_by(メーカー, 年代, 性別) |>
-  summarise(販売個数 = sum(個数), .groups = "drop") |>
-  ungroup()
+  summarise(
+    .by = c(メーカー, 年代, 性別), # メーカー、年代、性別ごとに
+    販売個数 = sum(個数) # 個数を合計
+    )
 ```
 
 競合A社の性別・年代ごとの売上個数を見てみる。
@@ -306,17 +307,19 @@ df_ji_A_item <- df_maker_age_sex |>
 
 # 全体売上個数を計算する
 df_total_item <- df |>
-  group_by(年代, 性別) |> # 年代と性別ごとに
-  summarise(合計 = sum(個数), .groups = "drop") # 売上個数を合計
+  summarise(
+      .by = c(年代, 性別), # 年代と性別ごとに
+    合計 = sum(個数) # 売上個数を合計
+  )
 
 # 自社とA社のデータフレームと全体のデータフレームを結合
 df_ji_A_item <- df_ji_A_item |>
   left_join(df_total_item, by = c("年代", "性別"))
 # 作表
 df_ji_A_item |>
-  arrange(性別) |>
-  group_by(性別) |>
-  gt() |>
+  arrange(性別) |> # 性別で並び替えて
+  group_by(性別) |> # 性別でグループ分けして
+  gt() |> # 表にする。
   fmt_number(columns = 3:5, decimals = 0) |>
   tab_header(title = "表2-7 自社と競合A社の年代・性別別売上個数")
 ```
@@ -623,8 +626,10 @@ fisher.test(O)
 ```{r}
 df_chi2 <- df |>
   filter(メーカー == "自社") |>
-  group_by(年代, 性別) |>
-  summarise(販売個数 = sum(個数), .groups = "drop") |>
+  summarise(
+    .by = c(年代, 性別), # 年代と性別ごとに
+    販売個数 = sum(個数)
+  ) |>
   pivot_wider(names_from = 性別, values_from = 販売個数)
 ```
 

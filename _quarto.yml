@@ -51,15 +51,16 @@ format:
     code-link: true
     link-external-icon: true
     df-print: kable
-    
+    mainfont: "Noto Sans JP"
+    monofont: "0xProto" # ※このフォントがシステムにない場合、デフォルトになります
     grid:
       sidebar-width: 200px
       body-width: 1200px
     css:
       - "mystyle.css"
 lang: "ja"
-knitr: 
-  opts_chunk: 
+knitr:
+  opts_chunk:
     dev: "ragg_png"
     dpi: 600
 
