@@ -197,8 +197,10 @@ Excelでピボットテーブルを使う手続が教科書で解説されてい
 ```{r}
 #| class-output: code-output
 df_maker_sales <- df |>
-  dplyr::group_by(メーカー) |>
-  dplyr::summarise(売上金額合計 = sum(金額))
+  dplyr::summarise(
+    .by = c(メーカー),
+    売上金額合計 = sum(金額)
+  )
 df_maker_sales
 ```
 
@@ -215,14 +217,18 @@ df_maker_sales |>
 ```
 
 次に，各メーカーのどの商品が，平均何円で売られているのか，を調べてみましょう。
-`group_by()`関数の引数に，`メーカー`と`商品名`を指定して，`summarise()`関数でグループごとの平均単価を計算し，
-`arrange()`関数でメーカーと平均単価でソートします。`desc()`関数は降順にソートするための関数です。
+`summarise()`関数の引数に，`.by=c()`を指定し，グループ化したい変数として`メーカー`と`商品名`を指定してグループごとの平均単価を計算する。
+そして`arrange()`関数でメーカーと平均単価でソートします。
+`desc()`関数は降順にソートするための関数です。
+
 ```{r}
 df_maker_item <- df |>
-  group_by(メーカー, 商品名) |> # メーカーと商品名でグループ化
-  summarise(平均単価 = mean(単価)) |> # 平均単価を計算
-  arrange(メーカー, desc(平均単価)) |># メーカーと平均単価でソート
-  ungroup()
+  summarise(
+    .by = c(メーカー, 商品名), # メーカーと商品名でグループ化
+    平均単価 = mean(単価) # 平均単価を計算
+    ) |>
+  arrange(メーカー, desc(平均単価)) # メーカーと平均単価でソート
+
 df_maker_item |>
   gt() |>
   fmt_number(columns = 3:3, decimals = 0) |>
@@ -252,17 +258,18 @@ df |>
 #| class-output: code-output
 df_jisha_total <- df |>
   filter(メーカー == "自社") |> # 自社製品だけを抽出
-  group_by(商品名) |>
   summarise(
+    .by = c(商品名),
     売上金額合計 = sum(金額),
     売上個数合計 = sum(個数)
     ) |>
   arrange(desc(売上金額合計))
+
 df_jisha_total
 ```
 
 これで自社の製品ごとの売上金額と売上個数の合計が計算されました。
-ここで注意しないといけないことは，`group_by()`関数と`summarise()`関数を使った場合，グループごとに1つの統計量を返すため，上のコードだと，
+ここで注意しないといけないことは`summarise()`関数に`.by=`引数を使った場合，グループごとに1つの統計量を返すため，上のコードだと，
 自社の2商品ごとの売上金額と売上個数の合計が出力され，2行2列のデータフレームが返されていることが分かります。
 
 
@@ -284,10 +291,11 @@ class(df$日付)
 df_month_sales <- df |>
   filter(メーカー == "自社") |>
   mutate(月 = lubridate::month(日付, label = TRUE)) |>
-  group_by(月) |> # 月ごとにグループ化
-  summarise(売上金額合計 = sum(金額)) |>
-  arrange(月) |>
-  ungroup()
+  summarise(
+      .by = c(月), # 月ごとにグループ化
+    売上金額合計 = sum(金額)
+    ) |>
+  arrange(月)
 
 df_month_sales |>
   gt() |>
@@ -306,10 +314,11 @@ df_month_sales |>
 ```{r}
 df_time_sales <- df |>
   filter(メーカー == "自社") |>
-  group_by(時間) |>
-  summarise(売上金額合計 = sum(金額)) |>
-  arrange(時間) |>
-  ungroup()
+  summarise(
+    .by = c(時間),
+    売上金額合計 = sum(金額)
+  ) |>
+  arrange(時間)
 
 df_time_sales |>
   gt() |>
@@ -377,8 +386,10 @@ df_month_time_sales <- df |>
   filter(メーカー == "自社") |>
   mutate(月 = lubridate::month(日付, label = TRUE),
          時間 = as.factor(時間)) |>
-  group_by(月, 時間) |>
-  summarise(売上金額合計 = sum(金額)) |>
+  summarise(
+      .by = c(月, 時間),
+    売上金額合計 = sum(金額)
+  ) |>
   arrange(月, 時間)
 
 df_month_time_sales |>
