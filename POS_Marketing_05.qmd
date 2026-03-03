@@ -12,7 +12,16 @@
 パッケージを読み込みます。
 
 ```{r packages}
-pacman::p_load(tidyverse, readxl, arules, ggthemes, knitr, kableExtra, gt, gtExtras, patchwork)
+pacman::p_load(
+  tidyverse, 
+  readxl, 
+  arules, # アソシエーション分析のパッケージ 
+  ggthemes, # ここから下は図表用
+  knitr, 
+  kableExtra, 
+  gt, 
+  gtExtras, 
+  patchwork)
 ```
 
 ここで用いる`chp5.xlsx`のシート名を確認します。
@@ -24,8 +33,9 @@ readxl::excel_sheets("data/chp5.xlsx")
 ## 併売の基礎集計
 
 最初の分析では、併売の基礎集計を行うために、1番目のシート「いつものPOSデータ」を読み込みます。
+`sheet =1`を指定して読み込みます。
 
-```{r chp5-1}
+```{r chp5-1, filename = "Excelの読み込み"}
 #| cache: TRUE
 df <- readxl::read_excel("data/chp5.xlsx", sheet = 1)
 head(df)
@@ -49,8 +59,10 @@ head(df_wide)
 df |>
   select(レシート番号, 商品名, 個数) |> # 必要な列だけ抽出
   mutate(回数 = if_else(個数 > 0, 1, 0)) |> # 個数が1以上の場合は1、それ以外は0
-  group_by(商品名) |> # 商品ごとにグループ化
-  summarise(購入回数 = sum(回数)) |> # 購入回数を合計
+  summarise(
+    .by = c(商品名), # 商品ごとにグループ化
+    購入回数 = sum(回数)
+  ) |> # 購入回数を合計
   arrange(desc(購入回数)) |>  # 購入回数で降順ソート
   gt() |> # 作表
   fmt_number(columns = 2, decimals = 0) |>
@@ -125,7 +137,8 @@ result <- product_names |>
         ) |> # 商品ごとに合計
       mutate(
         across(everything(), ~ ifelse(cur_column() == .x, total_counts[.x], .)),
-             商品 = .x)
+        商品 = .x
+        )
   }) |>
   select(商品, everything())
 # ここから下は表の設定なので、なくても動作します
@@ -141,12 +154,11 @@ result |>
   gt_theme_pff()
 ```
 
-
-
 各項目の値を合計値で割ることで、商品ごとの購入率を求めます。
 
 ```{r}
 result_ratio <- result |>
+  # 分母がゼロでないので、チェック不要だけど、普通は必要
   mutate(
     緑茶 = 緑茶 / 緑茶[1],
     濃い茶 = 濃い茶 / 濃い茶[2],

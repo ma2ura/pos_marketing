@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.8.26">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Soichi Matsuura">
 <title>1&nbsp; 第1回 売上をまとめた表をつくる – POSとマーケティングデータ分析</title>
 <style>
 code{white-space: pre-wrap;}
@@ -71,10 +72,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b758ccaa5987ceb1b75504551e579abf.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-fbc546a6f7231915c10c420282a7d289.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-0907bcc31431a373ae96853dfe16c1d2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-9b98439fbe4ae1eb56616ecad9777bd3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-0907bcc31431a373ae96853dfe16c1d2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -100,7 +108,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "検索",
     "search-label": "サーチ"
   }
-}</script><link rel="stylesheet" href="mystyle.css">
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-SFB56VHK63"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-SFB56VHK63', { 'anonymize_ip': true});
+</script><link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script><style>
+.marky {
+  background: linear-gradient(transparent 60%, #FCFFC1 0%);
+}
+.markb {
+  background: linear-gradient(transparent 60%, #88E2EA 0%);
+}
+.markp{
+  background: linear-gradient(transparent 70%, #ffcdd2 0%)
+}
+</style>
 <meta name="twitter:title" content="1&nbsp; 第1回 売上をまとめた表をつくる – POSとマーケティングデータ分析">
 <meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://so-ichi.com/POS_Marketing_01_files/figure-html/unnamed-chunk-21-1.png">
@@ -108,7 +133,169 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="twitter:image-width" content="8400">
 <meta name="twitter:card" content="summary_large_image">
 </head>
-<body class="nav-sidebar floating slimcontent quarto-light">
+<body class="nav-sidebar docked slimcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
@@ -124,11 +311,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">POSとマーケティングデータ分析</a> 
-        <div class="sidebar-tools-main">
+        <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/ma2ura/pos_marketing/" title="ソースコード" class="quarto-navigation-tool px-1" aria-label="ソースコード"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="ダークモードの切り替え"><i class="bi"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="リーダーモードの切り替え">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -194,12 +382,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
     </ul>
 </div>
-</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">目次</h2>
+    <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99"><h2 id="toc-title">ここの目次</h2>
    
-  <ul>
+  <ul class="collapse">
 <li><a href="#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB" id="toc-はじめに" class="nav-link active" data-scroll-target="#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB"><span class="header-section-number">1.1</span> はじめに</a></li>
   <li><a href="#%E3%81%93%E3%81%AE%E7%AB%A0%E3%81%A7%E4%BD%BF%E3%81%86%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%A8%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8" id="toc-この章で使うファイルとパッケージ" class="nav-link" data-scroll-target="#%E3%81%93%E3%81%AE%E7%AB%A0%E3%81%A7%E4%BD%BF%E3%81%86%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%A8%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8"><span class="header-section-number">1.2</span> この章で使うファイルとパッケージ</a></li>
   <li><a href="#r%E3%81%AE%E6%BA%96%E5%82%99" id="toc-rの準備" class="nav-link" data-scroll-target="#r%E3%81%AE%E6%BA%96%E5%82%99"><span class="header-section-number">1.3</span> Rの準備</a></li>
@@ -213,12 +398,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#%E9%9B%86%E8%A8%88%E7%B5%90%E6%9E%9C%E3%82%92%E3%82%B0%E3%83%A9%E3%83%95%E3%81%A7%E5%8F%AF%E8%A6%96%E5%8C%96" id="toc-集計結果をグラフで可視化" class="nav-link" data-scroll-target="#%E9%9B%86%E8%A8%88%E7%B5%90%E6%9E%9C%E3%82%92%E3%82%B0%E3%83%A9%E3%83%95%E3%81%A7%E5%8F%AF%E8%A6%96%E5%8C%96"><span class="header-section-number">1.11</span> 集計結果をグラフで可視化</a></li>
   <li><a href="#%E6%8F%90%E5%87%BA%E7%94%A8%E3%81%AE%E8%B3%87%E6%96%99%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B" id="toc-提出用の資料を作成する" class="nav-link" data-scroll-target="#%E6%8F%90%E5%87%BA%E7%94%A8%E3%81%AE%E8%B3%87%E6%96%99%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B"><span class="header-section-number">1.12</span> 提出用の資料を作成する。</a></li>
   </ul></nav>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">
+<div class="quarto-title-block"><div><h1 class="title">
 <span class="chapter-number">1</span>&nbsp; <span class="chapter-title">第1回 売上をまとめた表をつくる</span>
-</h1>
+</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> コード</button></div></div>
 </div>
 
 
@@ -239,14 +427,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">1.2</span> この章で使うファイルとパッケージ</h2>
 <p>ここで用いるデータが記録されているファイルは，Microsoft社のExcelのファイルです。 最近のMS Excelで作成されたファイルは拡張子に<code>.xlsx</code>がついています。 第1回の内容で扱うファイルは、</p>
 
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<div class="no-row-height column-margin column-container"><div class="">
 <p><strong>拡張子</strong>(extension)は，ファイル名の最後についている<code>.xlsx</code>や<code>.csv</code>などの文字列のことで，ファイルの種類を示しています。Windowsではデフォルトで拡張子が表示されない設定になっているかもしれないので，必ず拡張子を表示させる設定にしておいてください。<code>.exe</code>ファイルを知らずに実行すると，ウイルスに感染する可能性があるので，拡張子を表示させることはセキュリティ上も重要です。</p>
 </div></div><ul>
 <li><code>chp1.xlsx</code></li>
 </ul>
 <p>という名前のファイルです。 このファイルは，Rの作業ディレクトリ(working directory)の中にある<code>data</code>フォルダに保存しておきます。</p>
 
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<div class="no-row-height column-margin column-container"><div class="">
 <p><strong>作業ディレクトリ</strong>(working directory)は，Rがファイルを読み込むときの基準となるフォルダのことです。Rを起動したときに，デフォルトで設定されているフォルダが作業ディレクトリになります。作業ディレクトリは<code><a href="https://rdrr.io/r/base/getwd.html">getwd()</a></code>関数で確認できます。作業ディレクトリを変更するには，<code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code>関数を使います。</p>
 </div></div><p>Rの機能を拡張するために，ここでは以下のパッケージを用います。</p>
 <ul>
@@ -258,22 +446,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>通常，Rでは<code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code>関数を使ってパッケージをインストールし，<code><a href="https://rdrr.io/r/base/library.html">library()</a></code>で読み出しますが，ここでは<code>pacman</code>パッケージを使って一括でインストール・読み込みを行います。</p>
 <p><code>pacman</code>パッケージを使うために，以下のコードを実行してください。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"pacman"</span><span class="op">)</span> <span class="co"># 最初の1回だけ実行</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">install.packages</span>(<span class="st">"pacman"</span>) <span class="co"># 最初の1回だけ実行</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><code>pacman</code>パッケージには便利な関数がいろいろありますが，ここでは<code>p_load()</code>関数を使って複数のパッケージを一括で読み込みます。まだインストールされていないパッケージがあれば，自動でインストールされます。 便利なパッケージをいろいろ読み込んでおきましょう。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>, <span class="va">readxl</span>, <span class="va">ggthemes</span>, <span class="va">gt</span>, <span class="va">gtExtras</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(</span>
+<span id="cb2-2"><a href="#cb2-2"></a>  tidyverse,</span>
+<span id="cb2-3"><a href="#cb2-3"></a>  readxl,</span>
+<span id="cb2-4"><a href="#cb2-4"></a>  ggthemes,</span>
+<span id="cb2-5"><a href="#cb2-5"></a>  gt,</span>
+<span id="cb2-6"><a href="#cb2-6"></a>  gtExtras,</span>
+<span id="cb2-7"><a href="#cb2-7"></a>  gganimate</span>
+<span id="cb2-8"><a href="#cb2-8"></a>  )</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
+<li>
+<code>tidyverse</code> : データの読み込み，加工，可視化に使うパッケージ</li>
+<li>
+<code>readxl</code> : Excelファイルを読み込むためのパッケージ</li>
 <li>
 <code>ggtheme</code> : グラフのテーマを変更するためのパッケージ</li>
 <li>
 <code>gt</code> : 表を作成するためのパッケージ</li>
 <li>
 <code>gtExtras</code> : <code>gt</code>パッケージの拡張機能を提供するパッケージ</li>
+<li>
+<code>gganimate</code> : <code>ggplot2</code>で作成したグラフをアニメーションにするためのパッケージ</li>
 </ul>
 
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<div class="no-row-height column-margin column-container"><div class="">
 <p><code><a href="https://rdrr.io/pkg/pacman/man/p_load.html">pacman::p_load()</a></code>のように，「パッケージ名<code>::</code>関数名」という書き方で，パッケージ名を指定して関数を使うと，<code>p_load()</code>関数が<code>pacman</code>パッケージの関数であることが分かりやすいので，似たような名前の関数があるときは，パッケージ名をつけて使うといいでしょう。 たとえば，<code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code>関数や<code><a href="https://readxl.tidyverse.org/reference/read_excel.html">readxl::read_excel()</a></code>関数です。</p>
 </div></div><p>うえでも説明したとおり、今後分析に使う予定のファイルはすべて作業ディレクトリの<code>data</code>フォルダにいれてある、と想定したソースコードを作成しているので、もし<code>data</code>フォルダではない場所にファイルを保存している場合は、<code>data/</code>の部分を適宜変更してください。</p>
 <p><span class="rmarker-s">Rは作業ディレクトリとなっているフォルダを軸にしてファイルを読み込む</span>ため，ファイルの場所に注意してください。 ここでは作業ディレクトリの中に<code>data</code>フォルダを作り，そこに<code>chp1.xlsx</code>を保存してあるので，<code>data/chp1.xlsx</code>と指定することでファイルにアクセスしています。</p>
@@ -290,7 +491,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">1.4</span> データの読み込み</h2>
 <p>まずは<code>readxl</code>パッケージを使ってデータ<code>chp1.xlsx</code>を読み込んでみましょう。 このExcelファイルのシートの一覧を表示してみます。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/excel_sheets.html">excel_sheets</a></span><span class="op">(</span><span class="st">"data/chp1.xlsx"</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>readxl<span class="sc">::</span><span class="fu">excel_sheets</span>(<span class="st">"data/chp1.xlsx"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "いつものPOSデータ"     "ピボットテーブル"      "表1-2・図1-19"        
 [4] "表1-4・図1-28・図1-29" "表1-5・図1-32"         "表1-6"                
@@ -299,124 +500,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><span class="rmarker-s"><code>excel_sheets()</code>関数はデフォルトで1番目のシートを読み込みます</span>。 「いつものPOSデータ」を読み込みたいので，特に指定せずに<code>read_excel()</code>関数を使って読み込みます。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/chp1.xlsx"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="co"># 戦闘6行を表示</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>df <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/chp1.xlsx"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="fu">head</span>(df) <span class="co"># 戦闘6行を表示</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="kable-table">
-<table class="caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 15%">
-<col style="width: 12%">
-<col style="width: 5%">
-<col style="width: 5%">
-<col style="width: 5%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 15%">
-<col style="width: 5%">
-<col style="width: 5%">
-<col style="width: 5%">
-</colgroup>
-<thead><tr class="header">
-<th style="text-align: left;">レシート番号</th>
-<th style="text-align: left;">日付</th>
-<th style="text-align: left;">曜日</th>
-<th style="text-align: right;">時間</th>
-<th style="text-align: left;">性別</th>
-<th style="text-align: left;">年代</th>
-<th style="text-align: left;">メーカー</th>
-<th style="text-align: left;">商品名</th>
-<th style="text-align: right;">単価</th>
-<th style="text-align: right;">個数</th>
-<th style="text-align: right;">金額</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">R000001</td>
-<td style="text-align: left;">2023-01-02</td>
-<td style="text-align: left;">月</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: left;">女性</td>
-<td style="text-align: left;">30代</td>
-<td style="text-align: left;">競合A</td>
-<td style="text-align: left;">おいしい緑茶</td>
-<td style="text-align: right;">160</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">320</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">R000001</td>
-<td style="text-align: left;">2023-01-02</td>
-<td style="text-align: left;">月</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: left;">女性</td>
-<td style="text-align: left;">30代</td>
-<td style="text-align: left;">競合B</td>
-<td style="text-align: left;">静岡の緑茶</td>
-<td style="text-align: right;">170</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">340</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">R000002</td>
-<td style="text-align: left;">2023-01-02</td>
-<td style="text-align: left;">月</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: left;">男性</td>
-<td style="text-align: left;">60歳以上</td>
-<td style="text-align: left;">競合A</td>
-<td style="text-align: left;">おいしい濃茶</td>
-<td style="text-align: right;">160</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">320</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">R000002</td>
-<td style="text-align: left;">2023-01-02</td>
-<td style="text-align: left;">月</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: left;">男性</td>
-<td style="text-align: left;">60歳以上</td>
-<td style="text-align: left;">競合B</td>
-<td style="text-align: left;">静岡の緑茶</td>
-<td style="text-align: right;">170</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">680</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">R000003</td>
-<td style="text-align: left;">2023-01-02</td>
-<td style="text-align: left;">月</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: left;">男性</td>
-<td style="text-align: left;">50代</td>
-<td style="text-align: left;">競合C</td>
-<td style="text-align: left;">ほうじ茶</td>
-<td style="text-align: right;">140</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">140</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">R000004</td>
-<td style="text-align: left;">2023-01-02</td>
-<td style="text-align: left;">月</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: left;">女性</td>
-<td style="text-align: left;">50代</td>
-<td style="text-align: left;">競合D</td>
-<td style="text-align: left;">ウーロン茶</td>
-<td style="text-align: right;">140</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">420</td>
-</tr>
-</tbody>
-</table>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["レシート番号"],"name":[1],"type":["chr"],"align":["left"]},{"label":["日付"],"name":[2],"type":["dttm"],"align":["right"]},{"label":["曜日"],"name":[3],"type":["chr"],"align":["left"]},{"label":["時間"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["性別"],"name":[5],"type":["chr"],"align":["left"]},{"label":["年代"],"name":[6],"type":["chr"],"align":["left"]},{"label":["メーカー"],"name":[7],"type":["chr"],"align":["left"]},{"label":["商品名"],"name":[8],"type":["chr"],"align":["left"]},{"label":["単価"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["個数"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["金額"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"R000001","2":"2023-01-02","3":"月","4":"10","5":"女性","6":"30代","7":"競合A","8":"おいしい緑茶","9":"160","10":"2","11":"320"},{"1":"R000001","2":"2023-01-02","3":"月","4":"10","5":"女性","6":"30代","7":"競合B","8":"静岡の緑茶","9":"170","10":"2","11":"340"},{"1":"R000002","2":"2023-01-02","3":"月","4":"10","5":"男性","6":"60歳以上","7":"競合A","8":"おいしい濃茶","9":"160","10":"2","11":"320"},{"1":"R000002","2":"2023-01-02","3":"月","4":"10","5":"男性","6":"60歳以上","7":"競合B","8":"静岡の緑茶","9":"170","10":"4","11":"680"},{"1":"R000003","2":"2023-01-02","3":"月","4":"10","5":"男性","6":"50代","7":"競合C","8":"ほうじ茶","9":"140","10":"1","11":"140"},{"1":"R000004","2":"2023-01-02","3":"月","4":"10","5":"女性","6":"50代","7":"競合D","8":"ウーロン茶","9":"140","10":"3","11":"420"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
 </div>
 </div>
 <p>どんな変数があるのか確認するには<code><a href="https://rdrr.io/r/base/names.html">names()</a></code>関数を使います。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">names</span>(df)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "レシート番号" "日付"         "曜日"         "時間"         "性別"        
  [6] "年代"         "メーカー"     "商品名"       "単価"         "個数"        
@@ -427,7 +523,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">1.5</span> データの属性を確認する。</h2>
 <p>データの属性や型を確認するには<code><a href="https://rdrr.io/r/utils/str.html">str()</a></code>関数を使います。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">str</span>(df)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [374,090 × 11] (S3: tbl_df/tbl/data.frame)
  $ レシート番号: chr [1:374090] "R000001" "R000001" "R000002" "R000002" ...
@@ -445,7 +541,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><code><a href="https://pillar.r-lib.org/reference/glimpse.html">dplyr::glimpse()</a></code>関数を使うと，データの概要をより見やすく表示できます。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(df)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 374,090
 Columns: 11
@@ -464,7 +560,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 </div>
 <p>この表の上部をみると、このデータには変数が11個，観測値が374,090個あることが分かります。 また，変数名の横に<code>&lt;chr&gt;</code>や<code>&lt;dbl&gt;</code>といった文字が表示されていますが，これは変数の型を示しています。 <code>&lt;chr&gt;</code>は文字列型，<code>&lt;dbl&gt;</code>は数値型，<code>&lt;dttm&gt;</code>は日付型を示しています。</p>
 
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<div class="no-row-height column-margin column-container"><div class="">
 <p>文字型，数値型，日付型以外にも，</p>
 <ul>
 <li>
@@ -479,7 +575,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 <span class="header-section-number">1.6</span> データの概要を確認する</h2>
 <p>データの属性を確認するために，<code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>関数を使ってみましょう。 基本関数<code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>は，データの記述統計量などを返してくれる関数です。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">summary</span>(df)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> レシート番号            日付                         曜日          
  Length:374090      Min.   :2023-01-02 00:00:00   Length:374090     
@@ -514,9 +610,9 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 </ul>
 <p>となっていることがわかります。 また文字型となっている<code>曜日</code>，<code>性別</code>，<code>年代</code>，<code>メーカー</code>，<code>商品名</code>はデータの個数として<code>Length:</code>が出力されていることがわかります。 文字列の<code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>を出力しても意味がないので，文字型の変数を除外して，数値型の変数だけを表示するには，<code>select()</code>関数と<code>where()</code>関数を使い， <code>is.double</code>関数を使って数値型の変数だけを選択します。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.double</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.double)) <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="fu">summary</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      日付                          時間            単価            個数       
  Min.   :2023-01-02 00:00:00   Min.   :10.00   Min.   :140.0   Min.   : 1.000  
@@ -535,22 +631,22 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 </div>
 </div>
 
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<div class="no-row-height column-margin column-container"><div class="">
 <p><code><a href="https://rdrr.io/r/base/double.html">is.double()</a></code>関数は，引数の型が数値型かどうかを判定する関数で，数値型の場合は<code>TRUE</code>を返し，そうでない場合は<code>FALSE</code>を返します。このように，<code>is.型名()</code>関数は，型を判定する関数として使われます。 条件を満たす変数だけを選択する<code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code>関数と，<code><a href="https://tidyselect.r-lib.org/reference/where.html">dplyr::where()</a></code>関数を使うことで変数の型を指定して変数を抽出できます。</p>
 </div></div></section><section id="因子型" class="level2" data-number="1.7"><h2 data-number="1.7" class="anchored" data-anchor-id="因子型">
 <span class="header-section-number">1.7</span> 因子型</h2>
 <p>これらの文字型変数<code>曜日</code>，<code>性別</code>，<code>年代</code>，<code>メーカー</code>，<code>商品名</code>は，どのカテゴリーに属しているかを表している<strong>カテゴリカルデータ</strong>であるため， 文字型から<strong>因子型</strong>(factor)に変換しておきましょう。 変数を因子型に変更するには，<code>facor()</code>関数や<code><a href="https://rdrr.io/r/base/factor.html">as.factor()</a></code>関数を使います。 ここでは，曜日に順番があるため，<code>levels</code>オプションと<code>ordered</code>オプションで曜日の種類と順番を指定しています。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>曜日 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">曜日</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"月"</span>, <span class="st">"火"</span>, <span class="st">"水"</span>, <span class="st">"木"</span>, <span class="st">"金"</span>, <span class="st">"土"</span>, <span class="st">"日"</span><span class="op">)</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>         性別 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">性別</span><span class="op">)</span>,</span>
-<span>         年代 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">年代</span><span class="op">)</span>,</span>
-<span>         メーカー <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">メーカー</span><span class="op">)</span>,</span>
-<span>         商品名 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">商品名</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">mutate</span>(曜日 <span class="ot">=</span> <span class="fu">factor</span>(曜日, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"月"</span>, <span class="st">"火"</span>, <span class="st">"水"</span>, <span class="st">"木"</span>, <span class="st">"金"</span>, <span class="st">"土"</span>, <span class="st">"日"</span>), <span class="at">ordered =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb16-3"><a href="#cb16-3"></a>         性別 <span class="ot">=</span> <span class="fu">as.factor</span>(性別),</span>
+<span id="cb16-4"><a href="#cb16-4"></a>         年代 <span class="ot">=</span> <span class="fu">as.factor</span>(年代),</span>
+<span id="cb16-5"><a href="#cb16-5"></a>         メーカー <span class="ot">=</span> <span class="fu">as.factor</span>(メーカー),</span>
+<span id="cb16-6"><a href="#cb16-6"></a>         商品名 <span class="ot">=</span> <span class="fu">as.factor</span>(商品名))</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>変数の型を変更したので，もう一度，<code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>関数を使ってデータを確認してみましょう。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">summary</span>(df)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> レシート番号            日付                     曜日            時間      
  Length:374090      Min.   :2023-01-02 00:00:00   月:36468   Min.   :10.00  
@@ -583,119 +679,14 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 <span class="header-section-number">1.8</span> 条件によるデータの抽出</h2>
 <p><code>メーカー</code>変数が<code>自社</code>の場合だけを抽出するには，<code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code>関数を使います。 <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code>関数は，引数に<code>メーカー == "自社</code>という条件を指定することで，条件に合致するデータだけを抽出します。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">メーカー</span> <span class="op">==</span> <span class="st">"自社"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(メーカー <span class="sc">==</span> <span class="st">"自社"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="fu">head</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="kable-table">
-<table class="caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 17%">
-<col style="width: 14%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 12%">
-<col style="width: 9%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-</colgroup>
-<thead><tr class="header">
-<th style="text-align: left;">レシート番号</th>
-<th style="text-align: left;">日付</th>
-<th style="text-align: left;">曜日</th>
-<th style="text-align: right;">時間</th>
-<th style="text-align: left;">性別</th>
-<th style="text-align: left;">年代</th>
-<th style="text-align: left;">メーカー</th>
-<th style="text-align: left;">商品名</th>
-<th style="text-align: right;">単価</th>
-<th style="text-align: right;">個数</th>
-<th style="text-align: right;">金額</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">R000005</td>
-<td style="text-align: left;">2023-01-02</td>
-<td style="text-align: left;">月</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: left;">女性</td>
-<td style="text-align: left;">50代</td>
-<td style="text-align: left;">自社</td>
-<td style="text-align: left;">濃い茶</td>
-<td style="text-align: right;">150</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">300</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">R000005</td>
-<td style="text-align: left;">2023-01-02</td>
-<td style="text-align: left;">月</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: left;">女性</td>
-<td style="text-align: left;">50代</td>
-<td style="text-align: left;">自社</td>
-<td style="text-align: left;">緑茶</td>
-<td style="text-align: right;">150</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">450</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">R000010</td>
-<td style="text-align: left;">2023-01-02</td>
-<td style="text-align: left;">月</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: left;">女性</td>
-<td style="text-align: left;">50代</td>
-<td style="text-align: left;">自社</td>
-<td style="text-align: left;">濃い茶</td>
-<td style="text-align: right;">150</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">300</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">R000010</td>
-<td style="text-align: left;">2023-01-02</td>
-<td style="text-align: left;">月</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: left;">女性</td>
-<td style="text-align: left;">50代</td>
-<td style="text-align: left;">自社</td>
-<td style="text-align: left;">緑茶</td>
-<td style="text-align: right;">150</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">150</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">R000011</td>
-<td style="text-align: left;">2023-01-02</td>
-<td style="text-align: left;">月</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: left;">男性</td>
-<td style="text-align: left;">20代</td>
-<td style="text-align: left;">自社</td>
-<td style="text-align: left;">緑茶</td>
-<td style="text-align: right;">150</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">150</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">R000012</td>
-<td style="text-align: left;">2023-01-02</td>
-<td style="text-align: left;">月</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: left;">女性</td>
-<td style="text-align: left;">20代</td>
-<td style="text-align: left;">自社</td>
-<td style="text-align: left;">緑茶</td>
-<td style="text-align: right;">150</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">150</td>
-</tr>
-</tbody>
-</table>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["レシート番号"],"name":[1],"type":["chr"],"align":["left"]},{"label":["日付"],"name":[2],"type":["dttm"],"align":["right"]},{"label":["曜日"],"name":[3],"type":["ord"],"align":["right"]},{"label":["時間"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["性別"],"name":[5],"type":["fct"],"align":["left"]},{"label":["年代"],"name":[6],"type":["fct"],"align":["left"]},{"label":["メーカー"],"name":[7],"type":["fct"],"align":["left"]},{"label":["商品名"],"name":[8],"type":["fct"],"align":["left"]},{"label":["単価"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["個数"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["金額"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"R000005","2":"2023-01-02","3":"月","4":"10","5":"女性","6":"50代","7":"自社","8":"濃い茶","9":"150","10":"2","11":"300"},{"1":"R000005","2":"2023-01-02","3":"月","4":"10","5":"女性","6":"50代","7":"自社","8":"緑茶","9":"150","10":"3","11":"450"},{"1":"R000010","2":"2023-01-02","3":"月","4":"10","5":"女性","6":"50代","7":"自社","8":"濃い茶","9":"150","10":"2","11":"300"},{"1":"R000010","2":"2023-01-02","3":"月","4":"10","5":"女性","6":"50代","7":"自社","8":"緑茶","9":"150","10":"1","11":"150"},{"1":"R000011","2":"2023-01-02","3":"月","4":"10","5":"男性","6":"20代","7":"自社","8":"緑茶","9":"150","10":"1","11":"150"},{"1":"R000012","2":"2023-01-02","3":"月","4":"10","5":"女性","6":"20代","7":"自社","8":"緑茶","9":"150","10":"1","11":"150"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
 </div>
 </div>
@@ -703,55 +694,30 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 <span class="header-section-number">1.9</span> 基礎集計でデータの傾向をチェック</h2>
 <p>メーカーごとの売上金額合計を示す表を作成してみましょう。 Excelでピボットテーブルを使う手続が教科書で解説されていますが，Rだと<code>dplyr</code>パッケージを使って簡単にできます。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_maker_sales</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
-<span>    .by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">メーカー</span><span class="op">)</span>,</span>
-<span>    売上金額合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">金額</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="va">df_maker_sales</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>df_maker_sales <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
+<span id="cb20-3"><a href="#cb20-3"></a>    <span class="at">.by =</span> <span class="fu">c</span>(メーカー),</span>
+<span id="cb20-4"><a href="#cb20-4"></a>    売上金額合計 <span class="ot">=</span> <span class="fu">sum</span>(金額)</span>
+<span id="cb20-5"><a href="#cb20-5"></a>  )</span>
+<span id="cb20-6"><a href="#cb20-6"></a>df_maker_sales</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="kable-table">
-<table class="caption-top table table-sm table-striped small">
-<thead><tr class="header">
-<th style="text-align: left;">メーカー</th>
-<th style="text-align: right;">売上金額合計</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">競合A</td>
-<td style="text-align: right;">42695520</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">競合B</td>
-<td style="text-align: right;">13537440</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">競合C</td>
-<td style="text-align: right;">9289700</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">競合D</td>
-<td style="text-align: right;">7486080</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">自社</td>
-<td style="text-align: right;">30126150</td>
-</tr>
-</tbody>
-</table>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["メーカー"],"name":[1],"type":["fct"],"align":["left"]},{"label":["売上金額合計"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"競合A","2":"42695520"},{"1":"競合B","2":"13537440"},{"1":"競合C","2":"9289700"},{"1":"競合D","2":"7486080"},{"1":"自社","2":"30126150"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
 </div>
 </div>
 <p>これだけです。 キレイな表にするなら，<code>gt()</code>関数と<code>gtExtra</code>パッケージを使うといいでしょう。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_maker_sales</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">gt</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">2</span>, decimals <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"表1-2 メーカーごとの売上金額"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">gt_theme_pff</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># テーマを適用</span></span>
-<span>  <span class="fu">as_raw_html</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>df_maker_sales <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">decimals =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a>  <span class="fu">tab_header</span>(<span class="at">title =</span> <span class="st">"表1-2 メーカーごとの売上金額"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-5"><a href="#cb21-5"></a>  <span class="fu">gt_theme_pff</span>() <span class="sc">|&gt;</span> <span class="co"># テーマを適用</span></span>
+<span id="cb21-6"><a href="#cb21-6"></a>  <span class="fu">as_raw_html</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="ikpbkqiirg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="quolnosnlw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
   
   
 <table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false" data-bgcolor="#FFFFFF">
@@ -792,21 +758,21 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 </div>
 <p>次に，各メーカーのどの商品が，平均何円で売られているのか，を調べてみましょう。 <code>summarise()</code>関数の引数に，<code>.by=c()</code>を指定し，グループ化したい変数として<code>メーカー</code>と<code>商品名</code>を指定してグループごとの平均単価を計算する。 そして<code>arrange()</code>関数でメーカーと平均単価でソートします。 <code>desc()</code>関数は降順にソートするための関数です。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_maker_item</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">summarise</span><span class="op">(</span></span>
-<span>    .by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">メーカー</span>, <span class="va">商品名</span><span class="op">)</span>, <span class="co"># メーカーと商品名でグループ化</span></span>
-<span>    平均単価 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">単価</span><span class="op">)</span> <span class="co"># 平均単価を計算</span></span>
-<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">メーカー</span>, <span class="fu">desc</span><span class="op">(</span><span class="va">平均単価</span><span class="op">)</span><span class="op">)</span> <span class="co"># メーカーと平均単価でソート</span></span>
-<span></span>
-<span><span class="va">df_maker_item</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">gt</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">3</span>, decimals <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"表1−3 商品ごとの単価"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">gt_theme_pff</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># テーマを適用</span></span>
-<span>  <span class="fu">as_raw_html</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>df_maker_item <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb22-3"><a href="#cb22-3"></a>    <span class="at">.by =</span> <span class="fu">c</span>(メーカー, 商品名), <span class="co"># メーカーと商品名でグループ化</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a>    平均単価 <span class="ot">=</span> <span class="fu">mean</span>(単価) <span class="co"># 平均単価を計算</span></span>
+<span id="cb22-5"><a href="#cb22-5"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb22-6"><a href="#cb22-6"></a>  <span class="fu">arrange</span>(メーカー, <span class="fu">desc</span>(平均単価)) <span class="co"># メーカーと平均単価でソート</span></span>
+<span id="cb22-7"><a href="#cb22-7"></a></span>
+<span id="cb22-8"><a href="#cb22-8"></a>df_maker_item <span class="sc">|&gt;</span></span>
+<span id="cb22-9"><a href="#cb22-9"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb22-10"><a href="#cb22-10"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">decimals =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-11"><a href="#cb22-11"></a>  <span class="fu">tab_header</span>(<span class="at">title =</span> <span class="st">"表1−3 商品ごとの単価"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-12"><a href="#cb22-12"></a>  <span class="fu">gt_theme_pff</span>() <span class="sc">|&gt;</span> <span class="co"># テーマを適用</span></span>
+<span id="cb22-13"><a href="#cb22-13"></a>  <span class="fu">as_raw_html</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="bbrugdzxir" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="umjhujdbcq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
   
   
 <table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false" data-bgcolor="#FFFFFF">
@@ -865,111 +831,88 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 <span class="header-section-number">1.10</span> 資料作成に必要なデータを取り出す</h2>
 <p>データ全体における売上金額と売上個数を計算して，各月と各時間帯にの売上金額を計算してみる。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># 全体の売上金額と売上個数</span></span>
-<span><span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">summarise</span><span class="op">(</span></span>
-<span>    売上金額合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">金額</span><span class="op">)</span>,</span>
-<span>    売上個数合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">個数</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># 全体の売上金額と売上個数</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb23-4"><a href="#cb23-4"></a>    売上金額合計 <span class="ot">=</span> <span class="fu">sum</span>(金額),</span>
+<span id="cb23-5"><a href="#cb23-5"></a>    売上個数合計 <span class="ot">=</span> <span class="fu">sum</span>(個数)</span>
+<span id="cb23-6"><a href="#cb23-6"></a>    )</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="kable-table">
-<table class="caption-top table table-sm table-striped small">
-<thead><tr class="header">
-<th style="text-align: right;">売上金額合計</th>
-<th style="text-align: right;">売上個数合計</th>
-</tr></thead>
-<tbody><tr class="odd">
-<td style="text-align: right;">103134890</td>
-<td style="text-align: right;">667147</td>
-</tr></tbody>
-</table>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["売上金額合計"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["売上個数合計"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"103134890","2":"667147"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
 </div>
 </div>
 <p>自社製品ごとの個数と金額を計算してみましょう。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_jisha_total</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">メーカー</span> <span class="op">==</span> <span class="st">"自社"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 自社製品だけを抽出</span></span>
-<span>  <span class="fu">summarise</span><span class="op">(</span></span>
-<span>    .by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">商品名</span><span class="op">)</span>,</span>
-<span>    売上金額合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">金額</span><span class="op">)</span>,</span>
-<span>    売上個数合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">個数</span><span class="op">)</span></span>
-<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">売上金額合計</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">df_jisha_total</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>df_jisha_total <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">filter</span>(メーカー <span class="sc">==</span> <span class="st">"自社"</span>) <span class="sc">|&gt;</span> <span class="co"># 自社製品だけを抽出</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb24-4"><a href="#cb24-4"></a>    <span class="at">.by =</span> <span class="fu">c</span>(商品名),</span>
+<span id="cb24-5"><a href="#cb24-5"></a>    売上金額合計 <span class="ot">=</span> <span class="fu">sum</span>(金額),</span>
+<span id="cb24-6"><a href="#cb24-6"></a>    売上個数合計 <span class="ot">=</span> <span class="fu">sum</span>(個数)</span>
+<span id="cb24-7"><a href="#cb24-7"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb24-8"><a href="#cb24-8"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(売上金額合計))</span>
+<span id="cb24-9"><a href="#cb24-9"></a></span>
+<span id="cb24-10"><a href="#cb24-10"></a>df_jisha_total</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="kable-table">
-<table class="caption-top table table-sm table-striped small">
-<thead><tr class="header">
-<th style="text-align: left;">商品名</th>
-<th style="text-align: right;">売上金額合計</th>
-<th style="text-align: right;">売上個数合計</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">緑茶</td>
-<td style="text-align: right;">18057150</td>
-<td style="text-align: right;">120381</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">濃い茶</td>
-<td style="text-align: right;">12069000</td>
-<td style="text-align: right;">80460</td>
-</tr>
-</tbody>
-</table>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["商品名"],"name":[1],"type":["fct"],"align":["left"]},{"label":["売上金額合計"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["売上個数合計"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"緑茶","2":"18057150","3":"120381"},{"1":"濃い茶","2":"12069000","3":"80460"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
 </div>
 </div>
 <p>これで自社の製品ごとの売上金額と売上個数の合計が計算されました。 ここで注意しないといけないことは<code>summarise()</code>関数に<code>.by=</code>引数を使った場合，グループごとに1つの統計量を返すため，上のコードだと， 自社の2商品ごとの売上金額と売上個数の合計が出力され，2行2列のデータフレームが返されていることが分かります。</p>
 <p>次に，各月ごとの売上金額を計算してみましょう。 <code>日付</code>変数の型を確認します。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">日付</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">class</span>(df<span class="sc">$</span>日付)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre class="code-output"><code>[1] "POSIXct" "POSIXt" </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource code-output number-lines code-with-copy"><code class="sourceCode"><span id="cb26-1"><a href="#cb26-1"></a>[1] "POSIXct" "POSIXt" </span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <p><code>POSIXct</code> <code>POSIXt</code> という日付型のデータです。 この変数<code>日付</code>から月を取り出すには，<code>lubridate</code>パッケージを使います。 日付データは<code>2023-05-14 UTC</code>といった形式で格納されているため，<code><a href="https://lubridate.tidyverse.org/reference/month.html">lubridate::month()</a></code>関数を使って月を取り出します。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_month_sales</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">メーカー</span> <span class="op">==</span> <span class="st">"自社"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>月 <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">日付</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">summarise</span><span class="op">(</span></span>
-<span>      .by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">月</span><span class="op">)</span>, <span class="co"># 月ごとにグループ化</span></span>
-<span>    売上金額合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">金額</span><span class="op">)</span></span>
-<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">月</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">df_month_sales</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">gt</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">2</span>, decimals <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"表1−5 自社商品の月ごとの売上金額"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">gt_theme_pff</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># テーマを適用</span></span>
-<span>  <span class="fu">tab_options</span><span class="op">(</span></span>
-<span>    heading.title.font.size <span class="op">=</span> <span class="st">"small"</span>,</span>
-<span>    table.font.size <span class="op">=</span> <span class="st">"large"</span>,</span>
-<span>    table.width <span class="op">=</span> <span class="fu">pct</span><span class="op">(</span><span class="fl">60</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>df_month_sales <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">filter</span>(メーカー <span class="sc">==</span> <span class="st">"自社"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a>  <span class="fu">mutate</span>(月 <span class="ot">=</span> lubridate<span class="sc">::</span><span class="fu">month</span>(日付, <span class="at">label =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb27-4"><a href="#cb27-4"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb27-5"><a href="#cb27-5"></a>      <span class="at">.by =</span> <span class="fu">c</span>(月), <span class="co"># 月ごとにグループ化</span></span>
+<span id="cb27-6"><a href="#cb27-6"></a>    売上金額合計 <span class="ot">=</span> <span class="fu">sum</span>(金額)</span>
+<span id="cb27-7"><a href="#cb27-7"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb27-8"><a href="#cb27-8"></a>  <span class="fu">arrange</span>(月)</span>
+<span id="cb27-9"><a href="#cb27-9"></a></span>
+<span id="cb27-10"><a href="#cb27-10"></a>df_month_sales <span class="sc">|&gt;</span></span>
+<span id="cb27-11"><a href="#cb27-11"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb27-12"><a href="#cb27-12"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">decimals =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb27-13"><a href="#cb27-13"></a>  <span class="fu">tab_header</span>(<span class="at">title =</span> <span class="st">"表1−5 自社商品の月ごとの売上金額"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb27-14"><a href="#cb27-14"></a>  <span class="fu">gt_theme_pff</span>() <span class="sc">|&gt;</span> <span class="co"># テーマを適用</span></span>
+<span id="cb27-15"><a href="#cb27-15"></a>  <span class="fu">tab_options</span>(</span>
+<span id="cb27-16"><a href="#cb27-16"></a>    <span class="at">heading.title.font.size =</span> <span class="st">"small"</span>,</span>
+<span id="cb27-17"><a href="#cb27-17"></a>    <span class="at">table.font.size =</span> <span class="st">"large"</span>,</span>
+<span id="cb27-18"><a href="#cb27-18"></a>    <span class="at">table.width =</span> <span class="fu">pct</span>(<span class="dv">60</span>)</span>
+<span id="cb27-19"><a href="#cb27-19"></a>    )</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="xxmukcfvpt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="ocaopeysff" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-#xxmukcfvpt table {
+#ocaopeysff table {
   font-family: Roboto, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#xxmukcfvpt thead, #xxmukcfvpt tbody, #xxmukcfvpt tfoot, #xxmukcfvpt tr, #xxmukcfvpt td, #xxmukcfvpt th {
+#ocaopeysff thead, #ocaopeysff tbody, #ocaopeysff tfoot, #ocaopeysff tr, #ocaopeysff td, #ocaopeysff th {
   border-style: none;
 }
 
-#xxmukcfvpt p {
+#ocaopeysff p {
   margin: 0;
   padding: 0;
 }
 
-#xxmukcfvpt .gt_table {
+#ocaopeysff .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -995,12 +938,12 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-left-color: #D3D3D3;
 }
 
-#xxmukcfvpt .gt_caption {
+#ocaopeysff .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#xxmukcfvpt .gt_title {
+#ocaopeysff .gt_title {
   color: #333333;
   font-size: small;
   font-weight: bold;
@@ -1012,7 +955,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-bottom-width: 0;
 }
 
-#xxmukcfvpt .gt_subtitle {
+#ocaopeysff .gt_subtitle {
   color: #333333;
   font-size: 16px;
   font-weight: initial;
@@ -1024,7 +967,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-top-width: 0;
 }
 
-#xxmukcfvpt .gt_heading {
+#ocaopeysff .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -1036,13 +979,13 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-right-color: #D3D3D3;
 }
 
-#xxmukcfvpt .gt_bottom_border {
+#ocaopeysff .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xxmukcfvpt .gt_col_headings {
+#ocaopeysff .gt_col_headings {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: rgba(255, 255, 255, 0);
@@ -1057,7 +1000,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-right-color: #D3D3D3;
 }
 
-#xxmukcfvpt .gt_col_heading {
+#ocaopeysff .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1077,7 +1020,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   overflow-x: hidden;
 }
 
-#xxmukcfvpt .gt_column_spanner_outer {
+#ocaopeysff .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1089,15 +1032,15 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 4px;
 }
 
-#xxmukcfvpt .gt_column_spanner_outer:first-child {
+#ocaopeysff .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xxmukcfvpt .gt_column_spanner_outer:last-child {
+#ocaopeysff .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xxmukcfvpt .gt_column_spanner {
+#ocaopeysff .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 3px;
   border-bottom-color: rgba(255, 255, 255, 0);
@@ -1109,11 +1052,11 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   width: 100%;
 }
 
-#xxmukcfvpt .gt_spanner_row {
+#ocaopeysff .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#xxmukcfvpt .gt_group_heading {
+#ocaopeysff .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1139,7 +1082,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   text-align: left;
 }
 
-#xxmukcfvpt .gt_empty_group_heading {
+#ocaopeysff .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1154,15 +1097,15 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   vertical-align: middle;
 }
 
-#xxmukcfvpt .gt_from_md > :first-child {
+#ocaopeysff .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xxmukcfvpt .gt_from_md > :last-child {
+#ocaopeysff .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xxmukcfvpt .gt_row {
+#ocaopeysff .gt_row {
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 5px;
@@ -1181,7 +1124,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   overflow-x: hidden;
 }
 
-#xxmukcfvpt .gt_stub {
+#ocaopeysff .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1194,7 +1137,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 5px;
 }
 
-#xxmukcfvpt .gt_stub_row_group {
+#ocaopeysff .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1208,15 +1151,15 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   vertical-align: top;
 }
 
-#xxmukcfvpt .gt_row_group_first td {
+#ocaopeysff .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#xxmukcfvpt .gt_row_group_first th {
+#ocaopeysff .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#xxmukcfvpt .gt_summary_row {
+#ocaopeysff .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1226,16 +1169,16 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 5px;
 }
 
-#xxmukcfvpt .gt_first_summary_row {
+#ocaopeysff .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#xxmukcfvpt .gt_first_summary_row.thick {
+#ocaopeysff .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#xxmukcfvpt .gt_last_summary_row {
+#ocaopeysff .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1245,7 +1188,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-bottom-color: #D3D3D3;
 }
 
-#xxmukcfvpt .gt_grand_summary_row {
+#ocaopeysff .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1255,7 +1198,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 5px;
 }
 
-#xxmukcfvpt .gt_first_grand_summary_row {
+#ocaopeysff .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1265,7 +1208,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-top-color: #D3D3D3;
 }
 
-#xxmukcfvpt .gt_last_grand_summary_row_top {
+#ocaopeysff .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1275,11 +1218,11 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-bottom-color: #D3D3D3;
 }
 
-#xxmukcfvpt .gt_striped {
+#ocaopeysff .gt_striped {
   background-color: #F5F5F5;
 }
 
-#xxmukcfvpt .gt_table_body {
+#ocaopeysff .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1288,7 +1231,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-bottom-color: #D3D3D3;
 }
 
-#xxmukcfvpt .gt_footnotes {
+#ocaopeysff .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1302,7 +1245,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-right-color: #D3D3D3;
 }
 
-#xxmukcfvpt .gt_footnote {
+#ocaopeysff .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1311,7 +1254,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 5px;
 }
 
-#xxmukcfvpt .gt_sourcenotes {
+#ocaopeysff .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1325,7 +1268,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-right-color: #D3D3D3;
 }
 
-#xxmukcfvpt .gt_sourcenote {
+#ocaopeysff .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1333,72 +1276,72 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 5px;
 }
 
-#xxmukcfvpt .gt_left {
+#ocaopeysff .gt_left {
   text-align: left;
 }
 
-#xxmukcfvpt .gt_center {
+#ocaopeysff .gt_center {
   text-align: center;
 }
 
-#xxmukcfvpt .gt_right {
+#ocaopeysff .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xxmukcfvpt .gt_font_normal {
+#ocaopeysff .gt_font_normal {
   font-weight: normal;
 }
 
-#xxmukcfvpt .gt_font_bold {
+#ocaopeysff .gt_font_bold {
   font-weight: bold;
 }
 
-#xxmukcfvpt .gt_font_italic {
+#ocaopeysff .gt_font_italic {
   font-style: italic;
 }
 
-#xxmukcfvpt .gt_super {
+#ocaopeysff .gt_super {
   font-size: 65%;
 }
 
-#xxmukcfvpt .gt_footnote_marks {
+#ocaopeysff .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#xxmukcfvpt .gt_asterisk {
+#ocaopeysff .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#xxmukcfvpt .gt_indent_1 {
+#ocaopeysff .gt_indent_1 {
   text-indent: 5px;
 }
 
-#xxmukcfvpt .gt_indent_2 {
+#ocaopeysff .gt_indent_2 {
   text-indent: 10px;
 }
 
-#xxmukcfvpt .gt_indent_3 {
+#ocaopeysff .gt_indent_3 {
   text-indent: 15px;
 }
 
-#xxmukcfvpt .gt_indent_4 {
+#ocaopeysff .gt_indent_4 {
   text-indent: 20px;
 }
 
-#xxmukcfvpt .gt_indent_5 {
+#ocaopeysff .gt_indent_5 {
   text-indent: 25px;
 }
 
-#xxmukcfvpt .katex-display {
+#ocaopeysff .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#xxmukcfvpt div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ocaopeysff div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1468,43 +1411,43 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 </div>
 <p>同じように各時間帯ごとの売上金額を計算してみましょう。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_time_sales</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">メーカー</span> <span class="op">==</span> <span class="st">"自社"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">summarise</span><span class="op">(</span></span>
-<span>    .by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">時間</span><span class="op">)</span>,</span>
-<span>    売上金額合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">金額</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">時間</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">df_time_sales</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">gt</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">2</span>, decimals <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">gt_theme_pff</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># テーマを適用</span></span>
-<span>  <span class="fu">tab_header</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"表1−6 自社商品の時間帯別売上高"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">tab_options</span><span class="op">(</span></span>
-<span>        heading.title.font.size <span class="op">=</span> <span class="st">"small"</span>,</span>
-<span>        table.font.size <span class="op">=</span> <span class="st">"large"</span>,</span>
-<span>        table.width <span class="op">=</span> <span class="fu">pct</span><span class="op">(</span><span class="fl">60</span><span class="op">)</span></span>
-<span>        <span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>df_time_sales <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">filter</span>(メーカー <span class="sc">==</span> <span class="st">"自社"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb28-4"><a href="#cb28-4"></a>    <span class="at">.by =</span> <span class="fu">c</span>(時間),</span>
+<span id="cb28-5"><a href="#cb28-5"></a>    売上金額合計 <span class="ot">=</span> <span class="fu">sum</span>(金額)</span>
+<span id="cb28-6"><a href="#cb28-6"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb28-7"><a href="#cb28-7"></a>  <span class="fu">arrange</span>(時間)</span>
+<span id="cb28-8"><a href="#cb28-8"></a></span>
+<span id="cb28-9"><a href="#cb28-9"></a>df_time_sales <span class="sc">|&gt;</span></span>
+<span id="cb28-10"><a href="#cb28-10"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb28-11"><a href="#cb28-11"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">decimals =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-12"><a href="#cb28-12"></a>  <span class="fu">gt_theme_pff</span>() <span class="sc">|&gt;</span> <span class="co"># テーマを適用</span></span>
+<span id="cb28-13"><a href="#cb28-13"></a>  <span class="fu">tab_header</span>(<span class="at">title =</span> <span class="st">"表1−6 自社商品の時間帯別売上高"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-14"><a href="#cb28-14"></a>  <span class="fu">tab_options</span>(</span>
+<span id="cb28-15"><a href="#cb28-15"></a>        <span class="at">heading.title.font.size =</span> <span class="st">"small"</span>,</span>
+<span id="cb28-16"><a href="#cb28-16"></a>        <span class="at">table.font.size =</span> <span class="st">"large"</span>,</span>
+<span id="cb28-17"><a href="#cb28-17"></a>        <span class="at">table.width =</span> <span class="fu">pct</span>(<span class="dv">60</span>)</span>
+<span id="cb28-18"><a href="#cb28-18"></a>        )</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="iqnjwlguxu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="rdaxuzwcpw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-#iqnjwlguxu table {
+#rdaxuzwcpw table {
   font-family: Roboto, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#iqnjwlguxu thead, #iqnjwlguxu tbody, #iqnjwlguxu tfoot, #iqnjwlguxu tr, #iqnjwlguxu td, #iqnjwlguxu th {
+#rdaxuzwcpw thead, #rdaxuzwcpw tbody, #rdaxuzwcpw tfoot, #rdaxuzwcpw tr, #rdaxuzwcpw td, #rdaxuzwcpw th {
   border-style: none;
 }
 
-#iqnjwlguxu p {
+#rdaxuzwcpw p {
   margin: 0;
   padding: 0;
 }
 
-#iqnjwlguxu .gt_table {
+#rdaxuzwcpw .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1530,12 +1473,12 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-left-color: #D3D3D3;
 }
 
-#iqnjwlguxu .gt_caption {
+#rdaxuzwcpw .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#iqnjwlguxu .gt_title {
+#rdaxuzwcpw .gt_title {
   color: #333333;
   font-size: small;
   font-weight: bold;
@@ -1547,7 +1490,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-bottom-width: 0;
 }
 
-#iqnjwlguxu .gt_subtitle {
+#rdaxuzwcpw .gt_subtitle {
   color: #333333;
   font-size: 16px;
   font-weight: initial;
@@ -1559,7 +1502,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-top-width: 0;
 }
 
-#iqnjwlguxu .gt_heading {
+#rdaxuzwcpw .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -1571,13 +1514,13 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-right-color: #D3D3D3;
 }
 
-#iqnjwlguxu .gt_bottom_border {
+#rdaxuzwcpw .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#iqnjwlguxu .gt_col_headings {
+#rdaxuzwcpw .gt_col_headings {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: rgba(255, 255, 255, 0);
@@ -1592,7 +1535,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-right-color: #D3D3D3;
 }
 
-#iqnjwlguxu .gt_col_heading {
+#rdaxuzwcpw .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1612,7 +1555,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   overflow-x: hidden;
 }
 
-#iqnjwlguxu .gt_column_spanner_outer {
+#rdaxuzwcpw .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1624,15 +1567,15 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 4px;
 }
 
-#iqnjwlguxu .gt_column_spanner_outer:first-child {
+#rdaxuzwcpw .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#iqnjwlguxu .gt_column_spanner_outer:last-child {
+#rdaxuzwcpw .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#iqnjwlguxu .gt_column_spanner {
+#rdaxuzwcpw .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 3px;
   border-bottom-color: rgba(255, 255, 255, 0);
@@ -1644,11 +1587,11 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   width: 100%;
 }
 
-#iqnjwlguxu .gt_spanner_row {
+#rdaxuzwcpw .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#iqnjwlguxu .gt_group_heading {
+#rdaxuzwcpw .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1674,7 +1617,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   text-align: left;
 }
 
-#iqnjwlguxu .gt_empty_group_heading {
+#rdaxuzwcpw .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1689,15 +1632,15 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   vertical-align: middle;
 }
 
-#iqnjwlguxu .gt_from_md > :first-child {
+#rdaxuzwcpw .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#iqnjwlguxu .gt_from_md > :last-child {
+#rdaxuzwcpw .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#iqnjwlguxu .gt_row {
+#rdaxuzwcpw .gt_row {
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 5px;
@@ -1716,7 +1659,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   overflow-x: hidden;
 }
 
-#iqnjwlguxu .gt_stub {
+#rdaxuzwcpw .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1729,7 +1672,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 5px;
 }
 
-#iqnjwlguxu .gt_stub_row_group {
+#rdaxuzwcpw .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1743,15 +1686,15 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   vertical-align: top;
 }
 
-#iqnjwlguxu .gt_row_group_first td {
+#rdaxuzwcpw .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#iqnjwlguxu .gt_row_group_first th {
+#rdaxuzwcpw .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#iqnjwlguxu .gt_summary_row {
+#rdaxuzwcpw .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1761,16 +1704,16 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 5px;
 }
 
-#iqnjwlguxu .gt_first_summary_row {
+#rdaxuzwcpw .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#iqnjwlguxu .gt_first_summary_row.thick {
+#rdaxuzwcpw .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#iqnjwlguxu .gt_last_summary_row {
+#rdaxuzwcpw .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1780,7 +1723,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-bottom-color: #D3D3D3;
 }
 
-#iqnjwlguxu .gt_grand_summary_row {
+#rdaxuzwcpw .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1790,7 +1733,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 5px;
 }
 
-#iqnjwlguxu .gt_first_grand_summary_row {
+#rdaxuzwcpw .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1800,7 +1743,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-top-color: #D3D3D3;
 }
 
-#iqnjwlguxu .gt_last_grand_summary_row_top {
+#rdaxuzwcpw .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1810,11 +1753,11 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-bottom-color: #D3D3D3;
 }
 
-#iqnjwlguxu .gt_striped {
+#rdaxuzwcpw .gt_striped {
   background-color: #F5F5F5;
 }
 
-#iqnjwlguxu .gt_table_body {
+#rdaxuzwcpw .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1823,7 +1766,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-bottom-color: #D3D3D3;
 }
 
-#iqnjwlguxu .gt_footnotes {
+#rdaxuzwcpw .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1837,7 +1780,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-right-color: #D3D3D3;
 }
 
-#iqnjwlguxu .gt_footnote {
+#rdaxuzwcpw .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1846,7 +1789,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 5px;
 }
 
-#iqnjwlguxu .gt_sourcenotes {
+#rdaxuzwcpw .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1860,7 +1803,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   border-right-color: #D3D3D3;
 }
 
-#iqnjwlguxu .gt_sourcenote {
+#rdaxuzwcpw .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1868,72 +1811,72 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
   padding-right: 5px;
 }
 
-#iqnjwlguxu .gt_left {
+#rdaxuzwcpw .gt_left {
   text-align: left;
 }
 
-#iqnjwlguxu .gt_center {
+#rdaxuzwcpw .gt_center {
   text-align: center;
 }
 
-#iqnjwlguxu .gt_right {
+#rdaxuzwcpw .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#iqnjwlguxu .gt_font_normal {
+#rdaxuzwcpw .gt_font_normal {
   font-weight: normal;
 }
 
-#iqnjwlguxu .gt_font_bold {
+#rdaxuzwcpw .gt_font_bold {
   font-weight: bold;
 }
 
-#iqnjwlguxu .gt_font_italic {
+#rdaxuzwcpw .gt_font_italic {
   font-style: italic;
 }
 
-#iqnjwlguxu .gt_super {
+#rdaxuzwcpw .gt_super {
   font-size: 65%;
 }
 
-#iqnjwlguxu .gt_footnote_marks {
+#rdaxuzwcpw .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#iqnjwlguxu .gt_asterisk {
+#rdaxuzwcpw .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#iqnjwlguxu .gt_indent_1 {
+#rdaxuzwcpw .gt_indent_1 {
   text-indent: 5px;
 }
 
-#iqnjwlguxu .gt_indent_2 {
+#rdaxuzwcpw .gt_indent_2 {
   text-indent: 10px;
 }
 
-#iqnjwlguxu .gt_indent_3 {
+#rdaxuzwcpw .gt_indent_3 {
   text-indent: 15px;
 }
 
-#iqnjwlguxu .gt_indent_4 {
+#rdaxuzwcpw .gt_indent_4 {
   text-indent: 20px;
 }
 
-#iqnjwlguxu .gt_indent_5 {
+#rdaxuzwcpw .gt_indent_5 {
   text-indent: 25px;
 }
 
-#iqnjwlguxu .katex-display {
+#rdaxuzwcpw .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#iqnjwlguxu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#rdaxuzwcpw div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2005,30 +1948,30 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 <span class="header-section-number">1.11</span> 集計結果をグラフで可視化</h2>
 <p>可視化はRの得意分野です。 <code>ggplot2</code>パッケージを使って，いろんなグラフで表示してみましょう。</p>
 
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<div class="no-row-height column-margin column-container"><div class="">
 <p><code>ggplot2</code>パッケージで日本語を表示させるためには，一手間必要になります。 しかもMacOSとWindowsでやり方が異なるので，注意してください。 松浦の環境はMacOSであるため，ヒラギノフォントを指定してます。 ついでに，カラーパレットもユニバーサルデザインに配慮した<code>scale_fill_tableau(name = "Tableau 20")</code>を指定してます。</p>
 </div></div><p>メーカー別の売上合計金額を棒グラフにします。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_maker_sales</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">メーカー</span>, y <span class="op">=</span> <span class="va">売上金額合計</span>, fill <span class="op">=</span> <span class="va">メーカー</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_col</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"Noto San JP"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span> <span class="co"># Tableau 20 パレットを適用</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>df_maker_sales <span class="sc">|&gt;</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">x =</span> メーカー, <span class="at">y =</span> 売上金額合計, <span class="at">fill =</span> メーカー) <span class="sc">+</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"Noto San JP"</span>) <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4"></a>  <span class="fu">scale_fill_tableau</span>(<span class="at">name =</span> <span class="st">"Tableau 20"</span>) <span class="co"># Tableau 20 パレットを適用</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="4200"></p>
+<figure class="figure"><p><a href="POS_Marketing_01_files/figure-html/unnamed-chunk-21-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="4200"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <p>月別売上高を折れ線グラフにします。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_month_sales</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月</span>, y <span class="op">=</span> <span class="va">売上金額合計</span>, group <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>df_month_sales <span class="sc">|&gt;</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">x =</span> 月, <span class="at">y =</span> 売上金額合計, <span class="at">group =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a>  <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuPro-W3"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="4200"></p>
+<figure class="figure"><p><a href="POS_Marketing_01_files/figure-html/unnamed-chunk-22-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="4200"></a></p>
 </figure>
 </div>
 </div>
@@ -2036,15 +1979,15 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 <p>夏に売上高がピークを迎えていることが分かります。</p>
 <p>時間帯別売上高を棒グラフにします。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_time_sales</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">時間</span>, y <span class="op">=</span> <span class="va">売上金額合計</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">時間</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">時間</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># 時間の順序を逆にする</span></span>
-<span>  <span class="fu">geom_col</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># テーマとフォント</span></span>
-<span>  <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"時間帯"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">scale_fill_viridis_d</span><span class="op">(</span>direction <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="co"># Viridis パレットを逆順に適用</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>df_time_sales <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb31-3"><a href="#cb31-3"></a>  <span class="fu">aes</span>(<span class="at">x =</span> 時間, <span class="at">y =</span> 売上金額合計, <span class="at">fill =</span> <span class="fu">factor</span>(時間, <span class="at">levels =</span> <span class="fu">rev</span>(<span class="fu">unique</span>(時間)))) <span class="sc">+</span> <span class="co"># 時間の順序を逆にする</span></span>
+<span id="cb31-4"><a href="#cb31-4"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuPro-W3"</span>) <span class="sc">+</span> <span class="co"># テーマとフォント</span></span>
+<span id="cb31-5"><a href="#cb31-5"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"時間帯"</span>)) <span class="sc">+</span></span>
+<span id="cb31-6"><a href="#cb31-6"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">direction =</span> <span class="dv">1</span>) <span class="co"># Viridis パレットを逆順に適用</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="4200"></p>
+<figure class="figure"><p><a href="POS_Marketing_01_files/figure-html/unnamed-chunk-23-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="4200"></a></p>
 </figure>
 </div>
 </div>
@@ -2052,24 +1995,24 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 <p>12時ころと17時ころに売上高が大きくなっているので，昼食・夕食の時間帯に売上が伸びていることが分かります。</p>
 <p>さらに，月ごと，時間ごとの棒グラフを重ねて表示してみましょう。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_month_time_sales</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">メーカー</span> <span class="op">==</span> <span class="st">"自社"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>月 <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">日付</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>         時間 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">時間</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">summarise</span><span class="op">(</span></span>
-<span>      .by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">月</span>, <span class="va">時間</span><span class="op">)</span>,</span>
-<span>    売上金額合計 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">金額</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">月</span>, <span class="va">時間</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">df_month_time_sales</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月</span>, y <span class="op">=</span> <span class="va">売上金額合計</span>, fill <span class="op">=</span> <span class="va">時間</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_col</span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"時間帯"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">scale_fill_viridis_d</span><span class="op">(</span>direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>df_month_time_sales <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a>  <span class="fu">filter</span>(メーカー <span class="sc">==</span> <span class="st">"自社"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb32-3"><a href="#cb32-3"></a>  <span class="fu">mutate</span>(月 <span class="ot">=</span> lubridate<span class="sc">::</span><span class="fu">month</span>(日付, <span class="at">label =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb32-4"><a href="#cb32-4"></a>         時間 <span class="ot">=</span> <span class="fu">as.factor</span>(時間)) <span class="sc">|&gt;</span></span>
+<span id="cb32-5"><a href="#cb32-5"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb32-6"><a href="#cb32-6"></a>      <span class="at">.by =</span> <span class="fu">c</span>(月, 時間),</span>
+<span id="cb32-7"><a href="#cb32-7"></a>    売上金額合計 <span class="ot">=</span> <span class="fu">sum</span>(金額)</span>
+<span id="cb32-8"><a href="#cb32-8"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb32-9"><a href="#cb32-9"></a>  <span class="fu">arrange</span>(月, 時間)</span>
+<span id="cb32-10"><a href="#cb32-10"></a></span>
+<span id="cb32-11"><a href="#cb32-11"></a>df_month_time_sales <span class="sc">|&gt;</span></span>
+<span id="cb32-12"><a href="#cb32-12"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">x =</span> 月, <span class="at">y =</span> 売上金額合計, <span class="at">fill =</span> 時間) <span class="sc">+</span></span>
+<span id="cb32-13"><a href="#cb32-13"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuPro-W3"</span>) <span class="sc">+</span></span>
+<span id="cb32-14"><a href="#cb32-14"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"時間帯"</span>)) <span class="sc">+</span></span>
+<span id="cb32-15"><a href="#cb32-15"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="4200"></p>
+<figure class="figure"><p><a href="POS_Marketing_01_files/figure-html/unnamed-chunk-24-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="4200"></a></p>
 </figure>
 </div>
 </div>
@@ -2085,51 +2028,58 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 <code>exit_fade()</code>: アニメーションの終了時のエフェクトを指定します。</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">gganimate</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>月ごとの時間別売上高</strong></pre>
 </div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_month_time_sales</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月</span>, y <span class="op">=</span> <span class="va">売上金額合計</span>, fill <span class="op">=</span> <span class="va">時間</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_col</span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"時間帯"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">scale_fill_viridis_d</span><span class="op">(</span>direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">transition_states</span><span class="op">(</span><span class="va">時間</span>, transition_length <span class="op">=</span> <span class="fl">2</span>, state_length <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"月ごとの時間帯別売上高: 時間帯 {closest_state} 時"</span>,</span>
-<span>    x <span class="op">=</span> <span class="st">"月"</span>,</span>
-<span>    y <span class="op">=</span> <span class="st">"売上金額合計"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">enter_fade</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">exit_fade</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>df_month_time_sales <span class="sc">|&gt;</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb33-3"><a href="#cb33-3"></a>  <span class="fu">aes</span>(<span class="at">x =</span> 月, <span class="at">y =</span> 売上金額合計, <span class="at">fill =</span> 時間) <span class="sc">+</span></span>
+<span id="cb33-4"><a href="#cb33-4"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb33-5"><a href="#cb33-5"></a>  <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuPro-W3"</span>) <span class="sc">+</span></span>
+<span id="cb33-6"><a href="#cb33-6"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"時間帯"</span>)) <span class="sc">+</span></span>
+<span id="cb33-7"><a href="#cb33-7"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb33-8"><a href="#cb33-8"></a>  <span class="fu">transition_states</span>(時間, <span class="at">transition_length =</span> <span class="dv">2</span>, <span class="at">state_length =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb33-9"><a href="#cb33-9"></a>  <span class="fu">labs</span>(</span>
+<span id="cb33-10"><a href="#cb33-10"></a>    <span class="at">title =</span> <span class="st">"月ごとの時間帯別売上高: 時間帯 {closest_state} 時"</span>,</span>
+<span id="cb33-11"><a href="#cb33-11"></a>    <span class="at">x =</span> <span class="st">"月"</span>,</span>
+<span id="cb33-12"><a href="#cb33-12"></a>    <span class="at">y =</span> <span class="st">"売上金額合計"</span></span>
+<span id="cb33-13"><a href="#cb33-13"></a>  ) <span class="sc">+</span></span>
+<span id="cb33-14"><a href="#cb33-14"></a>  <span class="fu">enter_fade</span>() <span class="sc">+</span></span>
+<span id="cb33-15"><a href="#cb33-15"></a>  <span class="fu">exit_fade</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-26-1.gif" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="POS_Marketing_01_files/figure-html/month_time_sales_animation-1.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="POS_Marketing_01_files/figure-html/month_time_sales_animation-1.gif" class="img-fluid figure-img"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <p>同じように，月と時間を入れ替えてみましょう。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_month_time_sales</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">時間</span>, y <span class="op">=</span> <span class="va">売上金額合計</span>, fill <span class="op">=</span> <span class="va">月</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_col</span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"月"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">scale_fill_viridis_d</span><span class="op">(</span>direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">transition_states</span><span class="op">(</span><span class="va">月</span>, transition_length <span class="op">=</span> <span class="fl">2</span>, state_length <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"時間ごとの月別売上高:  {closest_state} 月"</span>,</span>
-<span>    x <span class="op">=</span> <span class="st">"時間"</span>,</span>
-<span>    y <span class="op">=</span> <span class="st">"売上金額合計"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">enter_fade</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">exit_fade</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>時間ごとの月別売上高</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>df_month_time_sales <span class="sc">|&gt;</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb34-3"><a href="#cb34-3"></a>  <span class="fu">aes</span>(<span class="at">x =</span> 時間, <span class="at">y =</span> 売上金額合計, <span class="at">fill =</span> 月) <span class="sc">+</span></span>
+<span id="cb34-4"><a href="#cb34-4"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb34-5"><a href="#cb34-5"></a>  <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuPro-W3"</span>) <span class="sc">+</span></span>
+<span id="cb34-6"><a href="#cb34-6"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"月"</span>)) <span class="sc">+</span></span>
+<span id="cb34-7"><a href="#cb34-7"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb34-8"><a href="#cb34-8"></a>  <span class="fu">transition_states</span>(月, <span class="at">transition_length =</span> <span class="dv">2</span>, <span class="at">state_length =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb34-9"><a href="#cb34-9"></a>  <span class="fu">labs</span>(</span>
+<span id="cb34-10"><a href="#cb34-10"></a>    <span class="at">title =</span> <span class="st">"時間ごとの月別売上高:  {closest_state} 月"</span>,</span>
+<span id="cb34-11"><a href="#cb34-11"></a>    <span class="at">x =</span> <span class="st">"時間"</span>,</span>
+<span id="cb34-12"><a href="#cb34-12"></a>    <span class="at">y =</span> <span class="st">"売上金額合計"</span></span>
+<span id="cb34-13"><a href="#cb34-13"></a>  ) <span class="sc">+</span></span>
+<span id="cb34-14"><a href="#cb34-14"></a>  <span class="fu">enter_fade</span>() <span class="sc">+</span></span>
+<span id="cb34-15"><a href="#cb34-15"></a>  <span class="fu">exit_fade</span>()</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_01_files/figure-html/unnamed-chunk-27-1.gif" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="POS_Marketing_01_files/figure-html/anime_month_time-1.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="POS_Marketing_01_files/figure-html/anime_month_time-1.gif" class="img-fluid figure-img"></a></p>
 </figure>
 </div>
 </div>
@@ -2140,8 +2090,23 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 <p>テキストではMS Excelで作成した表を、MS Powerpointに貼り付けてスライド資料を作成するようになっていますが、 RとQuartoを使えば、データ分析と資料作成を同じ場所で行うことができます。</p>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+<!-- -->
+
+</section><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> トップに戻る</a></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -2210,6 +2175,57 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -2551,11 +2567,487 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
         <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">第2回 顧客層別の売上</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">ソースコード</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu"># 第1回 売上をまとめた表をつくる</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a></span>
+<span id="cb35-3"><a href="#cb35-3"></a><span class="fu">## はじめに</span></span>
+<span id="cb35-4"><a href="#cb35-4"></a></span>
+<span id="cb35-5"><a href="#cb35-5"></a>第1回の内容は，POSデータを集約して，売上金額や売上個数の合計を計算し，販売状況の特徴を把握しやすい図や表を作成することです。</span>
+<span id="cb35-6"><a href="#cb35-6"></a></span>
+<span id="cb35-7"><a href="#cb35-7"></a><span class="fu">## この章で使うファイルとパッケージ</span></span>
+<span id="cb35-8"><a href="#cb35-8"></a></span>
+<span id="cb35-9"><a href="#cb35-9"></a>ここで用いるデータが記録されているファイルは，Microsoft社のExcelのファイルです。</span>
+<span id="cb35-10"><a href="#cb35-10"></a>最近のMS Excelで作成されたファイルは拡張子に<span class="in">`.xlsx`</span>がついています。</span>
+<span id="cb35-11"><a href="#cb35-11"></a>第1回の内容で扱うファイルは、</span>
+<span id="cb35-12"><a href="#cb35-12"></a></span>
+<span id="cb35-13"><a href="#cb35-13"></a>:::{.column-margin}</span>
+<span id="cb35-14"><a href="#cb35-14"></a>**拡張子**(extension)は，ファイル名の最後についている<span class="in">`.xlsx`</span>や<span class="in">`.csv`</span>などの文字列のことで，ファイルの種類を示しています。Windowsではデフォルトで拡張子が表示されない設定になっているかもしれないので，必ず拡張子を表示させる設定にしておいてください。<span class="in">`.exe`</span>ファイルを知らずに実行すると，ウイルスに感染する可能性があるので，拡張子を表示させることはセキュリティ上も重要です。</span>
+<span id="cb35-15"><a href="#cb35-15"></a>:::</span>
+<span id="cb35-16"><a href="#cb35-16"></a></span>
+<span id="cb35-17"><a href="#cb35-17"></a><span class="ss">- </span><span class="in">`chp1.xlsx`</span></span>
+<span id="cb35-18"><a href="#cb35-18"></a></span>
+<span id="cb35-19"><a href="#cb35-19"></a>という名前のファイルです。</span>
+<span id="cb35-20"><a href="#cb35-20"></a>このファイルは，Rの作業ディレクトリ(working directory)の中にある<span class="in">`data`</span>フォルダに保存しておきます。</span>
+<span id="cb35-21"><a href="#cb35-21"></a></span>
+<span id="cb35-22"><a href="#cb35-22"></a>:::{.column-margin}</span>
+<span id="cb35-23"><a href="#cb35-23"></a>**作業ディレクトリ**(working directory)は，Rがファイルを読み込むときの基準となるフォルダのことです。Rを起動したときに，デフォルトで設定されているフォルダが作業ディレクトリになります。作業ディレクトリは<span class="in">`getwd()`</span>関数で確認できます。作業ディレクトリを変更するには，<span class="in">`setwd()`</span>関数を使います。</span>
+<span id="cb35-24"><a href="#cb35-24"></a>:::</span>
+<span id="cb35-25"><a href="#cb35-25"></a></span>
+<span id="cb35-26"><a href="#cb35-26"></a>Rの機能を拡張するために，ここでは以下のパッケージを用います。</span>
+<span id="cb35-27"><a href="#cb35-27"></a></span>
+<span id="cb35-28"><a href="#cb35-28"></a><span class="ss">- </span><span class="in">`tidyverse`</span> : データの読み込み，加工，可視化に使うパッケージ</span>
+<span id="cb35-29"><a href="#cb35-29"></a><span class="ss">- </span><span class="in">`readxl`</span> : Excelファイルを読み込むためのパッケージ</span>
+<span id="cb35-30"><a href="#cb35-30"></a></span>
+<span id="cb35-31"><a href="#cb35-31"></a>通常，Rでは<span class="in">`install.packages()`</span>関数を使ってパッケージをインストールし，<span class="in">`library()`</span>で読み出しますが，ここでは<span class="in">`pacman`</span>パッケージを使って一括でインストール・読み込みを行います。</span>
+<span id="cb35-32"><a href="#cb35-32"></a></span>
+<span id="cb35-33"><a href="#cb35-33"></a><span class="in">`pacman`</span>パッケージを使うために，以下のコードを実行してください。</span>
+<span id="cb35-34"><a href="#cb35-34"></a></span>
+<span id="cb35-37"><a href="#cb35-37"></a><span class="in">```{r}</span></span>
+<span id="cb35-38"><a href="#cb35-38"></a><span class="co">#| eval: false</span></span>
+<span id="cb35-39"><a href="#cb35-39"></a><span class="fu">install.packages</span>(<span class="st">"pacman"</span>) <span class="co"># 最初の1回だけ実行</span></span>
+<span id="cb35-40"><a href="#cb35-40"></a><span class="in">```</span></span>
+<span id="cb35-41"><a href="#cb35-41"></a></span>
+<span id="cb35-42"><a href="#cb35-42"></a><span class="in">`pacman`</span>パッケージには便利な関数がいろいろありますが，ここでは<span class="in">`p_load()`</span>関数を使って複数のパッケージを一括で読み込みます。まだインストールされていないパッケージがあれば，自動でインストールされます。</span>
+<span id="cb35-43"><a href="#cb35-43"></a>便利なパッケージをいろいろ読み込んでおきましょう。</span>
+<span id="cb35-44"><a href="#cb35-44"></a></span>
+<span id="cb35-47"><a href="#cb35-47"></a><span class="in">```{r}</span></span>
+<span id="cb35-48"><a href="#cb35-48"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(</span>
+<span id="cb35-49"><a href="#cb35-49"></a>  tidyverse,</span>
+<span id="cb35-50"><a href="#cb35-50"></a>  readxl,</span>
+<span id="cb35-51"><a href="#cb35-51"></a>  ggthemes,</span>
+<span id="cb35-52"><a href="#cb35-52"></a>  gt,</span>
+<span id="cb35-53"><a href="#cb35-53"></a>  gtExtras,</span>
+<span id="cb35-54"><a href="#cb35-54"></a>  gganimate</span>
+<span id="cb35-55"><a href="#cb35-55"></a>  )</span>
+<span id="cb35-56"><a href="#cb35-56"></a><span class="in">```</span></span>
+<span id="cb35-57"><a href="#cb35-57"></a></span>
+<span id="cb35-58"><a href="#cb35-58"></a><span class="ss">- </span><span class="in">`tidyverse`</span> : データの読み込み，加工，可視化に使うパッケージ</span>
+<span id="cb35-59"><a href="#cb35-59"></a><span class="ss">- </span><span class="in">`readxl`</span> : Excelファイルを読み込むためのパッケージ</span>
+<span id="cb35-60"><a href="#cb35-60"></a><span class="ss">- </span><span class="in">`ggtheme`</span> : グラフのテーマを変更するためのパッケージ</span>
+<span id="cb35-61"><a href="#cb35-61"></a><span class="ss">- </span><span class="in">`gt`</span> : 表を作成するためのパッケージ</span>
+<span id="cb35-62"><a href="#cb35-62"></a><span class="ss">- </span><span class="in">`gtExtras`</span> : <span class="in">`gt`</span>パッケージの拡張機能を提供するパッケージ</span>
+<span id="cb35-63"><a href="#cb35-63"></a><span class="ss">- </span><span class="in">`gganimate`</span> : <span class="in">`ggplot2`</span>で作成したグラフをアニメーションにするためのパッケージ</span>
+<span id="cb35-64"><a href="#cb35-64"></a></span>
+<span id="cb35-65"><a href="#cb35-65"></a></span>
+<span id="cb35-66"><a href="#cb35-66"></a>:::{.column-margin}</span>
+<span id="cb35-67"><a href="#cb35-67"></a><span class="in">`pacman::p_load()`</span>のように，「パッケージ名<span class="in">`::`</span>関数名」という書き方で，パッケージ名を指定して関数を使うと，<span class="in">`p_load()`</span>関数が<span class="in">`pacman`</span>パッケージの関数であることが分かりやすいので，似たような名前の関数があるときは，パッケージ名をつけて使うといいでしょう。</span>
+<span id="cb35-68"><a href="#cb35-68"></a>たとえば，<span class="in">`dplyr::select()`</span>関数や<span class="in">`readxl::read_excel()`</span>関数です。</span>
+<span id="cb35-69"><a href="#cb35-69"></a>:::</span>
+<span id="cb35-70"><a href="#cb35-70"></a></span>
+<span id="cb35-71"><a href="#cb35-71"></a>うえでも説明したとおり、今後分析に使う予定のファイルはすべて作業ディレクトリの<span class="in">`data`</span>フォルダにいれてある、と想定したソースコードを作成しているので、もし<span class="in">`data`</span>フォルダではない場所にファイルを保存している場合は、<span class="in">`data/`</span>の部分を適宜変更してください。</span>
+<span id="cb35-72"><a href="#cb35-72"></a></span>
+<span id="cb35-73"><a href="#cb35-73"></a><span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">"rmarker-s"</span><span class="dt">&gt;</span>Rは作業ディレクトリとなっているフォルダを軸にしてファイルを読み込む<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span>ため，ファイルの場所に注意してください。</span>
+<span id="cb35-74"><a href="#cb35-74"></a>ここでは作業ディレクトリの中に<span class="in">`data`</span>フォルダを作り，そこに<span class="in">`chp1.xlsx`</span>を保存してあるので，<span class="in">`data/chp1.xlsx`</span>と指定することでファイルにアクセスしています。</span>
+<span id="cb35-75"><a href="#cb35-75"></a></span>
+<span id="cb35-76"><a href="#cb35-76"></a></span>
+<span id="cb35-77"><a href="#cb35-77"></a><span class="fu">## Rの準備</span></span>
+<span id="cb35-78"><a href="#cb35-78"></a></span>
+<span id="cb35-79"><a href="#cb35-79"></a><span class="ss">- </span>Rをインストールしておきましょう。</span>
+<span id="cb35-80"><a href="#cb35-80"></a><span class="ss">- </span>RStudioかVS Codeをインストールしておきましょう。</span>
+<span id="cb35-81"><a href="#cb35-81"></a><span class="ss">- </span>Rのパッケージ<span class="in">`tidyverse`</span>をインストールしておきましょう。</span>
+<span id="cb35-82"><a href="#cb35-82"></a><span class="ss">- </span>作業ディレクトリを設定しておきましょう。</span>
+<span id="cb35-83"><a href="#cb35-83"></a></span>
+<span id="cb35-84"><a href="#cb35-84"></a>これらの内容が分からない場合は，R入門の資料や本を参照してください。</span>
+<span id="cb35-85"><a href="#cb35-85"></a></span>
+<span id="cb35-86"><a href="#cb35-86"></a><span class="fu">## データの読み込み</span></span>
+<span id="cb35-87"><a href="#cb35-87"></a></span>
+<span id="cb35-88"><a href="#cb35-88"></a>まずは<span class="in">`readxl`</span>パッケージを使ってデータ<span class="in">`chp1.xlsx`</span>を読み込んでみましょう。</span>
+<span id="cb35-89"><a href="#cb35-89"></a>このExcelファイルのシートの一覧を表示してみます。</span>
+<span id="cb35-90"><a href="#cb35-90"></a></span>
+<span id="cb35-91"><a href="#cb35-91"></a><span class="in">```{r excel_sheets, filename = "Excelファイルのシートの確認"}</span></span>
+<span id="cb35-92"><a href="#cb35-92"></a>readxl<span class="sc">::</span><span class="fu">excel_sheets</span>(<span class="st">"data/chp1.xlsx"</span>)</span>
+<span id="cb35-93"><a href="#cb35-93"></a><span class="in">```</span></span>
+<span id="cb35-94"><a href="#cb35-94"></a></span>
+<span id="cb35-95"><a href="#cb35-95"></a><span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">"rmarker-s"</span><span class="dt">&gt;</span><span class="in">`excel_sheets()`</span>関数はデフォルトで1番目のシートを読み込みます<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span>。</span>
+<span id="cb35-96"><a href="#cb35-96"></a>「いつものPOSデータ」を読み込みたいので，特に指定せずに<span class="in">`read_excel()`</span>関数を使って読み込みます。</span>
+<span id="cb35-97"><a href="#cb35-97"></a></span>
+<span id="cb35-98"><a href="#cb35-98"></a><span class="in">```{r read_excel, filename = "Excelデータの読み込み"}</span></span>
+<span id="cb35-99"><a href="#cb35-99"></a>df <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/chp1.xlsx"</span>)</span>
+<span id="cb35-100"><a href="#cb35-100"></a><span class="fu">head</span>(df) <span class="co"># 戦闘6行を表示</span></span>
+<span id="cb35-101"><a href="#cb35-101"></a><span class="in">```</span></span>
+<span id="cb35-102"><a href="#cb35-102"></a></span>
+<span id="cb35-103"><a href="#cb35-103"></a>どんな変数があるのか確認するには<span class="in">`names()`</span>関数を使います。</span>
+<span id="cb35-104"><a href="#cb35-104"></a></span>
+<span id="cb35-105"><a href="#cb35-105"></a><span class="in">```{r check_names, filename = "変数名の確認"}</span></span>
+<span id="cb35-106"><a href="#cb35-106"></a><span class="fu">names</span>(df)</span>
+<span id="cb35-107"><a href="#cb35-107"></a><span class="in">```</span></span>
+<span id="cb35-108"><a href="#cb35-108"></a></span>
+<span id="cb35-109"><a href="#cb35-109"></a><span class="fu">## データの属性を確認する。</span></span>
+<span id="cb35-110"><a href="#cb35-110"></a></span>
+<span id="cb35-111"><a href="#cb35-111"></a>データの属性や型を確認するには<span class="in">`str()`</span>関数を使います。</span>
+<span id="cb35-112"><a href="#cb35-112"></a></span>
+<span id="cb35-113"><a href="#cb35-113"></a><span class="in">```{r check_str, filename = "データの属性を確認"}</span></span>
+<span id="cb35-114"><a href="#cb35-114"></a><span class="fu">str</span>(df)</span>
+<span id="cb35-115"><a href="#cb35-115"></a><span class="in">```</span></span>
+<span id="cb35-116"><a href="#cb35-116"></a></span>
+<span id="cb35-117"><a href="#cb35-117"></a><span class="in">`dplyr::glimpse()`</span>関数を使うと，データの概要をより見やすく表示できます。</span>
+<span id="cb35-118"><a href="#cb35-118"></a></span>
+<span id="cb35-119"><a href="#cb35-119"></a><span class="in">```{r check_glimpse, filename = "データの概要を確認"}</span></span>
+<span id="cb35-120"><a href="#cb35-120"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(df)</span>
+<span id="cb35-121"><a href="#cb35-121"></a><span class="in">```</span></span>
+<span id="cb35-122"><a href="#cb35-122"></a></span>
+<span id="cb35-123"><a href="#cb35-123"></a>この表の上部をみると、このデータには変数が11個，観測値が374,090個あることが分かります。</span>
+<span id="cb35-124"><a href="#cb35-124"></a>また，変数名の横に<span class="in">`&lt;chr&gt;`</span>や<span class="in">`&lt;dbl&gt;`</span>といった文字が表示されていますが，これは変数の型を示しています。</span>
+<span id="cb35-125"><a href="#cb35-125"></a><span class="in">`&lt;chr&gt;`</span>は文字列型，<span class="in">`&lt;dbl&gt;`</span>は数値型，<span class="in">`&lt;dttm&gt;`</span>は日付型を示しています。</span>
+<span id="cb35-126"><a href="#cb35-126"></a></span>
+<span id="cb35-127"><a href="#cb35-127"></a>:::{.column-margin}</span>
+<span id="cb35-128"><a href="#cb35-128"></a>文字型，数値型，日付型以外にも，</span>
+<span id="cb35-129"><a href="#cb35-129"></a></span>
+<span id="cb35-130"><a href="#cb35-130"></a><span class="ss">- </span><span class="in">`&lt;fct&gt;`</span>: 因子型</span>
+<span id="cb35-131"><a href="#cb35-131"></a><span class="ss">- </span><span class="in">`&lt;int&gt;`</span>: 整数型</span>
+<span id="cb35-132"><a href="#cb35-132"></a><span class="ss">- </span><span class="in">`&lt;lgl&gt;`</span>: 論理型</span>
+<span id="cb35-133"><a href="#cb35-133"></a></span>
+<span id="cb35-134"><a href="#cb35-134"></a>などがあります。</span>
+<span id="cb35-135"><a href="#cb35-135"></a>:::</span>
+<span id="cb35-136"><a href="#cb35-136"></a></span>
+<span id="cb35-137"><a href="#cb35-137"></a><span class="fu">## データの概要を確認する</span></span>
+<span id="cb35-138"><a href="#cb35-138"></a></span>
+<span id="cb35-139"><a href="#cb35-139"></a>データの属性を確認するために，<span class="in">`summary()`</span>関数を使ってみましょう。</span>
+<span id="cb35-140"><a href="#cb35-140"></a>基本関数<span class="in">`summary()`</span>は，データの記述統計量などを返してくれる関数です。</span>
+<span id="cb35-141"><a href="#cb35-141"></a></span>
+<span id="cb35-144"><a href="#cb35-144"></a><span class="in">```{r}</span></span>
+<span id="cb35-145"><a href="#cb35-145"></a><span class="fu">summary</span>(df)</span>
+<span id="cb35-146"><a href="#cb35-146"></a><span class="in">```</span></span>
+<span id="cb35-147"><a href="#cb35-147"></a></span>
+<span id="cb35-148"><a href="#cb35-148"></a>この表より，</span>
+<span id="cb35-149"><a href="#cb35-149"></a></span>
+<span id="cb35-150"><a href="#cb35-150"></a><span class="ss">- </span>日付は2023年1月2日から2023年12月31日まで</span>
+<span id="cb35-151"><a href="#cb35-151"></a><span class="ss">- </span>時間は10<span class="sc">:00から21:</span>00まで</span>
+<span id="cb35-152"><a href="#cb35-152"></a><span class="ss">- </span>単価は数値で，140〜170</span>
+<span id="cb35-153"><a href="#cb35-153"></a><span class="ss">- </span>個数は数値で，1〜14</span>
+<span id="cb35-154"><a href="#cb35-154"></a><span class="ss">- </span>金額は数値で，140〜2100</span>
+<span id="cb35-155"><a href="#cb35-155"></a></span>
+<span id="cb35-156"><a href="#cb35-156"></a>となっていることがわかります。</span>
+<span id="cb35-157"><a href="#cb35-157"></a>また文字型となっている<span class="in">`曜日`</span>，<span class="in">`性別`</span>，<span class="in">`年代`</span>，<span class="in">`メーカー`</span>，<span class="in">`商品名`</span>はデータの個数として<span class="in">`Length:`</span>が出力されていることがわかります。</span>
+<span id="cb35-158"><a href="#cb35-158"></a>文字列の<span class="in">`summary()`</span>を出力しても意味がないので，文字型の変数を除外して，数値型の変数だけを表示するには，<span class="in">`select()`</span>関数と<span class="in">`where()`</span>関数を使い，</span>
+<span id="cb35-159"><a href="#cb35-159"></a><span class="in">`is.double`</span>関数を使って数値型の変数だけを選択します。</span>
+<span id="cb35-160"><a href="#cb35-160"></a></span>
+<span id="cb35-161"><a href="#cb35-161"></a><span class="in">```{r summary_numeric, filename = "数値型の変数の記述統計量を確認"}</span></span>
+<span id="cb35-162"><a href="#cb35-162"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb35-163"><a href="#cb35-163"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.double)) <span class="sc">|&gt;</span> <span class="co"># 数値型の変数だけを選択</span></span>
+<span id="cb35-164"><a href="#cb35-164"></a>  <span class="fu">summary</span>() <span class="co"># 記述統計量を表示</span></span>
+<span id="cb35-165"><a href="#cb35-165"></a><span class="in">```</span></span>
+<span id="cb35-166"><a href="#cb35-166"></a></span>
+<span id="cb35-167"><a href="#cb35-167"></a>:::{.column-margin}</span>
+<span id="cb35-168"><a href="#cb35-168"></a><span class="in">`is.double()`</span>関数は，引数の型が数値型かどうかを判定する関数で，数値型の場合は<span class="in">`TRUE`</span>を返し，そうでない場合は<span class="in">`FALSE`</span>を返します。このように，<span class="in">`is.型名()`</span>関数は，型を判定する関数として使われます。</span>
+<span id="cb35-169"><a href="#cb35-169"></a>条件を満たす変数だけを選択する<span class="in">`dplyr::select()`</span>関数と，<span class="in">`dplyr::where()`</span>関数を使うことで変数の型を指定して変数を抽出できます。</span>
+<span id="cb35-170"><a href="#cb35-170"></a>:::</span>
+<span id="cb35-171"><a href="#cb35-171"></a></span>
+<span id="cb35-172"><a href="#cb35-172"></a><span class="fu">## 因子型</span></span>
+<span id="cb35-173"><a href="#cb35-173"></a></span>
+<span id="cb35-174"><a href="#cb35-174"></a>これらの文字型変数<span class="in">`曜日`</span>，<span class="in">`性別`</span>，<span class="in">`年代`</span>，<span class="in">`メーカー`</span>，<span class="in">`商品名`</span>は，どのカテゴリーに属しているかを表している**カテゴリカルデータ**であるため，</span>
+<span id="cb35-175"><a href="#cb35-175"></a>文字型から**因子型**(factor)に変換しておきましょう。</span>
+<span id="cb35-176"><a href="#cb35-176"></a>変数を因子型に変更するには，<span class="in">`facor()`</span>関数や<span class="in">`as.factor()`</span>関数を使います。</span>
+<span id="cb35-177"><a href="#cb35-177"></a>ここでは，曜日に順番があるため，<span class="in">`levels`</span>オプションと<span class="in">`ordered`</span>オプションで曜日の種類と順番を指定しています。</span>
+<span id="cb35-178"><a href="#cb35-178"></a></span>
+<span id="cb35-179"><a href="#cb35-179"></a><span class="in">```{r change_factor, filename = "文字型を因子型に変換"}</span></span>
+<span id="cb35-180"><a href="#cb35-180"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb35-181"><a href="#cb35-181"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb35-182"><a href="#cb35-182"></a>    曜日 <span class="ot">=</span> <span class="fu">factor</span>(</span>
+<span id="cb35-183"><a href="#cb35-183"></a>      曜日,</span>
+<span id="cb35-184"><a href="#cb35-184"></a>      <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"月"</span>, <span class="st">"火"</span>, <span class="st">"水"</span>, <span class="st">"木"</span>, <span class="st">"金"</span>, <span class="st">"土"</span>, <span class="st">"日"</span>),</span>
+<span id="cb35-185"><a href="#cb35-185"></a>      <span class="at">ordered =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb35-186"><a href="#cb35-186"></a>    性別 <span class="ot">=</span> <span class="fu">as.factor</span>(性別),</span>
+<span id="cb35-187"><a href="#cb35-187"></a>    年代 <span class="ot">=</span> <span class="fu">as.factor</span>(年代),</span>
+<span id="cb35-188"><a href="#cb35-188"></a>    メーカー <span class="ot">=</span> <span class="fu">as.factor</span>(メーカー),</span>
+<span id="cb35-189"><a href="#cb35-189"></a>    商品名 <span class="ot">=</span> <span class="fu">as.factor</span>(商品名)</span>
+<span id="cb35-190"><a href="#cb35-190"></a>  )</span>
+<span id="cb35-191"><a href="#cb35-191"></a><span class="in">```</span></span>
+<span id="cb35-192"><a href="#cb35-192"></a></span>
+<span id="cb35-193"><a href="#cb35-193"></a>変数の型を変更したので，もう一度，<span class="in">`summary()`</span>関数を使ってデータを確認してみましょう。</span>
+<span id="cb35-194"><a href="#cb35-194"></a></span>
+<span id="cb35-195"><a href="#cb35-195"></a><span class="in">```{r recheck_summary, filename = "データの概要を再確認"}</span></span>
+<span id="cb35-196"><a href="#cb35-196"></a><span class="fu">summary</span>(df)</span>
+<span id="cb35-197"><a href="#cb35-197"></a><span class="in">```</span></span>
+<span id="cb35-198"><a href="#cb35-198"></a></span>
+<span id="cb35-199"><a href="#cb35-199"></a>すると，<span class="in">`曜日`</span>，<span class="in">`性別`</span>，<span class="in">`年代`</span>，<span class="in">`メーカー`</span>，<span class="in">`商品名`</span>がカテゴリー変数として認識され，カテゴリーごとの個数が表示されています。</span>
+<span id="cb35-200"><a href="#cb35-200"></a></span>
+<span id="cb35-201"><a href="#cb35-201"></a><span class="fu">## 条件によるデータの抽出</span></span>
+<span id="cb35-202"><a href="#cb35-202"></a></span>
+<span id="cb35-203"><a href="#cb35-203"></a><span class="in">`メーカー`</span>変数が<span class="in">`自社`</span>の場合だけを抽出するには，<span class="in">`dplyr::filter()`</span>関数を使います。</span>
+<span id="cb35-204"><a href="#cb35-204"></a><span class="in">`filter()`</span>関数は，引数に<span class="in">`メーカー == "自社`</span>という条件を指定することで，条件に合致するデータだけを抽出します。</span>
+<span id="cb35-205"><a href="#cb35-205"></a></span>
+<span id="cb35-206"><a href="#cb35-206"></a></span>
+<span id="cb35-209"><a href="#cb35-209"></a><span class="in">```{r}</span></span>
+<span id="cb35-210"><a href="#cb35-210"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb35-211"><a href="#cb35-211"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(メーカー <span class="sc">==</span> <span class="st">"自社"</span>) <span class="sc">|&gt;</span> <span class="co"># 自社のデータだけを抽出</span></span>
+<span id="cb35-212"><a href="#cb35-212"></a>  <span class="fu">head</span>() <span class="co"># 最初の6行を表示</span></span>
+<span id="cb35-213"><a href="#cb35-213"></a><span class="in">```</span></span>
+<span id="cb35-214"><a href="#cb35-214"></a></span>
+<span id="cb35-215"><a href="#cb35-215"></a><span class="fu">## 基礎集計でデータの傾向をチェック</span></span>
+<span id="cb35-216"><a href="#cb35-216"></a></span>
+<span id="cb35-217"><a href="#cb35-217"></a>メーカーごとの売上金額合計を示す表を作成してみましょう。</span>
+<span id="cb35-218"><a href="#cb35-218"></a>Excelでピボットテーブルを使う手続が教科書で解説されていますが，Rだと<span class="in">`dplyr`</span>パッケージを使って簡単にできます。</span>
+<span id="cb35-219"><a href="#cb35-219"></a></span>
+<span id="cb35-220"><a href="#cb35-220"></a><span class="in">```{r maker_sales, filename = "メーカーごとの売上金額合計"}</span></span>
+<span id="cb35-221"><a href="#cb35-221"></a><span class="co">#| class-output: code-output</span></span>
+<span id="cb35-222"><a href="#cb35-222"></a>df_maker_sales <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb35-223"><a href="#cb35-223"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
+<span id="cb35-224"><a href="#cb35-224"></a>    <span class="at">.by =</span> <span class="fu">c</span>(メーカー),</span>
+<span id="cb35-225"><a href="#cb35-225"></a>    売上金額合計 <span class="ot">=</span> <span class="fu">sum</span>(金額)</span>
+<span id="cb35-226"><a href="#cb35-226"></a>  )</span>
+<span id="cb35-227"><a href="#cb35-227"></a>df_maker_sales</span>
+<span id="cb35-228"><a href="#cb35-228"></a><span class="in">```</span></span>
+<span id="cb35-229"><a href="#cb35-229"></a></span>
+<span id="cb35-230"><a href="#cb35-230"></a>これだけです。</span>
+<span id="cb35-231"><a href="#cb35-231"></a>キレイな表にするなら，<span class="in">`gt()`</span>関数と<span class="in">`gtExtra`</span>パッケージを使うといいでしょう。</span>
+<span id="cb35-232"><a href="#cb35-232"></a></span>
+<span id="cb35-233"><a href="#cb35-233"></a><span class="in">```{r maker_sales_gt, filename = "メーカーごとの売上金額合計の表"}</span></span>
+<span id="cb35-234"><a href="#cb35-234"></a>df_maker_sales <span class="sc">|&gt;</span></span>
+<span id="cb35-235"><a href="#cb35-235"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb35-236"><a href="#cb35-236"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">decimals =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="co"># 数値の書式を指定</span></span>
+<span id="cb35-237"><a href="#cb35-237"></a>  <span class="fu">tab_header</span>(<span class="at">title =</span> <span class="st">"表1-2 メーカーごとの売上金額"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb35-238"><a href="#cb35-238"></a>  <span class="fu">gt_theme_pff</span>() <span class="sc">|&gt;</span> <span class="co"># テーマを適用</span></span>
+<span id="cb35-239"><a href="#cb35-239"></a>  <span class="fu">as_raw_html</span>() <span class="co"># HTML形式で出力</span></span>
+<span id="cb35-240"><a href="#cb35-240"></a><span class="in">```</span></span>
+<span id="cb35-241"><a href="#cb35-241"></a></span>
+<span id="cb35-242"><a href="#cb35-242"></a>次に，各メーカーのどの商品が，平均何円で売られているのか，を調べてみましょう。</span>
+<span id="cb35-243"><a href="#cb35-243"></a><span class="in">`summarise()`</span>関数の引数に，<span class="in">`.by=c()`</span>を指定し，グループ化したい変数として<span class="in">`メーカー`</span>と<span class="in">`商品名`</span>を指定してグループごとの平均単価を計算する。</span>
+<span id="cb35-244"><a href="#cb35-244"></a>そして<span class="in">`arrange()`</span>関数でメーカーと平均単価でソートします。</span>
+<span id="cb35-245"><a href="#cb35-245"></a><span class="in">`desc()`</span>関数は降順にソートするための関数です。</span>
+<span id="cb35-246"><a href="#cb35-246"></a></span>
+<span id="cb35-249"><a href="#cb35-249"></a><span class="in">```{r}</span></span>
+<span id="cb35-250"><a href="#cb35-250"></a>df_maker_item <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb35-251"><a href="#cb35-251"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb35-252"><a href="#cb35-252"></a>    <span class="at">.by =</span> <span class="fu">c</span>(メーカー, 商品名), <span class="co"># メーカーと商品名でグループ化</span></span>
+<span id="cb35-253"><a href="#cb35-253"></a>    平均単価 <span class="ot">=</span> <span class="fu">mean</span>(単価) <span class="co"># 平均単価を計算</span></span>
+<span id="cb35-254"><a href="#cb35-254"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb35-255"><a href="#cb35-255"></a>  <span class="fu">arrange</span>(メーカー, <span class="fu">desc</span>(平均単価)) <span class="co"># メーカーと平均単価でソート</span></span>
+<span id="cb35-256"><a href="#cb35-256"></a></span>
+<span id="cb35-257"><a href="#cb35-257"></a>df_maker_item <span class="sc">|&gt;</span></span>
+<span id="cb35-258"><a href="#cb35-258"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb35-259"><a href="#cb35-259"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">decimals =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb35-260"><a href="#cb35-260"></a>  <span class="fu">tab_header</span>(<span class="at">title =</span> <span class="st">"表1−3 商品ごとの単価"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb35-261"><a href="#cb35-261"></a>  <span class="fu">gt_theme_pff</span>() <span class="sc">|&gt;</span> <span class="co"># テーマを適用</span></span>
+<span id="cb35-262"><a href="#cb35-262"></a>  <span class="fu">as_raw_html</span>()</span>
+<span id="cb35-263"><a href="#cb35-263"></a><span class="in">```</span></span>
+<span id="cb35-264"><a href="#cb35-264"></a></span>
+<span id="cb35-265"><a href="#cb35-265"></a><span class="fu">## 資料作成に必要なデータを取り出す</span></span>
+<span id="cb35-266"><a href="#cb35-266"></a></span>
+<span id="cb35-267"><a href="#cb35-267"></a>データ全体における売上金額と売上個数を計算して，各月と各時間帯にの売上金額を計算してみる。</span>
+<span id="cb35-268"><a href="#cb35-268"></a></span>
+<span id="cb35-269"><a href="#cb35-269"></a></span>
+<span id="cb35-272"><a href="#cb35-272"></a><span class="in">```{r}</span></span>
+<span id="cb35-273"><a href="#cb35-273"></a><span class="co">#| class-output: code-output</span></span>
+<span id="cb35-274"><a href="#cb35-274"></a><span class="co"># 全体の売上金額と売上個数</span></span>
+<span id="cb35-275"><a href="#cb35-275"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb35-276"><a href="#cb35-276"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb35-277"><a href="#cb35-277"></a>    売上金額合計 <span class="ot">=</span> <span class="fu">sum</span>(金額),</span>
+<span id="cb35-278"><a href="#cb35-278"></a>    売上個数合計 <span class="ot">=</span> <span class="fu">sum</span>(個数)</span>
+<span id="cb35-279"><a href="#cb35-279"></a>    )</span>
+<span id="cb35-280"><a href="#cb35-280"></a><span class="in">```</span></span>
+<span id="cb35-281"><a href="#cb35-281"></a></span>
+<span id="cb35-282"><a href="#cb35-282"></a>自社製品ごとの個数と金額を計算してみましょう。</span>
+<span id="cb35-283"><a href="#cb35-283"></a></span>
+<span id="cb35-286"><a href="#cb35-286"></a><span class="in">```{r}</span></span>
+<span id="cb35-287"><a href="#cb35-287"></a><span class="co">#| class-output: code-output</span></span>
+<span id="cb35-288"><a href="#cb35-288"></a>df_jisha_total <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb35-289"><a href="#cb35-289"></a>  <span class="fu">filter</span>(メーカー <span class="sc">==</span> <span class="st">"自社"</span>) <span class="sc">|&gt;</span> <span class="co"># 自社製品だけを抽出</span></span>
+<span id="cb35-290"><a href="#cb35-290"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb35-291"><a href="#cb35-291"></a>    <span class="at">.by =</span> <span class="fu">c</span>(商品名),</span>
+<span id="cb35-292"><a href="#cb35-292"></a>    売上金額合計 <span class="ot">=</span> <span class="fu">sum</span>(金額),</span>
+<span id="cb35-293"><a href="#cb35-293"></a>    売上個数合計 <span class="ot">=</span> <span class="fu">sum</span>(個数)</span>
+<span id="cb35-294"><a href="#cb35-294"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb35-295"><a href="#cb35-295"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(売上金額合計))</span>
+<span id="cb35-296"><a href="#cb35-296"></a></span>
+<span id="cb35-297"><a href="#cb35-297"></a>df_jisha_total</span>
+<span id="cb35-298"><a href="#cb35-298"></a><span class="in">```</span></span>
+<span id="cb35-299"><a href="#cb35-299"></a></span>
+<span id="cb35-300"><a href="#cb35-300"></a>これで自社の製品ごとの売上金額と売上個数の合計が計算されました。</span>
+<span id="cb35-301"><a href="#cb35-301"></a>ここで注意しないといけないことは<span class="in">`summarise()`</span>関数に<span class="in">`.by=`</span>引数を使った場合，グループごとに1つの統計量を返すため，上のコードだと，</span>
+<span id="cb35-302"><a href="#cb35-302"></a>自社の2商品ごとの売上金額と売上個数の合計が出力され，2行2列のデータフレームが返されていることが分かります。</span>
+<span id="cb35-303"><a href="#cb35-303"></a></span>
+<span id="cb35-304"><a href="#cb35-304"></a></span>
+<span id="cb35-305"><a href="#cb35-305"></a>次に，各月ごとの売上金額を計算してみましょう。</span>
+<span id="cb35-306"><a href="#cb35-306"></a><span class="in">`日付`</span>変数の型を確認します。</span>
+<span id="cb35-307"><a href="#cb35-307"></a></span>
+<span id="cb35-310"><a href="#cb35-310"></a><span class="in">```{r}</span></span>
+<span id="cb35-311"><a href="#cb35-311"></a><span class="co">#| class-output: code-output</span></span>
+<span id="cb35-312"><a href="#cb35-312"></a><span class="fu">class</span>(df<span class="sc">$</span>日付)</span>
+<span id="cb35-313"><a href="#cb35-313"></a><span class="in">```</span></span>
+<span id="cb35-314"><a href="#cb35-314"></a></span>
+<span id="cb35-315"><a href="#cb35-315"></a><span class="in">`POSIXct`</span> <span class="in">`POSIXt`</span> という日付型のデータです。</span>
+<span id="cb35-316"><a href="#cb35-316"></a>この変数<span class="in">`日付`</span>から月を取り出すには，<span class="in">`lubridate`</span>パッケージを使います。</span>
+<span id="cb35-317"><a href="#cb35-317"></a>日付データは<span class="in">`2023-05-14 UTC`</span>といった形式で格納されているため，<span class="in">`lubridate::month()`</span>関数を使って月を取り出します。</span>
+<span id="cb35-318"><a href="#cb35-318"></a></span>
+<span id="cb35-319"><a href="#cb35-319"></a></span>
+<span id="cb35-320"><a href="#cb35-320"></a></span>
+<span id="cb35-323"><a href="#cb35-323"></a><span class="in">```{r}</span></span>
+<span id="cb35-324"><a href="#cb35-324"></a>df_month_sales <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb35-325"><a href="#cb35-325"></a>  <span class="fu">filter</span>(メーカー <span class="sc">==</span> <span class="st">"自社"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb35-326"><a href="#cb35-326"></a>  <span class="fu">mutate</span>(月 <span class="ot">=</span> lubridate<span class="sc">::</span><span class="fu">month</span>(日付, <span class="at">label =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb35-327"><a href="#cb35-327"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb35-328"><a href="#cb35-328"></a>      <span class="at">.by =</span> <span class="fu">c</span>(月), <span class="co"># 月ごとにグループ化</span></span>
+<span id="cb35-329"><a href="#cb35-329"></a>    売上金額合計 <span class="ot">=</span> <span class="fu">sum</span>(金額)</span>
+<span id="cb35-330"><a href="#cb35-330"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb35-331"><a href="#cb35-331"></a>  <span class="fu">arrange</span>(月)</span>
+<span id="cb35-332"><a href="#cb35-332"></a></span>
+<span id="cb35-333"><a href="#cb35-333"></a>df_month_sales <span class="sc">|&gt;</span></span>
+<span id="cb35-334"><a href="#cb35-334"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb35-335"><a href="#cb35-335"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">decimals =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb35-336"><a href="#cb35-336"></a>  <span class="fu">tab_header</span>(<span class="at">title =</span> <span class="st">"表1−5 自社商品の月ごとの売上金額"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb35-337"><a href="#cb35-337"></a>  <span class="fu">gt_theme_pff</span>() <span class="sc">|&gt;</span> <span class="co"># テーマを適用</span></span>
+<span id="cb35-338"><a href="#cb35-338"></a>  <span class="fu">tab_options</span>(</span>
+<span id="cb35-339"><a href="#cb35-339"></a>    <span class="at">heading.title.font.size =</span> <span class="st">"small"</span>,</span>
+<span id="cb35-340"><a href="#cb35-340"></a>    <span class="at">table.font.size =</span> <span class="st">"large"</span>,</span>
+<span id="cb35-341"><a href="#cb35-341"></a>    <span class="at">table.width =</span> <span class="fu">pct</span>(<span class="dv">60</span>)</span>
+<span id="cb35-342"><a href="#cb35-342"></a>    )</span>
+<span id="cb35-343"><a href="#cb35-343"></a><span class="in">```</span></span>
+<span id="cb35-344"><a href="#cb35-344"></a></span>
+<span id="cb35-345"><a href="#cb35-345"></a>同じように各時間帯ごとの売上金額を計算してみましょう。</span>
+<span id="cb35-346"><a href="#cb35-346"></a></span>
+<span id="cb35-349"><a href="#cb35-349"></a><span class="in">```{r}</span></span>
+<span id="cb35-350"><a href="#cb35-350"></a>df_time_sales <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb35-351"><a href="#cb35-351"></a>  <span class="fu">filter</span>(メーカー <span class="sc">==</span> <span class="st">"自社"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb35-352"><a href="#cb35-352"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb35-353"><a href="#cb35-353"></a>    <span class="at">.by =</span> <span class="fu">c</span>(時間),</span>
+<span id="cb35-354"><a href="#cb35-354"></a>    売上金額合計 <span class="ot">=</span> <span class="fu">sum</span>(金額)</span>
+<span id="cb35-355"><a href="#cb35-355"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb35-356"><a href="#cb35-356"></a>  <span class="fu">arrange</span>(時間)</span>
+<span id="cb35-357"><a href="#cb35-357"></a></span>
+<span id="cb35-358"><a href="#cb35-358"></a>df_time_sales <span class="sc">|&gt;</span></span>
+<span id="cb35-359"><a href="#cb35-359"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb35-360"><a href="#cb35-360"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">decimals =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb35-361"><a href="#cb35-361"></a>  <span class="fu">gt_theme_pff</span>() <span class="sc">|&gt;</span> <span class="co"># テーマを適用</span></span>
+<span id="cb35-362"><a href="#cb35-362"></a>  <span class="fu">tab_header</span>(<span class="at">title =</span> <span class="st">"表1−6 自社商品の時間帯別売上高"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb35-363"><a href="#cb35-363"></a>  <span class="fu">tab_options</span>(</span>
+<span id="cb35-364"><a href="#cb35-364"></a>        <span class="at">heading.title.font.size =</span> <span class="st">"small"</span>,</span>
+<span id="cb35-365"><a href="#cb35-365"></a>        <span class="at">table.font.size =</span> <span class="st">"large"</span>,</span>
+<span id="cb35-366"><a href="#cb35-366"></a>        <span class="at">table.width =</span> <span class="fu">pct</span>(<span class="dv">60</span>)</span>
+<span id="cb35-367"><a href="#cb35-367"></a>        )</span>
+<span id="cb35-368"><a href="#cb35-368"></a><span class="in">```</span></span>
+<span id="cb35-369"><a href="#cb35-369"></a></span>
+<span id="cb35-370"><a href="#cb35-370"></a><span class="fu">## 集計結果をグラフで可視化</span></span>
+<span id="cb35-371"><a href="#cb35-371"></a></span>
+<span id="cb35-372"><a href="#cb35-372"></a>可視化はRの得意分野です。</span>
+<span id="cb35-373"><a href="#cb35-373"></a><span class="in">`ggplot2`</span>パッケージを使って，いろんなグラフで表示してみましょう。</span>
+<span id="cb35-374"><a href="#cb35-374"></a></span>
+<span id="cb35-375"><a href="#cb35-375"></a>:::{.column-margin}</span>
+<span id="cb35-376"><a href="#cb35-376"></a><span class="in">`ggplot2`</span>パッケージで日本語を表示させるためには，一手間必要になります。</span>
+<span id="cb35-377"><a href="#cb35-377"></a>しかもMacOSとWindowsでやり方が異なるので，注意してください。</span>
+<span id="cb35-378"><a href="#cb35-378"></a>松浦の環境はMacOSであるため，ヒラギノフォントを指定してます。</span>
+<span id="cb35-379"><a href="#cb35-379"></a>ついでに，カラーパレットもユニバーサルデザインに配慮した<span class="in">`scale_fill_tableau(name = "Tableau 20")`</span>を指定してます。</span>
+<span id="cb35-380"><a href="#cb35-380"></a>:::</span>
+<span id="cb35-381"><a href="#cb35-381"></a></span>
+<span id="cb35-382"><a href="#cb35-382"></a></span>
+<span id="cb35-383"><a href="#cb35-383"></a>メーカー別の売上合計金額を棒グラフにします。</span>
+<span id="cb35-384"><a href="#cb35-384"></a></span>
+<span id="cb35-387"><a href="#cb35-387"></a><span class="in">```{r}</span></span>
+<span id="cb35-388"><a href="#cb35-388"></a>df_maker_sales <span class="sc">|&gt;</span></span>
+<span id="cb35-389"><a href="#cb35-389"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">x =</span> メーカー, <span class="at">y =</span> 売上金額合計, <span class="at">fill =</span> メーカー) <span class="sc">+</span></span>
+<span id="cb35-390"><a href="#cb35-390"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"Noto San JP"</span>) <span class="sc">+</span></span>
+<span id="cb35-391"><a href="#cb35-391"></a>  <span class="fu">scale_fill_tableau</span>(<span class="at">name =</span> <span class="st">"Tableau 20"</span>) <span class="co"># Tableau 20 パレットを適用</span></span>
+<span id="cb35-392"><a href="#cb35-392"></a><span class="in">```</span></span>
+<span id="cb35-393"><a href="#cb35-393"></a></span>
+<span id="cb35-394"><a href="#cb35-394"></a>月別売上高を折れ線グラフにします。</span>
+<span id="cb35-395"><a href="#cb35-395"></a></span>
+<span id="cb35-398"><a href="#cb35-398"></a><span class="in">```{r}</span></span>
+<span id="cb35-399"><a href="#cb35-399"></a>df_month_sales <span class="sc">|&gt;</span></span>
+<span id="cb35-400"><a href="#cb35-400"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">x =</span> 月, <span class="at">y =</span> 売上金額合計, <span class="at">group =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb35-401"><a href="#cb35-401"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb35-402"><a href="#cb35-402"></a>  <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuPro-W3"</span>)</span>
+<span id="cb35-403"><a href="#cb35-403"></a><span class="in">```</span></span>
+<span id="cb35-404"><a href="#cb35-404"></a></span>
+<span id="cb35-405"><a href="#cb35-405"></a>夏に売上高がピークを迎えていることが分かります。</span>
+<span id="cb35-406"><a href="#cb35-406"></a></span>
+<span id="cb35-407"><a href="#cb35-407"></a>時間帯別売上高を棒グラフにします。</span>
+<span id="cb35-408"><a href="#cb35-408"></a></span>
+<span id="cb35-411"><a href="#cb35-411"></a><span class="in">```{r}</span></span>
+<span id="cb35-412"><a href="#cb35-412"></a><span class="co">#| class-output: code-output</span></span>
+<span id="cb35-413"><a href="#cb35-413"></a>df_time_sales <span class="sc">|&gt;</span></span>
+<span id="cb35-414"><a href="#cb35-414"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb35-415"><a href="#cb35-415"></a>  <span class="fu">aes</span>(<span class="at">x =</span> 時間, <span class="at">y =</span> 売上金額合計, <span class="at">fill =</span> <span class="fu">factor</span>(時間, <span class="at">levels =</span> <span class="fu">rev</span>(<span class="fu">unique</span>(時間)))) <span class="sc">+</span> <span class="co"># 時間の順序を逆にする</span></span>
+<span id="cb35-416"><a href="#cb35-416"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuPro-W3"</span>) <span class="sc">+</span> <span class="co"># テーマとフォント</span></span>
+<span id="cb35-417"><a href="#cb35-417"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"時間帯"</span>)) <span class="sc">+</span></span>
+<span id="cb35-418"><a href="#cb35-418"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">direction =</span> <span class="dv">1</span>) <span class="co"># Viridis パレットを逆順に適用</span></span>
+<span id="cb35-419"><a href="#cb35-419"></a><span class="in">```</span></span>
+<span id="cb35-420"><a href="#cb35-420"></a></span>
+<span id="cb35-421"><a href="#cb35-421"></a>12時ころと17時ころに売上高が大きくなっているので，昼食・夕食の時間帯に売上が伸びていることが分かります。</span>
+<span id="cb35-422"><a href="#cb35-422"></a></span>
+<span id="cb35-423"><a href="#cb35-423"></a>さらに，月ごと，時間ごとの棒グラフを重ねて表示してみましょう。</span>
+<span id="cb35-424"><a href="#cb35-424"></a></span>
+<span id="cb35-427"><a href="#cb35-427"></a><span class="in">```{r}</span></span>
+<span id="cb35-428"><a href="#cb35-428"></a>df_month_time_sales <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb35-429"><a href="#cb35-429"></a>  <span class="fu">filter</span>(メーカー <span class="sc">==</span> <span class="st">"自社"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb35-430"><a href="#cb35-430"></a>  <span class="fu">mutate</span>(月 <span class="ot">=</span> lubridate<span class="sc">::</span><span class="fu">month</span>(日付, <span class="at">label =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb35-431"><a href="#cb35-431"></a>         時間 <span class="ot">=</span> <span class="fu">as.factor</span>(時間)) <span class="sc">|&gt;</span></span>
+<span id="cb35-432"><a href="#cb35-432"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb35-433"><a href="#cb35-433"></a>      <span class="at">.by =</span> <span class="fu">c</span>(月, 時間),</span>
+<span id="cb35-434"><a href="#cb35-434"></a>    売上金額合計 <span class="ot">=</span> <span class="fu">sum</span>(金額)</span>
+<span id="cb35-435"><a href="#cb35-435"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb35-436"><a href="#cb35-436"></a>  <span class="fu">arrange</span>(月, 時間)</span>
+<span id="cb35-437"><a href="#cb35-437"></a></span>
+<span id="cb35-438"><a href="#cb35-438"></a>df_month_time_sales <span class="sc">|&gt;</span></span>
+<span id="cb35-439"><a href="#cb35-439"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">x =</span> 月, <span class="at">y =</span> 売上金額合計, <span class="at">fill =</span> 時間) <span class="sc">+</span></span>
+<span id="cb35-440"><a href="#cb35-440"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuPro-W3"</span>) <span class="sc">+</span></span>
+<span id="cb35-441"><a href="#cb35-441"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"時間帯"</span>)) <span class="sc">+</span></span>
+<span id="cb35-442"><a href="#cb35-442"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb35-443"><a href="#cb35-443"></a><span class="in">```</span></span>
+<span id="cb35-444"><a href="#cb35-444"></a></span>
+<span id="cb35-445"><a href="#cb35-445"></a>昼食時と夕食前に売上が伸びる傾向は1月から12月まで観察されていますが，その差は夏が非常に多く，冬には昼食時と夕食前とそれ以外の売上の差が小さくなっていることが分かります。</span>
+<span id="cb35-446"><a href="#cb35-446"></a></span>
+<span id="cb35-447"><a href="#cb35-447"></a>これをアニメーションにしてみましょう。</span>
+<span id="cb35-448"><a href="#cb35-448"></a>Rには<span class="in">`ggplot2`</span>パッケージで作ったグラフをアニメーションにする<span class="in">`gganimate`</span>パッケージがあります。</span>
+<span id="cb35-449"><a href="#cb35-449"></a>ここでは，<span class="in">`transition_states()`</span>関数と<span class="in">`enter_fade()`</span>関数，<span class="in">`exit_fade()`</span>関数を使って，時間帯ごとの売上高をアニメーションで表示してみます。</span>
+<span id="cb35-450"><a href="#cb35-450"></a></span>
+<span id="cb35-451"><a href="#cb35-451"></a><span class="ss">- </span><span class="in">`transition_states()`</span>: アニメーションの状態を指定します。</span>
+<span id="cb35-452"><a href="#cb35-452"></a><span class="ss">- </span><span class="in">`enter_fade()`</span>: アニメーションの開始時のエフェクトを指定します。</span>
+<span id="cb35-453"><a href="#cb35-453"></a><span class="ss">- </span><span class="in">`exit_fade()`</span>: アニメーションの終了時のエフェクトを指定します。</span>
+<span id="cb35-454"><a href="#cb35-454"></a></span>
+<span id="cb35-455"><a href="#cb35-455"></a></span>
+<span id="cb35-456"><a href="#cb35-456"></a><span class="in">```{r month_time_sales_animation, filename ="月ごとの時間別売上高"}</span></span>
+<span id="cb35-457"><a href="#cb35-457"></a><span class="co">#| cache: true</span></span>
+<span id="cb35-458"><a href="#cb35-458"></a>df_month_time_sales <span class="sc">|&gt;</span></span>
+<span id="cb35-459"><a href="#cb35-459"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb35-460"><a href="#cb35-460"></a>  <span class="fu">aes</span>(<span class="at">x =</span> 月, <span class="at">y =</span> 売上金額合計, <span class="at">fill =</span> 時間) <span class="sc">+</span></span>
+<span id="cb35-461"><a href="#cb35-461"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb35-462"><a href="#cb35-462"></a>  <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuPro-W3"</span>) <span class="sc">+</span></span>
+<span id="cb35-463"><a href="#cb35-463"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"時間帯"</span>)) <span class="sc">+</span></span>
+<span id="cb35-464"><a href="#cb35-464"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb35-465"><a href="#cb35-465"></a>  <span class="fu">transition_states</span>(時間, <span class="at">transition_length =</span> <span class="dv">2</span>, <span class="at">state_length =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb35-466"><a href="#cb35-466"></a>  <span class="fu">labs</span>(</span>
+<span id="cb35-467"><a href="#cb35-467"></a>    <span class="at">title =</span> <span class="st">"月ごとの時間帯別売上高: 時間帯 {closest_state} 時"</span>,</span>
+<span id="cb35-468"><a href="#cb35-468"></a>    <span class="at">x =</span> <span class="st">"月"</span>,</span>
+<span id="cb35-469"><a href="#cb35-469"></a>    <span class="at">y =</span> <span class="st">"売上金額合計"</span></span>
+<span id="cb35-470"><a href="#cb35-470"></a>  ) <span class="sc">+</span></span>
+<span id="cb35-471"><a href="#cb35-471"></a>  <span class="fu">enter_fade</span>() <span class="sc">+</span></span>
+<span id="cb35-472"><a href="#cb35-472"></a>  <span class="fu">exit_fade</span>()</span>
+<span id="cb35-473"><a href="#cb35-473"></a><span class="in">```</span></span>
+<span id="cb35-474"><a href="#cb35-474"></a></span>
+<span id="cb35-475"><a href="#cb35-475"></a>同じように，月と時間を入れ替えてみましょう。</span>
+<span id="cb35-476"><a href="#cb35-476"></a></span>
+<span id="cb35-477"><a href="#cb35-477"></a><span class="in">```{r anime_month_time, filename = "時間ごとの月別売上高"}</span></span>
+<span id="cb35-478"><a href="#cb35-478"></a><span class="co">#| cache: true</span></span>
+<span id="cb35-479"><a href="#cb35-479"></a>df_month_time_sales <span class="sc">|&gt;</span></span>
+<span id="cb35-480"><a href="#cb35-480"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb35-481"><a href="#cb35-481"></a>  <span class="fu">aes</span>(<span class="at">x =</span> 時間, <span class="at">y =</span> 売上金額合計, <span class="at">fill =</span> 月) <span class="sc">+</span></span>
+<span id="cb35-482"><a href="#cb35-482"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb35-483"><a href="#cb35-483"></a>  <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuPro-W3"</span>) <span class="sc">+</span></span>
+<span id="cb35-484"><a href="#cb35-484"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"月"</span>)) <span class="sc">+</span></span>
+<span id="cb35-485"><a href="#cb35-485"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb35-486"><a href="#cb35-486"></a>  <span class="fu">transition_states</span>(月, <span class="at">transition_length =</span> <span class="dv">2</span>, <span class="at">state_length =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb35-487"><a href="#cb35-487"></a>  <span class="fu">labs</span>(</span>
+<span id="cb35-488"><a href="#cb35-488"></a>    <span class="at">title =</span> <span class="st">"時間ごとの月別売上高:  {closest_state} 月"</span>,</span>
+<span id="cb35-489"><a href="#cb35-489"></a>    <span class="at">x =</span> <span class="st">"時間"</span>,</span>
+<span id="cb35-490"><a href="#cb35-490"></a>    <span class="at">y =</span> <span class="st">"売上金額合計"</span></span>
+<span id="cb35-491"><a href="#cb35-491"></a>  ) <span class="sc">+</span></span>
+<span id="cb35-492"><a href="#cb35-492"></a>  <span class="fu">enter_fade</span>() <span class="sc">+</span></span>
+<span id="cb35-493"><a href="#cb35-493"></a>  <span class="fu">exit_fade</span>()</span>
+<span id="cb35-494"><a href="#cb35-494"></a><span class="in">```</span></span>
+<span id="cb35-495"><a href="#cb35-495"></a></span>
+<span id="cb35-496"><a href="#cb35-496"></a></span>
+<span id="cb35-497"><a href="#cb35-497"></a>テキストの気温と販売個数の散布図は，気温データがないため作れません。</span>
+<span id="cb35-498"><a href="#cb35-498"></a></span>
+<span id="cb35-499"><a href="#cb35-499"></a><span class="fu">## 提出用の資料を作成する。</span></span>
+<span id="cb35-500"><a href="#cb35-500"></a></span>
+<span id="cb35-501"><a href="#cb35-501"></a>テキストではMS Excelで作成した表を、MS Powerpointに貼り付けてスライド資料を作成するようになっていますが、</span>
+<span id="cb35-502"><a href="#cb35-502"></a>RとQuartoを使えば、データ分析と資料作成を同じ場所で行うことができます。</span>
+</code></pre></div><button title="コピー" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
-<p>Copyright 2024, Soichi Matsuura</p>
+<p>Copyright 2026, Soichi Matsuura</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;
@@ -2563,7 +3055,7 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
 <li class="nav-item compact">
-    <a class="nav-link active" href="https://github.com/ma2ura/pos_marketing/" aria-current="page">
+    <a class="nav-link" href="https://github.com/ma2ura">
       <i class="bi bi-github" role="img">
 </i> 
     </a>
@@ -2577,7 +3069,38 @@ $ 金額         &lt;dbl&gt; 320, 340, 320, 680, 140, 420, 160, 300, 450, 640, 1
 </ul>
 </div>
   </div>
-</footer>
+</footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 </body></html>

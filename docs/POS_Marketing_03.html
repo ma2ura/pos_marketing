@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.8.26">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Soichi Matsuura">
 <title>3&nbsp; 第3回 売上の時系列データ分析 – POSとマーケティングデータ分析</title>
 <style>
 code{white-space: pre-wrap;}
@@ -71,10 +72,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b758ccaa5987ceb1b75504551e579abf.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-fbc546a6f7231915c10c420282a7d289.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-0907bcc31431a373ae96853dfe16c1d2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-9b98439fbe4ae1eb56616ecad9777bd3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-0907bcc31431a373ae96853dfe16c1d2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -100,7 +108,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "検索",
     "search-label": "サーチ"
   }
-}</script><link rel="stylesheet" href="mystyle.css">
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-SFB56VHK63"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-SFB56VHK63', { 'anonymize_ip': true});
+</script><link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script><style>
+.marky {
+  background: linear-gradient(transparent 60%, #FCFFC1 0%);
+}
+.markb {
+  background: linear-gradient(transparent 60%, #88E2EA 0%);
+}
+.markp{
+  background: linear-gradient(transparent 70%, #ffcdd2 0%)
+}
+</style>
 <meta name="twitter:title" content="3&nbsp; 第3回 売上の時系列データ分析 – POSとマーケティングデータ分析">
 <meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://so-ichi.com/POS_Marketing_03_files/figure-html/unnamed-chunk-4-1.png">
@@ -108,7 +133,169 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="twitter:image-width" content="8400">
 <meta name="twitter:card" content="summary_large_image">
 </head>
-<body class="nav-sidebar floating quarto-light">
+<body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
@@ -124,11 +311,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">POSとマーケティングデータ分析</a> 
-        <div class="sidebar-tools-main">
+        <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/ma2ura/pos_marketing/" title="ソースコード" class="quarto-navigation-tool px-1" aria-label="ソースコード"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="ダークモードの切り替え"><i class="bi"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="リーダーモードの切り替え">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -194,23 +382,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
     </ul>
 </div>
-</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">目次</h2>
+    <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99"><h2 id="toc-title">ここの目次</h2>
    
-  <ul>
+  <ul class="collapse">
 <li><a href="#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB" id="toc-はじめに" class="nav-link active" data-scroll-target="#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB"><span class="header-section-number">3.1</span> はじめに</a></li>
   <li><a href="#%E5%95%86%E5%93%81%E3%81%A8%E6%9C%88%E3%81%94%E3%81%A8%E3%81%AE%E5%A3%B2%E4%B8%8A%E5%80%8B%E6%95%B0" id="toc-商品と月ごとの売上個数" class="nav-link" data-scroll-target="#%E5%95%86%E5%93%81%E3%81%A8%E6%9C%88%E3%81%94%E3%81%A8%E3%81%AE%E5%A3%B2%E4%B8%8A%E5%80%8B%E6%95%B0"><span class="header-section-number">3.2</span> 商品と月ごとの売上個数</a></li>
   <li><a href="#%E6%97%A5%E5%88%A5%E3%81%AE%E5%A3%B2%E4%B8%8A%E5%80%8B%E6%95%B0" id="toc-日別の売上個数" class="nav-link" data-scroll-target="#%E6%97%A5%E5%88%A5%E3%81%AE%E5%A3%B2%E4%B8%8A%E5%80%8B%E6%95%B0"><span class="header-section-number">3.3</span> 日別の売上個数</a></li>
   <li><a href="#%E7%A7%BB%E5%8B%95%E5%B9%B3%E5%9D%87" id="toc-移動平均" class="nav-link" data-scroll-target="#%E7%A7%BB%E5%8B%95%E5%B9%B3%E5%9D%87"><span class="header-section-number">3.4</span> 移動平均</a></li>
   </ul></nav>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">
+<div class="quarto-title-block"><div><h1 class="title">
 <span class="chapter-number">3</span>&nbsp; <span class="chapter-title">第3回 売上の時系列データ分析</span>
-</h1>
+</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> コード</button></div></div>
 </div>
 
 
@@ -233,20 +421,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>パッケージを読み込みます。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>, <span class="va">readxl</span>, <span class="va">ggthemes</span>, <span class="va">gt</span>, <span class="va">gtExtras</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse, readxl, ggthemes, gt, gtExtras)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>「いつものPOSデータ」を読み込みます。 ついでに文字列をカテゴリー変数として因子型に変換しておきます。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/chp3.xlsx"</span><span class="op">)</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">mutate</span><span class="op">(</span></span>
-<span>        曜日 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">曜日</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"月"</span>, <span class="st">"火"</span>, <span class="st">"水"</span>, <span class="st">"木"</span>, <span class="st">"金"</span>, <span class="st">"土"</span>, <span class="st">"日"</span><span class="op">)</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>        性別 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">性別</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"男性"</span>, <span class="st">"女性"</span><span class="op">)</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>        年代 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">年代</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"20歳未満"</span>, <span class="st">"20代"</span>, <span class="st">"30代"</span>, <span class="st">"40代"</span>, <span class="st">"50代"</span>, <span class="st">"60歳以上"</span><span class="op">)</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>        メーカー <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">メーカー</span><span class="op">)</span>,</span>
-<span>        商品名 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">商品名</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="co"># 先頭6行を表示</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>df <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/chp3.xlsx"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb2-4"><a href="#cb2-4"></a>        曜日 <span class="ot">=</span> <span class="fu">factor</span>(曜日, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"月"</span>, <span class="st">"火"</span>, <span class="st">"水"</span>, <span class="st">"木"</span>, <span class="st">"金"</span>, <span class="st">"土"</span>, <span class="st">"日"</span>), <span class="at">ordered =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb2-5"><a href="#cb2-5"></a>        性別 <span class="ot">=</span> <span class="fu">factor</span>(性別, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"男性"</span>, <span class="st">"女性"</span>), <span class="at">ordered =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb2-6"><a href="#cb2-6"></a>        年代 <span class="ot">=</span> <span class="fu">factor</span>(年代, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"20歳未満"</span>, <span class="st">"20代"</span>, <span class="st">"30代"</span>, <span class="st">"40代"</span>, <span class="st">"50代"</span>, <span class="st">"60歳以上"</span>), <span class="at">ordered =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb2-7"><a href="#cb2-7"></a>        メーカー <span class="ot">=</span> <span class="fu">as.factor</span>(メーカー),</span>
+<span id="cb2-8"><a href="#cb2-8"></a>        商品名 <span class="ot">=</span> <span class="fu">as.factor</span>(商品名)</span>
+<span id="cb2-9"><a href="#cb2-9"></a>    )</span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="fu">head</span>(df) <span class="co"># 先頭6行を表示</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="kable-table">
 <table class="caption-top table table-sm table-striped small">
@@ -363,45 +551,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section><section id="商品と月ごとの売上個数" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="商品と月ごとの売上個数">
 <span class="header-section-number">3.2</span> 商品と月ごとの売上個数</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">mutate</span><span class="op">(</span></span>
-<span>        分類 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">メーカー</span>, <span class="va">商品名</span><span class="op">)</span>,</span>
-<span>        月 <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">日付</span><span class="op">)</span>,</span>
-<span>        月 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">月</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">月</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>        月日 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu">month</span><span class="op">(</span><span class="va">日付</span><span class="op">)</span>, <span class="st">"月"</span>, <span class="fu">day</span><span class="op">(</span><span class="va">日付</span><span class="op">)</span>, <span class="st">"日"</span><span class="op">)</span>,</span>
-<span>    <span class="op">)</span></span>
-<span></span>
-<span><span class="va">df_month_item</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">summarise</span><span class="op">(</span></span>
-<span>        .by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">分類</span>, <span class="va">月</span><span class="op">)</span>,</span>
-<span>        売上個数 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">個数</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
-<span></span>
-<span><span class="va">df_month_item</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">pivot_wider</span><span class="op">(</span></span>
-<span>        names_from <span class="op">=</span> <span class="va">分類</span>,</span>
-<span>        values_from <span class="op">=</span> <span class="va">売上個数</span></span>
-<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">gt</span><span class="op">(</span><span class="op">)</span><span class="op">|&gt;</span></span>
-<span>    <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">8</span>, decimals <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb3-3"><a href="#cb3-3"></a>        分類 <span class="ot">=</span> <span class="fu">paste0</span>(メーカー, 商品名),</span>
+<span id="cb3-4"><a href="#cb3-4"></a>        月 <span class="ot">=</span> lubridate<span class="sc">::</span><span class="fu">month</span>(日付),</span>
+<span id="cb3-5"><a href="#cb3-5"></a>        月 <span class="ot">=</span> <span class="fu">factor</span>(月, <span class="at">levels =</span> <span class="fu">unique</span>(月)),</span>
+<span id="cb3-6"><a href="#cb3-6"></a>        月日 <span class="ot">=</span> <span class="fu">paste0</span>(<span class="fu">month</span>(日付), <span class="st">"月"</span>, <span class="fu">day</span>(日付), <span class="st">"日"</span>),</span>
+<span id="cb3-7"><a href="#cb3-7"></a>    )</span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a>df_month_item <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb3-11"><a href="#cb3-11"></a>        <span class="at">.by =</span> <span class="fu">c</span>(分類, 月),</span>
+<span id="cb3-12"><a href="#cb3-12"></a>        売上個数 <span class="ot">=</span> <span class="fu">sum</span>(個数)</span>
+<span id="cb3-13"><a href="#cb3-13"></a>    )</span>
+<span id="cb3-14"><a href="#cb3-14"></a></span>
+<span id="cb3-15"><a href="#cb3-15"></a>df_month_item <span class="sc">|&gt;</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a>    <span class="fu">pivot_wider</span>(</span>
+<span id="cb3-17"><a href="#cb3-17"></a>        <span class="at">names_from =</span> 分類,</span>
+<span id="cb3-18"><a href="#cb3-18"></a>        <span class="at">values_from =</span> 売上個数</span>
+<span id="cb3-19"><a href="#cb3-19"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a>    <span class="fu">gt</span>()<span class="sc">|&gt;</span></span>
+<span id="cb3-21"><a href="#cb3-21"></a>    <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">decimals =</span> <span class="dv">0</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="qcumykrdqk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qcumykrdqk table {
+<div id="vgjywjujqc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#vgjywjujqc table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#qcumykrdqk thead, #qcumykrdqk tbody, #qcumykrdqk tfoot, #qcumykrdqk tr, #qcumykrdqk td, #qcumykrdqk th {
+#vgjywjujqc thead, #vgjywjujqc tbody, #vgjywjujqc tfoot, #vgjywjujqc tr, #vgjywjujqc td, #vgjywjujqc th {
   border-style: none;
 }
 
-#qcumykrdqk p {
+#vgjywjujqc p {
   margin: 0;
   padding: 0;
 }
 
-#qcumykrdqk .gt_table {
+#vgjywjujqc .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -427,12 +615,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-left-color: #D3D3D3;
 }
 
-#qcumykrdqk .gt_caption {
+#vgjywjujqc .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#qcumykrdqk .gt_title {
+#vgjywjujqc .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -444,7 +632,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-width: 0;
 }
 
-#qcumykrdqk .gt_subtitle {
+#vgjywjujqc .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -456,7 +644,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-width: 0;
 }
 
-#qcumykrdqk .gt_heading {
+#vgjywjujqc .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -468,13 +656,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#qcumykrdqk .gt_bottom_border {
+#vgjywjujqc .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qcumykrdqk .gt_col_headings {
+#vgjywjujqc .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -489,7 +677,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#qcumykrdqk .gt_col_heading {
+#vgjywjujqc .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -509,7 +697,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#qcumykrdqk .gt_column_spanner_outer {
+#vgjywjujqc .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -521,15 +709,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 4px;
 }
 
-#qcumykrdqk .gt_column_spanner_outer:first-child {
+#vgjywjujqc .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qcumykrdqk .gt_column_spanner_outer:last-child {
+#vgjywjujqc .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qcumykrdqk .gt_column_spanner {
+#vgjywjujqc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -541,11 +729,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
 }
 
-#qcumykrdqk .gt_spanner_row {
+#vgjywjujqc .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#qcumykrdqk .gt_group_heading {
+#vgjywjujqc .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -571,7 +759,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   text-align: left;
 }
 
-#qcumykrdqk .gt_empty_group_heading {
+#vgjywjujqc .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -586,15 +774,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: middle;
 }
 
-#qcumykrdqk .gt_from_md > :first-child {
+#vgjywjujqc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qcumykrdqk .gt_from_md > :last-child {
+#vgjywjujqc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qcumykrdqk .gt_row {
+#vgjywjujqc .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -613,7 +801,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#qcumykrdqk .gt_stub {
+#vgjywjujqc .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -626,7 +814,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#qcumykrdqk .gt_stub_row_group {
+#vgjywjujqc .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -640,15 +828,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: top;
 }
 
-#qcumykrdqk .gt_row_group_first td {
+#vgjywjujqc .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qcumykrdqk .gt_row_group_first th {
+#vgjywjujqc .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#qcumykrdqk .gt_summary_row {
+#vgjywjujqc .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -658,16 +846,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#qcumykrdqk .gt_first_summary_row {
+#vgjywjujqc .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qcumykrdqk .gt_first_summary_row.thick {
+#vgjywjujqc .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qcumykrdqk .gt_last_summary_row {
+#vgjywjujqc .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -677,7 +865,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#qcumykrdqk .gt_grand_summary_row {
+#vgjywjujqc .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -687,7 +875,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#qcumykrdqk .gt_first_grand_summary_row {
+#vgjywjujqc .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -697,7 +885,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-color: #D3D3D3;
 }
 
-#qcumykrdqk .gt_last_grand_summary_row_top {
+#vgjywjujqc .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -707,11 +895,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#qcumykrdqk .gt_striped {
+#vgjywjujqc .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qcumykrdqk .gt_table_body {
+#vgjywjujqc .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -720,7 +908,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#qcumykrdqk .gt_footnotes {
+#vgjywjujqc .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -734,7 +922,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#qcumykrdqk .gt_footnote {
+#vgjywjujqc .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -743,7 +931,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#qcumykrdqk .gt_sourcenotes {
+#vgjywjujqc .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -757,7 +945,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#qcumykrdqk .gt_sourcenote {
+#vgjywjujqc .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -765,72 +953,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#qcumykrdqk .gt_left {
+#vgjywjujqc .gt_left {
   text-align: left;
 }
 
-#qcumykrdqk .gt_center {
+#vgjywjujqc .gt_center {
   text-align: center;
 }
 
-#qcumykrdqk .gt_right {
+#vgjywjujqc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qcumykrdqk .gt_font_normal {
+#vgjywjujqc .gt_font_normal {
   font-weight: normal;
 }
 
-#qcumykrdqk .gt_font_bold {
+#vgjywjujqc .gt_font_bold {
   font-weight: bold;
 }
 
-#qcumykrdqk .gt_font_italic {
+#vgjywjujqc .gt_font_italic {
   font-style: italic;
 }
 
-#qcumykrdqk .gt_super {
+#vgjywjujqc .gt_super {
   font-size: 65%;
 }
 
-#qcumykrdqk .gt_footnote_marks {
+#vgjywjujqc .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#qcumykrdqk .gt_asterisk {
+#vgjywjujqc .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qcumykrdqk .gt_indent_1 {
+#vgjywjujqc .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qcumykrdqk .gt_indent_2 {
+#vgjywjujqc .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qcumykrdqk .gt_indent_3 {
+#vgjywjujqc .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qcumykrdqk .gt_indent_4 {
+#vgjywjujqc .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qcumykrdqk .gt_indent_5 {
+#vgjywjujqc .gt_indent_5 {
   text-indent: 25px;
 }
 
-#qcumykrdqk .katex-display {
+#vgjywjujqc .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#qcumykrdqk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#vgjywjujqc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -972,44 +1160,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_month_item</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">ggplot</span><span class="op">(</span></span>
-<span>        <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月</span>, y <span class="op">=</span> <span class="va">売上個数</span>, group <span class="op">=</span> <span class="va">分類</span>, color <span class="op">=</span> <span class="va">分類</span><span class="op">)</span></span>
-<span>    <span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">labs</span><span class="op">(</span></span>
-<span>        title <span class="op">=</span> <span class="st">"商品と月ごとの売上個数"</span>,</span>
-<span>        x <span class="op">=</span> <span class="st">"月"</span>,</span>
-<span>        y <span class="op">=</span> <span class="st">"売上個数"</span></span>
-<span>    <span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>df_month_item <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>    <span class="fu">ggplot</span>(</span>
+<span id="cb4-3"><a href="#cb4-3"></a>        <span class="fu">aes</span>(<span class="at">x =</span> 月, <span class="at">y =</span> 売上個数, <span class="at">group =</span> 分類, <span class="at">color =</span> 分類)</span>
+<span id="cb4-4"><a href="#cb4-4"></a>    ) <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>) <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a>    <span class="fu">labs</span>(</span>
+<span id="cb4-9"><a href="#cb4-9"></a>        <span class="at">title =</span> <span class="st">"商品と月ごとの売上個数"</span>,</span>
+<span id="cb4-10"><a href="#cb4-10"></a>        <span class="at">x =</span> <span class="st">"月"</span>,</span>
+<span id="cb4-11"><a href="#cb4-11"></a>        <span class="at">y =</span> <span class="st">"売上個数"</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a>    ) <span class="sc">+</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a>    <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuPro-W3"</span>) <span class="sc">+</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a>    <span class="fu">scale_fill_tableau</span>(<span class="at">name =</span> <span class="st">"Tableau 20"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="4200"></p>
+<figure class="figure"><p><a href="POS_Marketing_03_files/figure-html/unnamed-chunk-4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="4200"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <p>個人的に気に入っているグラフの描き方です。 ここでは12月のデータを抽出して、<code>geom_text()</code>でラベルを付けてることで、グラフ上に商品名を表示しています。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_name</span> <span class="op">&lt;-</span> <span class="va">df_month_item</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">月</span> <span class="op">==</span> <span class="fl">12</span><span class="op">)</span> <span class="co"># 12月のデータを抽出</span></span>
-<span></span>
-<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">df_month_item</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月</span>, y <span class="op">=</span> <span class="va">売上個数</span>, group <span class="op">=</span> <span class="va">分類</span>, color <span class="op">=</span> <span class="va">分類</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># 線と点を描く</span></span>
-<span>    <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"商品と月ごとの売上個数"</span>, x <span class="op">=</span> <span class="st">"月"</span>, y <span class="op">=</span> <span class="st">"売上個数"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">scale_x_discrete</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">12</span>, expand <span class="op">=</span> <span class="fu">expansion</span><span class="op">(</span>mult <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">.20</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co"># x軸の範囲を拡大</span></span>
-<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">+</span> <span class="fu">geom_text</span><span class="op">(</span>data <span class="op">=</span> <span class="va">df_name</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月</span>, y <span class="op">=</span> <span class="va">売上個数</span>, label <span class="op">=</span> <span class="va">分類</span><span class="op">)</span>, adj <span class="op">=</span> <span class="fl">0</span>, size <span class="op">=</span> <span class="fl">4</span>, nudge_x <span class="op">=</span> <span class="fl">0.2</span>,family <span class="op">=</span> <span class="st">"HiraKakuProN-W3"</span><span class="op">)</span></span>
-<span><span class="va">g</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>df_name <span class="ot">&lt;-</span> df_month_item <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>    <span class="fu">filter</span>(月 <span class="sc">==</span> <span class="dv">12</span>) <span class="co"># 12月のデータを抽出</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4"></a>g <span class="ot">&lt;-</span> df_month_item <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> 月, <span class="at">y =</span> 売上個数, <span class="at">group =</span> 分類, <span class="at">color =</span> 分類)) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="co"># 線と点を描く</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"商品と月ごとの売上個数"</span>, <span class="at">x =</span> <span class="st">"月"</span>, <span class="at">y =</span> <span class="st">"売上個数"</span>) <span class="sc">+</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>    <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuPro-W3"</span>) <span class="sc">+</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a>    <span class="fu">scale_fill_tableau</span>(<span class="at">name =</span> <span class="st">"Tableau 20"</span>) <span class="sc">+</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a>    <span class="fu">scale_x_discrete</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">20</span>))) <span class="co"># x軸の範囲を拡大</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a>g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">geom_text</span>(<span class="at">data =</span> df_name, <span class="fu">aes</span>(<span class="at">x =</span> 月, <span class="at">y =</span> 売上個数, <span class="at">label =</span> 分類), <span class="at">adj =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">nudge_x =</span> <span class="fl">0.2</span>,<span class="at">family =</span> <span class="st">"HiraKakuProN-W3"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12"></a>g</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="7200"></p>
+<figure class="figure"><p><a href="POS_Marketing_03_files/figure-html/unnamed-chunk-5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="7200"></a></p>
 </figure>
 </div>
 </div>
@@ -1017,38 +1205,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section><section id="日別の売上個数" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="日別の売上個数">
 <span class="header-section-number">3.3</span> 日別の売上個数</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_md_item</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">summarise</span><span class="op">(</span></span>
-<span>        .by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">分類</span>, <span class="va">月日</span><span class="op">)</span>,</span>
-<span>        売上個数 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">個数</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
-<span></span>
-<span><span class="va">df_md_item</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">pivot_wider</span><span class="op">(</span></span>
-<span>        names_from <span class="op">=</span> <span class="va">分類</span>,</span>
-<span>        values_from <span class="op">=</span> <span class="va">売上個数</span></span>
-<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">gt</span><span class="op">(</span><span class="op">)</span><span class="op">|&gt;</span></span>
-<span>    <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">8</span>, decimals <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>df_md_item <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb6-3"><a href="#cb6-3"></a>        <span class="at">.by =</span> <span class="fu">c</span>(分類, 月日),</span>
+<span id="cb6-4"><a href="#cb6-4"></a>        売上個数 <span class="ot">=</span> <span class="fu">sum</span>(個数)</span>
+<span id="cb6-5"><a href="#cb6-5"></a>    )</span>
+<span id="cb6-6"><a href="#cb6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7"></a>df_md_item <span class="sc">|&gt;</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>    <span class="fu">pivot_wider</span>(</span>
+<span id="cb6-9"><a href="#cb6-9"></a>        <span class="at">names_from =</span> 分類,</span>
+<span id="cb6-10"><a href="#cb6-10"></a>        <span class="at">values_from =</span> 売上個数</span>
+<span id="cb6-11"><a href="#cb6-11"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a>    <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a>    <span class="fu">gt</span>()<span class="sc">|&gt;</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a>    <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">decimals =</span> <span class="dv">0</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="dohziebpkj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#dohziebpkj table {
+<div id="kovaibiduv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kovaibiduv table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#dohziebpkj thead, #dohziebpkj tbody, #dohziebpkj tfoot, #dohziebpkj tr, #dohziebpkj td, #dohziebpkj th {
+#kovaibiduv thead, #kovaibiduv tbody, #kovaibiduv tfoot, #kovaibiduv tr, #kovaibiduv td, #kovaibiduv th {
   border-style: none;
 }
 
-#dohziebpkj p {
+#kovaibiduv p {
   margin: 0;
   padding: 0;
 }
 
-#dohziebpkj .gt_table {
+#kovaibiduv .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1074,12 +1262,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-left-color: #D3D3D3;
 }
 
-#dohziebpkj .gt_caption {
+#kovaibiduv .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#dohziebpkj .gt_title {
+#kovaibiduv .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1091,7 +1279,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-width: 0;
 }
 
-#dohziebpkj .gt_subtitle {
+#kovaibiduv .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1103,7 +1291,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-width: 0;
 }
 
-#dohziebpkj .gt_heading {
+#kovaibiduv .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1115,13 +1303,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#dohziebpkj .gt_bottom_border {
+#kovaibiduv .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#dohziebpkj .gt_col_headings {
+#kovaibiduv .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1136,7 +1324,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#dohziebpkj .gt_col_heading {
+#kovaibiduv .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1156,7 +1344,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#dohziebpkj .gt_column_spanner_outer {
+#kovaibiduv .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1168,15 +1356,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 4px;
 }
 
-#dohziebpkj .gt_column_spanner_outer:first-child {
+#kovaibiduv .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#dohziebpkj .gt_column_spanner_outer:last-child {
+#kovaibiduv .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#dohziebpkj .gt_column_spanner {
+#kovaibiduv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1188,11 +1376,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
 }
 
-#dohziebpkj .gt_spanner_row {
+#kovaibiduv .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#dohziebpkj .gt_group_heading {
+#kovaibiduv .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1218,7 +1406,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   text-align: left;
 }
 
-#dohziebpkj .gt_empty_group_heading {
+#kovaibiduv .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1233,15 +1421,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: middle;
 }
 
-#dohziebpkj .gt_from_md > :first-child {
+#kovaibiduv .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#dohziebpkj .gt_from_md > :last-child {
+#kovaibiduv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#dohziebpkj .gt_row {
+#kovaibiduv .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1260,7 +1448,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#dohziebpkj .gt_stub {
+#kovaibiduv .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1273,7 +1461,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#dohziebpkj .gt_stub_row_group {
+#kovaibiduv .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1287,15 +1475,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: top;
 }
 
-#dohziebpkj .gt_row_group_first td {
+#kovaibiduv .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#dohziebpkj .gt_row_group_first th {
+#kovaibiduv .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#dohziebpkj .gt_summary_row {
+#kovaibiduv .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1305,16 +1493,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#dohziebpkj .gt_first_summary_row {
+#kovaibiduv .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#dohziebpkj .gt_first_summary_row.thick {
+#kovaibiduv .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#dohziebpkj .gt_last_summary_row {
+#kovaibiduv .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1324,7 +1512,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#dohziebpkj .gt_grand_summary_row {
+#kovaibiduv .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1334,7 +1522,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#dohziebpkj .gt_first_grand_summary_row {
+#kovaibiduv .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1344,7 +1532,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-color: #D3D3D3;
 }
 
-#dohziebpkj .gt_last_grand_summary_row_top {
+#kovaibiduv .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1354,11 +1542,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#dohziebpkj .gt_striped {
+#kovaibiduv .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#dohziebpkj .gt_table_body {
+#kovaibiduv .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1367,7 +1555,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#dohziebpkj .gt_footnotes {
+#kovaibiduv .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1381,7 +1569,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#dohziebpkj .gt_footnote {
+#kovaibiduv .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1390,7 +1578,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#dohziebpkj .gt_sourcenotes {
+#kovaibiduv .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1404,7 +1592,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#dohziebpkj .gt_sourcenote {
+#kovaibiduv .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1412,72 +1600,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#dohziebpkj .gt_left {
+#kovaibiduv .gt_left {
   text-align: left;
 }
 
-#dohziebpkj .gt_center {
+#kovaibiduv .gt_center {
   text-align: center;
 }
 
-#dohziebpkj .gt_right {
+#kovaibiduv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#dohziebpkj .gt_font_normal {
+#kovaibiduv .gt_font_normal {
   font-weight: normal;
 }
 
-#dohziebpkj .gt_font_bold {
+#kovaibiduv .gt_font_bold {
   font-weight: bold;
 }
 
-#dohziebpkj .gt_font_italic {
+#kovaibiduv .gt_font_italic {
   font-style: italic;
 }
 
-#dohziebpkj .gt_super {
+#kovaibiduv .gt_super {
   font-size: 65%;
 }
 
-#dohziebpkj .gt_footnote_marks {
+#kovaibiduv .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#dohziebpkj .gt_asterisk {
+#kovaibiduv .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#dohziebpkj .gt_indent_1 {
+#kovaibiduv .gt_indent_1 {
   text-indent: 5px;
 }
 
-#dohziebpkj .gt_indent_2 {
+#kovaibiduv .gt_indent_2 {
   text-indent: 10px;
 }
 
-#dohziebpkj .gt_indent_3 {
+#kovaibiduv .gt_indent_3 {
   text-indent: 15px;
 }
 
-#dohziebpkj .gt_indent_4 {
+#kovaibiduv .gt_indent_4 {
   text-indent: 20px;
 }
 
-#dohziebpkj .gt_indent_5 {
+#kovaibiduv .gt_indent_5 {
   text-indent: 25px;
 }
 
-#dohziebpkj .katex-display {
+#kovaibiduv .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#dohziebpkj div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#kovaibiduv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1599,77 +1787,77 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_md_item</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月日</span>, y <span class="op">=</span> <span class="va">売上個数</span>, group <span class="op">=</span> <span class="va">分類</span>, color <span class="op">=</span> <span class="va">分類</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">geom_line</span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"商品と日別の売上個数"</span>,</span>
-<span>         x <span class="op">=</span> <span class="st">"日"</span>, y <span class="op">=</span> <span class="st">"売上個数"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="co"># ラベルを縦にする。</span></span>
-<span>    <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>df_md_item <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>    <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>    <span class="fu">aes</span>(<span class="at">x =</span> 月日, <span class="at">y =</span> 売上個数, <span class="at">group =</span> 分類, <span class="at">color =</span> 分類) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>    <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"商品と日別の売上個数"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7"></a>         <span class="at">x =</span> <span class="st">"日"</span>, <span class="at">y =</span> <span class="st">"売上個数"</span>) <span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>    <span class="co"># ラベルを縦にする。</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a>    <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuPro-W3"</span>) <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a>    <span class="fu">scale_fill_tableau</span>(<span class="at">name =</span> <span class="st">"Tableau 20"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="7200"></p>
+<figure class="figure"><p><a href="POS_Marketing_03_files/figure-html/unnamed-chunk-7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="7200"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">月</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span></span>
-<span>        <span class="va">分類</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"競合Aおいしい濃茶"</span>, <span class="st">"競合Aおいしい緑茶"</span>, <span class="st">"自社濃い茶"</span>, <span class="st">"自社緑茶"</span><span class="op">)</span></span>
-<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">summarise</span><span class="op">(</span></span>
-<span>        .by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">分類</span>, <span class="va">月日</span><span class="op">)</span>,</span>
-<span>        売上個数 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">個数</span><span class="op">)</span></span>
-<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月日</span>, y <span class="op">=</span> <span class="va">売上個数</span>, group <span class="op">=</span> <span class="va">分類</span>, color <span class="op">=</span> <span class="va">分類</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">geom_line</span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">labs</span><span class="op">(</span></span>
-<span>        title <span class="op">=</span> <span class="st">"商品と日別の売上個数"</span>,</span>
-<span>        x <span class="op">=</span> <span class="st">"日"</span>,</span>
-<span>        y <span class="op">=</span> <span class="st">"売上個数"</span></span>
-<span>    <span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="co"># ラベルを縦にする。</span></span>
-<span>    <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>    <span class="fu">filter</span>(月 <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a>    <span class="fu">filter</span>(</span>
+<span id="cb8-4"><a href="#cb8-4"></a>        分類 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"競合Aおいしい濃茶"</span>, <span class="st">"競合Aおいしい緑茶"</span>, <span class="st">"自社濃い茶"</span>, <span class="st">"自社緑茶"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb8-7"><a href="#cb8-7"></a>        <span class="at">.by =</span> <span class="fu">c</span>(分類, 月日),</span>
+<span id="cb8-8"><a href="#cb8-8"></a>        売上個数 <span class="ot">=</span> <span class="fu">sum</span>(個数)</span>
+<span id="cb8-9"><a href="#cb8-9"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a>    <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a>    <span class="fu">aes</span>(<span class="at">x =</span> 月日, <span class="at">y =</span> 売上個数, <span class="at">group =</span> 分類, <span class="at">color =</span> 分類) <span class="sc">+</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a>    <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb8-14"><a href="#cb8-14"></a>    <span class="fu">labs</span>(</span>
+<span id="cb8-15"><a href="#cb8-15"></a>        <span class="at">title =</span> <span class="st">"商品と日別の売上個数"</span>,</span>
+<span id="cb8-16"><a href="#cb8-16"></a>        <span class="at">x =</span> <span class="st">"日"</span>,</span>
+<span id="cb8-17"><a href="#cb8-17"></a>        <span class="at">y =</span> <span class="st">"売上個数"</span></span>
+<span id="cb8-18"><a href="#cb8-18"></a>    ) <span class="sc">+</span></span>
+<span id="cb8-19"><a href="#cb8-19"></a>    <span class="co"># ラベルを縦にする。</span></span>
+<span id="cb8-20"><a href="#cb8-20"></a>    <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuPro-W3"</span>) <span class="sc">+</span></span>
+<span id="cb8-21"><a href="#cb8-21"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb8-22"><a href="#cb8-22"></a>    <span class="fu">scale_fill_tableau</span>(<span class="at">name =</span> <span class="st">"Tableau 20"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="4200"></p>
+<figure class="figure"><p><a href="POS_Marketing_03_files/figure-html/unnamed-chunk-8-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="4200"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span></span>
-<span>        <span class="va">分類</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"競合Aおいしい濃茶"</span>, <span class="st">"競合Aおいしい緑茶"</span>, <span class="st">"自社濃い茶"</span>, <span class="st">"自社緑茶"</span><span class="op">)</span></span>
-<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">summarise</span><span class="op">(</span></span>
-<span>        .by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">分類</span>, <span class="va">曜日</span><span class="op">)</span>,</span>
-<span>        売上個数 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">個数</span><span class="op">)</span></span>
-<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">曜日</span>, y <span class="op">=</span> <span class="va">売上個数</span>, group <span class="op">=</span> <span class="va">分類</span>, color <span class="op">=</span> <span class="va">分類</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">geom_line</span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">labs</span><span class="op">(</span></span>
-<span>        title <span class="op">=</span> <span class="st">"商品と曜日の売上個数"</span>,</span>
-<span>        x <span class="op">=</span> <span class="st">"曜日"</span>,</span>
-<span>        y <span class="op">=</span> <span class="st">"売上個数"</span></span>
-<span>    <span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="co"># ラベルを縦にする。</span></span>
-<span>    <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>    <span class="fu">filter</span>(</span>
+<span id="cb9-3"><a href="#cb9-3"></a>        分類 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"競合Aおいしい濃茶"</span>, <span class="st">"競合Aおいしい緑茶"</span>, <span class="st">"自社濃い茶"</span>, <span class="st">"自社緑茶"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb9-6"><a href="#cb9-6"></a>        <span class="at">.by =</span> <span class="fu">c</span>(分類, 曜日),</span>
+<span id="cb9-7"><a href="#cb9-7"></a>        売上個数 <span class="ot">=</span> <span class="fu">sum</span>(個数)</span>
+<span id="cb9-8"><a href="#cb9-8"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> 曜日, <span class="at">y =</span> 売上個数, <span class="at">group =</span> 分類, <span class="at">color =</span> 分類)) <span class="sc">+</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a>    <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a>    <span class="fu">labs</span>(</span>
+<span id="cb9-13"><a href="#cb9-13"></a>        <span class="at">title =</span> <span class="st">"商品と曜日の売上個数"</span>,</span>
+<span id="cb9-14"><a href="#cb9-14"></a>        <span class="at">x =</span> <span class="st">"曜日"</span>,</span>
+<span id="cb9-15"><a href="#cb9-15"></a>        <span class="at">y =</span> <span class="st">"売上個数"</span></span>
+<span id="cb9-16"><a href="#cb9-16"></a>    ) <span class="sc">+</span></span>
+<span id="cb9-17"><a href="#cb9-17"></a>    <span class="co"># ラベルを縦にする。</span></span>
+<span id="cb9-18"><a href="#cb9-18"></a>    <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuPro-W3"</span>) <span class="sc">+</span></span>
+<span id="cb9-19"><a href="#cb9-19"></a>    <span class="fu">scale_fill_tableau</span>(<span class="at">name =</span> <span class="st">"Tableau 20"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="4200"></p>
+<figure class="figure"><p><a href="POS_Marketing_03_files/figure-html/unnamed-chunk-9-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="4200"></a></p>
 </figure>
 </div>
 </div>
@@ -1687,42 +1875,57 @@ $$
 -->
 <p>移動平均を計算するためには、<code>zoo</code>パッケージを使います。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">zoo</span><span class="op">)</span></span>
-<span><span class="va">df_mv_item</span> <span class="op">&lt;-</span> <span class="va">df_md_item</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span></span>
-<span>        <span class="va">分類</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"競合Aおいしい濃茶"</span>, <span class="st">"競合Aおいしい緑茶"</span>, <span class="st">"自社濃い茶"</span>, <span class="st">"自社緑茶"</span><span class="op">)</span></span>
-<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">mutate</span><span class="op">(</span></span>
-<span>        .by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">分類</span><span class="op">)</span>,</span>
-<span>        移動平均 <span class="op">=</span> <span class="fu">rollmean</span><span class="op">(</span><span class="va">売上個数</span>, align <span class="op">=</span> <span class="st">"right"</span>, k <span class="op">=</span> <span class="fl">7</span>, fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">df_mv_item</span><span class="op">$</span><span class="va">月日</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(zoo)</span>
+<span id="cb10-2"><a href="#cb10-2"></a>df_mv_item <span class="ot">&lt;-</span> df_md_item <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a>    <span class="fu">filter</span>(</span>
+<span id="cb10-4"><a href="#cb10-4"></a>        分類 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"競合Aおいしい濃茶"</span>, <span class="st">"競合Aおいしい緑茶"</span>, <span class="st">"自社濃い茶"</span>, <span class="st">"自社緑茶"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb10-7"><a href="#cb10-7"></a>        <span class="at">.by =</span> <span class="fu">c</span>(分類),</span>
+<span id="cb10-8"><a href="#cb10-8"></a>        移動平均 <span class="ot">=</span> <span class="fu">rollmean</span>(売上個数, <span class="at">align =</span> <span class="st">"right"</span>, <span class="at">k =</span> <span class="dv">7</span>, <span class="at">fill =</span> <span class="cn">NA</span>)</span>
+<span id="cb10-9"><a href="#cb10-9"></a>    )</span>
+<span id="cb10-10"><a href="#cb10-10"></a></span>
+<span id="cb10-11"><a href="#cb10-11"></a><span class="fu">levels</span>(df_mv_item<span class="sc">$</span>月日)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>NULL</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_mv_item</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">月日</span>, y <span class="op">=</span> <span class="va">移動平均</span>, group <span class="op">=</span> <span class="va">分類</span>, color <span class="op">=</span> <span class="va">分類</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">geom_line</span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">labs</span><span class="op">(</span></span>
-<span>        title <span class="op">=</span> <span class="st">"商品の売上個数の7日移動平均"</span>,</span>
-<span>        x <span class="op">=</span> <span class="st">"基準日"</span>,</span>
-<span>        y <span class="op">=</span> <span class="st">"売上個数"</span></span>
-<span>    <span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">theme_bw</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"HiraKakuPro-W3"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span>, hjust <span class="op">=</span> <span class="fl">1</span>, size <span class="op">=</span> <span class="fl">6</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">scale_fill_tableau</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Tableau 20"</span><span class="op">)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>df_mv_item <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>    <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">x =</span> 月日, <span class="at">y =</span> 移動平均, <span class="at">group =</span> 分類, <span class="at">color =</span> 分類) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>    <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>    <span class="fu">labs</span>(</span>
+<span id="cb12-5"><a href="#cb12-5"></a>        <span class="at">title =</span> <span class="st">"商品の売上個数の7日移動平均"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6"></a>        <span class="at">x =</span> <span class="st">"基準日"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7"></a>        <span class="at">y =</span> <span class="st">"売上個数"</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a>    ) <span class="sc">+</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a>    <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuPro-W3"</span>) <span class="sc">+</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">6</span>)) <span class="sc">+</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a>    <span class="fu">scale_fill_tableau</span>(<span class="at">name =</span> <span class="st">"Tableau 20"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="7200"></p>
+<figure class="figure"><p><a href="POS_Marketing_03_files/figure-html/unnamed-chunk-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="POS_Marketing_03_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="7200"></a></p>
 </figure>
 </div>
 </div>
 </div>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+<!-- -->
+
+</section><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> トップに戻る</a></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -1791,6 +1994,57 @@ $$
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -2132,11 +2386,240 @@ $$
         <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">第4回 売上に影響を与える要因</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">ソースコード</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu"># 第3回 売上の時系列データ分析</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="fu">## はじめに</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a></span>
+<span id="cb13-5"><a href="#cb13-5"></a>パッケージとデータを準備する。</span>
+<span id="cb13-6"><a href="#cb13-6"></a></span>
+<span id="cb13-7"><a href="#cb13-7"></a>第3回ファイルで使うデータは<span class="in">`chp3.xlsx`</span>です。</span>
+<span id="cb13-8"><a href="#cb13-8"></a></span>
+<span id="cb13-9"><a href="#cb13-9"></a><span class="ss">- </span><span class="in">`chp3.xlsx`</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a></span>
+<span id="cb13-11"><a href="#cb13-11"></a>パッケージを読み込みます。</span>
+<span id="cb13-12"><a href="#cb13-12"></a></span>
+<span id="cb13-15"><a href="#cb13-15"></a><span class="in">```{r}</span></span>
+<span id="cb13-16"><a href="#cb13-16"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse, readxl, ggthemes, gt, gtExtras)</span>
+<span id="cb13-17"><a href="#cb13-17"></a><span class="in">```</span></span>
+<span id="cb13-18"><a href="#cb13-18"></a></span>
+<span id="cb13-19"><a href="#cb13-19"></a>「いつものPOSデータ」を読み込みます。</span>
+<span id="cb13-20"><a href="#cb13-20"></a>ついでに文字列をカテゴリー変数として因子型に変換しておきます。</span>
+<span id="cb13-21"><a href="#cb13-21"></a></span>
+<span id="cb13-24"><a href="#cb13-24"></a><span class="in">```{r}</span></span>
+<span id="cb13-25"><a href="#cb13-25"></a><span class="co">#| cache=TRUE</span></span>
+<span id="cb13-26"><a href="#cb13-26"></a>df <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/chp3.xlsx"</span>)</span>
+<span id="cb13-27"><a href="#cb13-27"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb13-28"><a href="#cb13-28"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb13-29"><a href="#cb13-29"></a>        曜日 <span class="ot">=</span> <span class="fu">factor</span>(曜日, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"月"</span>, <span class="st">"火"</span>, <span class="st">"水"</span>, <span class="st">"木"</span>, <span class="st">"金"</span>, <span class="st">"土"</span>, <span class="st">"日"</span>), <span class="at">ordered =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb13-30"><a href="#cb13-30"></a>        性別 <span class="ot">=</span> <span class="fu">factor</span>(性別, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"男性"</span>, <span class="st">"女性"</span>), <span class="at">ordered =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb13-31"><a href="#cb13-31"></a>        年代 <span class="ot">=</span> <span class="fu">factor</span>(年代, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"20歳未満"</span>, <span class="st">"20代"</span>, <span class="st">"30代"</span>, <span class="st">"40代"</span>, <span class="st">"50代"</span>, <span class="st">"60歳以上"</span>), <span class="at">ordered =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb13-32"><a href="#cb13-32"></a>        メーカー <span class="ot">=</span> <span class="fu">as.factor</span>(メーカー),</span>
+<span id="cb13-33"><a href="#cb13-33"></a>        商品名 <span class="ot">=</span> <span class="fu">as.factor</span>(商品名)</span>
+<span id="cb13-34"><a href="#cb13-34"></a>    )</span>
+<span id="cb13-35"><a href="#cb13-35"></a><span class="fu">head</span>(df) <span class="co"># 先頭6行を表示</span></span>
+<span id="cb13-36"><a href="#cb13-36"></a><span class="in">```</span></span>
+<span id="cb13-37"><a href="#cb13-37"></a></span>
+<span id="cb13-38"><a href="#cb13-38"></a><span class="fu">## 商品と月ごとの売上個数</span></span>
+<span id="cb13-39"><a href="#cb13-39"></a></span>
+<span id="cb13-40"><a href="#cb13-40"></a></span>
+<span id="cb13-43"><a href="#cb13-43"></a><span class="in">```{r}</span></span>
+<span id="cb13-44"><a href="#cb13-44"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb13-45"><a href="#cb13-45"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb13-46"><a href="#cb13-46"></a>        分類 <span class="ot">=</span> <span class="fu">paste0</span>(メーカー, 商品名),</span>
+<span id="cb13-47"><a href="#cb13-47"></a>        月 <span class="ot">=</span> lubridate<span class="sc">::</span><span class="fu">month</span>(日付),</span>
+<span id="cb13-48"><a href="#cb13-48"></a>        月 <span class="ot">=</span> <span class="fu">factor</span>(月, <span class="at">levels =</span> <span class="fu">unique</span>(月)),</span>
+<span id="cb13-49"><a href="#cb13-49"></a>        月日 <span class="ot">=</span> <span class="fu">paste0</span>(<span class="fu">month</span>(日付), <span class="st">"月"</span>, <span class="fu">day</span>(日付), <span class="st">"日"</span>),</span>
+<span id="cb13-50"><a href="#cb13-50"></a>    )</span>
+<span id="cb13-51"><a href="#cb13-51"></a></span>
+<span id="cb13-52"><a href="#cb13-52"></a>df_month_item <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb13-53"><a href="#cb13-53"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb13-54"><a href="#cb13-54"></a>        <span class="at">.by =</span> <span class="fu">c</span>(分類, 月),</span>
+<span id="cb13-55"><a href="#cb13-55"></a>        売上個数 <span class="ot">=</span> <span class="fu">sum</span>(個数)</span>
+<span id="cb13-56"><a href="#cb13-56"></a>    )</span>
+<span id="cb13-57"><a href="#cb13-57"></a></span>
+<span id="cb13-58"><a href="#cb13-58"></a>df_month_item <span class="sc">|&gt;</span></span>
+<span id="cb13-59"><a href="#cb13-59"></a>    <span class="fu">pivot_wider</span>(</span>
+<span id="cb13-60"><a href="#cb13-60"></a>        <span class="at">names_from =</span> 分類,</span>
+<span id="cb13-61"><a href="#cb13-61"></a>        <span class="at">values_from =</span> 売上個数</span>
+<span id="cb13-62"><a href="#cb13-62"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb13-63"><a href="#cb13-63"></a>    <span class="fu">gt</span>()<span class="sc">|&gt;</span></span>
+<span id="cb13-64"><a href="#cb13-64"></a>    <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">decimals =</span> <span class="dv">0</span>)</span>
+<span id="cb13-65"><a href="#cb13-65"></a><span class="in">```</span></span>
+<span id="cb13-66"><a href="#cb13-66"></a></span>
+<span id="cb13-67"><a href="#cb13-67"></a></span>
+<span id="cb13-70"><a href="#cb13-70"></a><span class="in">```{r}</span></span>
+<span id="cb13-71"><a href="#cb13-71"></a>df_month_item <span class="sc">|&gt;</span></span>
+<span id="cb13-72"><a href="#cb13-72"></a>    <span class="fu">ggplot</span>(</span>
+<span id="cb13-73"><a href="#cb13-73"></a>        <span class="fu">aes</span>(<span class="at">x =</span> 月, <span class="at">y =</span> 売上個数, <span class="at">group =</span> 分類, <span class="at">color =</span> 分類)</span>
+<span id="cb13-74"><a href="#cb13-74"></a>    ) <span class="sc">+</span></span>
+<span id="cb13-75"><a href="#cb13-75"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb13-76"><a href="#cb13-76"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb13-77"><a href="#cb13-77"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>) <span class="sc">+</span></span>
+<span id="cb13-78"><a href="#cb13-78"></a>    <span class="fu">labs</span>(</span>
+<span id="cb13-79"><a href="#cb13-79"></a>        <span class="at">title =</span> <span class="st">"商品と月ごとの売上個数"</span>,</span>
+<span id="cb13-80"><a href="#cb13-80"></a>        <span class="at">x =</span> <span class="st">"月"</span>,</span>
+<span id="cb13-81"><a href="#cb13-81"></a>        <span class="at">y =</span> <span class="st">"売上個数"</span></span>
+<span id="cb13-82"><a href="#cb13-82"></a>    ) <span class="sc">+</span></span>
+<span id="cb13-83"><a href="#cb13-83"></a>    <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuPro-W3"</span>) <span class="sc">+</span></span>
+<span id="cb13-84"><a href="#cb13-84"></a>    <span class="fu">scale_fill_tableau</span>(<span class="at">name =</span> <span class="st">"Tableau 20"</span>)</span>
+<span id="cb13-85"><a href="#cb13-85"></a><span class="in">```</span></span>
+<span id="cb13-86"><a href="#cb13-86"></a></span>
+<span id="cb13-87"><a href="#cb13-87"></a></span>
+<span id="cb13-88"><a href="#cb13-88"></a>個人的に気に入っているグラフの描き方です。</span>
+<span id="cb13-89"><a href="#cb13-89"></a>ここでは12月のデータを抽出して、<span class="in">`geom_text()`</span>でラベルを付けてることで、グラフ上に商品名を表示しています。</span>
+<span id="cb13-90"><a href="#cb13-90"></a></span>
+<span id="cb13-93"><a href="#cb13-93"></a><span class="in">```{r}</span></span>
+<span id="cb13-94"><a href="#cb13-94"></a><span class="co">#| fig-width: 12</span></span>
+<span id="cb13-95"><a href="#cb13-95"></a>df_name <span class="ot">&lt;-</span> df_month_item <span class="sc">|&gt;</span></span>
+<span id="cb13-96"><a href="#cb13-96"></a>    <span class="fu">filter</span>(月 <span class="sc">==</span> <span class="dv">12</span>) <span class="co"># 12月のデータを抽出</span></span>
+<span id="cb13-97"><a href="#cb13-97"></a></span>
+<span id="cb13-98"><a href="#cb13-98"></a>g <span class="ot">&lt;-</span> df_month_item <span class="sc">|&gt;</span></span>
+<span id="cb13-99"><a href="#cb13-99"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> 月, <span class="at">y =</span> 売上個数, <span class="at">group =</span> 分類, <span class="at">color =</span> 分類)) <span class="sc">+</span></span>
+<span id="cb13-100"><a href="#cb13-100"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="co"># 線と点を描く</span></span>
+<span id="cb13-101"><a href="#cb13-101"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"商品と月ごとの売上個数"</span>, <span class="at">x =</span> <span class="st">"月"</span>, <span class="at">y =</span> <span class="st">"売上個数"</span>) <span class="sc">+</span></span>
+<span id="cb13-102"><a href="#cb13-102"></a>    <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuPro-W3"</span>) <span class="sc">+</span></span>
+<span id="cb13-103"><a href="#cb13-103"></a>    <span class="fu">scale_fill_tableau</span>(<span class="at">name =</span> <span class="st">"Tableau 20"</span>) <span class="sc">+</span></span>
+<span id="cb13-104"><a href="#cb13-104"></a>    <span class="fu">scale_x_discrete</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">20</span>))) <span class="co"># x軸の範囲を拡大</span></span>
+<span id="cb13-105"><a href="#cb13-105"></a>g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">geom_text</span>(<span class="at">data =</span> df_name, <span class="fu">aes</span>(<span class="at">x =</span> 月, <span class="at">y =</span> 売上個数, <span class="at">label =</span> 分類), <span class="at">adj =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">nudge_x =</span> <span class="fl">0.2</span>,<span class="at">family =</span> <span class="st">"HiraKakuProN-W3"</span>)</span>
+<span id="cb13-106"><a href="#cb13-106"></a>g</span>
+<span id="cb13-107"><a href="#cb13-107"></a><span class="in">```</span></span>
+<span id="cb13-108"><a href="#cb13-108"></a></span>
+<span id="cb13-109"><a href="#cb13-109"></a><span class="fu">## 日別の売上個数</span></span>
+<span id="cb13-110"><a href="#cb13-110"></a></span>
+<span id="cb13-111"><a href="#cb13-111"></a></span>
+<span id="cb13-114"><a href="#cb13-114"></a><span class="in">```{r}</span></span>
+<span id="cb13-115"><a href="#cb13-115"></a>df_md_item <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb13-116"><a href="#cb13-116"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb13-117"><a href="#cb13-117"></a>        <span class="at">.by =</span> <span class="fu">c</span>(分類, 月日),</span>
+<span id="cb13-118"><a href="#cb13-118"></a>        売上個数 <span class="ot">=</span> <span class="fu">sum</span>(個数)</span>
+<span id="cb13-119"><a href="#cb13-119"></a>    )</span>
+<span id="cb13-120"><a href="#cb13-120"></a></span>
+<span id="cb13-121"><a href="#cb13-121"></a>df_md_item <span class="sc">|&gt;</span></span>
+<span id="cb13-122"><a href="#cb13-122"></a>    <span class="fu">pivot_wider</span>(</span>
+<span id="cb13-123"><a href="#cb13-123"></a>        <span class="at">names_from =</span> 分類,</span>
+<span id="cb13-124"><a href="#cb13-124"></a>        <span class="at">values_from =</span> 売上個数</span>
+<span id="cb13-125"><a href="#cb13-125"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb13-126"><a href="#cb13-126"></a>    <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-127"><a href="#cb13-127"></a>    <span class="fu">gt</span>()<span class="sc">|&gt;</span></span>
+<span id="cb13-128"><a href="#cb13-128"></a>    <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">decimals =</span> <span class="dv">0</span>)</span>
+<span id="cb13-129"><a href="#cb13-129"></a><span class="in">```</span></span>
+<span id="cb13-130"><a href="#cb13-130"></a></span>
+<span id="cb13-131"><a href="#cb13-131"></a></span>
+<span id="cb13-134"><a href="#cb13-134"></a><span class="in">```{r}</span></span>
+<span id="cb13-135"><a href="#cb13-135"></a><span class="co">#| fig-width: 12</span></span>
+<span id="cb13-136"><a href="#cb13-136"></a>df_md_item <span class="sc">|&gt;</span></span>
+<span id="cb13-137"><a href="#cb13-137"></a>    <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb13-138"><a href="#cb13-138"></a>    <span class="fu">aes</span>(<span class="at">x =</span> 月日, <span class="at">y =</span> 売上個数, <span class="at">group =</span> 分類, <span class="at">color =</span> 分類) <span class="sc">+</span></span>
+<span id="cb13-139"><a href="#cb13-139"></a>    <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb13-140"><a href="#cb13-140"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb13-141"><a href="#cb13-141"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"商品と日別の売上個数"</span>,</span>
+<span id="cb13-142"><a href="#cb13-142"></a>         <span class="at">x =</span> <span class="st">"日"</span>, <span class="at">y =</span> <span class="st">"売上個数"</span>) <span class="sc">+</span></span>
+<span id="cb13-143"><a href="#cb13-143"></a>    <span class="co"># ラベルを縦にする。</span></span>
+<span id="cb13-144"><a href="#cb13-144"></a>    <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuPro-W3"</span>) <span class="sc">+</span></span>
+<span id="cb13-145"><a href="#cb13-145"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb13-146"><a href="#cb13-146"></a>    <span class="fu">scale_fill_tableau</span>(<span class="at">name =</span> <span class="st">"Tableau 20"</span>)</span>
+<span id="cb13-147"><a href="#cb13-147"></a><span class="in">```</span></span>
+<span id="cb13-148"><a href="#cb13-148"></a></span>
+<span id="cb13-149"><a href="#cb13-149"></a></span>
+<span id="cb13-150"><a href="#cb13-150"></a></span>
+<span id="cb13-153"><a href="#cb13-153"></a><span class="in">```{r}</span></span>
+<span id="cb13-154"><a href="#cb13-154"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb13-155"><a href="#cb13-155"></a>    <span class="fu">filter</span>(月 <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-156"><a href="#cb13-156"></a>    <span class="fu">filter</span>(</span>
+<span id="cb13-157"><a href="#cb13-157"></a>        分類 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"競合Aおいしい濃茶"</span>, <span class="st">"競合Aおいしい緑茶"</span>, <span class="st">"自社濃い茶"</span>, <span class="st">"自社緑茶"</span>)</span>
+<span id="cb13-158"><a href="#cb13-158"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb13-159"><a href="#cb13-159"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb13-160"><a href="#cb13-160"></a>        <span class="at">.by =</span> <span class="fu">c</span>(分類, 月日),</span>
+<span id="cb13-161"><a href="#cb13-161"></a>        売上個数 <span class="ot">=</span> <span class="fu">sum</span>(個数)</span>
+<span id="cb13-162"><a href="#cb13-162"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb13-163"><a href="#cb13-163"></a>    <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb13-164"><a href="#cb13-164"></a>    <span class="fu">aes</span>(<span class="at">x =</span> 月日, <span class="at">y =</span> 売上個数, <span class="at">group =</span> 分類, <span class="at">color =</span> 分類) <span class="sc">+</span></span>
+<span id="cb13-165"><a href="#cb13-165"></a>    <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb13-166"><a href="#cb13-166"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb13-167"><a href="#cb13-167"></a>    <span class="fu">labs</span>(</span>
+<span id="cb13-168"><a href="#cb13-168"></a>        <span class="at">title =</span> <span class="st">"商品と日別の売上個数"</span>,</span>
+<span id="cb13-169"><a href="#cb13-169"></a>        <span class="at">x =</span> <span class="st">"日"</span>,</span>
+<span id="cb13-170"><a href="#cb13-170"></a>        <span class="at">y =</span> <span class="st">"売上個数"</span></span>
+<span id="cb13-171"><a href="#cb13-171"></a>    ) <span class="sc">+</span></span>
+<span id="cb13-172"><a href="#cb13-172"></a>    <span class="co"># ラベルを縦にする。</span></span>
+<span id="cb13-173"><a href="#cb13-173"></a>    <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuPro-W3"</span>) <span class="sc">+</span></span>
+<span id="cb13-174"><a href="#cb13-174"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb13-175"><a href="#cb13-175"></a>    <span class="fu">scale_fill_tableau</span>(<span class="at">name =</span> <span class="st">"Tableau 20"</span>)</span>
+<span id="cb13-176"><a href="#cb13-176"></a><span class="in">```</span></span>
+<span id="cb13-177"><a href="#cb13-177"></a></span>
+<span id="cb13-178"><a href="#cb13-178"></a></span>
+<span id="cb13-181"><a href="#cb13-181"></a><span class="in">```{r}</span></span>
+<span id="cb13-182"><a href="#cb13-182"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb13-183"><a href="#cb13-183"></a>    <span class="fu">filter</span>(</span>
+<span id="cb13-184"><a href="#cb13-184"></a>        分類 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"競合Aおいしい濃茶"</span>, <span class="st">"競合Aおいしい緑茶"</span>, <span class="st">"自社濃い茶"</span>, <span class="st">"自社緑茶"</span>)</span>
+<span id="cb13-185"><a href="#cb13-185"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb13-186"><a href="#cb13-186"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb13-187"><a href="#cb13-187"></a>        <span class="at">.by =</span> <span class="fu">c</span>(分類, 曜日),</span>
+<span id="cb13-188"><a href="#cb13-188"></a>        売上個数 <span class="ot">=</span> <span class="fu">sum</span>(個数)</span>
+<span id="cb13-189"><a href="#cb13-189"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb13-190"><a href="#cb13-190"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> 曜日, <span class="at">y =</span> 売上個数, <span class="at">group =</span> 分類, <span class="at">color =</span> 分類)) <span class="sc">+</span></span>
+<span id="cb13-191"><a href="#cb13-191"></a>    <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb13-192"><a href="#cb13-192"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb13-193"><a href="#cb13-193"></a>    <span class="fu">labs</span>(</span>
+<span id="cb13-194"><a href="#cb13-194"></a>        <span class="at">title =</span> <span class="st">"商品と曜日の売上個数"</span>,</span>
+<span id="cb13-195"><a href="#cb13-195"></a>        <span class="at">x =</span> <span class="st">"曜日"</span>,</span>
+<span id="cb13-196"><a href="#cb13-196"></a>        <span class="at">y =</span> <span class="st">"売上個数"</span></span>
+<span id="cb13-197"><a href="#cb13-197"></a>    ) <span class="sc">+</span></span>
+<span id="cb13-198"><a href="#cb13-198"></a>    <span class="co"># ラベルを縦にする。</span></span>
+<span id="cb13-199"><a href="#cb13-199"></a>    <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuPro-W3"</span>) <span class="sc">+</span></span>
+<span id="cb13-200"><a href="#cb13-200"></a>    <span class="fu">scale_fill_tableau</span>(<span class="at">name =</span> <span class="st">"Tableau 20"</span>)</span>
+<span id="cb13-201"><a href="#cb13-201"></a><span class="in">```</span></span>
+<span id="cb13-202"><a href="#cb13-202"></a></span>
+<span id="cb13-203"><a href="#cb13-203"></a></span>
+<span id="cb13-204"><a href="#cb13-204"></a><span class="fu">## 移動平均</span></span>
+<span id="cb13-205"><a href="#cb13-205"></a></span>
+<span id="cb13-206"><a href="#cb13-206"></a><span class="co">&lt;!--</span></span>
+<span id="cb13-207"><a href="#cb13-207"></a><span class="co">日々の変動を平滑化するために、移動平均を使います。</span></span>
+<span id="cb13-208"><a href="#cb13-208"></a><span class="co">移動平均とは、基準時点を中心として前後のデータを含めた平均を取る手法です。</span></span>
+<span id="cb13-209"><a href="#cb13-209"></a><span class="co">たとえば、時系列データ$X_t$に対して、$t$時点を中心として前後$n$個のデータを含めた移動平均は次のように定義されます。</span></span>
+<span id="cb13-210"><a href="#cb13-210"></a></span>
+<span id="cb13-211"><a href="#cb13-211"></a><span class="co">$$</span></span>
+<span id="cb13-212"><a href="#cb13-212"></a><span class="co">\text{移動平均} = \frac{1}{2n+1} \sum_{i=-n}^{n} X_{t+i}</span></span>
+<span id="cb13-213"><a href="#cb13-213"></a><span class="co">$$</span></span>
+<span id="cb13-214"><a href="#cb13-214"></a><span class="co">--&gt;</span></span>
+<span id="cb13-215"><a href="#cb13-215"></a></span>
+<span id="cb13-216"><a href="#cb13-216"></a></span>
+<span id="cb13-217"><a href="#cb13-217"></a>移動平均を計算するためには、<span class="in">`zoo`</span>パッケージを使います。</span>
+<span id="cb13-218"><a href="#cb13-218"></a></span>
+<span id="cb13-221"><a href="#cb13-221"></a><span class="in">```{r}</span></span>
+<span id="cb13-222"><a href="#cb13-222"></a><span class="co">#| fig-width: 12</span></span>
+<span id="cb13-223"><a href="#cb13-223"></a><span class="co">#| warning: false</span></span>
+<span id="cb13-224"><a href="#cb13-224"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(zoo)</span>
+<span id="cb13-225"><a href="#cb13-225"></a>df_mv_item <span class="ot">&lt;-</span> df_md_item <span class="sc">|&gt;</span></span>
+<span id="cb13-226"><a href="#cb13-226"></a>    <span class="fu">filter</span>(</span>
+<span id="cb13-227"><a href="#cb13-227"></a>        分類 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"競合Aおいしい濃茶"</span>, <span class="st">"競合Aおいしい緑茶"</span>, <span class="st">"自社濃い茶"</span>, <span class="st">"自社緑茶"</span>)</span>
+<span id="cb13-228"><a href="#cb13-228"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb13-229"><a href="#cb13-229"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb13-230"><a href="#cb13-230"></a>        <span class="at">.by =</span> <span class="fu">c</span>(分類),</span>
+<span id="cb13-231"><a href="#cb13-231"></a>        移動平均 <span class="ot">=</span> <span class="fu">rollmean</span>(売上個数, <span class="at">align =</span> <span class="st">"right"</span>, <span class="at">k =</span> <span class="dv">7</span>, <span class="at">fill =</span> <span class="cn">NA</span>)</span>
+<span id="cb13-232"><a href="#cb13-232"></a>    )</span>
+<span id="cb13-233"><a href="#cb13-233"></a></span>
+<span id="cb13-234"><a href="#cb13-234"></a><span class="fu">levels</span>(df_mv_item<span class="sc">$</span>月日)</span>
+<span id="cb13-235"><a href="#cb13-235"></a></span>
+<span id="cb13-236"><a href="#cb13-236"></a>df_mv_item <span class="sc">|&gt;</span></span>
+<span id="cb13-237"><a href="#cb13-237"></a>    <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">x =</span> 月日, <span class="at">y =</span> 移動平均, <span class="at">group =</span> 分類, <span class="at">color =</span> 分類) <span class="sc">+</span></span>
+<span id="cb13-238"><a href="#cb13-238"></a>    <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb13-239"><a href="#cb13-239"></a>    <span class="fu">labs</span>(</span>
+<span id="cb13-240"><a href="#cb13-240"></a>        <span class="at">title =</span> <span class="st">"商品の売上個数の7日移動平均"</span>,</span>
+<span id="cb13-241"><a href="#cb13-241"></a>        <span class="at">x =</span> <span class="st">"基準日"</span>,</span>
+<span id="cb13-242"><a href="#cb13-242"></a>        <span class="at">y =</span> <span class="st">"売上個数"</span></span>
+<span id="cb13-243"><a href="#cb13-243"></a>    ) <span class="sc">+</span></span>
+<span id="cb13-244"><a href="#cb13-244"></a>    <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"HiraKakuPro-W3"</span>) <span class="sc">+</span></span>
+<span id="cb13-245"><a href="#cb13-245"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">6</span>)) <span class="sc">+</span></span>
+<span id="cb13-246"><a href="#cb13-246"></a>    <span class="fu">scale_fill_tableau</span>(<span class="at">name =</span> <span class="st">"Tableau 20"</span>)</span>
+<span id="cb13-247"><a href="#cb13-247"></a><span class="in">```</span></span>
+</code></pre></div><button title="コピー" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
-<p>Copyright 2024, Soichi Matsuura</p>
+<p>Copyright 2026, Soichi Matsuura</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;
@@ -2144,7 +2627,7 @@ $$
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
 <li class="nav-item compact">
-    <a class="nav-link active" href="https://github.com/ma2ura/pos_marketing/" aria-current="page">
+    <a class="nav-link" href="https://github.com/ma2ura">
       <i class="bi bi-github" role="img">
 </i> 
     </a>
@@ -2158,7 +2641,38 @@ $$
 </ul>
 </div>
   </div>
-</footer>
+</footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 </body></html>

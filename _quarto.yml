@@ -2,21 +2,44 @@ project:
   type: book
   output-dir: docs
 
+lightbox: auto
+
 book:
   title: "POSとマーケティングデータ分析"
-  reader-mode: true
   author:
     - name: "Soichi Matsuura"
     - affiliation: Ritsumeikan University
     - email: matsuura@fc.ritsumei.ac.jp
   date: "11/28/2024"
+  search: true
+  # license: "CC BY-NC-SA"
+  # cover-image: img/POS_data.jpg
   favicon: img/favicon.ico
+
+
+  reader-mode: true
+  google-analytics: "G-SFB56VHK63"
+  page-navigation: true
 
   site-url: https://so-ichi.com
   repo-url: https://github.com/ma2ura/pos_marketing/
   repo-branch: main
 
-  twitter-card: true
+  page-footer:
+      border: true
+      background: "#a10000"
+      left: "Copyright 2026, Soichi Matsuura"
+      right:
+        - icon: github
+          href: https://github.com/ma2ura
+        - icon: twitter
+          href: https://twitter.com/matsuura_rits
+          aria-label: Twitter
+
+  sidebar:
+    style: docked
+    background: light
+    collapse: true
 
   chapters:
     - index.qmd
@@ -28,36 +51,54 @@ book:
     - POS_Marketing_06.qmd
     - POS_Marketing_07.qmd
 
-  page-navigation: true
+website:
   back-to-top-navigation: true
-  page-footer:
-      border: true
-      background: light
-      left: "Copyright 2024, Soichi Matsuura"
-      right:
-        - icon: github
-          href: https://github.com/ma2ura/pos_marketing/
-        - icon: twitter
-          href: https://twitter.com/matsuura_rits
-          aria-label: Twitter
 
 format:
   html:
-    theme: cerulean
-    toc: true
-    html-math-method: mathjax
-    code-copy: true
-    code-overflow: wrap
-    code-link: true
-    link-external-icon: true
-    df-print: kable
+    theme:
+      light: united
+      dark: cyborg
     mainfont: "Noto Sans JP"
     monofont: "0xProto" # ※このフォントがシステムにない場合、デフォルトになります
-    grid:
-      sidebar-width: 200px
-      body-width: 1200px
-    css:
-      - "mystyle.css"
+
+    toc: true
+    toc-location: left
+    toc-title: "ここの目次"
+    toc-depth: 2
+    toc-expand: true
+
+    code-tools: true
+    code-link: true
+    code-line-numbers: true
+    code-block-bg: true
+    code-block-border-left: "#002D72"
+    code-copy: hover
+    code-overflow: scroll
+    link-external-icon: true
+
+
+    html-math-method: katex
+    author-meta: "Soichi Matsuura"
+    df-print: paged
+    page-navigation: true
+    back-to-top-navigation: true
+    twitter-card: true
+
+    include-in-header:
+      text: |
+        <style>
+        .marky {
+          background: linear-gradient(transparent 60%, #FCFFC1 0%);
+        }
+        .markb {
+          background: linear-gradient(transparent 60%, #88E2EA 0%);
+        }
+        .markp{
+          background: linear-gradient(transparent 70%, #ffcdd2 0%)
+        }
+        </style>
+
 lang: "ja"
 knitr:
   opts_chunk:

@@ -14,23 +14,31 @@
 です。
 ではまず必要なパッケージを読み込みます。
 
-```{r}
-options(scipen = 100)
-pacman::p_load(tidyverse, readxl, ggthemes, gt, gtExtras)
+```{r load_packages, filename = "必要なパッケージの読み込み"}
+options(scipen = 100) # 科学的表記を避ける
+pacman::p_load(
+  tidyverse,
+  readxl,
+  ggthemes,
+  gt,
+  gtExtras,
+  janitor
+  )
 ```
 
-`readxl`パッケージを使ってデータ`chp2.xlsx`を読み込んでみましょう。
+ここで新しいパッケージ`janitor`を読み込んでいます。
+`janitor`はデータのクリーニングや集計を簡単にするためのパッケージで、特にクロス集計表を作成するための関数が充実しています。
+
+では`readxl`パッケージを使ってデータ`chp2.xlsx`を読み込んでみましょう。
 前章と同様にこのExcelファイルのシートの一覧を表示してみます。
 
-```{r}
+```{r read_sheets, filename = "Excelファイルのシートの確認"}
 readxl::excel_sheets("data/chp2.xlsx")
 ```
 
 最初のシート「いつものPOSデータ」を読み込みたいので、シート番号を指定せずに`read_excel()`関数を使ってExcelファイルを読み込みます。
 ついでに<span class = "marky">文字列をカテゴリー変数として因子型に変換しておきます</span>。
-```{r}
-#| cache: FALSE
-#| warning: FALSE
+```{r load_data, filename = "データの読み込みと変数の型変換"}
 df <- readxl::read_excel("data/chp2.xlsx") # データを読み込む
 df <- df |> # 文字列を因子型に変換
   mutate(曜日 = factor(曜日, levels = c("月", "火", "水", "木", "金", "土", "日"), ordered = TRUE),
@@ -38,7 +46,7 @@ df <- df |> # 文字列を因子型に変換
          年代 = factor(年代, levels = c("20歳未満", "20代", "30代", "40代", "50代", "60歳以上"), ordered = TRUE),
          メーカー = as.factor(メーカー),
          商品名 = as.factor(商品名))
-head(df) # 戦闘6行を表示
+head(df) # 先頭6行を表示
 ```
 
 ## 自社商品における購入者の属性を調べる
@@ -51,7 +59,7 @@ head(df) # 戦闘6行を表示
 まずは<span class = "markp">自社商品におおける年代別と性別ごとの販売個数</span>を計算してみましょう。
 
 
-```{r}
+```{r jisha_age_sex, filename = "自社商品の年代別・性別ごとの販売個数"}
 df_jisha_age_sex_num <- df |>
   filter(メーカー == "自社") |> # 自社商品のみ抽出
   summarise(
@@ -62,20 +70,37 @@ df_jisha_age_sex_num <- df |>
 df_jisha_age_sex_num
 ```
 
+`janitor`パッケージを使ってクロス集計表を作成することもできます。
+
+```{r jisha_age_sex_janitor, filename = "自社商品の年代別・性別ごとの販売個数"}
+df |>
+  filter(メーカー == "自社") |>
+  tabyl(年代, 性別) |> # 年代と性別のクロス集計表を作成
+  adorn_rounding(digits = 0) |>
+  gt() |>
+  tab_header(title = "表2-1 性別・年代ごとの購入回数（クロス集計表）")
+```
+
 表が出力されましたが，いわゆる「ロング型」となっているため，表示に適した教科書のようなワイド型に変換してみましょう。
 ついでに教科書のように，年代別合計を列に，性別ごとの合計を行に追加します。これが以外に面倒です。
 
-```{r}
+```{r jisha_age_sex_num_wide, filename = "自社商品の年代別・性別ごとの販売個数の表"}
 total_sex <- df_jisha_age_sex_num |>
   summarise(
     .by = c(性別), # 性別ごとに
     合計 = sum(販売個数合計) # 個数を合計
     ) |>
-  pivot_wider(names_from = 性別, values_from = 合計) |> # ワイドに
+  pivot_wider(
+    names_from = 性別,
+    values_from = 合計
+  ) |> # ワイドに
   mutate(年代 = "合計") # 年代に"合計"を追加
 
 df_jisha_age_sex_num |> # ワイドに
-  pivot_wider(names_from = 性別, values_from = 販売個数合計) |>
+  pivot_wider(
+    names_from = 性別,
+    values_from = 販売個数合計
+  ) |>
   rbind(total_sex) |> # 合計の行を追加
   mutate( # 合計の列を追加
     合計 = 女性 + 男性
@@ -280,6 +305,19 @@ df_maker_age_sex |>
   gt() |>
   fmt_number(columns = 2:4, decimals = 0) |>
   tab_header(title = "表2-6 年代・性別ごとの競合A社の売上個数")
+```
+
+
+
+
+```{r jisha_age_se_janitor, filename = "自社商品の年代別・性別ごとの購入回数のクロス集計表"}
+df |>
+  filter(メーカー == "自社") |>
+  tabyl(年代, 性別) |>
+  adorn_totals(where = c("row", "col")) |> # 行と列に合計を追加
+  adorn_rounding(digits = 0) |>
+  gt() |>
+  tab_header(title = "表2-1 性別・年代ごとの購入回数（クロス集計表）")
 ```
 
 棒グラフにしてみる。
@@ -648,7 +686,10 @@ chisq.test(mat_chi2, correct = FALSE)
 ```
 
 $\chi^2$ 値が`288.42`となり、 $p$ 値が`0.00000000000000022`とほぼゼロとなっていることから、
-<span class="markp">「自社と競合A社の年代・性別別売上個数に差がない」という帰無仮説は棄却されました</span>。
+<span class="markp">「自社の販売個数が性別や年代によって異なる」という帰無仮説は棄却されました</span>。
+
+
+
 
 <!---
 
